@@ -267,7 +267,7 @@ html_theme = 'shibuya'
 html_theme_path = ['tools']
 html_theme_options = {
     "accent_color": "blue",
-    "logo_target": "/",
+    "logo_target": "/indexcontent.html",
     "navigation_with_keys": True,
     "nav_links": [
         {"title": "Home", "url": "index"},
@@ -276,20 +276,20 @@ html_theme_options = {
             "children": [
                 {
                     "title": "Contributing",
-                    "summary": "Learn how to contribute to the Type Lens project",
-                    "url": "contribution-guide",
+                    "summary": "Learn how to contribute to the Python projects",
+                    "url": "https://www.python.org/dev/",
                     "icon": "contributing",
                 },
                 {
                     "title": "Code of Conduct",
-                    "summary": "Review the etiquette for interacting with the Litestar community",
-                    "url": "https://github.com/litestar-org/.github?tab=coc-ov-file",
+                    "summary": "Review the etiquette for interacting with the Python community",
+                    "url": "https://policies.python.org/python.org/code-of-conduct/",
                     "icon": "coc",
                 },
                 {
                     "title": "Security",
-                    "summary": "Overview of Litestar's security protocols",
-                    "url": "https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file",
+                    "summary": "Overview of Python's security protocols",
+                    "url": "https://www.python.org/dev/security/",
                     "icon": "coc",
                 },
             ],
@@ -298,16 +298,10 @@ html_theme_options = {
             "title": "About",
             "children": [
                 {
-                    "title": "Litestar Organization",
-                    "summary": "Details about the Litestar organization",
-                    "url": "https://litestar.dev/about/organization",
+                    "title": "The PSF",
+                    "summary": "Details about the Python Software Foundation",
+                    "url": "https://www.python.org/psf-landing/",
                     "icon": "org",
-                },
-                {
-                    "title": "Releases",
-                    "summary": "Explore the release process, versioning, and deprecation policy for Litestar",
-                    "url": "releases",
-                    "icon": "releases",
                 },
             ],
         },
@@ -316,7 +310,7 @@ html_theme_options = {
             "children": [
                 {
                     "title": "Changelog",
-                    "url": "changelog",
+                    "url": "whatsnew/index",
                     "summary": "All changes in the current major version",
                 },
             ],
@@ -333,18 +327,12 @@ html_theme_options = {
                 {
                     "title": "GitHub Discussions",
                     "summary": "GitHub Discussions",
-                    "url": "https://github.com/litestar-org/polyfactory/discussions",
-                    "icon": "coc",
-                },
-                {
-                    "title": "Stack Overflow",
-                    "summary": "We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow",
-                    "url": "https://stackoverflow.com/questions/tagged/polyfactory",
+                    "url": "https://github.com/python/cpython/discussions",
                     "icon": "coc",
                 },
             ],
         },
-        {"title": "Sponsor", "url": "https://github.com/sponsors/Litestar-Org", "icon": "heart"},
+        {"title": "Sponsor", "url": "https://github.com/sponsors/python", "icon": "heart"},
     ],
 }
 
