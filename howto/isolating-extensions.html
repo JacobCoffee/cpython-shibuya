@@ -1,0 +1,1289 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Isolating Extension Modules - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Python Frequently Asked Questions" href="../faq/index.html" /><link rel="prev" title="Annotations Best Practices" href="annotations.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="Isolating Extension Modules"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">The Python Standard Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../library/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../library/socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../library/json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Python HOWTOs</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#who-should-read-this">Who should read this</a></li>
+<li><a class="reference internal" href="#background">Background</a><ul>
+<li><a class="reference internal" href="#enter-per-module-state">Enter Per-Module State</a></li>
+<li><a class="reference internal" href="#isolated-module-objects">Isolated Module Objects</a></li>
+<li><a class="reference internal" href="#surprising-edge-cases">Surprising Edge Cases</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#making-modules-safe-with-multiple-interpreters">Making Modules Safe with Multiple Interpreters</a><ul>
+<li><a class="reference internal" href="#managing-global-state">Managing Global State</a></li>
+<li><a class="reference internal" href="#managing-per-module-state">Managing Per-Module State</a></li>
+<li><a class="reference internal" href="#opt-out-limiting-to-one-module-object-per-process">Opt-Out: Limiting to One Module Object per Process</a></li>
+<li><a class="reference internal" href="#module-state-access-from-functions">Module State Access from Functions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#heap-types">Heap Types</a><ul>
+<li><a class="reference internal" href="#changing-static-types-to-heap-types">Changing Static Types to Heap Types</a></li>
+<li><a class="reference internal" href="#defining-heap-types">Defining Heap Types</a></li>
+<li><a class="reference internal" href="#garbage-collection-protocol">Garbage-Collection Protocol</a></li>
+<li><a class="reference internal" href="#module-state-access-from-classes">Module State Access from Classes</a></li>
+<li><a class="reference internal" href="#module-state-access-from-regular-methods">Module State Access from Regular Methods</a></li>
+<li><a class="reference internal" href="#module-state-access-from-slot-methods-getters-and-setters">Module State Access from Slot Methods, Getters and Setters</a></li>
+<li><a class="reference internal" href="#lifetime-of-the-module-state">Lifetime of the Module State</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#open-issues">Open Issues</a><ul>
+<li><a class="reference internal" href="#per-class-scope">Per-Class Scope</a></li>
+<li><a class="reference internal" href="#lossless-conversion-to-heap-types">Lossless Conversion to Heap Types</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/howto/isolating-extensions.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">Python HOWTOs</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">Isolating Extension Modules</strong>
+        <meta itemprop="position" content="3" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="isolating-extension-modules">
+<span id="isolating-extensions-howto"></span><h1>Isolating Extension Modules<a class="headerlink" href="#isolating-extension-modules" title="Permalink to this heading">¶</a></h1>
+<aside class="topic">
+<p class="topic-title">Abstract</p>
+<p>Traditionally, state belonging to Python extension modules was kept in C
+<code class="docutils literal notranslate"><span class="pre">static</span></code> variables, which have process-wide scope. This document
+describes problems of such per-process state and shows a safer way:
+per-module state.</p>
+<p>The document also describes how to switch to per-module state where
+possible. This transition involves allocating space for that state, potentially
+switching from static types to heap types, and—perhaps most
+importantly—accessing per-module state from code.</p>
+</aside>
+<section id="who-should-read-this">
+<h2>Who should read this<a class="headerlink" href="#who-should-read-this" title="Permalink to this heading">¶</a></h2>
+<p>This guide is written for maintainers of <a class="reference internal" href="../c-api/index.html#c-api-index"><span class="std std-ref">C-API</span></a> extensions
+who would like to make that extension safer to use in applications where
+Python itself is used as a library.</p>
+</section>
+<section id="background">
+<h2>Background<a class="headerlink" href="#background" title="Permalink to this heading">¶</a></h2>
+<p>An <em>interpreter</em> is the context in which Python code runs. It contains
+configuration (e.g. the import path) and runtime state (e.g. the set of
+imported modules).</p>
+<p>Python supports running multiple interpreters in one process. There are
+two cases to think about—users may run interpreters:</p>
+<ul class="simple">
+<li><p>in sequence, with several <a class="reference internal" href="../c-api/init.html#c.Py_InitializeEx" title="Py_InitializeEx"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_InitializeEx()</span></code></a>/<a class="reference internal" href="../c-api/init.html#c.Py_FinalizeEx" title="Py_FinalizeEx"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_FinalizeEx()</span></code></a>
+cycles, and</p></li>
+<li><p>in parallel, managing “sub-interpreters” using
+<a class="reference internal" href="../c-api/init.html#c.Py_NewInterpreter" title="Py_NewInterpreter"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_NewInterpreter()</span></code></a>/<a class="reference internal" href="../c-api/init.html#c.Py_EndInterpreter" title="Py_EndInterpreter"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_EndInterpreter()</span></code></a>.</p></li>
+</ul>
+<p>Both cases (and combinations of them) would be most useful when
+embedding Python within a library. Libraries generally shouldn’t make
+assumptions about the application that uses them, which include
+assuming a process-wide “main Python interpreter”.</p>
+<p>Historically, Python extension modules don’t handle this use case well.
+Many extension modules (and even some stdlib modules) use <em>per-process</em>
+global state, because C <code class="docutils literal notranslate"><span class="pre">static</span></code> variables are extremely easy to use.
+Thus, data that should be specific to an interpreter ends up being shared
+between interpreters. Unless the extension developer is careful, it is very
+easy to introduce edge cases that lead to crashes when a module is loaded in
+more than one interpreter in the same process.</p>
+<p>Unfortunately, <em>per-interpreter</em> state is not easy to achieve. Extension
+authors tend to not keep multiple interpreters in mind when developing,
+and it is currently cumbersome to test the behavior.</p>
+<section id="enter-per-module-state">
+<h3>Enter Per-Module State<a class="headerlink" href="#enter-per-module-state" title="Permalink to this heading">¶</a></h3>
+<p>Instead of focusing on per-interpreter state, Python’s C API is evolving
+to better support the more granular <em>per-module</em> state.
+This means that C-level data should be attached to a <em>module object</em>.
+Each interpreter creates its own module object, keeping the data separate.
+For testing the isolation, multiple module objects corresponding to a single
+extension can even be loaded in a single interpreter.</p>
+<p>Per-module state provides an easy way to think about lifetime and
+resource ownership: the extension module will initialize when a
+module object is created, and clean up when it’s freed. In this regard,
+a module is just like any other <span class="c-expr sig sig-inline c"><a class="reference internal" href="../c-api/structures.html#c.PyObject" title="PyObject"><span class="n">PyObject</span></a><span class="p">*</span></span>; there are no “on
+interpreter shutdown” hooks to think—or forget—about.</p>
+<p>Note that there are use cases for different kinds of “globals”:
+per-process, per-interpreter, per-thread or per-task state.
+With per-module state as the default, these are still possible,
+but you should treat them as exceptional cases:
+if you need them, you should give them additional care and testing.
+(Note that this guide does not cover them.)</p>
+</section>
+<section id="isolated-module-objects">
+<h3>Isolated Module Objects<a class="headerlink" href="#isolated-module-objects" title="Permalink to this heading">¶</a></h3>
+<p>The key point to keep in mind when developing an extension module is
+that several module objects can be created from a single shared library.
+For example:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sys</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">binascii</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">old_binascii</span> <span class="o">=</span> <span class="n">binascii</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="k">del</span> <span class="n">sys</span><span class="o">.</span><span class="n">modules</span><span class="p">[</span><span class="s1">&#39;binascii&#39;</span><span class="p">]</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">binascii</span>  <span class="c1"># create a new module object</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">old_binascii</span> <span class="o">==</span> <span class="n">binascii</span>
+</span><span data-line="7"><span class="go">False</span>
+</span></pre></div>
+</div>
+<p>As a rule of thumb, the two modules should be completely independent.
+All objects and state specific to the module should be encapsulated
+within the module object, not shared with other module objects, and
+cleaned up when the module object is deallocated.
+Since this just is a rule of thumb, exceptions are possible
+(see <a class="reference internal" href="#managing-global-state">Managing Global State</a>), but they will need more
+thought and attention to edge cases.</p>
+<p>While some modules could do with less stringent restrictions, isolated
+modules make it easier to set clear expectations and guidelines that
+work across a variety of use cases.</p>
+</section>
+<section id="surprising-edge-cases">
+<h3>Surprising Edge Cases<a class="headerlink" href="#surprising-edge-cases" title="Permalink to this heading">¶</a></h3>
+<p>Note that isolated modules do create some surprising edge cases. Most
+notably, each module object will typically not share its classes and
+exceptions with other similar modules. Continuing from the
+<a class="reference internal" href="#isolated-module-objects">example above</a>,
+note that <code class="docutils literal notranslate"><span class="pre">old_binascii.Error</span></code> and <code class="docutils literal notranslate"><span class="pre">binascii.Error</span></code> are
+separate objects. In the following code, the exception is <em>not</em> caught:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">old_binascii</span><span class="o">.</span><span class="n">Error</span> <span class="o">==</span> <span class="n">binascii</span><span class="o">.</span><span class="n">Error</span>
+</span><span data-line="2"><span class="go">False</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="k">try</span><span class="p">:</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="n">old_binascii</span><span class="o">.</span><span class="n">unhexlify</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;qwertyuiop&#39;</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">... </span><span class="k">except</span> <span class="n">binascii</span><span class="o">.</span><span class="n">Error</span><span class="p">:</span>
+</span><span data-line="6"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;boo&#39;</span><span class="p">)</span>
+</span><span data-line="7"><span class="gp">...</span>
+</span><span data-line="8"><span class="gt">Traceback (most recent call last):</span>
+</span><span data-line="9">  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">&lt;module&gt;</span>
+</span><span data-line="10"><span class="gr">binascii.Error</span>: <span class="n">Non-hexadecimal digit found</span>
+</span></pre></div>
+</div>
+<p>This is expected. Notice that pure-Python modules behave the same way:
+it is a part of how Python works.</p>
+<p>The goal is to make extension modules safe at the C level, not to make
+hacks behave intuitively. Mutating <code class="docutils literal notranslate"><span class="pre">sys.modules</span></code> “manually” counts
+as a hack.</p>
+</section>
+</section>
+<section id="making-modules-safe-with-multiple-interpreters">
+<h2>Making Modules Safe with Multiple Interpreters<a class="headerlink" href="#making-modules-safe-with-multiple-interpreters" title="Permalink to this heading">¶</a></h2>
+<section id="managing-global-state">
+<h3>Managing Global State<a class="headerlink" href="#managing-global-state" title="Permalink to this heading">¶</a></h3>
+<p>Sometimes, the state associated with a Python module is not specific to that module, but
+to the entire process (or something else “more global” than a module).
+For example:</p>
+<ul class="simple">
+<li><p>The <code class="docutils literal notranslate"><span class="pre">readline</span></code> module manages <em>the</em> terminal.</p></li>
+<li><p>A module running on a circuit board wants to control <em>the</em> on-board
+LED.</p></li>
+</ul>
+<p>In these cases, the Python module should provide <em>access</em> to the global
+state, rather than <em>own</em> it. If possible, write the module so that
+multiple copies of it can access the state independently (along with
+other libraries, whether for Python or other languages). If that is not
+possible, consider explicit locking.</p>
+<p>If it is necessary to use process-global state, the simplest way to
+avoid issues with multiple interpreters is to explicitly prevent a
+module from being loaded more than once per process—see
+<a class="reference internal" href="#opt-out-limiting-to-one-module-object-per-process">Opt-Out: Limiting to One Module Object per Process</a>.</p>
+</section>
+<section id="managing-per-module-state">
+<h3>Managing Per-Module State<a class="headerlink" href="#managing-per-module-state" title="Permalink to this heading">¶</a></h3>
+<p>To use per-module state, use
+<a class="reference internal" href="../c-api/module.html#multi-phase-initialization"><span class="std std-ref">multi-phase extension module initialization</span></a>.
+This signals that your module supports multiple interpreters correctly.</p>
+<p>Set <code class="docutils literal notranslate"><span class="pre">PyModuleDef.m_size</span></code> to a positive number to request that many
+bytes of storage local to the module. Usually, this will be set to the
+size of some module-specific <code class="docutils literal notranslate"><span class="pre">struct</span></code>, which can store all of the
+module’s C-level state. In particular, it is where you should put
+pointers to classes (including exceptions, but excluding static types)
+and settings (e.g. <code class="docutils literal notranslate"><span class="pre">csv</span></code>’s <a class="reference internal" href="../library/csv.html#csv.field_size_limit" title="csv.field_size_limit"><code class="xref py py-data docutils literal notranslate"><span class="pre">field_size_limit</span></code></a>)
+which the C code needs to function.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Another option is to store state in the module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>,
+but you must avoid crashing when users modify <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> from
+Python code. This usually means error- and type-checking at the C level,
+which is easy to get wrong and hard to test sufficiently.</p>
+<p>However, if module state is not needed in C code, storing it in
+<code class="docutils literal notranslate"><span class="pre">__dict__</span></code> only is a good idea.</p>
+</div>
+<p>If the module state includes <code class="docutils literal notranslate"><span class="pre">PyObject</span></code> pointers, the module object
+must hold references to those objects and implement the module-level hooks
+<code class="docutils literal notranslate"><span class="pre">m_traverse</span></code>, <code class="docutils literal notranslate"><span class="pre">m_clear</span></code> and <code class="docutils literal notranslate"><span class="pre">m_free</span></code>. These work like
+<code class="docutils literal notranslate"><span class="pre">tp_traverse</span></code>, <code class="docutils literal notranslate"><span class="pre">tp_clear</span></code> and <code class="docutils literal notranslate"><span class="pre">tp_free</span></code> of a class. Adding them will
+require some work and make the code longer; this is the price for
+modules which can be unloaded cleanly.</p>
+<p>An example of a module with per-module state is currently available as
+<a class="reference external" href="https://github.com/python/cpython/blob/master/Modules/xxlimited.c">xxlimited</a>;
+example module initialization shown at the bottom of the file.</p>
+</section>
+<section id="opt-out-limiting-to-one-module-object-per-process">
+<h3>Opt-Out: Limiting to One Module Object per Process<a class="headerlink" href="#opt-out-limiting-to-one-module-object-per-process" title="Permalink to this heading">¶</a></h3>
+<p>A non-negative <code class="docutils literal notranslate"><span class="pre">PyModuleDef.m_size</span></code> signals that a module supports
+multiple interpreters correctly. If this is not yet the case for your
+module, you can explicitly make your module loadable only once per
+process. For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">static</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">loaded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">static</span><span class="w"> </span><span class="kt">int</span>
+</span><span data-line="4"><span class="nf">exec_module</span><span class="p">(</span><span class="n">PyObject</span><span class="o">*</span><span class="w"> </span><span class="n">module</span><span class="p">)</span>
+</span><span data-line="5"><span class="p">{</span>
+</span><span data-line="6"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">loaded</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="7"><span class="w">        </span><span class="n">PyErr_SetString</span><span class="p">(</span><span class="n">PyExc_ImportError</span><span class="p">,</span>
+</span><span data-line="8"><span class="w">                        </span><span class="s">&quot;cannot load module more than once per process&quot;</span><span class="p">);</span>
+</span><span data-line="9"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="mi">-1</span><span class="p">;</span>
+</span><span data-line="10"><span class="w">    </span><span class="p">}</span>
+</span><span data-line="11"><span class="w">    </span><span class="n">loaded</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</span><span data-line="12"><span class="w">    </span><span class="c1">// ... rest of initialization</span>
+</span><span data-line="13"><span class="p">}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="module-state-access-from-functions">
+<h3>Module State Access from Functions<a class="headerlink" href="#module-state-access-from-functions" title="Permalink to this heading">¶</a></h3>
+<p>Accessing the state from module-level functions is straightforward.
+Functions get the module object as their first argument; for extracting
+the state, you can use <code class="docutils literal notranslate"><span class="pre">PyModule_GetState</span></code>:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">static</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span>
+</span><span data-line="2"><span class="nf">func</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">module</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">)</span>
+</span><span data-line="3"><span class="p">{</span>
+</span><span data-line="4"><span class="w">    </span><span class="n">my_struct</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">my_struct</span><span class="o">*</span><span class="p">)</span><span class="n">PyModule_GetState</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+</span><span data-line="5"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="6"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+</span><span data-line="7"><span class="w">    </span><span class="p">}</span>
+</span><span data-line="8"><span class="w">    </span><span class="c1">// ... rest of logic</span>
+</span><span data-line="9"><span class="p">}</span>
+</span></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">PyModule_GetState</span></code> may return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> without setting an
+exception if there is no module state, i.e. <code class="docutils literal notranslate"><span class="pre">PyModuleDef.m_size</span></code> was
+zero. In your own module, you’re in control of <code class="docutils literal notranslate"><span class="pre">m_size</span></code>, so this is
+easy to prevent.</p>
+</div>
+</section>
+</section>
+<section id="heap-types">
+<h2>Heap Types<a class="headerlink" href="#heap-types" title="Permalink to this heading">¶</a></h2>
+<p>Traditionally, types defined in C code are <em>static</em>; that is,
+<code class="docutils literal notranslate"><span class="pre">static</span> <span class="pre">PyTypeObject</span></code> structures defined directly in code and
+initialized using <code class="docutils literal notranslate"><span class="pre">PyType_Ready()</span></code>.</p>
+<p>Such types are necessarily shared across the process. Sharing them
+between module objects requires paying attention to any state they own
+or access. To limit the possible issues, static types are immutable at
+the Python level: for example, you can’t set <code class="docutils literal notranslate"><span class="pre">str.myattribute</span> <span class="pre">=</span> <span class="pre">123</span></code>.</p>
+<div class="impl-detail compound">
+<p><strong>CPython implementation detail:</strong> Sharing truly immutable objects between interpreters is fine,
+as long as they don’t provide access to mutable objects.
+However, in CPython, every Python object has a mutable implementation
+detail: the reference count. Changes to the refcount are guarded by the GIL.
+Thus, code that shares any Python objects across interpreters implicitly
+depends on CPython’s current, process-wide GIL.</p>
+</div>
+<p>Because they are immutable and process-global, static types cannot access
+“their” module state.
+If any method of such a type requires access to module state,
+the type must be converted to a <em>heap-allocated type</em>, or <em>heap type</em>
+for short. These correspond more closely to classes created by Python’s
+<code class="docutils literal notranslate"><span class="pre">class</span></code> statement.</p>
+<p>For new modules, using heap types by default is a good rule of thumb.</p>
+<section id="changing-static-types-to-heap-types">
+<h3>Changing Static Types to Heap Types<a class="headerlink" href="#changing-static-types-to-heap-types" title="Permalink to this heading">¶</a></h3>
+<p>Static types can be converted to heap types, but note that
+the heap type API was not designed for “lossless” conversion
+from static types—that is, creating a type that works exactly like a given
+static type.
+So, when rewriting the class definition in a new API,
+you are likely to unintentionally change a few details (e.g. pickleability
+or inherited slots).
+Always test the details that are important to you.</p>
+<p>Watch out for the following two points in particular (but note that this is not
+a comprehensive list):</p>
+<ul class="simple">
+<li><p>Unlike static types, heap type objects are mutable by default.
+Use the <a class="reference internal" href="../c-api/typeobj.html#c.Py_TPFLAGS_IMMUTABLETYPE" title="Py_TPFLAGS_IMMUTABLETYPE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_TPFLAGS_IMMUTABLETYPE</span></code></a> flag to prevent mutability.</p></li>
+<li><p>Heap types inherit <a class="reference internal" href="../c-api/typeobj.html#c.PyTypeObject.tp_new" title="PyTypeObject.tp_new"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_new</span></code></a> by default,
+so it may become possible to instantiate them from Python code.
+You can prevent this with the <a class="reference internal" href="../c-api/typeobj.html#c.Py_TPFLAGS_DISALLOW_INSTANTIATION" title="Py_TPFLAGS_DISALLOW_INSTANTIATION"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_TPFLAGS_DISALLOW_INSTANTIATION</span></code></a> flag.</p></li>
+</ul>
+</section>
+<section id="defining-heap-types">
+<h3>Defining Heap Types<a class="headerlink" href="#defining-heap-types" title="Permalink to this heading">¶</a></h3>
+<p>Heap types can be created by filling a <a class="reference internal" href="../c-api/type.html#c.PyType_Spec" title="PyType_Spec"><code class="xref c c-struct docutils literal notranslate"><span class="pre">PyType_Spec</span></code></a> structure, a
+description or “blueprint” of a class, and calling
+<a class="reference internal" href="../c-api/type.html#c.PyType_FromModuleAndSpec" title="PyType_FromModuleAndSpec"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_FromModuleAndSpec()</span></code></a> to construct a new class object.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Other functions, like <a class="reference internal" href="../c-api/type.html#c.PyType_FromSpec" title="PyType_FromSpec"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_FromSpec()</span></code></a>, can also create
+heap types, but <a class="reference internal" href="../c-api/type.html#c.PyType_FromModuleAndSpec" title="PyType_FromModuleAndSpec"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_FromModuleAndSpec()</span></code></a> associates the module
+with the class, allowing access to the module state from methods.</p>
+</div>
+<p>The class should generally be stored in <em>both</em> the module state (for
+safe access from C) and the module’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> (for access from
+Python code).</p>
+</section>
+<section id="garbage-collection-protocol">
+<h3>Garbage-Collection Protocol<a class="headerlink" href="#garbage-collection-protocol" title="Permalink to this heading">¶</a></h3>
+<p>Instances of heap types hold a reference to their type.
+This ensures that the type isn’t destroyed before all its instances are,
+but may result in reference cycles that need to be broken by the
+garbage collector.</p>
+<p>To avoid memory leaks, instances of heap types must implement the
+garbage collection protocol.
+That is, heap types should:</p>
+<ul class="simple">
+<li><p>Have the <a class="reference internal" href="../c-api/typeobj.html#c.Py_TPFLAGS_HAVE_GC" title="Py_TPFLAGS_HAVE_GC"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_TPFLAGS_HAVE_GC</span></code></a> flag.</p></li>
+<li><p>Define a traverse function using <code class="docutils literal notranslate"><span class="pre">Py_tp_traverse</span></code>, which
+visits the type (e.g. using <span class="c-expr sig sig-inline c"><a class="reference internal" href="../c-api/gcsupport.html#c.Py_VISIT" title="Py_VISIT"><span class="n">Py_VISIT</span></a><span class="p">(</span><a class="reference internal" href="../c-api/structures.html#c.Py_TYPE" title="Py_TYPE"><span class="n">Py_TYPE</span></a><span class="p">(</span><span class="n">self</span><span class="p">)</span><span class="p">)</span></span>).</p></li>
+</ul>
+<p>Please refer to the <a class="reference internal" href="../c-api/typeobj.html#type-structs"><span class="std std-ref">the documentation</span></a> of
+<a class="reference internal" href="../c-api/typeobj.html#c.Py_TPFLAGS_HAVE_GC" title="Py_TPFLAGS_HAVE_GC"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_TPFLAGS_HAVE_GC</span></code></a> and <a class="reference internal" href="../c-api/typeobj.html#c.PyTypeObject.tp_traverse" title="PyTypeObject.tp_traverse"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_traverse</span></code></a>
+for additional considerations.</p>
+<p>If your traverse function delegates to the <code class="docutils literal notranslate"><span class="pre">tp_traverse</span></code> of its base class
+(or another type), ensure that <code class="docutils literal notranslate"><span class="pre">Py_TYPE(self)</span></code> is visited only once.
+Note that only heap type are expected to visit the type in <code class="docutils literal notranslate"><span class="pre">tp_traverse</span></code>.</p>
+<p>For example, if your traverse function includes:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">base</span><span class="o">-&gt;</span><span class="n">tp_traverse</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">visit</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>…and <code class="docutils literal notranslate"><span class="pre">base</span></code> may be a static type, then it should also include:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">tp_flags</span><span class="w"> </span><span class="o">&amp;</span><span class="w"> </span><span class="n">Py_TPFLAGS_HEAPTYPE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="2"><span class="w">    </span><span class="c1">// a heap type&#39;s tp_traverse already visited Py_TYPE(self)</span>
+</span><span data-line="3"><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="4"><span class="w">    </span><span class="n">Py_VISIT</span><span class="p">(</span><span class="n">Py_TYPE</span><span class="p">(</span><span class="n">self</span><span class="p">));</span>
+</span><span data-line="5"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p>It is not necessary to handle the type’s reference count in <code class="docutils literal notranslate"><span class="pre">tp_new</span></code>
+and <code class="docutils literal notranslate"><span class="pre">tp_clear</span></code>.</p>
+</section>
+<section id="module-state-access-from-classes">
+<h3>Module State Access from Classes<a class="headerlink" href="#module-state-access-from-classes" title="Permalink to this heading">¶</a></h3>
+<p>If you have a type object defined with <a class="reference internal" href="../c-api/type.html#c.PyType_FromModuleAndSpec" title="PyType_FromModuleAndSpec"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_FromModuleAndSpec()</span></code></a>,
+you can call <a class="reference internal" href="../c-api/type.html#c.PyType_GetModule" title="PyType_GetModule"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_GetModule()</span></code></a> to get the associated module, and then
+<a class="reference internal" href="../c-api/module.html#c.PyModule_GetState" title="PyModule_GetState"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyModule_GetState()</span></code></a> to get the module’s state.</p>
+<p>To save a some tedious error-handling boilerplate code, you can combine
+these two steps with <a class="reference internal" href="../c-api/type.html#c.PyType_GetModuleState" title="PyType_GetModuleState"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_GetModuleState()</span></code></a>, resulting in:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">my_struct</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">my_struct</span><span class="o">*</span><span class="p">)</span><span class="n">PyType_GetModuleState</span><span class="p">(</span><span class="n">type</span><span class="p">);</span>
+</span><span data-line="2"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="3"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+</span><span data-line="4"><span class="p">}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="module-state-access-from-regular-methods">
+<h3>Module State Access from Regular Methods<a class="headerlink" href="#module-state-access-from-regular-methods" title="Permalink to this heading">¶</a></h3>
+<p>Accessing the module-level state from methods of a class is somewhat more
+complicated, but is possible thanks to API introduced in Python 3.9.
+To get the state, you need to first get the <em>defining class</em>, and then
+get the module state from it.</p>
+<p>The largest roadblock is getting <em>the class a method was defined in</em>, or
+that method’s “defining class” for short. The defining class can have a
+reference to the module it is part of.</p>
+<p>Do not confuse the defining class with <span class="c-expr sig sig-inline c"><a class="reference internal" href="../c-api/structures.html#c.Py_TYPE" title="Py_TYPE"><span class="n">Py_TYPE</span></a><span class="p">(</span><span class="n">self</span><span class="p">)</span></span>. If the method
+is called on a <em>subclass</em> of your type, <code class="docutils literal notranslate"><span class="pre">Py_TYPE(self)</span></code> will refer to
+that subclass, which may be defined in different module than yours.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The following Python code can illustrate the concept.
+<code class="docutils literal notranslate"><span class="pre">Base.get_defining_class</span></code> returns <code class="docutils literal notranslate"><span class="pre">Base</span></code> even
+if <code class="docutils literal notranslate"><span class="pre">type(self)</span> <span class="pre">==</span> <span class="pre">Sub</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">Base</span><span class="p">:</span>
+</span><span data-line="2">    <span class="k">def</span> <span class="nf">get_type_of_self</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="3">        <span class="k">return</span> <span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+</span><span data-line="4">
+</span><span data-line="5">    <span class="k">def</span> <span class="nf">get_defining_class</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="6">        <span class="k">return</span> <span class="vm">__class__</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="k">class</span> <span class="nc">Sub</span><span class="p">(</span><span class="n">Base</span><span class="p">):</span>
+</span><span data-line="9">    <span class="k">pass</span>
+</span></pre></div>
+</div>
+</div>
+<p>For a method to get its “defining class”, it must use the
+<a class="reference internal" href="../c-api/structures.html#meth-method-meth-fastcall-meth-keywords"><span class="std std-ref">METH_METHOD | METH_FASTCALL | METH_KEYWORDS</span></a>
+<a class="reference internal" href="../c-api/structures.html#c.PyMethodDef" title="PyMethodDef"><code class="xref c c-type docutils literal notranslate"><span class="pre">calling</span> <span class="pre">convention</span></code></a>
+and the corresponding <a class="reference internal" href="../c-api/structures.html#c.PyCMethod" title="PyCMethod"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyCMethod</span></code></a> signature:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">PyCMethod</span><span class="p">(</span>
+</span><span data-line="2"><span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span><span class="w">               </span><span class="c1">// object the method was called on</span>
+</span><span data-line="3"><span class="w">    </span><span class="n">PyTypeObject</span><span class="w"> </span><span class="o">*</span><span class="n">defining_class</span><span class="p">,</span><span class="w"> </span><span class="c1">// defining class</span>
+</span><span data-line="4"><span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">,</span><span class="w">        </span><span class="c1">// C array of arguments</span>
+</span><span data-line="5"><span class="w">    </span><span class="n">Py_ssize_t</span><span class="w"> </span><span class="n">nargs</span><span class="p">,</span><span class="w">             </span><span class="c1">// length of &quot;args&quot;</span>
+</span><span data-line="6"><span class="w">    </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">kwnames</span><span class="p">)</span><span class="w">            </span><span class="c1">// NULL, or dict of keyword arguments</span>
+</span></pre></div>
+</div>
+<p>Once you have the defining class, call <a class="reference internal" href="../c-api/type.html#c.PyType_GetModuleState" title="PyType_GetModuleState"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_GetModuleState()</span></code></a> to get
+the state of its associated module.</p>
+<p>For example:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">static</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span>
+</span><span data-line="2"><span class="nf">example_method</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">self</span><span class="p">,</span>
+</span><span data-line="3"><span class="w">        </span><span class="n">PyTypeObject</span><span class="w"> </span><span class="o">*</span><span class="n">defining_class</span><span class="p">,</span>
+</span><span data-line="4"><span class="w">        </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="n">args</span><span class="p">,</span>
+</span><span data-line="5"><span class="w">        </span><span class="n">Py_ssize_t</span><span class="w"> </span><span class="n">nargs</span><span class="p">,</span>
+</span><span data-line="6"><span class="w">        </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">kwnames</span><span class="p">)</span>
+</span><span data-line="7"><span class="p">{</span>
+</span><span data-line="8"><span class="w">    </span><span class="n">my_struct</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">my_struct</span><span class="o">*</span><span class="p">)</span><span class="n">PyType_GetModuleState</span><span class="p">(</span><span class="n">defining_class</span><span class="p">);</span>
+</span><span data-line="9"><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="10"><span class="w">        </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+</span><span data-line="11"><span class="w">    </span><span class="p">}</span>
+</span><span data-line="12"><span class="w">    </span><span class="p">...</span><span class="w"> </span><span class="c1">// rest of logic</span>
+</span><span data-line="13"><span class="p">}</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="n">PyDoc_STRVAR</span><span class="p">(</span><span class="n">example_method_doc</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;...&quot;</span><span class="p">);</span>
+</span><span data-line="16">
+</span><span data-line="17"><span class="k">static</span><span class="w"> </span><span class="n">PyMethodDef</span><span class="w"> </span><span class="n">my_methods</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="18"><span class="w">    </span><span class="p">{</span><span class="s">&quot;example_method&quot;</span><span class="p">,</span>
+</span><span data-line="19"><span class="w">      </span><span class="p">(</span><span class="n">PyCFunction</span><span class="p">)(</span><span class="kt">void</span><span class="p">(</span><span class="o">*</span><span class="p">)(</span><span class="kt">void</span><span class="p">))</span><span class="n">example_method</span><span class="p">,</span>
+</span><span data-line="20"><span class="w">      </span><span class="n">METH_METHOD</span><span class="o">|</span><span class="n">METH_FASTCALL</span><span class="o">|</span><span class="n">METH_KEYWORDS</span><span class="p">,</span>
+</span><span data-line="21"><span class="w">      </span><span class="n">example_method_doc</span><span class="p">}</span>
+</span><span data-line="22"><span class="w">    </span><span class="p">{</span><span class="nb">NULL</span><span class="p">},</span>
+</span><span data-line="23"><span class="p">}</span>
+</span></pre></div>
+</div>
+</section>
+<section id="module-state-access-from-slot-methods-getters-and-setters">
+<h3>Module State Access from Slot Methods, Getters and Setters<a class="headerlink" href="#module-state-access-from-slot-methods-getters-and-setters" title="Permalink to this heading">¶</a></h3>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is new in Python 3.11.</p>
+</div>
+<p>Slot methods—the fast C equivalents for special methods, such as
+<a class="reference internal" href="../c-api/typeobj.html#c.PyNumberMethods.nb_add" title="PyNumberMethods.nb_add"><code class="xref c c-member docutils literal notranslate"><span class="pre">nb_add</span></code></a> for <a class="reference internal" href="../reference/datamodel.html#object.__add__" title="object.__add__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__add__</span></code></a> or
+<a class="reference internal" href="../c-api/typeobj.html#c.PyTypeObject.tp_new" title="PyTypeObject.tp_new"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_new</span></code></a> for initialization—have a very simple API that
+doesn’t allow passing in the defining class, unlike with <a class="reference internal" href="../c-api/structures.html#c.PyCMethod" title="PyCMethod"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyCMethod</span></code></a>.
+The same goes for getters and setters defined with
+<a class="reference internal" href="../c-api/structures.html#c.PyGetSetDef" title="PyGetSetDef"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyGetSetDef</span></code></a>.</p>
+<p>To access the module state in these cases, use the
+<a class="reference internal" href="../c-api/type.html#c.PyType_GetModuleByDef" title="PyType_GetModuleByDef"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_GetModuleByDef()</span></code></a> function, and pass in the module definition.
+Once you have the module, call <a class="reference internal" href="../c-api/module.html#c.PyModule_GetState" title="PyModule_GetState"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyModule_GetState()</span></code></a>
+to get the state:</p>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">module</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">PyType_GetModuleByDef</span><span class="p">(</span><span class="n">Py_TYPE</span><span class="p">(</span><span class="n">self</span><span class="p">),</span><span class="w"> </span><span class="o">&amp;</span><span class="n">module_def</span><span class="p">);</span>
+</span><span data-line="2"><span class="n">my_struct</span><span class="w"> </span><span class="o">*</span><span class="n">state</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="n">my_struct</span><span class="o">*</span><span class="p">)</span><span class="n">PyModule_GetState</span><span class="p">(</span><span class="n">module</span><span class="p">);</span>
+</span><span data-line="3"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">state</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="nb">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+</span><span data-line="4"><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="nb">NULL</span><span class="p">;</span>
+</span><span data-line="5"><span class="p">}</span>
+</span></pre></div>
+</div>
+<p><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_GetModuleByDef()</span></code> works by searching the
+<a class="reference internal" href="../glossary.html#term-method-resolution-order"><span class="xref std std-term">method resolution order</span></a> (i.e. all superclasses) for the first
+superclass that has a corresponding module.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In very exotic cases (inheritance chains spanning multiple modules
+created from the same definition), <code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_GetModuleByDef()</span></code> might not
+return the module of the true defining class. However, it will always
+return a module with the same definition, ensuring a compatible
+C memory layout.</p>
+</div>
+</section>
+<section id="lifetime-of-the-module-state">
+<h3>Lifetime of the Module State<a class="headerlink" href="#lifetime-of-the-module-state" title="Permalink to this heading">¶</a></h3>
+<p>When a module object is garbage-collected, its module state is freed.
+For each pointer to (a part of) the module state, you must hold a reference
+to the module object.</p>
+<p>Usually this is not an issue, because types created with
+<a class="reference internal" href="../c-api/type.html#c.PyType_FromModuleAndSpec" title="PyType_FromModuleAndSpec"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyType_FromModuleAndSpec()</span></code></a>, and their instances, hold a reference
+to the module.
+However, you must be careful in reference counting when you reference
+module state from other places, such as callbacks for external
+libraries.</p>
+</section>
+</section>
+<section id="open-issues">
+<h2>Open Issues<a class="headerlink" href="#open-issues" title="Permalink to this heading">¶</a></h2>
+<p>Several issues around per-module state and heap types are still open.</p>
+<p>Discussions about improving the situation are best held on the <a class="reference external" href="https://mail.python.org/mailman3/lists/capi-sig.python.org/">capi-sig
+mailing list</a>.</p>
+<section id="per-class-scope">
+<h3>Per-Class Scope<a class="headerlink" href="#per-class-scope" title="Permalink to this heading">¶</a></h3>
+<p>It is currently (as of Python 3.11) not possible to attach state to individual
+<em>types</em> without relying on CPython implementation details (which may change
+in the future—perhaps, ironically, to allow a proper solution for
+per-class scope).</p>
+</section>
+<section id="lossless-conversion-to-heap-types">
+<h3>Lossless Conversion to Heap Types<a class="headerlink" href="#lossless-conversion-to-heap-types" title="Permalink to this heading">¶</a></h3>
+<p>The heap type API was not designed for “lossless” conversion from static types;
+that is, creating a type that works exactly like a given static type.</p>
+</section>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="annotations.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title">Annotations Best Practices</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="../faq/index.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Python Frequently Asked Questions</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

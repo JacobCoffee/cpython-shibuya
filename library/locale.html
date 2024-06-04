@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>locale — Internationalization services - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Program Frameworks" href="frameworks.html" /><link rel="prev" title="gettext — Multilingual internationalization services" href="gettext.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="locale — Internationalization services"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="i18n.html">Internationalization</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#locale.Error"><code class="docutils literal notranslate"><span class="pre">Error</span></code></a></li>
+<li><a class="reference internal" href="#locale.setlocale"><code class="docutils literal notranslate"><span class="pre">setlocale()</span></code></a></li>
+<li><a class="reference internal" href="#locale.localeconv"><code class="docutils literal notranslate"><span class="pre">localeconv()</span></code></a></li>
+<li><a class="reference internal" href="#locale.nl_langinfo"><code class="docutils literal notranslate"><span class="pre">nl_langinfo()</span></code></a></li>
+<li><a class="reference internal" href="#locale.CODESET"><code class="docutils literal notranslate"><span class="pre">CODESET</span></code></a></li>
+<li><a class="reference internal" href="#locale.D_T_FMT"><code class="docutils literal notranslate"><span class="pre">D_T_FMT</span></code></a></li>
+<li><a class="reference internal" href="#locale.D_FMT"><code class="docutils literal notranslate"><span class="pre">D_FMT</span></code></a></li>
+<li><a class="reference internal" href="#locale.T_FMT"><code class="docutils literal notranslate"><span class="pre">T_FMT</span></code></a></li>
+<li><a class="reference internal" href="#locale.T_FMT_AMPM"><code class="docutils literal notranslate"><span class="pre">T_FMT_AMPM</span></code></a></li>
+<li><a class="reference internal" href="#locale.RADIXCHAR"><code class="docutils literal notranslate"><span class="pre">RADIXCHAR</span></code></a></li>
+<li><a class="reference internal" href="#locale.THOUSEP"><code class="docutils literal notranslate"><span class="pre">THOUSEP</span></code></a></li>
+<li><a class="reference internal" href="#locale.YESEXPR"><code class="docutils literal notranslate"><span class="pre">YESEXPR</span></code></a></li>
+<li><a class="reference internal" href="#locale.NOEXPR"><code class="docutils literal notranslate"><span class="pre">NOEXPR</span></code></a></li>
+<li><a class="reference internal" href="#locale.CRNCYSTR"><code class="docutils literal notranslate"><span class="pre">CRNCYSTR</span></code></a></li>
+<li><a class="reference internal" href="#locale.ERA"><code class="docutils literal notranslate"><span class="pre">ERA</span></code></a></li>
+<li><a class="reference internal" href="#locale.ERA_D_T_FMT"><code class="docutils literal notranslate"><span class="pre">ERA_D_T_FMT</span></code></a></li>
+<li><a class="reference internal" href="#locale.ERA_D_FMT"><code class="docutils literal notranslate"><span class="pre">ERA_D_FMT</span></code></a></li>
+<li><a class="reference internal" href="#locale.ERA_T_FMT"><code class="docutils literal notranslate"><span class="pre">ERA_T_FMT</span></code></a></li>
+<li><a class="reference internal" href="#locale.ALT_DIGITS"><code class="docutils literal notranslate"><span class="pre">ALT_DIGITS</span></code></a></li>
+<li><a class="reference internal" href="#locale.getdefaultlocale"><code class="docutils literal notranslate"><span class="pre">getdefaultlocale()</span></code></a></li>
+<li><a class="reference internal" href="#locale.getlocale"><code class="docutils literal notranslate"><span class="pre">getlocale()</span></code></a></li>
+<li><a class="reference internal" href="#locale.getpreferredencoding"><code class="docutils literal notranslate"><span class="pre">getpreferredencoding()</span></code></a></li>
+<li><a class="reference internal" href="#locale.getencoding"><code class="docutils literal notranslate"><span class="pre">getencoding()</span></code></a></li>
+<li><a class="reference internal" href="#locale.normalize"><code class="docutils literal notranslate"><span class="pre">normalize()</span></code></a></li>
+<li><a class="reference internal" href="#locale.strcoll"><code class="docutils literal notranslate"><span class="pre">strcoll()</span></code></a></li>
+<li><a class="reference internal" href="#locale.strxfrm"><code class="docutils literal notranslate"><span class="pre">strxfrm()</span></code></a></li>
+<li><a class="reference internal" href="#locale.format_string"><code class="docutils literal notranslate"><span class="pre">format_string()</span></code></a></li>
+<li><a class="reference internal" href="#locale.currency"><code class="docutils literal notranslate"><span class="pre">currency()</span></code></a></li>
+<li><a class="reference internal" href="#locale.str"><code class="docutils literal notranslate"><span class="pre">str()</span></code></a></li>
+<li><a class="reference internal" href="#locale.delocalize"><code class="docutils literal notranslate"><span class="pre">delocalize()</span></code></a></li>
+<li><a class="reference internal" href="#locale.localize"><code class="docutils literal notranslate"><span class="pre">localize()</span></code></a></li>
+<li><a class="reference internal" href="#locale.atof"><code class="docutils literal notranslate"><span class="pre">atof()</span></code></a></li>
+<li><a class="reference internal" href="#locale.atoi"><code class="docutils literal notranslate"><span class="pre">atoi()</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_CTYPE"><code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_COLLATE"><code class="docutils literal notranslate"><span class="pre">LC_COLLATE</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_TIME"><code class="docutils literal notranslate"><span class="pre">LC_TIME</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_MONETARY"><code class="docutils literal notranslate"><span class="pre">LC_MONETARY</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_MESSAGES"><code class="docutils literal notranslate"><span class="pre">LC_MESSAGES</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_NUMERIC"><code class="docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a></li>
+<li><a class="reference internal" href="#locale.LC_ALL"><code class="docutils literal notranslate"><span class="pre">LC_ALL</span></code></a></li>
+<li><a class="reference internal" href="#locale.CHAR_MAX"><code class="docutils literal notranslate"><span class="pre">CHAR_MAX</span></code></a></li>
+<li><a class="reference internal" href="#background-details-hints-tips-and-caveats">Background, details, hints, tips and caveats</a></li>
+<li><a class="reference internal" href="#for-extension-writers-and-programs-that-embed-python">For extension writers and programs that embed Python</a></li>
+<li><a class="reference internal" href="#access-to-message-catalogs">Access to message catalogs</a><ul>
+<li><a class="reference internal" href="#locale.gettext"><code class="docutils literal notranslate"><span class="pre">gettext()</span></code></a></li>
+<li><a class="reference internal" href="#locale.dgettext"><code class="docutils literal notranslate"><span class="pre">dgettext()</span></code></a></li>
+<li><a class="reference internal" href="#locale.dcgettext"><code class="docutils literal notranslate"><span class="pre">dcgettext()</span></code></a></li>
+<li><a class="reference internal" href="#locale.textdomain"><code class="docutils literal notranslate"><span class="pre">textdomain()</span></code></a></li>
+<li><a class="reference internal" href="#locale.bindtextdomain"><code class="docutils literal notranslate"><span class="pre">bindtextdomain()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/locale.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="i18n.html"><span itemprop="name">Internationalization</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="module-locale">
+<span id="locale-internationalization-services"></span><h1><a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> — Internationalization services<a class="headerlink" href="#module-locale" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/locale.py">Lib/locale.py</a></p>
+<hr class="docutils" />
+<p>The <a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> module opens access to the POSIX locale database and
+functionality. The POSIX locale mechanism allows programmers to deal with
+certain cultural issues in an application, without requiring the programmer to
+know all the specifics of each country where the software is executed.</p>
+<p id="index-0">The <a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> module is implemented on top of the <code class="xref py py-mod docutils literal notranslate"><span class="pre">_locale</span></code> module,
+which in turn uses an ANSI C locale implementation if available.</p>
+<p>The <a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> module defines the following exception and functions:</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="locale.Error">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#locale.Error" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exception raised when the locale passed to <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a> is not
+recognized.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.setlocale">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">setlocale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.setlocale" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <em>locale</em> is given and not <code class="docutils literal notranslate"><span class="pre">None</span></code>, <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a> modifies the locale
+setting for the <em>category</em>. The available categories are listed in the data
+description below. <em>locale</em> may be a string, or an iterable of two strings
+(language code and encoding). If it’s an iterable, it’s converted to a locale
+name using the locale aliasing engine. An empty string specifies the user’s
+default settings. If the modification of the locale fails, the exception
+<a class="reference internal" href="#locale.Error" title="locale.Error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Error</span></code></a> is raised. If successful, the new locale setting is returned.</p>
+<p>If <em>locale</em> is omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the current setting for <em>category</em> is
+returned.</p>
+<p><a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a> is not thread-safe on most systems. Applications typically
+start with a call of</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">locale</span>
+</span><span data-line="2"><span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>This sets the locale for all categories to the user’s default setting (typically
+specified in the <span class="target" id="index-1"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LANG</span></code> environment variable).  If the locale is not
+changed thereafter, using multithreading should not cause problems.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.localeconv">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">localeconv</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#locale.localeconv" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the database of the local conventions as a dictionary. This dictionary
+has the following strings as keys:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Key</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#locale.LC_NUMERIC" title="locale.LC_NUMERIC"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'decimal_point'</span></code></p></td>
+<td><p>Decimal point character.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'grouping'</span></code></p></td>
+<td><p>Sequence of numbers specifying
+which relative positions the
+<code class="docutils literal notranslate"><span class="pre">'thousands_sep'</span></code> is
+expected.  If the sequence is
+terminated with
+<a class="reference internal" href="#locale.CHAR_MAX" title="locale.CHAR_MAX"><code class="xref py py-const docutils literal notranslate"><span class="pre">CHAR_MAX</span></code></a>, no further
+grouping is performed. If the
+sequence terminates with a
+<code class="docutils literal notranslate"><span class="pre">0</span></code>,  the last group size is
+repeatedly used.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'thousands_sep'</span></code></p></td>
+<td><p>Character used between groups.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#locale.LC_MONETARY" title="locale.LC_MONETARY"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_MONETARY</span></code></a></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'int_curr_symbol'</span></code></p></td>
+<td><p>International currency symbol.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'currency_symbol'</span></code></p></td>
+<td><p>Local currency symbol.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'p_cs_precedes/n_cs_precedes'</span></code></p></td>
+<td><p>Whether the currency symbol
+precedes the value (for
+positive resp. negative
+values).</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'p_sep_by_space/n_sep_by_space'</span></code></p></td>
+<td><p>Whether the currency symbol is
+separated from the value  by a
+space (for positive resp.
+negative values).</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'mon_decimal_point'</span></code></p></td>
+<td><p>Decimal point used for
+monetary values.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'frac_digits'</span></code></p></td>
+<td><p>Number of fractional digits
+used in local formatting of
+monetary values.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'int_frac_digits'</span></code></p></td>
+<td><p>Number of fractional digits
+used in international
+formatting of monetary values.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'mon_thousands_sep'</span></code></p></td>
+<td><p>Group separator used for
+monetary values.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'mon_grouping'</span></code></p></td>
+<td><p>Equivalent to <code class="docutils literal notranslate"><span class="pre">'grouping'</span></code>,
+used for monetary values.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'positive_sign'</span></code></p></td>
+<td><p>Symbol used to annotate a
+positive monetary value.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'negative_sign'</span></code></p></td>
+<td><p>Symbol used to annotate a
+negative monetary value.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">'p_sign_posn/n_sign_posn'</span></code></p></td>
+<td><p>The position of the sign (for
+positive resp. negative
+values), see below.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>All numeric values can be set to <a class="reference internal" href="#locale.CHAR_MAX" title="locale.CHAR_MAX"><code class="xref py py-const docutils literal notranslate"><span class="pre">CHAR_MAX</span></code></a> to indicate that there is no
+value specified in this locale.</p>
+<p>The possible values for <code class="docutils literal notranslate"><span class="pre">'p_sign_posn'</span></code> and <code class="docutils literal notranslate"><span class="pre">'n_sign_posn'</span></code> are given below.</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Value</p></th>
+<th class="head"><p>Explanation</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">0</span></code></p></td>
+<td><p>Currency and value are surrounded by
+parentheses.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">1</span></code></p></td>
+<td><p>The sign should precede the value and
+currency symbol.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">2</span></code></p></td>
+<td><p>The sign should follow the value and
+currency symbol.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">3</span></code></p></td>
+<td><p>The sign should immediately precede the
+value.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">4</span></code></p></td>
+<td><p>The sign should immediately follow the
+value.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">CHAR_MAX</span></code></p></td>
+<td><p>Nothing is specified in this locale.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>The function temporarily sets the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> locale to the <code class="docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code>
+locale or the <code class="docutils literal notranslate"><span class="pre">LC_MONETARY</span></code> locale if locales are different and numeric or
+monetary strings are non-ASCII. This temporary change affects other threads.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>The function now temporarily sets the <code class="docutils literal notranslate"><span class="pre">LC_CTYPE</span></code> locale to the
+<code class="docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code> locale in some cases.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.nl_langinfo">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">nl_langinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.nl_langinfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return some locale-specific information as a string.  This function is not
+available on all systems, and the set of possible options might also vary
+across platforms.  The possible argument values are numbers, for which
+symbolic constants are available in the locale module.</p>
+<p>The <a class="reference internal" href="#locale.nl_langinfo" title="locale.nl_langinfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">nl_langinfo()</span></code></a> function accepts one of the following keys.  Most
+descriptions are taken from the corresponding description in the GNU C
+library.</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.CODESET">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">CODESET</span></span><a class="headerlink" href="#locale.CODESET" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string with the name of the character encoding used in the
+selected locale.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.D_T_FMT">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">D_T_FMT</span></span><a class="headerlink" href="#locale.D_T_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string that can be used as a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to
+represent date and time in a locale-specific way.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.D_FMT">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">D_FMT</span></span><a class="headerlink" href="#locale.D_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string that can be used as a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to
+represent a date in a locale-specific way.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.T_FMT">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">T_FMT</span></span><a class="headerlink" href="#locale.T_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string that can be used as a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to
+represent a time in a locale-specific way.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.T_FMT_AMPM">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">T_FMT_AMPM</span></span><a class="headerlink" href="#locale.T_FMT_AMPM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to represent time in the am/pm
+format.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">DAY_1</span> <span class="pre">...</span> <span class="pre">DAY_7</span></span></dt>
+<dd><p>Get the name of the n-th day of the week.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This follows the US convention of <code class="xref py py-const docutils literal notranslate"><span class="pre">DAY_1</span></code> being Sunday, not the
+international convention (ISO 8601) that Monday is the first day of the
+week.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ABDAY_1</span> <span class="pre">...</span> <span class="pre">ABDAY_7</span></span></dt>
+<dd><p>Get the abbreviated name of the n-th day of the week.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">MON_1</span> <span class="pre">...</span> <span class="pre">MON_12</span></span></dt>
+<dd><p>Get the name of the n-th month.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">ABMON_1</span> <span class="pre">...</span> <span class="pre">ABMON_12</span></span></dt>
+<dd><p>Get the abbreviated name of the n-th month.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.RADIXCHAR">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">RADIXCHAR</span></span><a class="headerlink" href="#locale.RADIXCHAR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the radix character (decimal dot, decimal comma, etc.).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.THOUSEP">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">THOUSEP</span></span><a class="headerlink" href="#locale.THOUSEP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the separator character for thousands (groups of three digits).</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.YESEXPR">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">YESEXPR</span></span><a class="headerlink" href="#locale.YESEXPR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a regular expression that can be used with the regex function to
+recognize a positive response to a yes/no question.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.NOEXPR">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">NOEXPR</span></span><a class="headerlink" href="#locale.NOEXPR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a regular expression that can be used with the regex(3) function to
+recognize a negative response to a yes/no question.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The regular expressions for <a class="reference internal" href="#locale.YESEXPR" title="locale.YESEXPR"><code class="xref py py-const docutils literal notranslate"><span class="pre">YESEXPR</span></code></a> and
+<a class="reference internal" href="#locale.NOEXPR" title="locale.NOEXPR"><code class="xref py py-const docutils literal notranslate"><span class="pre">NOEXPR</span></code></a> use syntax suitable for the
+<code class="xref c c-func docutils literal notranslate"><span class="pre">regex()</span></code> function from the C library, which might
+differ from the syntax used in <a class="reference internal" href="re.html#module-re" title="re: Regular expression operations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.CRNCYSTR">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">CRNCYSTR</span></span><a class="headerlink" href="#locale.CRNCYSTR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the currency symbol, preceded by “-” if the symbol should appear before
+the value, “+” if the symbol should appear after the value, or “.” if the
+symbol should replace the radix character.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.ERA">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">ERA</span></span><a class="headerlink" href="#locale.ERA" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a string that represents the era used in the current locale.</p>
+<p>Most locales do not define this value.  An example of a locale which does
+define this value is the Japanese one.  In Japan, the traditional
+representation of dates includes the name of the era corresponding to the
+then-emperor’s reign.</p>
+<p>Normally it should not be necessary to use this value directly. Specifying
+the <code class="docutils literal notranslate"><span class="pre">E</span></code> modifier in their format strings causes the <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a>
+function to use this information.  The format of the returned string is not
+specified, and therefore you should not assume knowledge of it on different
+systems.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.ERA_D_T_FMT">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">ERA_D_T_FMT</span></span><a class="headerlink" href="#locale.ERA_D_T_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to represent date and time in a
+locale-specific era-based way.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.ERA_D_FMT">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">ERA_D_FMT</span></span><a class="headerlink" href="#locale.ERA_D_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to represent a date in a
+locale-specific era-based way.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.ERA_T_FMT">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">ERA_T_FMT</span></span><a class="headerlink" href="#locale.ERA_T_FMT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a format string for <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a> to represent a time in a
+locale-specific era-based way.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.ALT_DIGITS">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">ALT_DIGITS</span></span><a class="headerlink" href="#locale.ALT_DIGITS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a representation of up to 100 values used to represent the values
+0 to 99.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.getdefaultlocale">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">getdefaultlocale</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">envvars</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#locale.getdefaultlocale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tries to determine the default locale settings and returns them as a tuple of
+the form <code class="docutils literal notranslate"><span class="pre">(language</span> <span class="pre">code,</span> <span class="pre">encoding)</span></code>.</p>
+<p>According to POSIX, a program which has not called <code class="docutils literal notranslate"><span class="pre">setlocale(LC_ALL,</span> <span class="pre">'')</span></code>
+runs using the portable <code class="docutils literal notranslate"><span class="pre">'C'</span></code> locale.  Calling <code class="docutils literal notranslate"><span class="pre">setlocale(LC_ALL,</span> <span class="pre">'')</span></code> lets
+it use the default locale as defined by the <span class="target" id="index-2"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LANG</span></code> variable.  Since we
+do not want to interfere with the current locale setting we thus emulate the
+behavior in the way described above.</p>
+<p>To maintain compatibility with other platforms, not only the <span class="target" id="index-3"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">LANG</span></code>
+variable is tested, but a list of variables given as envvars parameter.  The
+first found to be defined will be used.  <em>envvars</em> defaults to the search
+path used in GNU gettext; it must always contain the variable name
+<code class="docutils literal notranslate"><span class="pre">'LANG'</span></code>.  The GNU gettext search path contains <code class="docutils literal notranslate"><span class="pre">'LC_ALL'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'LC_CTYPE'</span></code>, <code class="docutils literal notranslate"><span class="pre">'LANG'</span></code> and <code class="docutils literal notranslate"><span class="pre">'LANGUAGE'</span></code>, in that order.</p>
+<p>Except for the code <code class="docutils literal notranslate"><span class="pre">'C'</span></code>, the language code corresponds to <span class="target" id="index-4"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1766.html"><strong>RFC 1766</strong></a>.
+<em>language code</em> and <em>encoding</em> may be <code class="docutils literal notranslate"><span class="pre">None</span></code> if their values cannot be
+determined.</p>
+<div class="deprecated-removed">
+<p><span class="versionmodified">Deprecated since version 3.11, removed in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.getlocale">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">getlocale</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">LC_CTYPE</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.getlocale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the current setting for the given locale category as sequence containing
+<em>language code</em>, <em>encoding</em>. <em>category</em> may be one of the <code class="xref py py-const docutils literal notranslate"><span class="pre">LC_*</span></code> values
+except <a class="reference internal" href="#locale.LC_ALL" title="locale.LC_ALL"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_ALL</span></code></a>.  It defaults to <a class="reference internal" href="#locale.LC_CTYPE" title="locale.LC_CTYPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_CTYPE</span></code></a>.</p>
+<p>Except for the code <code class="docutils literal notranslate"><span class="pre">'C'</span></code>, the language code corresponds to <span class="target" id="index-5"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1766.html"><strong>RFC 1766</strong></a>.
+<em>language code</em> and <em>encoding</em> may be <code class="docutils literal notranslate"><span class="pre">None</span></code> if their values cannot be
+determined.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.getpreferredencoding">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">getpreferredencoding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">do_setlocale</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.getpreferredencoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the <a class="reference internal" href="../glossary.html#term-locale-encoding"><span class="xref std std-term">locale encoding</span></a> used for text data, according to user
+preferences.  User preferences are expressed differently on different
+systems, and might not be available programmatically on some systems, so
+this function only returns a guess.</p>
+<p>On some systems, it is necessary to invoke <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a> to obtain the
+user preferences, so this function is not thread-safe. If invoking setlocale
+is not necessary or desired, <em>do_setlocale</em> should be set to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p>On Android or if the <a class="reference internal" href="os.html#utf8-mode"><span class="std std-ref">Python UTF-8 Mode</span></a> is enabled, always
+return <code class="docutils literal notranslate"><span class="pre">'utf-8'</span></code>, the <a class="reference internal" href="../glossary.html#term-locale-encoding"><span class="xref std std-term">locale encoding</span></a> and the <em>do_setlocale</em>
+argument are ignored.</p>
+<p>The <a class="reference internal" href="../c-api/init_config.html#c-preinit"><span class="std std-ref">Python preinitialization</span></a> configures the LC_CTYPE
+locale. See also the <a class="reference internal" href="../glossary.html#term-filesystem-encoding-and-error-handler"><span class="xref std std-term">filesystem encoding and error handler</span></a>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>The function now always returns <code class="docutils literal notranslate"><span class="pre">&quot;utf-8&quot;</span></code> on Android or if the
+<a class="reference internal" href="os.html#utf8-mode"><span class="std std-ref">Python UTF-8 Mode</span></a> is enabled.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.getencoding">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">getencoding</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#locale.getencoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the current <a class="reference internal" href="../glossary.html#term-locale-encoding"><span class="xref std std-term">locale encoding</span></a>:</p>
+<ul class="simple">
+<li><p>On Android and VxWorks, return <code class="docutils literal notranslate"><span class="pre">&quot;utf-8&quot;</span></code>.</p></li>
+<li><p>On Unix, return the encoding of the current <a class="reference internal" href="#locale.LC_CTYPE" title="locale.LC_CTYPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">LC_CTYPE</span></code></a> locale.
+Return <code class="docutils literal notranslate"><span class="pre">&quot;utf-8&quot;</span></code> if <code class="docutils literal notranslate"><span class="pre">nl_langinfo(CODESET)</span></code> returns an empty string:
+for example, if the current LC_CTYPE locale is not supported.</p></li>
+<li><p>On Windows, return the ANSI code page.</p></li>
+</ul>
+<p>The <a class="reference internal" href="../c-api/init_config.html#c-preinit"><span class="std std-ref">Python preinitialization</span></a> configures the LC_CTYPE
+locale. See also the <a class="reference internal" href="../glossary.html#term-filesystem-encoding-and-error-handler"><span class="xref std std-term">filesystem encoding and error handler</span></a>.</p>
+<p>This function is similar to
+<a class="reference internal" href="#locale.getpreferredencoding" title="locale.getpreferredencoding"><code class="xref py py-func docutils literal notranslate"><span class="pre">getpreferredencoding(False)</span></code></a> except this
+function ignores the <a class="reference internal" href="os.html#utf8-mode"><span class="std std-ref">Python UTF-8 Mode</span></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.11.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.normalize">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">normalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">localename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.normalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a normalized locale code for the given locale name.  The returned locale
+code is formatted for use with <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a>.  If normalization fails, the
+original name is returned unchanged.</p>
+<p>If the given encoding is not known, the function defaults to the default
+encoding for the locale code just like <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.strcoll">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">strcoll</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">string2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.strcoll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compares two strings according to the current <a class="reference internal" href="#locale.LC_COLLATE" title="locale.LC_COLLATE"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_COLLATE</span></code></a> setting. As
+any other compare function, returns a negative, or a positive value, or <code class="docutils literal notranslate"><span class="pre">0</span></code>,
+depending on whether <em>string1</em> collates before or after <em>string2</em> or is equal to
+it.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.strxfrm">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">strxfrm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.strxfrm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transforms a string to one that can be used in locale-aware
+comparisons.  For example, <code class="docutils literal notranslate"><span class="pre">strxfrm(s1)</span> <span class="pre">&lt;</span> <span class="pre">strxfrm(s2)</span></code> is
+equivalent to <code class="docutils literal notranslate"><span class="pre">strcoll(s1,</span> <span class="pre">s2)</span> <span class="pre">&lt;</span> <span class="pre">0</span></code>.  This function can be used
+when the same string is compared repeatedly, e.g. when collating a
+sequence of strings.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.format_string">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">format_string</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monetary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.format_string" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a number <em>val</em> according to the current <a class="reference internal" href="#locale.LC_NUMERIC" title="locale.LC_NUMERIC"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a> setting.
+The format follows the conventions of the <code class="docutils literal notranslate"><span class="pre">%</span></code> operator.  For floating point
+values, the decimal point is modified if appropriate.  If <em>grouping</em> is <code class="docutils literal notranslate"><span class="pre">True</span></code>,
+also takes the grouping into account.</p>
+<p>If <em>monetary</em> is true, the conversion uses monetary thousands separator and
+grouping strings.</p>
+<p>Processes formatting specifiers as in <code class="docutils literal notranslate"><span class="pre">format</span> <span class="pre">%</span> <span class="pre">val</span></code>, but takes the current
+locale settings into account.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>The <em>monetary</em> keyword parameter was added.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.currency">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">currency</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">val</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">international</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.currency" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a number <em>val</em> according to the current <a class="reference internal" href="#locale.LC_MONETARY" title="locale.LC_MONETARY"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_MONETARY</span></code></a> settings.</p>
+<p>The returned string includes the currency symbol if <em>symbol</em> is true, which is
+the default. If <em>grouping</em> is <code class="docutils literal notranslate"><span class="pre">True</span></code> (which is not the default), grouping is done
+with the value. If <em>international</em> is <code class="docutils literal notranslate"><span class="pre">True</span></code> (which is not the default), the
+international currency symbol is used.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function will not work with the ‘C’ locale, so you have to set a
+locale via <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a> first.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.str">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">str</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.str" title="Permalink to this definition">¶</a></dt>
+<dd><p>Formats a floating point number using the same format as the built-in function
+<code class="docutils literal notranslate"><span class="pre">str(float)</span></code>, but takes the decimal point into account.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.delocalize">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">delocalize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.delocalize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a string into a normalized number string, following the
+<a class="reference internal" href="#locale.LC_NUMERIC" title="locale.LC_NUMERIC"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a> settings.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.localize">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">localize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grouping</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">monetary</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.localize" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a normalized number string into a formatted string following the
+<a class="reference internal" href="#locale.LC_NUMERIC" title="locale.LC_NUMERIC"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a> settings.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.10.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.atof">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">atof</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">func</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.atof" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a string to a number, following the <a class="reference internal" href="#locale.LC_NUMERIC" title="locale.LC_NUMERIC"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a> settings,
+by calling <em>func</em> on the result of calling <a class="reference internal" href="#locale.delocalize" title="locale.delocalize"><code class="xref py py-func docutils literal notranslate"><span class="pre">delocalize()</span></code></a> on <em>string</em>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.atoi">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">atoi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">string</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.atoi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts a string to an integer, following the <a class="reference internal" href="#locale.LC_NUMERIC" title="locale.LC_NUMERIC"><code class="xref py py-const docutils literal notranslate"><span class="pre">LC_NUMERIC</span></code></a> conventions.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_CTYPE">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_CTYPE</span></span><a class="headerlink" href="#locale.LC_CTYPE" title="Permalink to this definition">¶</a></dt>
+<dd><p id="index-6">Locale category for the character type functions.  Depending on the settings of
+this category, the functions of module <a class="reference internal" href="string.html#module-string" title="string: Common string operations."><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code></a> dealing with case change
+their behaviour.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_COLLATE">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_COLLATE</span></span><a class="headerlink" href="#locale.LC_COLLATE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locale category for sorting strings.  The functions <a class="reference internal" href="#locale.strcoll" title="locale.strcoll"><code class="xref py py-func docutils literal notranslate"><span class="pre">strcoll()</span></code></a> and
+<a class="reference internal" href="#locale.strxfrm" title="locale.strxfrm"><code class="xref py py-func docutils literal notranslate"><span class="pre">strxfrm()</span></code></a> of the <a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> module are affected.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_TIME">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_TIME</span></span><a class="headerlink" href="#locale.LC_TIME" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locale category for the formatting of time.  The function <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a>
+follows these conventions.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_MONETARY">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_MONETARY</span></span><a class="headerlink" href="#locale.LC_MONETARY" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locale category for formatting of monetary values.  The available options are
+available from the <a class="reference internal" href="#locale.localeconv" title="locale.localeconv"><code class="xref py py-func docutils literal notranslate"><span class="pre">localeconv()</span></code></a> function.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_MESSAGES">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_MESSAGES</span></span><a class="headerlink" href="#locale.LC_MESSAGES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locale category for message display. Python currently does not support
+application specific locale-aware messages.  Messages displayed by the operating
+system, like those returned by <a class="reference internal" href="os.html#os.strerror" title="os.strerror"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.strerror()</span></code></a> might be affected by this
+category.</p>
+<p>This value may not be available on operating systems not conforming to the
+POSIX standard, most notably Windows.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_NUMERIC">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_NUMERIC</span></span><a class="headerlink" href="#locale.LC_NUMERIC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Locale category for formatting numbers.  The functions <a class="reference internal" href="#locale.format_string" title="locale.format_string"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_string()</span></code></a>,
+<a class="reference internal" href="#locale.atoi" title="locale.atoi"><code class="xref py py-func docutils literal notranslate"><span class="pre">atoi()</span></code></a>, <a class="reference internal" href="#locale.atof" title="locale.atof"><code class="xref py py-func docutils literal notranslate"><span class="pre">atof()</span></code></a> and <a class="reference internal" href="#locale.str" title="locale.str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> of the <a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> module are
+affected by that category.  All other numeric formatting operations are not
+affected.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.LC_ALL">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">LC_ALL</span></span><a class="headerlink" href="#locale.LC_ALL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Combination of all locale settings.  If this flag is used when the locale is
+changed, setting the locale for all categories is attempted. If that fails for
+any category, no category is changed at all.  When the locale is retrieved using
+this flag, a string indicating the setting for all categories is returned. This
+string can be later used to restore the settings.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="locale.CHAR_MAX">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">CHAR_MAX</span></span><a class="headerlink" href="#locale.CHAR_MAX" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a symbolic constant used for different values returned by
+<a class="reference internal" href="#locale.localeconv" title="locale.localeconv"><code class="xref py py-func docutils literal notranslate"><span class="pre">localeconv()</span></code></a>.</p>
+</dd></dl>
+
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">locale</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">loc</span> <span class="o">=</span> <span class="n">locale</span><span class="o">.</span><span class="n">getlocale</span><span class="p">()</span>  <span class="c1"># get current locale</span>
+</span><span data-line="3"><span class="go"># use German locale; name might vary with platform</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;de_DE&#39;</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">strcoll</span><span class="p">(</span><span class="s1">&#39;f</span><span class="se">\xe4</span><span class="s1">n&#39;</span><span class="p">,</span> <span class="s1">&#39;foo&#39;</span><span class="p">)</span>  <span class="c1"># compare a string containing an umlaut</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>   <span class="c1"># use user&#39;s preferred locale</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">)</span>  <span class="c1"># use default (C) locale</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="n">locale</span><span class="o">.</span><span class="n">setlocale</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">LC_ALL</span><span class="p">,</span> <span class="n">loc</span><span class="p">)</span>  <span class="c1"># restore saved locale</span>
+</span></pre></div>
+</div>
+<section id="background-details-hints-tips-and-caveats">
+<h2>Background, details, hints, tips and caveats<a class="headerlink" href="#background-details-hints-tips-and-caveats" title="Permalink to this heading">¶</a></h2>
+<p>The C standard defines the locale as a program-wide property that may be
+relatively expensive to change.  On top of that, some implementations are broken
+in such a way that frequent locale changes may cause core dumps.  This makes the
+locale somewhat painful to use correctly.</p>
+<p>Initially, when a program is started, the locale is the <code class="docutils literal notranslate"><span class="pre">C</span></code> locale, no matter
+what the user’s preferred locale is.  There is one exception: the
+<a class="reference internal" href="#locale.LC_CTYPE" title="locale.LC_CTYPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">LC_CTYPE</span></code></a> category is changed at startup to set the current locale
+encoding to the user’s preferred locale encoding. The program must explicitly
+say that it wants the user’s preferred locale settings for other categories by
+calling <code class="docutils literal notranslate"><span class="pre">setlocale(LC_ALL,</span> <span class="pre">'')</span></code>.</p>
+<p>It is generally a bad idea to call <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a> in some library routine,
+since as a side effect it affects the entire program.  Saving and restoring it
+is almost as bad: it is expensive and affects other threads that happen to run
+before the settings have been restored.</p>
+<p>If, when coding a module for general use, you need a locale independent version
+of an operation that is affected by the locale (such as
+certain formats used with <a class="reference internal" href="time.html#time.strftime" title="time.strftime"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.strftime()</span></code></a>), you will have to find a way to
+do it without using the standard library routine.  Even better is convincing
+yourself that using locale settings is okay.  Only as a last resort should you
+document that your module is not compatible with non-<code class="docutils literal notranslate"><span class="pre">C</span></code> locale settings.</p>
+<p>The only way to perform numeric operations according to the locale is to use the
+special functions defined by this module: <a class="reference internal" href="#locale.atof" title="locale.atof"><code class="xref py py-func docutils literal notranslate"><span class="pre">atof()</span></code></a>, <a class="reference internal" href="#locale.atoi" title="locale.atoi"><code class="xref py py-func docutils literal notranslate"><span class="pre">atoi()</span></code></a>,
+<a class="reference internal" href="#locale.format_string" title="locale.format_string"><code class="xref py py-func docutils literal notranslate"><span class="pre">format_string()</span></code></a>, <a class="reference internal" href="#locale.str" title="locale.str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a>.</p>
+<p>There is no way to perform case conversions and character classifications
+according to the locale.  For (Unicode) text strings these are done according
+to the character value only, while for byte strings, the conversions and
+classifications are done according to the ASCII value of the byte, and bytes
+whose high bit is set (i.e., non-ASCII bytes) are never converted or considered
+part of a character class such as letter or whitespace.</p>
+</section>
+<section id="for-extension-writers-and-programs-that-embed-python">
+<span id="embedding-locale"></span><h2>For extension writers and programs that embed Python<a class="headerlink" href="#for-extension-writers-and-programs-that-embed-python" title="Permalink to this heading">¶</a></h2>
+<p>Extension modules should never call <a class="reference internal" href="#locale.setlocale" title="locale.setlocale"><code class="xref py py-func docutils literal notranslate"><span class="pre">setlocale()</span></code></a>, except to find out what
+the current locale is.  But since the return value can only be used portably to
+restore it, that is not very useful (except perhaps to find out whether or not
+the locale is <code class="docutils literal notranslate"><span class="pre">C</span></code>).</p>
+<p>When Python code uses the <a class="reference internal" href="#module-locale" title="locale: Internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code></a> module to change the locale, this also
+affects the embedding application.  If the embedding application doesn’t want
+this to happen, it should remove the <code class="xref py py-mod docutils literal notranslate"><span class="pre">_locale</span></code> extension module (which does
+all the work) from the table of built-in modules in the <code class="file docutils literal notranslate"><span class="pre">config.c</span></code> file,
+and make sure that the <code class="xref py py-mod docutils literal notranslate"><span class="pre">_locale</span></code> module is not accessible as a shared
+library.</p>
+</section>
+<section id="access-to-message-catalogs">
+<span id="locale-gettext"></span><h2>Access to message catalogs<a class="headerlink" href="#access-to-message-catalogs" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.gettext">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">gettext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.gettext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.dgettext">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">dgettext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.dgettext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.dcgettext">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">dcgettext</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">category</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.dcgettext" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.textdomain">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">textdomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.textdomain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="locale.bindtextdomain">
+<span class="sig-prename descclassname"><span class="pre">locale.</span></span><span class="sig-name descname"><span class="pre">bindtextdomain</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">domain</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dir</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#locale.bindtextdomain" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>The locale module exposes the C library’s gettext interface on systems that
+provide this interface.  It consists of the functions <code class="xref py py-func docutils literal notranslate"><span class="pre">gettext()</span></code>,
+<code class="xref py py-func docutils literal notranslate"><span class="pre">dgettext()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">dcgettext()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">textdomain()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">bindtextdomain()</span></code>,
+and <code class="xref py py-func docutils literal notranslate"><span class="pre">bind_textdomain_codeset()</span></code>.  These are similar to the same functions in
+the <a class="reference internal" href="gettext.html#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code></a> module, but use the C library’s binary format for message
+catalogs, and the C library’s search algorithms for locating message catalogs.</p>
+<p>Python applications should normally find no need to invoke these functions, and
+should use <a class="reference internal" href="gettext.html#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code></a> instead.  A known exception to this rule are
+applications that link with additional C libraries which internally invoke
+<code class="xref c c-func docutils literal notranslate"><span class="pre">gettext()</span></code> or <code class="xref c c-func docutils literal notranslate"><span class="pre">dcgettext()</span></code>.  For these applications, it may be
+necessary to bind the text domain, so that the libraries can properly locate
+their message catalogs.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="gettext.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="frameworks.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Program Frameworks</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

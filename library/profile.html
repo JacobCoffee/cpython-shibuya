@@ -1,0 +1,1526 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>The Python Profilers - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="timeit — Measure execution time of small code snippets" href="timeit.html" /><link rel="prev" title="pdb — The Python Debugger" href="pdb.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="The Python Profilers"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#introduction-to-the-profilers">Introduction to the profilers</a></li>
+<li><a class="reference internal" href="#instant-user-s-manual">Instant User&#8217;s Manual</a></li>
+<li><a class="reference internal" href="#module-cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code> and <code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code> Module Reference</a><ul>
+<li><a class="reference internal" href="#profile.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li><a class="reference internal" href="#profile.runctx"><code class="docutils literal notranslate"><span class="pre">runctx()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile"><code class="docutils literal notranslate"><span class="pre">Profile</span></code></a><ul>
+<li><a class="reference internal" href="#profile.Profile.enable"><code class="docutils literal notranslate"><span class="pre">Profile.enable()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.disable"><code class="docutils literal notranslate"><span class="pre">Profile.disable()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.create_stats"><code class="docutils literal notranslate"><span class="pre">Profile.create_stats()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.print_stats"><code class="docutils literal notranslate"><span class="pre">Profile.print_stats()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.dump_stats"><code class="docutils literal notranslate"><span class="pre">Profile.dump_stats()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.run"><code class="docutils literal notranslate"><span class="pre">Profile.run()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.runctx"><code class="docutils literal notranslate"><span class="pre">Profile.runctx()</span></code></a></li>
+<li><a class="reference internal" href="#profile.Profile.runcall"><code class="docutils literal notranslate"><span class="pre">Profile.runcall()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#the-stats-class">The <code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code> Class</a><ul>
+<li><a class="reference internal" href="#pstats.Stats"><code class="docutils literal notranslate"><span class="pre">Stats</span></code></a><ul>
+<li><a class="reference internal" href="#pstats.Stats.strip_dirs"><code class="docutils literal notranslate"><span class="pre">Stats.strip_dirs()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.add"><code class="docutils literal notranslate"><span class="pre">Stats.add()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.dump_stats"><code class="docutils literal notranslate"><span class="pre">Stats.dump_stats()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.sort_stats"><code class="docutils literal notranslate"><span class="pre">Stats.sort_stats()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.reverse_order"><code class="docutils literal notranslate"><span class="pre">Stats.reverse_order()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.print_stats"><code class="docutils literal notranslate"><span class="pre">Stats.print_stats()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.print_callers"><code class="docutils literal notranslate"><span class="pre">Stats.print_callers()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.print_callees"><code class="docutils literal notranslate"><span class="pre">Stats.print_callees()</span></code></a></li>
+<li><a class="reference internal" href="#pstats.Stats.get_stats_profile"><code class="docutils literal notranslate"><span class="pre">Stats.get_stats_profile()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#what-is-deterministic-profiling">What Is Deterministic Profiling?</a></li>
+<li><a class="reference internal" href="#limitations">Limitations</a></li>
+<li><a class="reference internal" href="#calibration">Calibration</a></li>
+<li><a class="reference internal" href="#using-a-custom-timer">Using a custom timer</a></li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/profile.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="debug.html"><span itemprop="name">Debugging and Profiling</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">The Python Profilers</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="the-python-profilers">
+<span id="profile"></span><h1>The Python Profilers<a class="headerlink" href="#the-python-profilers" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/profile.py">Lib/profile.py</a> and <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/pstats.py">Lib/pstats.py</a></p>
+<hr class="docutils" />
+<section id="introduction-to-the-profilers">
+<span id="profiler-introduction"></span><h2>Introduction to the profilers<a class="headerlink" href="#introduction-to-the-profilers" title="Permalink to this heading">¶</a></h2>
+<p id="index-0"><a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> and <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> provide <em class="dfn">deterministic profiling</em> of
+Python programs. A <em class="dfn">profile</em> is a set of statistics that describes how
+often and for how long various parts of the program executed. These statistics
+can be formatted into reports via the <a class="reference internal" href="#module-pstats" title="pstats: Statistics object for use with the profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pstats</span></code></a> module.</p>
+<p>The Python standard library provides two different implementations of the same
+profiling interface:</p>
+<ol class="arabic simple">
+<li><p><a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> is recommended for most users; it’s a C extension with
+reasonable overhead that makes it suitable for profiling long-running
+programs.  Based on <code class="xref py py-mod docutils literal notranslate"><span class="pre">lsprof</span></code>, contributed by Brett Rosen and Ted
+Czotter.</p></li>
+<li><p><a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a>, a pure Python module whose interface is imitated by
+<a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>, but which adds significant overhead to profiled programs.
+If you’re trying to extend the profiler in some way, the task might be easier
+with this module.  Originally designed and written by Jim Roskind.</p></li>
+</ol>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The profiler modules are designed to provide an execution profile for a given
+program, not for benchmarking purposes (for that, there is <a class="reference internal" href="timeit.html#module-timeit" title="timeit: Measure the execution time of small code snippets."><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code></a> for
+reasonably accurate results).  This particularly applies to benchmarking
+Python code against C code: the profilers introduce overhead for Python code,
+but not for C-level functions, and so the C code would seem faster than any
+Python one.</p>
+</div>
+</section>
+<section id="instant-user-s-manual">
+<span id="profile-instant"></span><h2>Instant User’s Manual<a class="headerlink" href="#instant-user-s-manual" title="Permalink to this heading">¶</a></h2>
+<p>This section is provided for users that “don’t want to read the manual.” It
+provides a very brief overview, and allows a user to rapidly perform profiling
+on an existing application.</p>
+<p>To profile a function that takes a single argument, you can do:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">cProfile</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">re</span>
+</span><span data-line="3"><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;re.compile(&quot;foo|bar&quot;)&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>(Use <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> instead of <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> if the latter is not available on
+your system.)</p>
+<p>The above action would run <a class="reference internal" href="re.html#re.compile" title="re.compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">re.compile()</span></code></a> and print profile results like
+the following:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1">      <span class="mi">214</span> <span class="n">function</span> <span class="n">calls</span> <span class="p">(</span><span class="mi">207</span> <span class="n">primitive</span> <span class="n">calls</span><span class="p">)</span> <span class="ow">in</span> <span class="mf">0.002</span> <span class="n">seconds</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="n">Ordered</span> <span class="n">by</span><span class="p">:</span> <span class="n">cumulative</span> <span class="n">time</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="n">ncalls</span>  <span class="n">tottime</span>  <span class="n">percall</span>  <span class="n">cumtime</span>  <span class="n">percall</span> <span class="n">filename</span><span class="p">:</span><span class="n">lineno</span><span class="p">(</span><span class="n">function</span><span class="p">)</span>
+</span><span data-line="6">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.002</span>    <span class="mf">0.002</span> <span class="p">{</span><span class="n">built</span><span class="o">-</span><span class="ow">in</span> <span class="n">method</span> <span class="n">builtins</span><span class="o">.</span><span class="n">exec</span><span class="p">}</span>
+</span><span data-line="7">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.001</span>    <span class="mf">0.001</span> <span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span><span class="p">:</span><span class="mi">1</span><span class="p">(</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">)</span>
+</span><span data-line="8">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.001</span>    <span class="mf">0.001</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">250</span><span class="p">(</span><span class="nb">compile</span><span class="p">)</span>
+</span><span data-line="9">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.001</span>    <span class="mf">0.001</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">289</span><span class="p">(</span><span class="n">_compile</span><span class="p">)</span>
+</span><span data-line="10">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span> <span class="n">_compiler</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">759</span><span class="p">(</span><span class="nb">compile</span><span class="p">)</span>
+</span><span data-line="11">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span> <span class="n">_parser</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">937</span><span class="p">(</span><span class="n">parse</span><span class="p">)</span>
+</span><span data-line="12">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span> <span class="n">_compiler</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">598</span><span class="p">(</span><span class="n">_code</span><span class="p">)</span>
+</span><span data-line="13">     <span class="mi">1</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span>    <span class="mf">0.000</span> <span class="n">_parser</span><span class="o">.</span><span class="n">py</span><span class="p">:</span><span class="mi">435</span><span class="p">(</span><span class="n">_parse_sub</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The first line indicates that 214 calls were monitored.  Of those calls, 207
+were <em class="dfn">primitive</em>, meaning that the call was not induced via recursion. The
+next line: <code class="docutils literal notranslate"><span class="pre">Ordered</span> <span class="pre">by:</span> <span class="pre">cumulative</span> <span class="pre">time</span></code>, indicates that the text string in the
+far right column was used to sort the output. The column headings include:</p>
+<dl class="simple">
+<dt>ncalls</dt><dd><p>for the number of calls.</p>
+</dd>
+<dt>tottime</dt><dd><p>for the total time spent in the given function (and excluding time made in
+calls to sub-functions)</p>
+</dd>
+<dt>percall</dt><dd><p>is the quotient of <code class="docutils literal notranslate"><span class="pre">tottime</span></code> divided by <code class="docutils literal notranslate"><span class="pre">ncalls</span></code></p>
+</dd>
+<dt>cumtime</dt><dd><p>is the cumulative time spent in this and all subfunctions (from invocation
+till exit). This figure is accurate <em>even</em> for recursive functions.</p>
+</dd>
+<dt>percall</dt><dd><p>is the quotient of <code class="docutils literal notranslate"><span class="pre">cumtime</span></code> divided by primitive calls</p>
+</dd>
+<dt>filename:lineno(function)</dt><dd><p>provides the respective data of each function</p>
+</dd>
+</dl>
+<p>When there are two numbers in the first column (for example <code class="docutils literal notranslate"><span class="pre">3/1</span></code>), it means
+that the function recursed.  The second value is the number of primitive calls
+and the former is the total number of calls.  Note that when the function does
+not recurse, these two values are the same, and only the single figure is
+printed.</p>
+<p>Instead of printing the output at the end of the profile run, you can save the
+results to a file by specifying a filename to the <code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code> function:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">cProfile</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">re</span>
+</span><span data-line="3"><span class="n">cProfile</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s1">&#39;re.compile(&quot;foo|bar&quot;)&#39;</span><span class="p">,</span> <span class="s1">&#39;restats&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">pstats.Stats</span></code></a> class reads profile results from a file and formats
+them in various ways.</p>
+<p id="profile-cli">The files <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> and <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> can also be invoked as a script to
+profile another script.  For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">cProfile</span> <span class="p">[</span><span class="o">-</span><span class="n">o</span> <span class="n">output_file</span><span class="p">]</span> <span class="p">[</span><span class="o">-</span><span class="n">s</span> <span class="n">sort_order</span><span class="p">]</span> <span class="p">(</span><span class="o">-</span><span class="n">m</span> <span class="n">module</span> <span class="o">|</span> <span class="n">myscript</span><span class="o">.</span><span class="n">py</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">-o</span></code> writes the profile results to a file instead of to stdout</p>
+<p><code class="docutils literal notranslate"><span class="pre">-s</span></code> specifies one of the <a class="reference internal" href="#pstats.Stats.sort_stats" title="pstats.Stats.sort_stats"><code class="xref py py-func docutils literal notranslate"><span class="pre">sort_stats()</span></code></a> sort values to sort
+the output by. This only applies when <code class="docutils literal notranslate"><span class="pre">-o</span></code> is not supplied.</p>
+<p><code class="docutils literal notranslate"><span class="pre">-m</span></code> specifies that a module is being profiled instead of a script.</p>
+<blockquote>
+<div><div class="versionadded">
+<p><span class="versionmodified added">New in version 3.7: </span>Added the <code class="docutils literal notranslate"><span class="pre">-m</span></code> option to <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8: </span>Added the <code class="docutils literal notranslate"><span class="pre">-m</span></code> option to <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a>.</p>
+</div>
+</div></blockquote>
+<p>The <a class="reference internal" href="#module-pstats" title="pstats: Statistics object for use with the profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pstats</span></code></a> module’s <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class has a variety of methods
+for manipulating and printing the data saved into a profile results file:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">pstats</span>
+</span><span data-line="2"><span class="kn">from</span> <span class="nn">pstats</span> <span class="kn">import</span> <span class="n">SortKey</span>
+</span><span data-line="3"><span class="n">p</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="s1">&#39;restats&#39;</span><span class="p">)</span>
+</span><span data-line="4"><span class="n">p</span><span class="o">.</span><span class="n">strip_dirs</span><span class="p">()</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#pstats.Stats.strip_dirs" title="pstats.Stats.strip_dirs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">strip_dirs()</span></code></a> method removed the extraneous path from all
+the module names. The <a class="reference internal" href="#pstats.Stats.sort_stats" title="pstats.Stats.sort_stats"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort_stats()</span></code></a> method sorted all the
+entries according to the standard module/line/name string that is printed. The
+<a class="reference internal" href="#pstats.Stats.print_stats" title="pstats.Stats.print_stats"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_stats()</span></code></a> method printed out all the statistics.  You
+might try the following sort calls:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">SortKey</span><span class="o">.</span><span class="n">NAME</span><span class="p">)</span>
+</span><span data-line="2"><span class="n">p</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>The first call will actually sort the list by function name, and the second call
+will print out the statistics.  The following are some interesting calls to
+experiment with:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">SortKey</span><span class="o">.</span><span class="n">CUMULATIVE</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>This sorts the profile by cumulative time in a function, and then only prints
+the ten most significant lines.  If you want to understand what algorithms are
+taking time, the above line is what you would use.</p>
+<p>If you were looking to see what functions were looping a lot, and taking a lot
+of time, you would do:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">SortKey</span><span class="o">.</span><span class="n">TIME</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>to sort according to time spent within each function, and then print the
+statistics for the top ten functions.</p>
+<p>You might also try:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">SortKey</span><span class="o">.</span><span class="n">FILENAME</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="s1">&#39;__init__&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>This will sort all the statistics by file name, and then print out statistics
+for only the class init methods (since they are spelled with <code class="docutils literal notranslate"><span class="pre">__init__</span></code> in
+them).  As one final example, you could try:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">SortKey</span><span class="o">.</span><span class="n">TIME</span><span class="p">,</span> <span class="n">SortKey</span><span class="o">.</span><span class="n">CUMULATIVE</span><span class="p">)</span><span class="o">.</span><span class="n">print_stats</span><span class="p">(</span><span class="mf">.5</span><span class="p">,</span> <span class="s1">&#39;init&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>This line sorts statistics with a primary key of time, and a secondary key of
+cumulative time, and then prints out some of the statistics. To be specific, the
+list is first culled down to 50% (re: <code class="docutils literal notranslate"><span class="pre">.5</span></code>) of its original size, then only
+lines containing <code class="docutils literal notranslate"><span class="pre">init</span></code> are maintained, and that sub-sub-list is printed.</p>
+<p>If you wondered what functions called the above functions, you could now (<code class="docutils literal notranslate"><span class="pre">p</span></code>
+is still sorted according to the last criteria) do:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">print_callers</span><span class="p">(</span><span class="mf">.5</span><span class="p">,</span> <span class="s1">&#39;init&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>and you would get a list of callers for each of the listed functions.</p>
+<p>If you want more functionality, you’re going to have to read the manual, or
+guess what the following functions do:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">p</span><span class="o">.</span><span class="n">print_callees</span><span class="p">()</span>
+</span><span data-line="2"><span class="n">p</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="s1">&#39;restats&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Invoked as a script, the <a class="reference internal" href="#module-pstats" title="pstats: Statistics object for use with the profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pstats</span></code></a> module is a statistics browser for
+reading and examining profile dumps.  It has a simple line-oriented interface
+(implemented using <a class="reference internal" href="cmd.html#module-cmd" title="cmd: Build line-oriented command interpreters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code></a>) and interactive help.</p>
+</section>
+<section id="module-cProfile">
+<span id="profile-and-cprofile-module-reference"></span><h2><a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> and <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> Module Reference<a class="headerlink" href="#module-cProfile" title="Permalink to this heading">¶</a></h2>
+<span class="target" id="module-profile"></span><p>Both the <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> and <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> modules provide the following
+functions:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="profile.run">
+<span class="sig-prename descclassname"><span class="pre">profile.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function takes a single argument that can be passed to the <a class="reference internal" href="functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a>
+function, and an optional file name.  In all cases this routine executes:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">exec</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="n">__main__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">,</span> <span class="n">__main__</span><span class="o">.</span><span class="vm">__dict__</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>and gathers profiling statistics from the execution. If no file name is
+present, then this function automatically creates a <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a>
+instance and prints a simple profiling report. If the sort value is specified,
+it is passed to this <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> instance to control how the
+results are sorted.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="profile.runctx">
+<span class="sig-prename descclassname"><span class="pre">profile.</span></span><span class="sig-name descname"><span class="pre">runctx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">command</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.runctx" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is similar to <a class="reference internal" href="#profile.run" title="profile.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a>, with added arguments to supply the
+globals and locals dictionaries for the <em>command</em> string. This routine
+executes:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">exec</span><span class="p">(</span><span class="n">command</span><span class="p">,</span> <span class="nb">globals</span><span class="p">,</span> <span class="nb">locals</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>and gathers profiling statistics as in the <a class="reference internal" href="#profile.run" title="profile.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> function above.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="profile.Profile">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">profile.</span></span><span class="sig-name descname"><span class="pre">Profile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeunit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">subcalls</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">builtins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is normally only used if more precise control over profiling is
+needed than what the <code class="xref py py-func docutils literal notranslate"><span class="pre">cProfile.run()</span></code> function provides.</p>
+<p>A custom timer can be supplied for measuring how long code takes to run via
+the <em>timer</em> argument. This must be a function that returns a single number
+representing the current time. If the number is an integer, the <em>timeunit</em>
+specifies a multiplier that specifies the duration of each unit of time. For
+example, if the timer returns times measured in thousands of seconds, the
+time unit would be <code class="docutils literal notranslate"><span class="pre">.001</span></code>.</p>
+<p>Directly using the <a class="reference internal" href="#profile.Profile" title="profile.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a> class allows formatting profile results
+without writing the profile data to a file:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">cProfile</span><span class="o">,</span> <span class="nn">pstats</span><span class="o">,</span> <span class="nn">io</span>
+</span><span data-line="2"><span class="kn">from</span> <span class="nn">pstats</span> <span class="kn">import</span> <span class="n">SortKey</span>
+</span><span data-line="3"><span class="n">pr</span> <span class="o">=</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span>
+</span><span data-line="4"><span class="n">pr</span><span class="o">.</span><span class="n">enable</span><span class="p">()</span>
+</span><span data-line="5"><span class="c1"># ... do something ...</span>
+</span><span data-line="6"><span class="n">pr</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+</span><span data-line="7"><span class="n">s</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+</span><span data-line="8"><span class="n">sortby</span> <span class="o">=</span> <span class="n">SortKey</span><span class="o">.</span><span class="n">CUMULATIVE</span>
+</span><span data-line="9"><span class="n">ps</span> <span class="o">=</span> <span class="n">pstats</span><span class="o">.</span><span class="n">Stats</span><span class="p">(</span><span class="n">pr</span><span class="p">,</span> <span class="n">stream</span><span class="o">=</span><span class="n">s</span><span class="p">)</span><span class="o">.</span><span class="n">sort_stats</span><span class="p">(</span><span class="n">sortby</span><span class="p">)</span>
+</span><span data-line="10"><span class="n">ps</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span><span data-line="11"><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#profile.Profile" title="profile.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code></a> class can also be used as a context manager (supported
+only in <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a> module. see <a class="reference internal" href="stdtypes.html#typecontextmanager"><span class="std std-ref">Context Manager Types</span></a>):</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">cProfile</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">with</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span> <span class="k">as</span> <span class="n">pr</span><span class="p">:</span>
+</span><span data-line="4">    <span class="c1"># ... do something ...</span>
+</span><span data-line="5">
+</span><span data-line="6">    <span class="n">pr</span><span class="o">.</span><span class="n">print_stats</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.8: </span>Added context manager support.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.enable">
+<span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start collecting profiling data. Only in <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.disable">
+<span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop collecting profiling data. Only in <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.create_stats">
+<span class="sig-name descname"><span class="pre">create_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.create_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stop collecting profiling data and record the results internally
+as the current profile.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.print_stats">
+<span class="sig-name descname"><span class="pre">print_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.print_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> object based on the current
+profile and print the results to stdout.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.dump_stats">
+<span class="sig-name descname"><span class="pre">dump_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.dump_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write the results of the current profile to <em>filename</em>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profile the cmd via <a class="reference internal" href="functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.runctx">
+<span class="sig-name descname"><span class="pre">runctx</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globals</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.runctx" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profile the cmd via <a class="reference internal" href="functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a> with the specified global and
+local environment.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="profile.Profile.runcall">
+<span class="sig-name descname"><span class="pre">runcall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#profile.Profile.runcall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Profile <code class="docutils literal notranslate"><span class="pre">func(*args,</span> <span class="pre">**kwargs)</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Note that profiling will only work if the called command/function actually
+returns.  If the interpreter is terminated (e.g. via a <a class="reference internal" href="sys.html#sys.exit" title="sys.exit"><code class="xref py py-func docutils literal notranslate"><span class="pre">sys.exit()</span></code></a> call
+during the called command/function execution) no profiling results will be
+printed.</p>
+</section>
+<section id="the-stats-class">
+<span id="profile-stats"></span><h2>The <code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code> Class<a class="headerlink" href="#the-stats-class" title="Permalink to this heading">¶</a></h2>
+<p>Analysis of the profiler data is done using the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class.</p>
+<span class="target" id="module-pstats"></span><dl class="py class">
+<dt class="sig sig-object py" id="pstats.Stats">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pstats.</span></span><span class="sig-name descname"><span class="pre">Stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">*filenames</span> <span class="pre">or</span> <span class="pre">profile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stream=sys.stdout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class constructor creates an instance of a “statistics object” from a
+<em>filename</em> (or list of filenames) or from a <code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code> instance. Output
+will be printed to the stream specified by <em>stream</em>.</p>
+<p>The file selected by the above constructor must have been created by the
+corresponding version of <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> or <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>.  To be specific,
+there is <em>no</em> file compatibility guaranteed with future versions of this
+profiler, and there is no compatibility with files produced by other
+profilers, or the same profiler run on a different operating system.  If
+several files are provided, all the statistics for identical functions will
+be coalesced, so that an overall view of several processes can be considered
+in a single report.  If additional files need to be combined with data in an
+existing <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> object, the <a class="reference internal" href="#pstats.Stats.add" title="pstats.Stats.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a> method
+can be used.</p>
+<p>Instead of reading the profile data from a file, a <code class="xref py py-class docutils literal notranslate"><span class="pre">cProfile.Profile</span></code>
+or <a class="reference internal" href="#profile.Profile" title="profile.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code></a> object can be used as the profile data source.</p>
+<p><a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> objects have the following methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.strip_dirs">
+<span class="sig-name descname"><span class="pre">strip_dirs</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.strip_dirs" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method for the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class removes all leading path
+information from file names.  It is very useful in reducing the size of
+the printout to fit within (close to) 80 columns.  This method modifies
+the object, and the stripped information is lost.  After performing a
+strip operation, the object is considered to have its entries in a
+“random” order, as it was just after object initialization and loading.
+If <a class="reference internal" href="#pstats.Stats.strip_dirs" title="pstats.Stats.strip_dirs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">strip_dirs()</span></code></a> causes two function names to be
+indistinguishable (they are on the same line of the same filename, and
+have the same function name), then the statistics for these two entries
+are accumulated into a single entry.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">filenames</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.add" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method of the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class accumulates additional profiling
+information into the current profiling object.  Its arguments should refer
+to filenames created by the corresponding version of <a class="reference internal" href="#profile.run" title="profile.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">profile.run()</span></code></a>
+or <code class="xref py py-func docutils literal notranslate"><span class="pre">cProfile.run()</span></code>. Statistics for identically named (re: file, line,
+name) functions are automatically accumulated into single function
+statistics.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.dump_stats">
+<span class="sig-name descname"><span class="pre">dump_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.dump_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save the data loaded into the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> object to a file named
+<em>filename</em>.  The file is created if it does not exist, and is overwritten
+if it already exists.  This is equivalent to the method of the same name
+on the <a class="reference internal" href="#profile.Profile" title="profile.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code></a> and <code class="xref py py-class docutils literal notranslate"><span class="pre">cProfile.Profile</span></code> classes.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.sort_stats">
+<span class="sig-name descname"><span class="pre">sort_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">keys</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.sort_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method modifies the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> object by sorting it according to
+the supplied criteria.  The argument can be either a string or a SortKey
+enum identifying the basis of a sort (example: <code class="docutils literal notranslate"><span class="pre">'time'</span></code>, <code class="docutils literal notranslate"><span class="pre">'name'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SortKey.TIME</span></code> or <code class="docutils literal notranslate"><span class="pre">SortKey.NAME</span></code>). The SortKey enums argument have
+advantage over the string argument in that it is more robust and less
+error prone.</p>
+<p>When more than one key is provided, then additional keys are used as
+secondary criteria when there is equality in all keys selected before
+them.  For example, <code class="docutils literal notranslate"><span class="pre">sort_stats(SortKey.NAME,</span> <span class="pre">SortKey.FILE)</span></code> will sort
+all the entries according to their function name, and resolve all ties
+(identical function names) by sorting by file name.</p>
+<p>For the string argument, abbreviations can be used for any key names, as
+long as the abbreviation is unambiguous.</p>
+<p>The following are the valid string and SortKey:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Valid String Arg</p></th>
+<th class="head"><p>Valid enum Arg</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'calls'</span></code></p></td>
+<td><p>SortKey.CALLS</p></td>
+<td><p>call count</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'cumulative'</span></code></p></td>
+<td><p>SortKey.CUMULATIVE</p></td>
+<td><p>cumulative time</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'cumtime'</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>cumulative time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'file'</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>file name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'filename'</span></code></p></td>
+<td><p>SortKey.FILENAME</p></td>
+<td><p>file name</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'module'</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>file name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'ncalls'</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>call count</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'pcalls'</span></code></p></td>
+<td><p>SortKey.PCALLS</p></td>
+<td><p>primitive call count</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'line'</span></code></p></td>
+<td><p>SortKey.LINE</p></td>
+<td><p>line number</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'name'</span></code></p></td>
+<td><p>SortKey.NAME</p></td>
+<td><p>function name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'nfl'</span></code></p></td>
+<td><p>SortKey.NFL</p></td>
+<td><p>name/file/line</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'stdname'</span></code></p></td>
+<td><p>SortKey.STDNAME</p></td>
+<td><p>standard name</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'time'</span></code></p></td>
+<td><p>SortKey.TIME</p></td>
+<td><p>internal time</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'tottime'</span></code></p></td>
+<td><p>N/A</p></td>
+<td><p>internal time</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note that all sorts on statistics are in descending order (placing most
+time consuming items first), where as name, file, and line number searches
+are in ascending order (alphabetical). The subtle distinction between
+<code class="docutils literal notranslate"><span class="pre">SortKey.NFL</span></code> and <code class="docutils literal notranslate"><span class="pre">SortKey.STDNAME</span></code> is that the standard name is a
+sort of the name as printed, which means that the embedded line numbers
+get compared in an odd way.  For example, lines 3, 20, and 40 would (if
+the file names were the same) appear in the string order 20, 3 and 40.
+In contrast, <code class="docutils literal notranslate"><span class="pre">SortKey.NFL</span></code> does a numeric compare of the line numbers.
+In fact, <code class="docutils literal notranslate"><span class="pre">sort_stats(SortKey.NFL)</span></code> is the same as
+<code class="docutils literal notranslate"><span class="pre">sort_stats(SortKey.NAME,</span> <span class="pre">SortKey.FILENAME,</span> <span class="pre">SortKey.LINE)</span></code>.</p>
+<p>For backward-compatibility reasons, the numeric arguments <code class="docutils literal notranslate"><span class="pre">-1</span></code>, <code class="docutils literal notranslate"><span class="pre">0</span></code>,
+<code class="docutils literal notranslate"><span class="pre">1</span></code>, and <code class="docutils literal notranslate"><span class="pre">2</span></code> are permitted.  They are interpreted as <code class="docutils literal notranslate"><span class="pre">'stdname'</span></code>,
+<code class="docutils literal notranslate"><span class="pre">'calls'</span></code>, <code class="docutils literal notranslate"><span class="pre">'time'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'cumulative'</span></code> respectively.  If this old
+style format (numeric) is used, only one sort key (the numeric key) will
+be used, and additional arguments will be silently ignored.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.7: </span>Added the SortKey enum.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.reverse_order">
+<span class="sig-name descname"><span class="pre">reverse_order</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.reverse_order" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method for the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class reverses the ordering of the
+basic list within the object.  Note that by default ascending vs
+descending order is properly selected based on the sort key of choice.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.print_stats">
+<span class="sig-name descname"><span class="pre">print_stats</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">restrictions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.print_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method for the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class prints out a report as described
+in the <a class="reference internal" href="#profile.run" title="profile.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">profile.run()</span></code></a> definition.</p>
+<p>The order of the printing is based on the last
+<a class="reference internal" href="#pstats.Stats.sort_stats" title="pstats.Stats.sort_stats"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sort_stats()</span></code></a> operation done on the object (subject to
+caveats in <a class="reference internal" href="#pstats.Stats.add" title="pstats.Stats.add"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add()</span></code></a> and
+<a class="reference internal" href="#pstats.Stats.strip_dirs" title="pstats.Stats.strip_dirs"><code class="xref py py-meth docutils literal notranslate"><span class="pre">strip_dirs()</span></code></a>).</p>
+<p>The arguments provided (if any) can be used to limit the list down to the
+significant entries.  Initially, the list is taken to be the complete set
+of profiled functions.  Each restriction is either an integer (to select a
+count of lines), or a decimal fraction between 0.0 and 1.0 inclusive (to
+select a percentage of lines), or a string that will interpreted as a
+regular expression (to pattern match the standard name that is printed).
+If several restrictions are provided, then they are applied sequentially.
+For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">print_stats</span><span class="p">(</span><span class="mf">.1</span><span class="p">,</span> <span class="s1">&#39;foo:&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>would first limit the printing to first 10% of list, and then only print
+functions that were part of filename <code class="file docutils literal notranslate"><span class="pre">.*foo:</span></code>.  In contrast, the
+command:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">print_stats</span><span class="p">(</span><span class="s1">&#39;foo:&#39;</span><span class="p">,</span> <span class="mf">.1</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>would limit the list to all functions having file names <code class="file docutils literal notranslate"><span class="pre">.*foo:</span></code>,
+and then proceed to only print the first 10% of them.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.print_callers">
+<span class="sig-name descname"><span class="pre">print_callers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">restrictions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.print_callers" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method for the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class prints a list of all functions
+that called each function in the profiled database.  The ordering is
+identical to that provided by <a class="reference internal" href="#pstats.Stats.print_stats" title="pstats.Stats.print_stats"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_stats()</span></code></a>, and the
+definition of the restricting argument is also identical.  Each caller is
+reported on its own line.  The format differs slightly depending on the
+profiler that produced the stats:</p>
+<ul class="simple">
+<li><p>With <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a>, a number is shown in parentheses after each caller
+to show how many times this specific call was made.  For convenience, a
+second non-parenthesized number repeats the cumulative time spent in the
+function at the right.</p></li>
+<li><p>With <a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>, each caller is preceded by three numbers: the
+number of times this specific call was made, and the total and
+cumulative times spent in the current function while it was invoked by
+this specific caller.</p></li>
+</ul>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.print_callees">
+<span class="sig-name descname"><span class="pre">print_callees</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">restrictions</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.print_callees" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method for the <a class="reference internal" href="#pstats.Stats" title="pstats.Stats"><code class="xref py py-class docutils literal notranslate"><span class="pre">Stats</span></code></a> class prints a list of all function
+that were called by the indicated function.  Aside from this reversal of
+direction of calls (re: called vs was called by), the arguments and
+ordering are identical to the <a class="reference internal" href="#pstats.Stats.print_callers" title="pstats.Stats.print_callers"><code class="xref py py-meth docutils literal notranslate"><span class="pre">print_callers()</span></code></a> method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="pstats.Stats.get_stats_profile">
+<span class="sig-name descname"><span class="pre">get_stats_profile</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pstats.Stats.get_stats_profile" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method returns an instance of StatsProfile, which contains a mapping
+of function names to instances of FunctionProfile. Each FunctionProfile
+instance holds information related to the function’s profile such as how
+long the function took to run, how many times it was called, etc…</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.9: </span>Added the following dataclasses: StatsProfile, FunctionProfile.
+Added the following function: get_stats_profile.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="what-is-deterministic-profiling">
+<span id="deterministic-profiling"></span><h2>What Is Deterministic Profiling?<a class="headerlink" href="#what-is-deterministic-profiling" title="Permalink to this heading">¶</a></h2>
+<p><em class="dfn">Deterministic profiling</em> is meant to reflect the fact that all <em>function
+call</em>, <em>function return</em>, and <em>exception</em> events are monitored, and precise
+timings are made for the intervals between these events (during which time the
+user’s code is executing).  In contrast, <em class="dfn">statistical profiling</em> (which is
+not done by this module) randomly samples the effective instruction pointer, and
+deduces where time is being spent.  The latter technique traditionally involves
+less overhead (as the code does not need to be instrumented), but provides only
+relative indications of where time is being spent.</p>
+<p>In Python, since there is an interpreter active during execution, the presence
+of instrumented code is not required in order to do deterministic profiling.
+Python automatically provides a <em class="dfn">hook</em> (optional callback) for each event.
+In addition, the interpreted nature of Python tends to add so much overhead to
+execution, that deterministic profiling tends to only add small processing
+overhead in typical applications.  The result is that deterministic profiling is
+not that expensive, yet provides extensive run time statistics about the
+execution of a Python program.</p>
+<p>Call count statistics can be used to identify bugs in code (surprising counts),
+and to identify possible inline-expansion points (high call counts).  Internal
+time statistics can be used to identify “hot loops” that should be carefully
+optimized.  Cumulative time statistics should be used to identify high level
+errors in the selection of algorithms.  Note that the unusual handling of
+cumulative times in this profiler allows statistics for recursive
+implementations of algorithms to be directly compared to iterative
+implementations.</p>
+</section>
+<section id="limitations">
+<span id="profile-limitations"></span><h2>Limitations<a class="headerlink" href="#limitations" title="Permalink to this heading">¶</a></h2>
+<p>One limitation has to do with accuracy of timing information. There is a
+fundamental problem with deterministic profilers involving accuracy.  The most
+obvious restriction is that the underlying “clock” is only ticking at a rate
+(typically) of about .001 seconds.  Hence no measurements will be more accurate
+than the underlying clock.  If enough measurements are taken, then the “error”
+will tend to average out. Unfortunately, removing this first error induces a
+second source of error.</p>
+<p>The second problem is that it “takes a while” from when an event is dispatched
+until the profiler’s call to get the time actually <em>gets</em> the state of the
+clock.  Similarly, there is a certain lag when exiting the profiler event
+handler from the time that the clock’s value was obtained (and then squirreled
+away), until the user’s code is once again executing.  As a result, functions
+that are called many times, or call many functions, will typically accumulate
+this error. The error that accumulates in this fashion is typically less than
+the accuracy of the clock (less than one clock tick), but it <em>can</em> accumulate
+and become very significant.</p>
+<p>The problem is more important with <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> than with the lower-overhead
+<a class="reference internal" href="#module-cProfile" title="cProfile"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cProfile</span></code></a>.  For this reason, <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> provides a means of
+calibrating itself for a given platform so that this error can be
+probabilistically (on the average) removed. After the profiler is calibrated, it
+will be more accurate (in a least square sense), but it will sometimes produce
+negative numbers (when call counts are exceptionally low, and the gods of
+probability work against you :-). )  Do <em>not</em> be alarmed by negative numbers in
+the profile.  They should <em>only</em> appear if you have calibrated your profiler,
+and the results are actually better than without calibration.</p>
+</section>
+<section id="calibration">
+<span id="profile-calibration"></span><h2>Calibration<a class="headerlink" href="#calibration" title="Permalink to this heading">¶</a></h2>
+<p>The profiler of the <a class="reference internal" href="#module-profile" title="profile: Python source profiler."><code class="xref py py-mod docutils literal notranslate"><span class="pre">profile</span></code></a> module subtracts a constant from each event
+handling time to compensate for the overhead of calling the time function, and
+socking away the results.  By default, the constant is 0. The following
+procedure can be used to obtain a better constant for a given platform (see
+<a class="reference internal" href="#profile-limitations"><span class="std std-ref">Limitations</span></a>).</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">profile</span>
+</span><span data-line="2"><span class="n">pr</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span>
+</span><span data-line="3"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+</span><span data-line="4">    <span class="nb">print</span><span class="p">(</span><span class="n">pr</span><span class="o">.</span><span class="n">calibrate</span><span class="p">(</span><span class="mi">10000</span><span class="p">))</span>
+</span></pre></div>
+</div>
+<p>The method executes the number of Python calls given by the argument, directly
+and again under the profiler, measuring the time for both. It then computes the
+hidden overhead per profiler event, and returns that as a float.  For example,
+on a 1.8Ghz Intel Core i5 running macOS, and using Python’s time.process_time() as
+the timer, the magical number is about 4.04e-6.</p>
+<p>The object of this exercise is to get a fairly consistent result. If your
+computer is <em>very</em> fast, or your timer function has poor resolution, you might
+have to pass 100000, or even 1000000, to get consistent results.</p>
+<p>When you have a consistent answer, there are three ways you can use it:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">profile</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="c1"># 1. Apply computed bias to all Profile instances created hereafter.</span>
+</span><span data-line="4"><span class="n">profile</span><span class="o">.</span><span class="n">Profile</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">your_computed_bias</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="c1"># 2. Apply computed bias to a specific Profile instance.</span>
+</span><span data-line="7"><span class="n">pr</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span>
+</span><span data-line="8"><span class="n">pr</span><span class="o">.</span><span class="n">bias</span> <span class="o">=</span> <span class="n">your_computed_bias</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># 3. Specify computed bias in instance constructor.</span>
+</span><span data-line="11"><span class="n">pr</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span><span class="n">bias</span><span class="o">=</span><span class="n">your_computed_bias</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>If you have a choice, you are better off choosing a smaller constant, and then
+your results will “less often” show up as negative in profile statistics.</p>
+</section>
+<section id="using-a-custom-timer">
+<span id="profile-timers"></span><h2>Using a custom timer<a class="headerlink" href="#using-a-custom-timer" title="Permalink to this heading">¶</a></h2>
+<p>If you want to change how current time is determined (for example, to force use
+of wall-clock time or elapsed process time), pass the timing function you want
+to the <code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code> class constructor:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">pr</span> <span class="o">=</span> <span class="n">profile</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span><span class="n">your_time_func</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The resulting profiler will then call <code class="docutils literal notranslate"><span class="pre">your_time_func</span></code>. Depending on whether
+you are using <a class="reference internal" href="#profile.Profile" title="profile.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code></a> or <code class="xref py py-class docutils literal notranslate"><span class="pre">cProfile.Profile</span></code>,
+<code class="docutils literal notranslate"><span class="pre">your_time_func</span></code>’s return value will be interpreted differently:</p>
+<dl>
+<dt><a class="reference internal" href="#profile.Profile" title="profile.Profile"><code class="xref py py-class docutils literal notranslate"><span class="pre">profile.Profile</span></code></a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">your_time_func</span></code> should return a single number, or a list of numbers whose
+sum is the current time (like what <a class="reference internal" href="os.html#os.times" title="os.times"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.times()</span></code></a> returns).  If the
+function returns a single time number, or the list of returned numbers has
+length 2, then you will get an especially fast version of the dispatch
+routine.</p>
+<p>Be warned that you should calibrate the profiler class for the timer function
+that you choose (see <a class="reference internal" href="#profile-calibration"><span class="std std-ref">Calibration</span></a>).  For most machines, a timer
+that returns a lone integer value will provide the best results in terms of
+low overhead during profiling.  (<a class="reference internal" href="os.html#os.times" title="os.times"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.times()</span></code></a> is <em>pretty</em> bad, as it
+returns a tuple of floating point values).  If you want to substitute a
+better timer in the cleanest fashion, derive a class and hardwire a
+replacement dispatch method that best handles your timer call, along with the
+appropriate calibration constant.</p>
+</dd>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">cProfile.Profile</span></code></dt><dd><p><code class="docutils literal notranslate"><span class="pre">your_time_func</span></code> should return a single number.  If it returns integers,
+you can also invoke the class constructor with a second argument specifying
+the real duration of one unit of time.  For example, if
+<code class="docutils literal notranslate"><span class="pre">your_integer_time_func</span></code> returns times measured in thousands of seconds,
+you would construct the <code class="xref py py-class docutils literal notranslate"><span class="pre">Profile</span></code> instance as follows:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">pr</span> <span class="o">=</span> <span class="n">cProfile</span><span class="o">.</span><span class="n">Profile</span><span class="p">(</span><span class="n">your_integer_time_func</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>As the <code class="xref py py-class docutils literal notranslate"><span class="pre">cProfile.Profile</span></code> class cannot be calibrated, custom timer
+functions should be used with care and should be as fast as possible.  For
+the best results with a custom timer, it might be necessary to hard-code it
+in the C source of the internal <code class="xref py py-mod docutils literal notranslate"><span class="pre">_lsprof</span></code> module.</p>
+</dd>
+</dl>
+<p>Python 3.3 adds several new functions in <a class="reference internal" href="time.html#module-time" title="time: Time access and conversions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code></a> that can be used to make
+precise measurements of process or wall-clock time. For example, see
+<a class="reference internal" href="time.html#time.perf_counter" title="time.perf_counter"><code class="xref py py-func docutils literal notranslate"><span class="pre">time.perf_counter()</span></code></a>.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="pdb.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="timeit.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

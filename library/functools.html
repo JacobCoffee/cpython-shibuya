@@ -1,0 +1,1533 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>functools — Higher-order functions and operations on callable objects - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="operator — Standard operators as functions" href="operator.html" /><link rel="prev" title="itertools — Functions creating iterators for efficient looping" href="itertools.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="functools — Higher-order functions and operations on callable objects"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#functools.cache"><code class="docutils literal notranslate"><span class="pre">cache()</span></code></a></li>
+<li><a class="reference internal" href="#functools.cached_property"><code class="docutils literal notranslate"><span class="pre">cached_property()</span></code></a></li>
+<li><a class="reference internal" href="#functools.cmp_to_key"><code class="docutils literal notranslate"><span class="pre">cmp_to_key()</span></code></a></li>
+<li><a class="reference internal" href="#functools.lru_cache"><code class="docutils literal notranslate"><span class="pre">lru_cache()</span></code></a></li>
+<li><a class="reference internal" href="#functools.total_ordering"><code class="docutils literal notranslate"><span class="pre">total_ordering()</span></code></a></li>
+<li><a class="reference internal" href="#functools.partial"><code class="docutils literal notranslate"><span class="pre">partial()</span></code></a></li>
+<li><a class="reference internal" href="#functools.partialmethod"><code class="docutils literal notranslate"><span class="pre">partialmethod</span></code></a></li>
+<li><a class="reference internal" href="#functools.reduce"><code class="docutils literal notranslate"><span class="pre">reduce()</span></code></a></li>
+<li><a class="reference internal" href="#functools.singledispatch"><code class="docutils literal notranslate"><span class="pre">singledispatch()</span></code></a></li>
+<li><a class="reference internal" href="#functools.singledispatchmethod"><code class="docutils literal notranslate"><span class="pre">singledispatchmethod</span></code></a></li>
+<li><a class="reference internal" href="#functools.update_wrapper"><code class="docutils literal notranslate"><span class="pre">update_wrapper()</span></code></a></li>
+<li><a class="reference internal" href="#functools.wraps"><code class="docutils literal notranslate"><span class="pre">wraps()</span></code></a></li>
+<li><a class="reference internal" href="#partial-objects"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code> Objects</a><ul>
+<li><a class="reference internal" href="#functools.partial.func"><code class="docutils literal notranslate"><span class="pre">partial.func</span></code></a></li>
+<li><a class="reference internal" href="#functools.partial.args"><code class="docutils literal notranslate"><span class="pre">partial.args</span></code></a></li>
+<li><a class="reference internal" href="#functools.partial.keywords"><code class="docutils literal notranslate"><span class="pre">partial.keywords</span></code></a></li>
+</ul>
+</li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/functools.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="functional.html"><span itemprop="name">Functional Programming Modules</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="module-functools">
+<span id="functools-higher-order-functions-and-operations-on-callable-objects"></span><h1><a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> — Higher-order functions and operations on callable objects<a class="headerlink" href="#module-functools" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/functools.py">Lib/functools.py</a></p>
+<hr class="docutils" />
+<p>The <a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> module is for higher-order functions: functions that act on
+or return other functions. In general, any callable object can be treated as a
+function for the purposes of this module.</p>
+<p>The <a class="reference internal" href="#module-functools" title="functools: Higher-order functions and operations on callable objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code></a> module defines the following functions:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.cache">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cache" title="Permalink to this definition">¶</a></dt>
+<dd><p>Simple lightweight unbounded function cache.  Sometimes called
+<a class="reference external" href="https://en.wikipedia.org/wiki/Memoization">“memoize”</a>.</p>
+<p>Returns the same as <code class="docutils literal notranslate"><span class="pre">lru_cache(maxsize=None)</span></code>, creating a thin
+wrapper around a dictionary lookup for the function arguments.  Because it
+never needs to evict old values, this is smaller and faster than
+<a class="reference internal" href="#functools.lru_cache" title="functools.lru_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">lru_cache()</span></code></a> with a size limit.</p>
+<p>For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@cache</span>
+</span><span data-line="2"><span class="k">def</span> <span class="nf">factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span data-line="3">    <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="n">factorial</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">if</span> <span class="n">n</span> <span class="k">else</span> <span class="mi">1</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>      <span class="c1"># no previously cached result, makes 11 recursive calls</span>
+</span><span data-line="6"><span class="mi">3628800</span>
+</span><span data-line="7"><span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>       <span class="c1"># just looks up cached value result</span>
+</span><span data-line="8"><span class="mi">120</span>
+</span><span data-line="9"><span class="o">&gt;&gt;&gt;</span> <span class="n">factorial</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>      <span class="c1"># makes two new recursive calls, the other 10 are cached</span>
+</span><span data-line="10"><span class="mi">479001600</span>
+</span></pre></div>
+</div>
+<p>The cache is threadsafe so that the wrapped function can be used in
+multiple threads.  This means that the underlying data structure will
+remain coherent during concurrent updates.</p>
+<p>It is possible for the wrapped function to be called more than once if
+another thread makes an additional call before the initial call has been
+completed and cached.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.cached_property">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">cached_property</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cached_property" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a method of a class into a property whose value is computed once
+and then cached as a normal attribute for the life of the instance. Similar
+to <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a>, with the addition of caching. Useful for expensive
+computed properties of instances that are otherwise effectively immutable.</p>
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">DataSet</span><span class="p">:</span>
+</span><span data-line="2">
+</span><span data-line="3">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">sequence_of_numbers</span><span class="p">):</span>
+</span><span data-line="4">        <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">sequence_of_numbers</span><span class="p">)</span>
+</span><span data-line="5">
+</span><span data-line="6">    <span class="nd">@cached_property</span>
+</span><span data-line="7">    <span class="k">def</span> <span class="nf">stdev</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="8">        <span class="k">return</span> <span class="n">statistics</span><span class="o">.</span><span class="n">stdev</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The mechanics of <a class="reference internal" href="#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">cached_property()</span></code></a> are somewhat different from
+<a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a>.  A regular property blocks attribute writes unless a
+setter is defined. In contrast, a <em>cached_property</em> allows writes.</p>
+<p>The <em>cached_property</em> decorator only runs on lookups and only when an
+attribute of the same name doesn’t exist.  When it does run, the
+<em>cached_property</em> writes to the attribute with the same name. Subsequent
+attribute reads and writes take precedence over the <em>cached_property</em>
+method and it works like a normal attribute.</p>
+<p>The cached value can be cleared by deleting the attribute.  This
+allows the <em>cached_property</em> method to run again.</p>
+<p>The <em>cached_property</em> does not prevent a possible race condition in
+multi-threaded usage. The getter function could run more than once on the
+same instance, with the latest run setting the cached value. If the cached
+property is idempotent or otherwise not harmful to run more than once on an
+instance, this is fine. If synchronization is needed, implement the necessary
+locking inside the decorated getter function or around the cached property
+access.</p>
+<p>Note, this decorator interferes with the operation of <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0412/"><strong>PEP 412</strong></a>
+key-sharing dictionaries.  This means that instance dictionaries
+can take more space than usual.</p>
+<p>Also, this decorator requires that the <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> attribute on each instance
+be a mutable mapping. This means it will not work with some types, such as
+metaclasses (since the <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> attributes on type instances are
+read-only proxies for the class namespace), and those that specify
+<code class="docutils literal notranslate"><span class="pre">__slots__</span></code> without including <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> as one of the defined slots
+(as such classes don’t provide a <code class="docutils literal notranslate"><span class="pre">__dict__</span></code> attribute at all).</p>
+<p>If a mutable mapping is not available or if space-efficient key sharing is
+desired, an effect similar to <a class="reference internal" href="#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">cached_property()</span></code></a> can also be achieved by
+stacking <a class="reference internal" href="functions.html#property" title="property"><code class="xref py py-func docutils literal notranslate"><span class="pre">property()</span></code></a> on top of <a class="reference internal" href="#functools.lru_cache" title="functools.lru_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">lru_cache()</span></code></a>. See
+<a class="reference internal" href="../faq/programming.html#faq-cache-method-calls"><span class="std std-ref">How do I cache method calls?</span></a> for more details on how this differs from <a class="reference internal" href="#functools.cached_property" title="functools.cached_property"><code class="xref py py-func docutils literal notranslate"><span class="pre">cached_property()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>Prior to Python 3.12, <code class="docutils literal notranslate"><span class="pre">cached_property</span></code> included an undocumented lock to
+ensure that in multi-threaded usage the getter function was guaranteed to
+run only once per instance. However, the lock was per-property, not
+per-instance, which could result in unacceptably high lock contention. In
+Python 3.12+ this locking is removed.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.cmp_to_key">
+<span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">cmp_to_key</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.cmp_to_key" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform an old-style comparison function to a <a class="reference internal" href="../glossary.html#term-key-function"><span class="xref std std-term">key function</span></a>.  Used
+with tools that accept key functions (such as <a class="reference internal" href="functions.html#sorted" title="sorted"><code class="xref py py-func docutils literal notranslate"><span class="pre">sorted()</span></code></a>, <a class="reference internal" href="functions.html#min" title="min"><code class="xref py py-func docutils literal notranslate"><span class="pre">min()</span></code></a>,
+<a class="reference internal" href="functions.html#max" title="max"><code class="xref py py-func docutils literal notranslate"><span class="pre">max()</span></code></a>, <a class="reference internal" href="heapq.html#heapq.nlargest" title="heapq.nlargest"><code class="xref py py-func docutils literal notranslate"><span class="pre">heapq.nlargest()</span></code></a>, <a class="reference internal" href="heapq.html#heapq.nsmallest" title="heapq.nsmallest"><code class="xref py py-func docutils literal notranslate"><span class="pre">heapq.nsmallest()</span></code></a>,
+<a class="reference internal" href="itertools.html#itertools.groupby" title="itertools.groupby"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.groupby()</span></code></a>).  This function is primarily used as a transition
+tool for programs being converted from Python 2 which supported the use of
+comparison functions.</p>
+<p>A comparison function is any callable that accepts two arguments, compares them,
+and returns a negative number for less-than, zero for equality, or a positive
+number for greater-than.  A key function is a callable that accepts one
+argument and returns another value to be used as the sort key.</p>
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nb">sorted</span><span class="p">(</span><span class="n">iterable</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">cmp_to_key</span><span class="p">(</span><span class="n">locale</span><span class="o">.</span><span class="n">strcoll</span><span class="p">))</span>  <span class="c1"># locale-aware sort order</span>
+</span></pre></div>
+</div>
+<p>For sorting examples and a brief sorting tutorial, see <a class="reference internal" href="../howto/sorting.html#sortinghowto"><span class="std std-ref">Sorting HOW TO</span></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.lru_cache">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">lru_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user_function</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.lru_cache" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">lru_cache</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">maxsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">typed</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span></dt>
+<dd><p>Decorator to wrap a function with a memoizing callable that saves up to the
+<em>maxsize</em> most recent calls.  It can save time when an expensive or I/O bound
+function is periodically called with the same arguments.</p>
+<p>The cache is threadsafe so that the wrapped function can be used in
+multiple threads.  This means that the underlying data structure will
+remain coherent during concurrent updates.</p>
+<p>It is possible for the wrapped function to be called more than once if
+another thread makes an additional call before the initial call has been
+completed and cached.</p>
+<p>Since a dictionary is used to cache results, the positional and keyword
+arguments to the function must be <a class="reference internal" href="../glossary.html#term-hashable"><span class="xref std std-term">hashable</span></a>.</p>
+<p>Distinct argument patterns may be considered to be distinct calls with
+separate cache entries.  For example, <code class="docutils literal notranslate"><span class="pre">f(a=1,</span> <span class="pre">b=2)</span></code> and <code class="docutils literal notranslate"><span class="pre">f(b=2,</span> <span class="pre">a=1)</span></code>
+differ in their keyword argument order and may have two separate cache
+entries.</p>
+<p>If <em>user_function</em> is specified, it must be a callable. This allows the
+<em>lru_cache</em> decorator to be applied directly to a user function, leaving
+the <em>maxsize</em> at its default value of 128:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@lru_cache</span>
+</span><span data-line="2"><span class="k">def</span> <span class="nf">count_vowels</span><span class="p">(</span><span class="n">sentence</span><span class="p">):</span>
+</span><span data-line="3">    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">sentence</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">vowel</span><span class="p">)</span> <span class="k">for</span> <span class="n">vowel</span> <span class="ow">in</span> <span class="s1">&#39;AEIOUaeiou&#39;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>If <em>maxsize</em> is set to <code class="docutils literal notranslate"><span class="pre">None</span></code>, the LRU feature is disabled and the cache can
+grow without bound.</p>
+<p>If <em>typed</em> is set to true, function arguments of different types will be
+cached separately.  If <em>typed</em> is false, the implementation will usually
+regard them as equivalent calls and only cache a single result. (Some
+types such as <em>str</em> and <em>int</em> may be cached separately even when <em>typed</em>
+is false.)</p>
+<p>Note, type specificity applies only to the function’s immediate arguments
+rather than their contents.  The scalar arguments, <code class="docutils literal notranslate"><span class="pre">Decimal(42)</span></code> and
+<code class="docutils literal notranslate"><span class="pre">Fraction(42)</span></code> are be treated as distinct calls with distinct results.
+In contrast, the tuple arguments <code class="docutils literal notranslate"><span class="pre">('answer',</span> <span class="pre">Decimal(42))</span></code> and
+<code class="docutils literal notranslate"><span class="pre">('answer',</span> <span class="pre">Fraction(42))</span></code> are treated as equivalent.</p>
+<p>The wrapped function is instrumented with a <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_parameters()</span></code>
+function that returns a new <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> showing the values for <em>maxsize</em>
+and <em>typed</em>.  This is for information purposes only.  Mutating the values
+has no effect.</p>
+<p>To help measure the effectiveness of the cache and tune the <em>maxsize</em>
+parameter, the wrapped function is instrumented with a <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_info()</span></code>
+function that returns a <a class="reference internal" href="../glossary.html#term-named-tuple"><span class="xref std std-term">named tuple</span></a> showing <em>hits</em>, <em>misses</em>,
+<em>maxsize</em> and <em>currsize</em>.</p>
+<p>The decorator also provides a <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_clear()</span></code> function for clearing or
+invalidating the cache.</p>
+<p>The original underlying function is accessible through the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute.  This is useful for introspection, for
+bypassing the cache, or for rewrapping the function with a different cache.</p>
+<p>The cache keeps references to the arguments and return values until they age
+out of the cache or until the cache is cleared.</p>
+<p>If a method is cached, the <code class="docutils literal notranslate"><span class="pre">self</span></code> instance argument is included in the
+cache.  See <a class="reference internal" href="../faq/programming.html#faq-cache-method-calls"><span class="std std-ref">How do I cache method calls?</span></a></p>
+<p>An <a class="reference external" href="https://en.wikipedia.org/wiki/Cache_replacement_policies#Least_recently_used_(LRU)">LRU (least recently used) cache</a>
+works best when the most recent calls are the best predictors of upcoming
+calls (for example, the most popular articles on a news server tend to
+change each day).  The cache’s size limit assures that the cache does not
+grow without bound on long-running processes such as web servers.</p>
+<p>In general, the LRU cache should only be used when you want to reuse
+previously computed values.  Accordingly, it doesn’t make sense to cache
+functions with side-effects, functions that need to create
+distinct mutable objects on each call (such as generators and async functions),
+or impure functions such as time() or random().</p>
+<p>Example of an LRU cache for static web content:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</span><span data-line="2"><span class="k">def</span> <span class="nf">get_pep</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+</span><span data-line="3">    <span class="s1">&#39;Retrieve text of a Python Enhancement Proposal&#39;</span>
+</span><span data-line="4">    <span class="n">resource</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;https://peps.python.org/pep-</span><span class="si">{</span><span class="n">num</span><span class="si">:</span><span class="s1">04d</span><span class="si">}</span><span class="s1">&#39;</span>
+</span><span data-line="5">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="6">        <span class="k">with</span> <span class="n">urllib</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">resource</span><span class="p">)</span> <span class="k">as</span> <span class="n">s</span><span class="p">:</span>
+</span><span data-line="7">            <span class="k">return</span> <span class="n">s</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+</span><span data-line="8">    <span class="k">except</span> <span class="n">urllib</span><span class="o">.</span><span class="n">error</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">:</span>
+</span><span data-line="9">        <span class="k">return</span> <span class="s1">&#39;Not Found&#39;</span>
+</span><span data-line="10">
+</span><span data-line="11"><span class="o">&gt;&gt;&gt;</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">290</span><span class="p">,</span> <span class="mi">308</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">218</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">279</span><span class="p">,</span> <span class="mi">289</span><span class="p">,</span> <span class="mi">320</span><span class="p">,</span> <span class="mi">9991</span><span class="p">:</span>
+</span><span data-line="12"><span class="o">...</span>     <span class="n">pep</span> <span class="o">=</span> <span class="n">get_pep</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</span><span data-line="13"><span class="o">...</span>     <span class="nb">print</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">pep</span><span class="p">))</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="o">&gt;&gt;&gt;</span> <span class="n">get_pep</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
+</span><span data-line="16"><span class="n">CacheInfo</span><span class="p">(</span><span class="n">hits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">misses</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span> <span class="n">currsize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Example of efficiently computing
+<a class="reference external" href="https://en.wikipedia.org/wiki/Fibonacci_number">Fibonacci numbers</a>
+using a cache to implement a
+<a class="reference external" href="https://en.wikipedia.org/wiki/Dynamic_programming">dynamic programming</a>
+technique:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@lru_cache</span><span class="p">(</span><span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span><span data-line="2"><span class="k">def</span> <span class="nf">fib</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+</span><span data-line="3">    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+</span><span data-line="4">        <span class="k">return</span> <span class="n">n</span>
+</span><span data-line="5">    <span class="k">return</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="o">&gt;&gt;&gt;</span> <span class="p">[</span><span class="n">fib</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">16</span><span class="p">)]</span>
+</span><span data-line="8"><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">13</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">89</span><span class="p">,</span> <span class="mi">144</span><span class="p">,</span> <span class="mi">233</span><span class="p">,</span> <span class="mi">377</span><span class="p">,</span> <span class="mi">610</span><span class="p">]</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="o">&gt;&gt;&gt;</span> <span class="n">fib</span><span class="o">.</span><span class="n">cache_info</span><span class="p">()</span>
+</span><span data-line="11"><span class="n">CacheInfo</span><span class="p">(</span><span class="n">hits</span><span class="o">=</span><span class="mi">28</span><span class="p">,</span> <span class="n">misses</span><span class="o">=</span><span class="mi">16</span><span class="p">,</span> <span class="n">maxsize</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">currsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span>Added the <em>typed</em> option.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.8: </span>Added the <em>user_function</em> option.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.9: </span>Added the function <code class="xref py py-func docutils literal notranslate"><span class="pre">cache_parameters()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.total_ordering">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">total_ordering</span></span><a class="headerlink" href="#functools.total_ordering" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a class defining one or more rich comparison ordering methods, this
+class decorator supplies the rest.  This simplifies the effort involved
+in specifying all of the possible rich comparison operations:</p>
+<p>The class must define one of <code class="xref py py-meth docutils literal notranslate"><span class="pre">__lt__()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">__le__()</span></code>,
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">__gt__()</span></code>, or <code class="xref py py-meth docutils literal notranslate"><span class="pre">__ge__()</span></code>.
+In addition, the class should supply an <code class="xref py py-meth docutils literal notranslate"><span class="pre">__eq__()</span></code> method.</p>
+<p>For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nd">@total_ordering</span>
+</span><span data-line="2"><span class="k">class</span> <span class="nc">Student</span><span class="p">:</span>
+</span><span data-line="3">    <span class="k">def</span> <span class="nf">_is_valid_operand</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+</span><span data-line="4">        <span class="k">return</span> <span class="p">(</span><span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;lastname&quot;</span><span class="p">)</span> <span class="ow">and</span>
+</span><span data-line="5">                <span class="nb">hasattr</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="s2">&quot;firstname&quot;</span><span class="p">))</span>
+</span><span data-line="6">    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+</span><span data-line="7">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_operand</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+</span><span data-line="8">            <span class="k">return</span> <span class="bp">NotImplemented</span>
+</span><span data-line="9">        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">==</span>
+</span><span data-line="10">                <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+</span><span data-line="11">    <span class="k">def</span> <span class="fm">__lt__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+</span><span data-line="12">        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_valid_operand</span><span class="p">(</span><span class="n">other</span><span class="p">):</span>
+</span><span data-line="13">            <span class="k">return</span> <span class="bp">NotImplemented</span>
+</span><span data-line="14">        <span class="k">return</span> <span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">())</span> <span class="o">&lt;</span>
+</span><span data-line="15">                <span class="p">(</span><span class="n">other</span><span class="o">.</span><span class="n">lastname</span><span class="o">.</span><span class="n">lower</span><span class="p">(),</span> <span class="n">other</span><span class="o">.</span><span class="n">firstname</span><span class="o">.</span><span class="n">lower</span><span class="p">()))</span>
+</span></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>While this decorator makes it easy to create well behaved totally
+ordered types, it <em>does</em> come at the cost of slower execution and
+more complex stack traces for the derived comparison methods. If
+performance benchmarking indicates this is a bottleneck for a given
+application, implementing all six rich comparison methods instead is
+likely to provide an easy speed boost.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This decorator makes no attempt to override methods that have been
+declared in the class <em>or its superclasses</em>. Meaning that if a
+superclass defines a comparison operator, <em>total_ordering</em> will not
+implement it again, even if the original method is abstract.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.4: </span>Returning NotImplemented from the underlying comparison function for
+unrecognised types is now supported.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.partial">
+<span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">partial</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">keywords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.partial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new <a class="reference internal" href="#partial-objects"><span class="std std-ref">partial object</span></a> which when called
+will behave like <em>func</em> called with the positional arguments <em>args</em>
+and keyword arguments <em>keywords</em>. If more arguments are supplied to the
+call, they are appended to <em>args</em>. If additional keyword arguments are
+supplied, they extend and override <em>keywords</em>.
+Roughly equivalent to:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span> <span class="nf">partial</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">/</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">keywords</span><span class="p">):</span>
+</span><span data-line="2">    <span class="k">def</span> <span class="nf">newfunc</span><span class="p">(</span><span class="o">*</span><span class="n">fargs</span><span class="p">,</span> <span class="o">**</span><span class="n">fkeywords</span><span class="p">):</span>
+</span><span data-line="3">        <span class="n">newkeywords</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">keywords</span><span class="p">,</span> <span class="o">**</span><span class="n">fkeywords</span><span class="p">}</span>
+</span><span data-line="4">        <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">*</span><span class="n">fargs</span><span class="p">,</span> <span class="o">**</span><span class="n">newkeywords</span><span class="p">)</span>
+</span><span data-line="5">    <span class="n">newfunc</span><span class="o">.</span><span class="n">func</span> <span class="o">=</span> <span class="n">func</span>
+</span><span data-line="6">    <span class="n">newfunc</span><span class="o">.</span><span class="n">args</span> <span class="o">=</span> <span class="n">args</span>
+</span><span data-line="7">    <span class="n">newfunc</span><span class="o">.</span><span class="n">keywords</span> <span class="o">=</span> <span class="n">keywords</span>
+</span><span data-line="8">    <span class="k">return</span> <span class="n">newfunc</span>
+</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal notranslate"><span class="pre">partial()</span></code></a> is used for partial function application which “freezes”
+some portion of a function’s arguments and/or keywords resulting in a new object
+with a simplified signature.  For example, <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal notranslate"><span class="pre">partial()</span></code></a> can be used to create
+a callable that behaves like the <a class="reference internal" href="functions.html#int" title="int"><code class="xref py py-func docutils literal notranslate"><span class="pre">int()</span></code></a> function where the <em>base</em> argument
+defaults to two:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">base</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s1">&#39;Convert base 2 string to an int.&#39;</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">basetwo</span><span class="p">(</span><span class="s1">&#39;10010&#39;</span><span class="p">)</span>
+</span><span data-line="5"><span class="go">18</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functools.partialmethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">partialmethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">keywords</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.partialmethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new <a class="reference internal" href="#functools.partialmethod" title="functools.partialmethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">partialmethod</span></code></a> descriptor which behaves
+like <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> except that it is designed to be used as a method
+definition rather than being directly callable.</p>
+<p><em>func</em> must be a <a class="reference internal" href="../glossary.html#term-descriptor"><span class="xref std std-term">descriptor</span></a> or a callable (objects which are both,
+like normal functions, are handled as descriptors).</p>
+<p>When <em>func</em> is a descriptor (such as a normal Python function,
+<a class="reference internal" href="functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">classmethod()</span></code></a>, <a class="reference internal" href="functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">staticmethod()</span></code></a>, <code class="xref py py-func docutils literal notranslate"><span class="pre">abstractmethod()</span></code> or
+another instance of <a class="reference internal" href="#functools.partialmethod" title="functools.partialmethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">partialmethod</span></code></a>), calls to <code class="docutils literal notranslate"><span class="pre">__get__</span></code> are
+delegated to the underlying descriptor, and an appropriate
+<a class="reference internal" href="#partial-objects"><span class="std std-ref">partial object</span></a> returned as the result.</p>
+<p>When <em>func</em> is a non-descriptor callable, an appropriate bound method is
+created dynamically. This behaves like a normal Python function when
+used as a method: the <em>self</em> argument will be inserted as the first
+positional argument, even before the <em>args</em> and <em>keywords</em> supplied to
+the <a class="reference internal" href="#functools.partialmethod" title="functools.partialmethod"><code class="xref py py-class docutils literal notranslate"><span class="pre">partialmethod</span></code></a> constructor.</p>
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">Cell</span><span class="p">:</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="nd">@property</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="k">def</span> <span class="nf">alive</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="6"><span class="gp">... </span>        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span>
+</span><span data-line="7"><span class="gp">... </span>    <span class="k">def</span> <span class="nf">set_state</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+</span><span data-line="8"><span class="gp">... </span>        <span class="bp">self</span><span class="o">.</span><span class="n">_alive</span> <span class="o">=</span> <span class="nb">bool</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span><span data-line="9"><span class="gp">... </span>    <span class="n">set_alive</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">set_state</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>
+</span><span data-line="10"><span class="gp">... </span>    <span class="n">set_dead</span> <span class="o">=</span> <span class="n">partialmethod</span><span class="p">(</span><span class="n">set_state</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</span><span data-line="11"><span class="gp">...</span>
+</span><span data-line="12"><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span> <span class="o">=</span> <span class="n">Cell</span><span class="p">()</span>
+</span><span data-line="13"><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">alive</span>
+</span><span data-line="14"><span class="go">False</span>
+</span><span data-line="15"><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">set_alive</span><span class="p">()</span>
+</span><span data-line="16"><span class="gp">&gt;&gt;&gt; </span><span class="n">c</span><span class="o">.</span><span class="n">alive</span>
+</span><span data-line="17"><span class="go">True</span>
+</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.4.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.reduce">
+<span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">reduce</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">iterable</span></span></em>, <span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">initial</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.reduce" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply <em>function</em> of two arguments cumulatively to the items of <em>iterable</em>, from
+left to right, so as to reduce the iterable to a single value.  For example,
+<code class="docutils literal notranslate"><span class="pre">reduce(lambda</span> <span class="pre">x,</span> <span class="pre">y:</span> <span class="pre">x+y,</span> <span class="pre">[1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5])</span></code> calculates <code class="docutils literal notranslate"><span class="pre">((((1+2)+3)+4)+5)</span></code>.
+The left argument, <em>x</em>, is the accumulated value and the right argument, <em>y</em>, is
+the update value from the <em>iterable</em>.  If the optional <em>initial</em> is present,
+it is placed before the items of the iterable in the calculation, and serves as
+a default when the iterable is empty.  If <em>initial</em> is not given and
+<em>iterable</em> contains only one item, the first item is returned.</p>
+<p>Roughly equivalent to:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">initial_missing</span> <span class="o">=</span> <span class="nb">object</span><span class="p">()</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">def</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">iterable</span><span class="p">,</span> <span class="n">initial</span><span class="o">=</span><span class="n">initial_missing</span><span class="p">,</span> <span class="o">/</span><span class="p">):</span>
+</span><span data-line="4">    <span class="n">it</span> <span class="o">=</span> <span class="nb">iter</span><span class="p">(</span><span class="n">iterable</span><span class="p">)</span>
+</span><span data-line="5">    <span class="k">if</span> <span class="n">initial</span> <span class="ow">is</span> <span class="n">initial_missing</span><span class="p">:</span>
+</span><span data-line="6">        <span class="n">value</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">it</span><span class="p">)</span>
+</span><span data-line="7">    <span class="k">else</span><span class="p">:</span>
+</span><span data-line="8">        <span class="n">value</span> <span class="o">=</span> <span class="n">initial</span>
+</span><span data-line="9">    <span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">it</span><span class="p">:</span>
+</span><span data-line="10">        <span class="n">value</span> <span class="o">=</span> <span class="n">function</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">element</span><span class="p">)</span>
+</span><span data-line="11">    <span class="k">return</span> <span class="n">value</span>
+</span></pre></div>
+</div>
+<p>See <a class="reference internal" href="itertools.html#itertools.accumulate" title="itertools.accumulate"><code class="xref py py-func docutils literal notranslate"><span class="pre">itertools.accumulate()</span></code></a> for an iterator that yields all intermediate
+values.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.singledispatch">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">singledispatch</span></span><a class="headerlink" href="#functools.singledispatch" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a function into a <a class="reference internal" href="../glossary.html#term-single-dispatch"><span class="xref std std-term">single-dispatch</span></a> <a class="reference internal" href="../glossary.html#term-generic-function"><span class="xref std std-term">generic function</span></a>.</p>
+<p>To define a generic function, decorate it with the <code class="docutils literal notranslate"><span class="pre">&#64;singledispatch</span></code>
+decorator. When defining a function using <code class="docutils literal notranslate"><span class="pre">&#64;singledispatch</span></code>, note that the
+dispatch happens on the type of the first argument:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">singledispatch</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@singledispatch</span>
+</span><span data-line="3"><span class="gp">... </span><span class="k">def</span> <span class="nf">fun</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="5"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Let me just say,&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>To add overloaded implementations to the function, use the <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code>
+attribute of the generic function, which can be used as a decorator.  For
+functions annotated with types, the decorator will infer the type of the
+first argument automatically:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="2"><span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="4"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strength in numbers, eh?&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">...</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="8"><span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="9"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="10"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enumerate this:&quot;</span><span class="p">)</span>
+</span><span data-line="11"><span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+</span><span data-line="12"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p><a class="reference internal" href="types.html#types.UnionType" title="types.UnionType"><code class="xref py py-data docutils literal notranslate"><span class="pre">types.UnionType</span></code></a> and <a class="reference internal" href="typing.html#typing.Union" title="typing.Union"><code class="xref py py-data docutils literal notranslate"><span class="pre">typing.Union</span></code></a> can also be used:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="2"><span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="4"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Strength in numbers, eh?&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">...</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">Union</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="9"><span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">list</span><span class="p">,</span> <span class="nb">set</span><span class="p">],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="10"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="11"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enumerate this:&quot;</span><span class="p">)</span>
+</span><span data-line="12"><span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">elem</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">arg</span><span class="p">):</span>
+</span><span data-line="13"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">elem</span><span class="p">)</span>
+</span><span data-line="14"><span class="gp">...</span>
+</span></pre></div>
+</div>
+<p>For code which doesn’t use type annotations, the appropriate type
+argument can be passed explicitly to the decorator itself:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="4"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Better than complicated.&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span data-line="5"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span><span class="o">.</span><span class="n">real</span><span class="p">,</span> <span class="n">arg</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">...</span>
+</span></pre></div>
+</div>
+<p>To enable registering <a class="reference internal" href="../glossary.html#term-lambda"><span class="xref std std-term">lambdas</span></a> and pre-existing functions,
+the <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute can also be used in a functional form:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">nothing</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Nothing.&quot;</span><span class="p">)</span>
+</span><span data-line="3"><span class="gp">...</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="kc">None</span><span class="p">),</span> <span class="n">nothing</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute returns the undecorated function. This
+enables decorator stacking, <a class="reference internal" href="pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickling</span></code></a>, and the creation
+of unit tests for each variant independently:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">... </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Decimal</span><span class="p">)</span>
+</span><span data-line="3"><span class="gp">... </span><span class="k">def</span> <span class="nf">fun_num</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="5"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Half of your number:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">arg</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span>
+</span><span data-line="7"><span class="gp">...</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun_num</span> <span class="ow">is</span> <span class="n">fun</span>
+</span><span data-line="9"><span class="go">False</span>
+</span></pre></div>
+</div>
+<p>When called, the generic function dispatches on the type of the first
+argument:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s2">&quot;Hello, world.&quot;</span><span class="p">)</span>
+</span><span data-line="2"><span class="go">Hello, world.</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="s2">&quot;test.&quot;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="4"><span class="go">Let me just say, test.</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="mi">42</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="6"><span class="go">Strength in numbers, eh? 42</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">([</span><span class="s1">&#39;spam&#39;</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">,</span> <span class="s1">&#39;eggs&#39;</span><span class="p">,</span> <span class="s1">&#39;spam&#39;</span><span class="p">],</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span data-line="8"><span class="go">Enumerate this:</span>
+</span><span data-line="9"><span class="go">0 spam</span>
+</span><span data-line="10"><span class="go">1 spam</span>
+</span><span data-line="11"><span class="go">2 eggs</span>
+</span><span data-line="12"><span class="go">3 spam</span>
+</span><span data-line="13"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span>
+</span><span data-line="14"><span class="go">Nothing.</span>
+</span><span data-line="15"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">(</span><span class="mf">1.23</span><span class="p">)</span>
+</span><span data-line="16"><span class="go">0.615</span>
+</span></pre></div>
+</div>
+<p>Where there is no registered implementation for a specific type, its
+method resolution order is used to find a more generic implementation.
+The original function decorated with <code class="docutils literal notranslate"><span class="pre">&#64;singledispatch</span></code> is registered
+for the base <a class="reference internal" href="functions.html#object" title="object"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a> type, which means it is used if no better
+implementation is found.</p>
+<p>If an implementation is registered to an <a class="reference internal" href="../glossary.html#term-abstract-base-class"><span class="xref std std-term">abstract base class</span></a>,
+virtual subclasses of the base class will be dispatched to that
+implementation:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">collections.abc</span> <span class="kn">import</span> <span class="n">Mapping</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@fun</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="3"><span class="gp">... </span><span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="n">arg</span><span class="p">:</span> <span class="n">Mapping</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+</span><span data-line="5"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Keys &amp; Values&quot;</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">... </span>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">arg</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+</span><span data-line="7"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="s2">&quot;=&gt;&quot;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</span><span data-line="8"><span class="gp">...</span>
+</span><span data-line="9"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="s2">&quot;b&quot;</span><span class="p">})</span>
+</span><span data-line="10"><span class="go">a =&gt; b</span>
+</span></pre></div>
+</div>
+<p>To check which implementation the generic function will choose for
+a given type, use the <code class="docutils literal notranslate"><span class="pre">dispatch()</span></code> attribute:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+</span><span data-line="2"><span class="go">&lt;function fun_num at 0x1035a2840&gt;</span>
+</span><span data-line="3"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">dispatch</span><span class="p">(</span><span class="nb">dict</span><span class="p">)</span>    <span class="c1"># note: default implementation</span>
+</span><span data-line="4"><span class="go">&lt;function fun at 0x103fe0000&gt;</span>
+</span></pre></div>
+</div>
+<p>To access all registered implementations, use the read-only <code class="docutils literal notranslate"><span class="pre">registry</span></code>
+attribute:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+</span><span data-line="2"><span class="go">dict_keys([&lt;class &#39;NoneType&#39;&gt;, &lt;class &#39;int&#39;&gt;, &lt;class &#39;object&#39;&gt;,</span>
+</span><span data-line="3"><span class="go">          &lt;class &#39;decimal.Decimal&#39;&gt;, &lt;class &#39;list&#39;&gt;,</span>
+</span><span data-line="4"><span class="go">          &lt;class &#39;float&#39;&gt;])</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span>
+</span><span data-line="6"><span class="go">&lt;function fun_num at 0x1035a2840&gt;</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">fun</span><span class="o">.</span><span class="n">registry</span><span class="p">[</span><span class="nb">object</span><span class="p">]</span>
+</span><span data-line="8"><span class="go">&lt;function fun at 0x103fe0000&gt;</span>
+</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.4.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>The <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute now supports using type annotations.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span>The <code class="xref py py-func docutils literal notranslate"><span class="pre">register()</span></code> attribute now supports <a class="reference internal" href="types.html#types.UnionType" title="types.UnionType"><code class="xref py py-data docutils literal notranslate"><span class="pre">types.UnionType</span></code></a>
+and <a class="reference internal" href="typing.html#typing.Union" title="typing.Union"><code class="xref py py-data docutils literal notranslate"><span class="pre">typing.Union</span></code></a> as type annotations.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="functools.singledispatchmethod">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">singledispatchmethod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.singledispatchmethod" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform a method into a <a class="reference internal" href="../glossary.html#term-single-dispatch"><span class="xref std std-term">single-dispatch</span></a> <a class="reference internal" href="../glossary.html#term-generic-function"><span class="xref std std-term">generic function</span></a>.</p>
+<p>To define a generic method, decorate it with the <code class="docutils literal notranslate"><span class="pre">&#64;singledispatchmethod</span></code>
+decorator. When defining a function using <code class="docutils literal notranslate"><span class="pre">&#64;singledispatchmethod</span></code>, note
+that the dispatch happens on the type of the first non-<em>self</em> or non-<em>cls</em>
+argument:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">Negator</span><span class="p">:</span>
+</span><span data-line="2">    <span class="nd">@singledispatchmethod</span>
+</span><span data-line="3">    <span class="k">def</span> <span class="nf">neg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+</span><span data-line="4">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Cannot negate a&quot;</span><span class="p">)</span>
+</span><span data-line="5">
+</span><span data-line="6">    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="7">    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span data-line="8">        <span class="k">return</span> <span class="o">-</span><span class="n">arg</span>
+</span><span data-line="9">
+</span><span data-line="10">    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="11">    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+</span><span data-line="12">        <span class="k">return</span> <span class="ow">not</span> <span class="n">arg</span>
+</span></pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">&#64;singledispatchmethod</span></code> supports nesting with other decorators such as
+<a class="reference internal" href="functions.html#classmethod" title="classmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;classmethod</span></code></a>. Note that to allow for
+<code class="docutils literal notranslate"><span class="pre">dispatcher.register</span></code>, <code class="docutils literal notranslate"><span class="pre">singledispatchmethod</span></code> must be the <em>outer most</em>
+decorator. Here is the <code class="docutils literal notranslate"><span class="pre">Negator</span></code> class with the <code class="docutils literal notranslate"><span class="pre">neg</span></code> methods bound to
+the class, rather than an instance of the class:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">Negator</span><span class="p">:</span>
+</span><span data-line="2">    <span class="nd">@singledispatchmethod</span>
+</span><span data-line="3">    <span class="nd">@classmethod</span>
+</span><span data-line="4">    <span class="k">def</span> <span class="nf">neg</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">):</span>
+</span><span data-line="5">        <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Cannot negate a&quot;</span><span class="p">)</span>
+</span><span data-line="6">
+</span><span data-line="7">    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="8">    <span class="nd">@classmethod</span>
+</span><span data-line="9">    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">int</span><span class="p">):</span>
+</span><span data-line="10">        <span class="k">return</span> <span class="o">-</span><span class="n">arg</span>
+</span><span data-line="11">
+</span><span data-line="12">    <span class="nd">@neg</span><span class="o">.</span><span class="n">register</span>
+</span><span data-line="13">    <span class="nd">@classmethod</span>
+</span><span data-line="14">    <span class="k">def</span> <span class="nf">_</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">arg</span><span class="p">:</span> <span class="nb">bool</span><span class="p">):</span>
+</span><span data-line="15">        <span class="k">return</span> <span class="ow">not</span> <span class="n">arg</span>
+</span></pre></div>
+</div>
+<p>The same pattern can be used for other similar decorators:
+<a class="reference internal" href="functions.html#staticmethod" title="staticmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;staticmethod</span></code></a>,
+<a class="reference internal" href="abc.html#abc.abstractmethod" title="abc.abstractmethod"><code class="xref py py-func docutils literal notranslate"><span class="pre">&#64;abstractmethod</span></code></a>, and others.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.update_wrapper">
+<span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">update_wrapper</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapper</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wrapped</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assigned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WRAPPER_ASSIGNMENTS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WRAPPER_UPDATES</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.update_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>Update a <em>wrapper</em> function to look like the <em>wrapped</em> function. The optional
+arguments are tuples to specify which attributes of the original function are
+assigned directly to the matching attributes on the wrapper function and which
+attributes of the wrapper function are updated with the corresponding attributes
+from the original function. The default values for these arguments are the
+module level constants <code class="docutils literal notranslate"><span class="pre">WRAPPER_ASSIGNMENTS</span></code> (which assigns to the wrapper
+function’s <code class="docutils literal notranslate"><span class="pre">__module__</span></code>, <code class="docutils literal notranslate"><span class="pre">__name__</span></code>, <code class="docutils literal notranslate"><span class="pre">__qualname__</span></code>, <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code>
+and <code class="docutils literal notranslate"><span class="pre">__doc__</span></code>, the documentation string) and <code class="docutils literal notranslate"><span class="pre">WRAPPER_UPDATES</span></code> (which
+updates the wrapper function’s <code class="docutils literal notranslate"><span class="pre">__dict__</span></code>, i.e. the instance dictionary).</p>
+<p>To allow access to the original function for introspection and other purposes
+(e.g. bypassing a caching decorator such as <a class="reference internal" href="#functools.lru_cache" title="functools.lru_cache"><code class="xref py py-func docutils literal notranslate"><span class="pre">lru_cache()</span></code></a>), this function
+automatically adds a <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute to the wrapper that refers to
+the function being wrapped.</p>
+<p>The main intended use for this function is in <a class="reference internal" href="../glossary.html#term-decorator"><span class="xref std std-term">decorator</span></a> functions which
+wrap the decorated function and return the wrapper. If the wrapper function is
+not updated, the metadata of the returned function will reflect the wrapper
+definition rather than the original function definition, which is typically less
+than helpful.</p>
+<p><a class="reference internal" href="#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">update_wrapper()</span></code></a> may be used with callables other than functions. Any
+attributes named in <em>assigned</em> or <em>updated</em> that are missing from the object
+being wrapped are ignored (i.e. this function will not attempt to set them
+on the wrapper function). <a class="reference internal" href="exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a> is still raised if the
+wrapper function itself is missing any attributes named in <em>updated</em>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2: </span>Automatic addition of the <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2: </span>Copying of the <code class="docutils literal notranslate"><span class="pre">__annotations__</span></code> attribute by default.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span>Missing attributes no longer trigger an <a class="reference internal" href="exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.4: </span>The <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute now always refers to the wrapped
+function, even if that function defined a <code class="docutils literal notranslate"><span class="pre">__wrapped__</span></code> attribute.
+(see <a class="reference external" href="https://bugs.python.org/issue?&#64;action=redirect&amp;bpo=17482">bpo-17482</a>)</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="functools.wraps">
+<span class="sig-prename descclassname"><span class="pre">&#64;</span></span><span class="sig-prename descclassname"><span class="pre">functools.</span></span><span class="sig-name descname"><span class="pre">wraps</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wrapped</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">assigned</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WRAPPER_ASSIGNMENTS</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">updated</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">WRAPPER_UPDATES</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#functools.wraps" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a convenience function for invoking <a class="reference internal" href="#functools.update_wrapper" title="functools.update_wrapper"><code class="xref py py-func docutils literal notranslate"><span class="pre">update_wrapper()</span></code></a> as a
+function decorator when defining a wrapper function.  It is equivalent to
+<code class="docutils literal notranslate"><span class="pre">partial(update_wrapper,</span> <span class="pre">wrapped=wrapped,</span> <span class="pre">assigned=assigned,</span> <span class="pre">updated=updated)</span></code>.
+For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">wraps</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">my_decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="nd">@wraps</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">... </span>    <span class="k">def</span> <span class="nf">wrapper</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">):</span>
+</span><span data-line="5"><span class="gp">... </span>        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Calling decorated function&#39;</span><span class="p">)</span>
+</span><span data-line="6"><span class="gp">... </span>        <span class="k">return</span> <span class="n">f</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwds</span><span class="p">)</span>
+</span><span data-line="7"><span class="gp">... </span>    <span class="k">return</span> <span class="n">wrapper</span>
+</span><span data-line="8"><span class="gp">...</span>
+</span><span data-line="9"><span class="gp">&gt;&gt;&gt; </span><span class="nd">@my_decorator</span>
+</span><span data-line="10"><span class="gp">... </span><span class="k">def</span> <span class="nf">example</span><span class="p">():</span>
+</span><span data-line="11"><span class="gp">... </span><span class="w">    </span><span class="sd">&quot;&quot;&quot;Docstring&quot;&quot;&quot;</span>
+</span><span data-line="12"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Called example function&#39;</span><span class="p">)</span>
+</span><span data-line="13"><span class="gp">...</span>
+</span><span data-line="14"><span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="p">()</span>
+</span><span data-line="15"><span class="go">Calling decorated function</span>
+</span><span data-line="16"><span class="go">Called example function</span>
+</span><span data-line="17"><span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="o">.</span><span class="vm">__name__</span>
+</span><span data-line="18"><span class="go">&#39;example&#39;</span>
+</span><span data-line="19"><span class="gp">&gt;&gt;&gt; </span><span class="n">example</span><span class="o">.</span><span class="vm">__doc__</span>
+</span><span data-line="20"><span class="go">&#39;Docstring&#39;</span>
+</span></pre></div>
+</div>
+<p>Without the use of this decorator factory, the name of the example function
+would have been <code class="docutils literal notranslate"><span class="pre">'wrapper'</span></code>, and the docstring of the original <code class="xref py py-func docutils literal notranslate"><span class="pre">example()</span></code>
+would have been lost.</p>
+</dd></dl>
+
+<section id="partial-objects">
+<span id="id1"></span><h2><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> Objects<a class="headerlink" href="#partial-objects" title="Permalink to this heading">¶</a></h2>
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> objects are callable objects created by <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-func docutils literal notranslate"><span class="pre">partial()</span></code></a>. They
+have three read-only attributes:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functools.partial.func">
+<span class="sig-prename descclassname"><span class="pre">partial.</span></span><span class="sig-name descname"><span class="pre">func</span></span><a class="headerlink" href="#functools.partial.func" title="Permalink to this definition">¶</a></dt>
+<dd><p>A callable object or function.  Calls to the <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> object will be
+forwarded to <a class="reference internal" href="#functools.partial.func" title="functools.partial.func"><code class="xref py py-attr docutils literal notranslate"><span class="pre">func</span></code></a> with new arguments and keywords.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functools.partial.args">
+<span class="sig-prename descclassname"><span class="pre">partial.</span></span><span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#functools.partial.args" title="Permalink to this definition">¶</a></dt>
+<dd><p>The leftmost positional arguments that will be prepended to the positional
+arguments provided to a <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> object call.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="functools.partial.keywords">
+<span class="sig-prename descclassname"><span class="pre">partial.</span></span><span class="sig-name descname"><span class="pre">keywords</span></span><a class="headerlink" href="#functools.partial.keywords" title="Permalink to this definition">¶</a></dt>
+<dd><p>The keyword arguments that will be supplied when the <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> object is
+called.</p>
+</dd></dl>
+
+<p><a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> objects are like <code class="xref py py-class docutils literal notranslate"><span class="pre">function</span></code> objects in that they are
+callable, weak referencable, and can have attributes.  There are some important
+differences.  For instance, the <a class="reference internal" href="stdtypes.html#definition.__name__" title="definition.__name__"><code class="xref py py-attr docutils literal notranslate"><span class="pre">__name__</span></code></a> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">__doc__</span></code> attributes
+are not created automatically.  Also, <a class="reference internal" href="#functools.partial" title="functools.partial"><code class="xref py py-class docutils literal notranslate"><span class="pre">partial</span></code></a> objects defined in
+classes behave like static methods and do not transform into bound methods
+during instance attribute look-up.</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="itertools.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="operator.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

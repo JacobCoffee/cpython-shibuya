@@ -1,0 +1,1651 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>2. Lexical analysis - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="3. Data model" href="datamodel.html" /><link rel="prev" title="1. Introduction" href="introduction.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="2. Lexical analysis"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Language Reference</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="introduction.html">1. Introduction</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../library/index.html">The Python Standard Library</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../library/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../library/socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../library/email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../library/json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../library/superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../library/security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#line-structure">2.1. Line structure</a><ul>
+<li><a class="reference internal" href="#logical-lines">2.1.1. Logical lines</a></li>
+<li><a class="reference internal" href="#physical-lines">2.1.2. Physical lines</a></li>
+<li><a class="reference internal" href="#comments">2.1.3. Comments</a></li>
+<li><a class="reference internal" href="#encoding-declarations">2.1.4. Encoding declarations</a></li>
+<li><a class="reference internal" href="#explicit-line-joining">2.1.5. Explicit line joining</a></li>
+<li><a class="reference internal" href="#implicit-line-joining">2.1.6. Implicit line joining</a></li>
+<li><a class="reference internal" href="#blank-lines">2.1.7. Blank lines</a></li>
+<li><a class="reference internal" href="#indentation">2.1.8. Indentation</a></li>
+<li><a class="reference internal" href="#whitespace-between-tokens">2.1.9. Whitespace between tokens</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#other-tokens">2.2. Other tokens</a></li>
+<li><a class="reference internal" href="#identifiers">2.3. Identifiers and keywords</a><ul>
+<li><a class="reference internal" href="#keywords">2.3.1. Keywords</a></li>
+<li><a class="reference internal" href="#soft-keywords">2.3.2. Soft Keywords</a></li>
+<li><a class="reference internal" href="#reserved-classes-of-identifiers">2.3.3. Reserved classes of identifiers</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#literals">2.4. Literals</a><ul>
+<li><a class="reference internal" href="#string-and-bytes-literals">2.4.1. String and Bytes literals</a><ul>
+<li><a class="reference internal" href="#escape-sequences">2.4.1.1. Escape sequences</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#string-literal-concatenation">2.4.2. String literal concatenation</a></li>
+<li><a class="reference internal" href="#formatted-string-literals">2.4.3. Formatted string literals</a></li>
+<li><a class="reference internal" href="#numeric-literals">2.4.4. Numeric literals</a></li>
+<li><a class="reference internal" href="#integer-literals">2.4.5. Integer literals</a></li>
+<li><a class="reference internal" href="#floating-point-literals">2.4.6. Floating point literals</a></li>
+<li><a class="reference internal" href="#imaginary-literals">2.4.7. Imaginary literals</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#operators">2.5. Operators</a></li>
+<li><a class="reference internal" href="#delimiters">2.6. Delimiters</a></li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/reference/lexical_analysis.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Language Reference</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><span class="section-number">2. </span>Lexical analysis</strong>
+        <meta itemprop="position" content="3" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="lexical-analysis">
+<span id="lexical"></span><h1><span class="section-number">2. </span>Lexical analysis<a class="headerlink" href="#lexical-analysis" title="Permalink to this heading">¶</a></h1>
+<p id="index-0">A Python program is read by a <em>parser</em>.  Input to the parser is a stream of
+<em>tokens</em>, generated by the <em>lexical analyzer</em>.  This chapter describes how the
+lexical analyzer breaks a file into tokens.</p>
+<p>Python reads program text as Unicode code points; the encoding of a source file
+can be given by an encoding declaration and defaults to UTF-8, see <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-3120/"><strong>PEP 3120</strong></a>
+for details.  If the source file cannot be decoded, a <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a> is
+raised.</p>
+<section id="line-structure">
+<span id="id1"></span><h2><span class="section-number">2.1. </span>Line structure<a class="headerlink" href="#line-structure" title="Permalink to this heading">¶</a></h2>
+<p id="index-2">A Python program is divided into a number of <em>logical lines</em>.</p>
+<section id="logical-lines">
+<span id="id2"></span><h3><span class="section-number">2.1.1. </span>Logical lines<a class="headerlink" href="#logical-lines" title="Permalink to this heading">¶</a></h3>
+<p id="index-3">The end of a logical line is represented by the token NEWLINE.  Statements
+cannot cross logical line boundaries except where NEWLINE is allowed by the
+syntax (e.g., between statements in compound statements). A logical line is
+constructed from one or more <em>physical lines</em> by following the explicit or
+implicit <em>line joining</em> rules.</p>
+</section>
+<section id="physical-lines">
+<span id="id3"></span><h3><span class="section-number">2.1.2. </span>Physical lines<a class="headerlink" href="#physical-lines" title="Permalink to this heading">¶</a></h3>
+<p>A physical line is a sequence of characters terminated by an end-of-line
+sequence.  In source files and strings, any of the standard platform line
+termination sequences can be used - the Unix form using ASCII LF (linefeed),
+the Windows form using the ASCII sequence CR LF (return followed by linefeed),
+or the old Macintosh form using the ASCII CR (return) character.  All of these
+forms can be used equally, regardless of platform. The end of input also serves
+as an implicit terminator for the final physical line.</p>
+<p>When embedding Python, source code strings should be passed to Python APIs using
+the standard C conventions for newline characters (the <code class="docutils literal notranslate"><span class="pre">\n</span></code> character,
+representing ASCII LF, is the line terminator).</p>
+</section>
+<section id="comments">
+<span id="id4"></span><h3><span class="section-number">2.1.3. </span>Comments<a class="headerlink" href="#comments" title="Permalink to this heading">¶</a></h3>
+<p id="index-4">A comment starts with a hash character (<code class="docutils literal notranslate"><span class="pre">#</span></code>) that is not part of a string
+literal, and ends at the end of the physical line.  A comment signifies the end
+of the logical line unless the implicit line joining rules are invoked. Comments
+are ignored by the syntax.</p>
+</section>
+<section id="encoding-declarations">
+<span id="encodings"></span><h3><span class="section-number">2.1.4. </span>Encoding declarations<a class="headerlink" href="#encoding-declarations" title="Permalink to this heading">¶</a></h3>
+<p id="index-5">If a comment in the first or second line of the Python script matches the
+regular expression <code class="docutils literal notranslate"><span class="pre">coding[=:]\s*([-\w.]+)</span></code>, this comment is processed as an
+encoding declaration; the first group of this expression names the encoding of
+the source code file. The encoding declaration must appear on a line of its
+own. If it is the second line, the first line must also be a comment-only line.
+The recommended forms of an encoding expression are</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># -*- coding: &lt;encoding-name&gt; -*-</span>
+</span></pre></div>
+</div>
+<p>which is recognized also by GNU Emacs, and</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># vim:fileencoding=&lt;encoding-name&gt;</span>
+</span></pre></div>
+</div>
+<p>which is recognized by Bram Moolenaar’s VIM.</p>
+<p>If no encoding declaration is found, the default encoding is UTF-8.  In
+addition, if the first bytes of the file are the UTF-8 byte-order mark
+(<code class="docutils literal notranslate"><span class="pre">b'\xef\xbb\xbf'</span></code>), the declared file encoding is UTF-8 (this is supported,
+among others, by Microsoft’s <strong class="program">notepad</strong>).</p>
+<p>If an encoding is declared, the encoding name must be recognized by Python
+(see <a class="reference internal" href="../library/codecs.html#standard-encodings"><span class="std std-ref">Standard Encodings</span></a>). The
+encoding is used for all lexical analysis, including string literals, comments
+and identifiers.</p>
+</section>
+<section id="explicit-line-joining">
+<span id="explicit-joining"></span><h3><span class="section-number">2.1.5. </span>Explicit line joining<a class="headerlink" href="#explicit-line-joining" title="Permalink to this heading">¶</a></h3>
+<p id="index-6">Two or more physical lines may be joined into logical lines using backslash
+characters (<code class="docutils literal notranslate"><span class="pre">\</span></code>), as follows: when a physical line ends in a backslash that is
+not part of a string literal or comment, it is joined with the following forming
+a single logical line, deleting the backslash and the following end-of-line
+character.  For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">if</span> <span class="mi">1900</span> <span class="o">&lt;</span> <span class="n">year</span> <span class="o">&lt;</span> <span class="mi">2100</span> <span class="ow">and</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">month</span> <span class="o">&lt;=</span> <span class="mi">12</span> \
+</span><span data-line="2">   <span class="ow">and</span> <span class="mi">1</span> <span class="o">&lt;=</span> <span class="n">day</span> <span class="o">&lt;=</span> <span class="mi">31</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">hour</span> <span class="o">&lt;</span> <span class="mi">24</span> \
+</span><span data-line="3">   <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">minute</span> <span class="o">&lt;</span> <span class="mi">60</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">second</span> <span class="o">&lt;</span> <span class="mi">60</span><span class="p">:</span>   <span class="c1"># Looks like a valid date</span>
+</span><span data-line="4">        <span class="k">return</span> <span class="mi">1</span>
+</span></pre></div>
+</div>
+<p>A line ending in a backslash cannot carry a comment.  A backslash does not
+continue a comment.  A backslash does not continue a token except for string
+literals (i.e., tokens other than string literals cannot be split across
+physical lines using a backslash).  A backslash is illegal elsewhere on a line
+outside a string literal.</p>
+</section>
+<section id="implicit-line-joining">
+<span id="implicit-joining"></span><h3><span class="section-number">2.1.6. </span>Implicit line joining<a class="headerlink" href="#implicit-line-joining" title="Permalink to this heading">¶</a></h3>
+<p>Expressions in parentheses, square brackets or curly braces can be split over
+more than one physical line without using backslashes. For example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">month_names</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Januari&#39;</span><span class="p">,</span> <span class="s1">&#39;Februari&#39;</span><span class="p">,</span> <span class="s1">&#39;Maart&#39;</span><span class="p">,</span>      <span class="c1"># These are the</span>
+</span><span data-line="2">               <span class="s1">&#39;April&#39;</span><span class="p">,</span>   <span class="s1">&#39;Mei&#39;</span><span class="p">,</span>      <span class="s1">&#39;Juni&#39;</span><span class="p">,</span>       <span class="c1"># Dutch names</span>
+</span><span data-line="3">               <span class="s1">&#39;Juli&#39;</span><span class="p">,</span>    <span class="s1">&#39;Augustus&#39;</span><span class="p">,</span> <span class="s1">&#39;September&#39;</span><span class="p">,</span>  <span class="c1"># for the months</span>
+</span><span data-line="4">               <span class="s1">&#39;Oktober&#39;</span><span class="p">,</span> <span class="s1">&#39;November&#39;</span><span class="p">,</span> <span class="s1">&#39;December&#39;</span><span class="p">]</span>   <span class="c1"># of the year</span>
+</span></pre></div>
+</div>
+<p>Implicitly continued lines can carry comments.  The indentation of the
+continuation lines is not important.  Blank continuation lines are allowed.
+There is no NEWLINE token between implicit continuation lines.  Implicitly
+continued lines can also occur within triple-quoted strings (see below); in that
+case they cannot carry comments.</p>
+</section>
+<section id="blank-lines">
+<span id="id5"></span><h3><span class="section-number">2.1.7. </span>Blank lines<a class="headerlink" href="#blank-lines" title="Permalink to this heading">¶</a></h3>
+<p id="index-7">A logical line that contains only spaces, tabs, formfeeds and possibly a
+comment, is ignored (i.e., no NEWLINE token is generated).  During interactive
+input of statements, handling of a blank line may differ depending on the
+implementation of the read-eval-print loop.  In the standard interactive
+interpreter, an entirely blank logical line (i.e. one containing not even
+whitespace or a comment) terminates a multi-line statement.</p>
+</section>
+<section id="indentation">
+<span id="id6"></span><h3><span class="section-number">2.1.8. </span>Indentation<a class="headerlink" href="#indentation" title="Permalink to this heading">¶</a></h3>
+<p id="index-8">Leading whitespace (spaces and tabs) at the beginning of a logical line is used
+to compute the indentation level of the line, which in turn is used to determine
+the grouping of statements.</p>
+<p>Tabs are replaced (from left to right) by one to eight spaces such that the
+total number of characters up to and including the replacement is a multiple of
+eight (this is intended to be the same rule as used by Unix).  The total number
+of spaces preceding the first non-blank character then determines the line’s
+indentation.  Indentation cannot be split over multiple physical lines using
+backslashes; the whitespace up to the first backslash determines the
+indentation.</p>
+<p>Indentation is rejected as inconsistent if a source file mixes tabs and spaces
+in a way that makes the meaning dependent on the worth of a tab in spaces; a
+<a class="reference internal" href="../library/exceptions.html#TabError" title="TabError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TabError</span></code></a> is raised in that case.</p>
+<p><strong>Cross-platform compatibility note:</strong> because of the nature of text editors on
+non-UNIX platforms, it is unwise to use a mixture of spaces and tabs for the
+indentation in a single source file.  It should also be noted that different
+platforms may explicitly limit the maximum indentation level.</p>
+<p>A formfeed character may be present at the start of the line; it will be ignored
+for the indentation calculations above.  Formfeed characters occurring elsewhere
+in the leading whitespace have an undefined effect (for instance, they may reset
+the space count to zero).</p>
+<p id="index-9">The indentation levels of consecutive lines are used to generate INDENT and
+DEDENT tokens, using a stack, as follows.</p>
+<p>Before the first line of the file is read, a single zero is pushed on the stack;
+this will never be popped off again.  The numbers pushed on the stack will
+always be strictly increasing from bottom to top.  At the beginning of each
+logical line, the line’s indentation level is compared to the top of the stack.
+If it is equal, nothing happens. If it is larger, it is pushed on the stack, and
+one INDENT token is generated.  If it is smaller, it <em>must</em> be one of the
+numbers occurring on the stack; all numbers on the stack that are larger are
+popped off, and for each number popped off a DEDENT token is generated.  At the
+end of the file, a DEDENT token is generated for each number remaining on the
+stack that is larger than zero.</p>
+<p>Here is an example of a correctly (though confusingly) indented piece of Python
+code:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span> <span class="nf">perm</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>
+</span><span data-line="2">        <span class="c1"># Compute the list of all permutations of l</span>
+</span><span data-line="3">    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+</span><span data-line="4">                  <span class="k">return</span> <span class="p">[</span><span class="n">l</span><span class="p">]</span>
+</span><span data-line="5">    <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="6">    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>
+</span><span data-line="7">             <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+</span><span data-line="8">             <span class="n">p</span> <span class="o">=</span> <span class="n">perm</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span data-line="9">             <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+</span><span data-line="10">              <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span><span data-line="11">    <span class="k">return</span> <span class="n">r</span>
+</span></pre></div>
+</div>
+<p>The following example shows various indentation errors:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"> <span class="k">def</span> <span class="nf">perm</span><span class="p">(</span><span class="n">l</span><span class="p">):</span>                       <span class="c1"># error: first line indented</span>
+</span><span data-line="2"><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">l</span><span class="p">)):</span>             <span class="c1"># error: not indented</span>
+</span><span data-line="3">    <span class="n">s</span> <span class="o">=</span> <span class="n">l</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:]</span>
+</span><span data-line="4">        <span class="n">p</span> <span class="o">=</span> <span class="n">perm</span><span class="p">(</span><span class="n">l</span><span class="p">[:</span><span class="n">i</span><span class="p">]</span> <span class="o">+</span> <span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">:])</span>   <span class="c1"># error: unexpected indent</span>
+</span><span data-line="5">        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">p</span><span class="p">:</span>
+</span><span data-line="6">                <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">l</span><span class="p">[</span><span class="n">i</span><span class="p">:</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">x</span><span class="p">)</span>
+</span><span data-line="7">            <span class="k">return</span> <span class="n">r</span>                <span class="c1"># error: inconsistent dedent</span>
+</span></pre></div>
+</div>
+<p>(Actually, the first three errors are detected by the parser; only the last
+error is found by the lexical analyzer — the indentation of <code class="docutils literal notranslate"><span class="pre">return</span> <span class="pre">r</span></code> does
+not match a level popped off the stack.)</p>
+</section>
+<section id="whitespace-between-tokens">
+<span id="whitespace"></span><h3><span class="section-number">2.1.9. </span>Whitespace between tokens<a class="headerlink" href="#whitespace-between-tokens" title="Permalink to this heading">¶</a></h3>
+<p>Except at the beginning of a logical line or in string literals, the whitespace
+characters space, tab and formfeed can be used interchangeably to separate
+tokens.  Whitespace is needed between two tokens only if their concatenation
+could otherwise be interpreted as a different token (e.g., ab is one token, but
+a b is two tokens).</p>
+</section>
+</section>
+<section id="other-tokens">
+<span id="id7"></span><h2><span class="section-number">2.2. </span>Other tokens<a class="headerlink" href="#other-tokens" title="Permalink to this heading">¶</a></h2>
+<p>Besides NEWLINE, INDENT and DEDENT, the following categories of tokens exist:
+<em>identifiers</em>, <em>keywords</em>, <em>literals</em>, <em>operators</em>, and <em>delimiters</em>. Whitespace
+characters (other than line terminators, discussed earlier) are not tokens, but
+serve to delimit tokens. Where ambiguity exists, a token comprises the longest
+possible string that forms a legal token, when read from left to right.</p>
+</section>
+<section id="identifiers">
+<span id="identifiers-and-keywords"></span><h2><span class="section-number">2.3. </span>Identifiers and keywords<a class="headerlink" href="#identifiers" title="Permalink to this heading">¶</a></h2>
+<p id="index-10">Identifiers (also referred to as <em>names</em>) are described by the following lexical
+definitions.</p>
+<p>The syntax of identifiers in Python is based on the Unicode standard annex
+UAX-31, with elaboration and changes as defined below; see also <span class="target" id="index-11"></span><a class="pep reference external" href="https://peps.python.org/pep-3131/"><strong>PEP 3131</strong></a> for
+further details.</p>
+<p>Within the ASCII range (U+0001..U+007F), the valid characters for identifiers
+are the same as in Python 2.x: the uppercase and lowercase letters <code class="docutils literal notranslate"><span class="pre">A</span></code> through
+<code class="docutils literal notranslate"><span class="pre">Z</span></code>, the underscore <code class="docutils literal notranslate"><span class="pre">_</span></code> and, except for the first character, the digits
+<code class="docutils literal notranslate"><span class="pre">0</span></code> through <code class="docutils literal notranslate"><span class="pre">9</span></code>.</p>
+<p>Python 3.0 introduces additional characters from outside the ASCII range (see
+<span class="target" id="index-12"></span><a class="pep reference external" href="https://peps.python.org/pep-3131/"><strong>PEP 3131</strong></a>).  For these characters, the classification uses the version of the
+Unicode Character Database as included in the <a class="reference internal" href="../library/unicodedata.html#module-unicodedata" title="unicodedata: Access the Unicode Database."><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code></a> module.</p>
+<p>Identifiers are unlimited in length.  Case is significant.</p>
+<pre>
+<strong id="grammar-token-python-grammar-identifier">identifier  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-xid_start"><code class="xref docutils literal notranslate"><span class="pre">xid_start</span></code></a> <a class="reference internal" href="#grammar-token-python-grammar-xid_continue"><code class="xref docutils literal notranslate"><span class="pre">xid_continue</span></code></a>*
+<strong id="grammar-token-python-grammar-id_start">id_start    </strong> ::=  &lt;all characters in general categories Lu, Ll, Lt, Lm, Lo, Nl, the underscore, and characters with the Other_ID_Start property&gt;
+<strong id="grammar-token-python-grammar-id_continue">id_continue </strong> ::=  &lt;all characters in <a class="reference internal" href="#grammar-token-python-grammar-id_start"><code class="xref docutils literal notranslate"><span class="pre">id_start</span></code></a>, plus characters in the categories Mn, Mc, Nd, Pc and others with the Other_ID_Continue property&gt;
+<strong id="grammar-token-python-grammar-xid_start">xid_start   </strong> ::=  &lt;all characters in <a class="reference internal" href="#grammar-token-python-grammar-id_start"><code class="xref docutils literal notranslate"><span class="pre">id_start</span></code></a> whose NFKC normalization is in &quot;id_start xid_continue*&quot;&gt;
+<strong id="grammar-token-python-grammar-xid_continue">xid_continue</strong> ::=  &lt;all characters in <a class="reference internal" href="#grammar-token-python-grammar-id_continue"><code class="xref docutils literal notranslate"><span class="pre">id_continue</span></code></a> whose NFKC normalization is in &quot;id_continue*&quot;&gt;
+</pre>
+<p>The Unicode category codes mentioned above stand for:</p>
+<ul class="simple">
+<li><p><em>Lu</em> - uppercase letters</p></li>
+<li><p><em>Ll</em> - lowercase letters</p></li>
+<li><p><em>Lt</em> - titlecase letters</p></li>
+<li><p><em>Lm</em> - modifier letters</p></li>
+<li><p><em>Lo</em> - other letters</p></li>
+<li><p><em>Nl</em> - letter numbers</p></li>
+<li><p><em>Mn</em> - nonspacing marks</p></li>
+<li><p><em>Mc</em> - spacing combining marks</p></li>
+<li><p><em>Nd</em> - decimal numbers</p></li>
+<li><p><em>Pc</em> - connector punctuations</p></li>
+<li><p><em>Other_ID_Start</em> - explicit list of characters in <a class="reference external" href="https://www.unicode.org/Public/15.1.0/ucd/PropList.txt">PropList.txt</a> to support backwards
+compatibility</p></li>
+<li><p><em>Other_ID_Continue</em> - likewise</p></li>
+</ul>
+<p>All identifiers are converted into the normal form NFKC while parsing; comparison
+of identifiers is based on NFKC.</p>
+<p>A non-normative HTML file listing all valid identifier characters for Unicode
+15.1.0 can be found at
+<a class="reference external" href="https://www.unicode.org/Public/15.1.0/ucd/DerivedCoreProperties.txt">https://www.unicode.org/Public/15.1.0/ucd/DerivedCoreProperties.txt</a></p>
+<section id="keywords">
+<span id="id8"></span><h3><span class="section-number">2.3.1. </span>Keywords<a class="headerlink" href="#keywords" title="Permalink to this heading">¶</a></h3>
+<p id="index-13">The following identifiers are used as reserved words, or <em>keywords</em> of the
+language, and cannot be used as ordinary identifiers.  They must be spelled
+exactly as written here:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">False      await      else       import     pass
+</span><span data-line="2">None       break      except     in         raise
+</span><span data-line="3">True       class      finally    is         return
+</span><span data-line="4">and        continue   for        lambda     try
+</span><span data-line="5">as         def        from       nonlocal   while
+</span><span data-line="6">assert     del        global     not        with
+</span><span data-line="7">async      elif       if         or         yield
+</span></pre></div>
+</div>
+</section>
+<section id="soft-keywords">
+<span id="id9"></span><h3><span class="section-number">2.3.2. </span>Soft Keywords<a class="headerlink" href="#soft-keywords" title="Permalink to this heading">¶</a></h3>
+<div class="versionadded" id="index-14">
+<p><span class="versionmodified added">New in version 3.10.</span></p>
+</div>
+<p>Some identifiers are only reserved under specific contexts. These are known as
+<em>soft keywords</em>.  The identifiers <code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">case</span></code>, <code class="docutils literal notranslate"><span class="pre">type</span></code> and <code class="docutils literal notranslate"><span class="pre">_</span></code> can
+syntactically act as keywords in certain contexts,
+but this distinction is done at the parser level, not when tokenizing.</p>
+<p>As soft keywords, their use in the grammar is possible while still
+preserving compatibility with existing code that uses these names as
+identifier names.</p>
+<p><code class="docutils literal notranslate"><span class="pre">match</span></code>, <code class="docutils literal notranslate"><span class="pre">case</span></code>, and <code class="docutils literal notranslate"><span class="pre">_</span></code> are used in the <a class="reference internal" href="compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a> statement.
+<code class="docutils literal notranslate"><span class="pre">type</span></code> is used in the <a class="reference internal" href="simple_stmts.html#type"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code></a> statement.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span><code class="docutils literal notranslate"><span class="pre">type</span></code> is now a soft keyword.</p>
+</div>
+</section>
+<section id="reserved-classes-of-identifiers">
+<span id="id-classes"></span><span id="index-15"></span><h3><span class="section-number">2.3.3. </span>Reserved classes of identifiers<a class="headerlink" href="#reserved-classes-of-identifiers" title="Permalink to this heading">¶</a></h3>
+<p>Certain classes of identifiers (besides keywords) have special meanings.  These
+classes are identified by the patterns of leading and trailing underscore
+characters:</p>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">_*</span></code></dt><dd><p>Not imported by <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">module</span> <span class="pre">import</span> <span class="pre">*</span></code>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">_</span></code></dt><dd><p>In a <code class="docutils literal notranslate"><span class="pre">case</span></code> pattern within a <a class="reference internal" href="compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a> statement, <code class="docutils literal notranslate"><span class="pre">_</span></code> is a
+<a class="reference internal" href="#soft-keywords"><span class="std std-ref">soft keyword</span></a> that denotes a
+<a class="reference internal" href="compound_stmts.html#wildcard-patterns"><span class="std std-ref">wildcard</span></a>.</p>
+<p>Separately, the interactive interpreter makes the result of the last evaluation
+available in the variable <code class="docutils literal notranslate"><span class="pre">_</span></code>.
+(It is stored in the <a class="reference internal" href="../library/builtins.html#module-builtins" title="builtins: The module that provides the built-in namespace."><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code></a> module, alongside built-in
+functions like <code class="docutils literal notranslate"><span class="pre">print</span></code>.)</p>
+<p>Elsewhere, <code class="docutils literal notranslate"><span class="pre">_</span></code> is a regular identifier. It is often used to name
+“special” items, but it is not special to Python itself.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The name <code class="docutils literal notranslate"><span class="pre">_</span></code> is often used in conjunction with internationalization;
+refer to the documentation for the <a class="reference internal" href="../library/gettext.html#module-gettext" title="gettext: Multilingual internationalization services."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code></a> module for more
+information on this convention.</p>
+<p>It is also commonly used for unused variables.</p>
+</div>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">__*__</span></code></dt><dd><p>System-defined names, informally known as “dunder” names. These names are
+defined by the interpreter and its implementation (including the standard library).
+Current system names are discussed in the <a class="reference internal" href="datamodel.html#specialnames"><span class="std std-ref">Special method names</span></a> section and elsewhere.
+More will likely be defined in future versions of Python.  <em>Any</em> use of <code class="docutils literal notranslate"><span class="pre">__*__</span></code> names,
+in any context, that does not follow explicitly documented use, is subject to
+breakage without warning.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">__*</span></code></dt><dd><p>Class-private names.  Names in this category, when used within the context of a
+class definition, are re-written to use a mangled form to help avoid name
+clashes between “private” attributes of base and derived classes. See section
+<a class="reference internal" href="expressions.html#atom-identifiers"><span class="std std-ref">Identifiers (Names)</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="literals">
+<span id="id10"></span><h2><span class="section-number">2.4. </span>Literals<a class="headerlink" href="#literals" title="Permalink to this heading">¶</a></h2>
+<p id="index-16">Literals are notations for constant values of some built-in types.</p>
+<section id="string-and-bytes-literals">
+<span id="strings"></span><span id="index-17"></span><h3><span class="section-number">2.4.1. </span>String and Bytes literals<a class="headerlink" href="#string-and-bytes-literals" title="Permalink to this heading">¶</a></h3>
+<p>String literals are described by the following lexical definitions:</p>
+<pre>
+<strong id="grammar-token-python-grammar-stringliteral">stringliteral  </strong> ::=  [<a class="reference internal" href="#grammar-token-python-grammar-stringprefix"><code class="xref docutils literal notranslate"><span class="pre">stringprefix</span></code></a>](<a class="reference internal" href="#grammar-token-python-grammar-shortstring"><code class="xref docutils literal notranslate"><span class="pre">shortstring</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-longstring"><code class="xref docutils literal notranslate"><span class="pre">longstring</span></code></a>)
+<strong id="grammar-token-python-grammar-stringprefix">stringprefix   </strong> ::=  &quot;r&quot; | &quot;u&quot; | &quot;R&quot; | &quot;U&quot; | &quot;f&quot; | &quot;F&quot;
+                     | &quot;fr&quot; | &quot;Fr&quot; | &quot;fR&quot; | &quot;FR&quot; | &quot;rf&quot; | &quot;rF&quot; | &quot;Rf&quot; | &quot;RF&quot;
+<strong id="grammar-token-python-grammar-shortstring">shortstring    </strong> ::=  &quot;'&quot; <a class="reference internal" href="#grammar-token-python-grammar-shortstringitem"><code class="xref docutils literal notranslate"><span class="pre">shortstringitem</span></code></a>* &quot;'&quot; | '&quot;' <a class="reference internal" href="#grammar-token-python-grammar-shortstringitem"><code class="xref docutils literal notranslate"><span class="pre">shortstringitem</span></code></a>* '&quot;'
+<strong id="grammar-token-python-grammar-longstring">longstring     </strong> ::=  &quot;'''&quot; <a class="reference internal" href="#grammar-token-python-grammar-longstringitem"><code class="xref docutils literal notranslate"><span class="pre">longstringitem</span></code></a>* &quot;'''&quot; | '&quot;&quot;&quot;' <a class="reference internal" href="#grammar-token-python-grammar-longstringitem"><code class="xref docutils literal notranslate"><span class="pre">longstringitem</span></code></a>* '&quot;&quot;&quot;'
+<strong id="grammar-token-python-grammar-shortstringitem">shortstringitem</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-shortstringchar"><code class="xref docutils literal notranslate"><span class="pre">shortstringchar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-stringescapeseq"><code class="xref docutils literal notranslate"><span class="pre">stringescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-longstringitem">longstringitem </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-longstringchar"><code class="xref docutils literal notranslate"><span class="pre">longstringchar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-stringescapeseq"><code class="xref docutils literal notranslate"><span class="pre">stringescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-shortstringchar">shortstringchar</strong> ::=  &lt;any source character except &quot;\&quot; or newline or the quote&gt;
+<strong id="grammar-token-python-grammar-longstringchar">longstringchar </strong> ::=  &lt;any source character except &quot;\&quot;&gt;
+<strong id="grammar-token-python-grammar-stringescapeseq">stringescapeseq</strong> ::=  &quot;\&quot; &lt;any source character&gt;
+</pre>
+<pre>
+<strong id="grammar-token-python-grammar-bytesliteral">bytesliteral  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-bytesprefix"><code class="xref docutils literal notranslate"><span class="pre">bytesprefix</span></code></a>(<a class="reference internal" href="#grammar-token-python-grammar-shortbytes"><code class="xref docutils literal notranslate"><span class="pre">shortbytes</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-longbytes"><code class="xref docutils literal notranslate"><span class="pre">longbytes</span></code></a>)
+<strong id="grammar-token-python-grammar-bytesprefix">bytesprefix   </strong> ::=  &quot;b&quot; | &quot;B&quot; | &quot;br&quot; | &quot;Br&quot; | &quot;bR&quot; | &quot;BR&quot; | &quot;rb&quot; | &quot;rB&quot; | &quot;Rb&quot; | &quot;RB&quot;
+<strong id="grammar-token-python-grammar-shortbytes">shortbytes    </strong> ::=  &quot;'&quot; <a class="reference internal" href="#grammar-token-python-grammar-shortbytesitem"><code class="xref docutils literal notranslate"><span class="pre">shortbytesitem</span></code></a>* &quot;'&quot; | '&quot;' <a class="reference internal" href="#grammar-token-python-grammar-shortbytesitem"><code class="xref docutils literal notranslate"><span class="pre">shortbytesitem</span></code></a>* '&quot;'
+<strong id="grammar-token-python-grammar-longbytes">longbytes     </strong> ::=  &quot;'''&quot; <a class="reference internal" href="#grammar-token-python-grammar-longbytesitem"><code class="xref docutils literal notranslate"><span class="pre">longbytesitem</span></code></a>* &quot;'''&quot; | '&quot;&quot;&quot;' <a class="reference internal" href="#grammar-token-python-grammar-longbytesitem"><code class="xref docutils literal notranslate"><span class="pre">longbytesitem</span></code></a>* '&quot;&quot;&quot;'
+<strong id="grammar-token-python-grammar-shortbytesitem">shortbytesitem</strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-shortbyteschar"><code class="xref docutils literal notranslate"><span class="pre">shortbyteschar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-bytesescapeseq"><code class="xref docutils literal notranslate"><span class="pre">bytesescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-longbytesitem">longbytesitem </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-longbyteschar"><code class="xref docutils literal notranslate"><span class="pre">longbyteschar</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-bytesescapeseq"><code class="xref docutils literal notranslate"><span class="pre">bytesescapeseq</span></code></a>
+<strong id="grammar-token-python-grammar-shortbyteschar">shortbyteschar</strong> ::=  &lt;any ASCII character except &quot;\&quot; or newline or the quote&gt;
+<strong id="grammar-token-python-grammar-longbyteschar">longbyteschar </strong> ::=  &lt;any ASCII character except &quot;\&quot;&gt;
+<strong id="grammar-token-python-grammar-bytesescapeseq">bytesescapeseq</strong> ::=  &quot;\&quot; &lt;any ASCII character&gt;
+</pre>
+<p>One syntactic restriction not indicated by these productions is that whitespace
+is not allowed between the <a class="reference internal" href="#grammar-token-python-grammar-stringprefix"><code class="xref std std-token docutils literal notranslate"><span class="pre">stringprefix</span></code></a> or
+<a class="reference internal" href="#grammar-token-python-grammar-bytesprefix"><code class="xref std std-token docutils literal notranslate"><span class="pre">bytesprefix</span></code></a> and the rest of the literal. The source
+character set is defined by the encoding declaration; it is UTF-8 if no encoding
+declaration is given in the source file; see section <a class="reference internal" href="#encodings"><span class="std std-ref">Encoding declarations</span></a>.</p>
+<p id="index-18">In plain English: Both types of literals can be enclosed in matching single quotes
+(<code class="docutils literal notranslate"><span class="pre">'</span></code>) or double quotes (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>).  They can also be enclosed in matching groups
+of three single or double quotes (these are generally referred to as
+<em>triple-quoted strings</em>). The backslash (<code class="docutils literal notranslate"><span class="pre">\</span></code>) character is used to give special
+meaning to otherwise ordinary characters like <code class="docutils literal notranslate"><span class="pre">n</span></code>, which means ‘newline’ when
+escaped (<code class="docutils literal notranslate"><span class="pre">\n</span></code>). It can also be used to escape characters that otherwise have a
+special meaning, such as newline, backslash itself, or the quote character.
+See <a class="reference internal" href="#escape-sequences"><span class="std std-ref">escape sequences</span></a> below for examples.</p>
+<p id="index-19">Bytes literals are always prefixed with <code class="docutils literal notranslate"><span class="pre">'b'</span></code> or <code class="docutils literal notranslate"><span class="pre">'B'</span></code>; they produce an
+instance of the <a class="reference internal" href="../library/stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> type instead of the <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> type.  They
+may only contain ASCII characters; bytes with a numeric value of 128 or greater
+must be expressed with escapes.</p>
+<p id="index-20">Both string and bytes literals may optionally be prefixed with a letter <code class="docutils literal notranslate"><span class="pre">'r'</span></code>
+or <code class="docutils literal notranslate"><span class="pre">'R'</span></code>; such strings are called <em class="dfn">raw strings</em> and treat backslashes as
+literal characters.  As a result, in string literals, <code class="docutils literal notranslate"><span class="pre">'\U'</span></code> and <code class="docutils literal notranslate"><span class="pre">'\u'</span></code>
+escapes in raw strings are not treated specially. Given that Python 2.x’s raw
+unicode literals behave differently than Python 3.x’s the <code class="docutils literal notranslate"><span class="pre">'ur'</span></code> syntax
+is not supported.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3: </span>The <code class="docutils literal notranslate"><span class="pre">'rb'</span></code> prefix of raw bytes literals has been added as a synonym
+of <code class="docutils literal notranslate"><span class="pre">'br'</span></code>.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3: </span>Support for the unicode legacy literal (<code class="docutils literal notranslate"><span class="pre">u'value'</span></code>) was reintroduced
+to simplify the maintenance of dual Python 2.x and 3.x codebases.
+See <span class="target" id="index-21"></span><a class="pep reference external" href="https://peps.python.org/pep-0414/"><strong>PEP 414</strong></a> for more information.</p>
+</div>
+<p id="index-22">A string literal with <code class="docutils literal notranslate"><span class="pre">'f'</span></code> or <code class="docutils literal notranslate"><span class="pre">'F'</span></code> in its prefix is a
+<em class="dfn">formatted string literal</em>; see <a class="reference internal" href="#f-strings"><span class="std std-ref">Formatted string literals</span></a>.  The <code class="docutils literal notranslate"><span class="pre">'f'</span></code> may be
+combined with <code class="docutils literal notranslate"><span class="pre">'r'</span></code>, but not with <code class="docutils literal notranslate"><span class="pre">'b'</span></code> or <code class="docutils literal notranslate"><span class="pre">'u'</span></code>, therefore raw
+formatted strings are possible, but formatted bytes literals are not.</p>
+<p>In triple-quoted literals, unescaped newlines and quotes are allowed (and are
+retained), except that three unescaped quotes in a row terminate the literal.  (A
+“quote” is the character used to open the literal, i.e. either <code class="docutils literal notranslate"><span class="pre">'</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;</span></code>.)</p>
+<section id="escape-sequences">
+<span id="index-23"></span><span id="id11"></span><h4><span class="section-number">2.4.1.1. </span>Escape sequences<a class="headerlink" href="#escape-sequences" title="Permalink to this heading">¶</a></h4>
+<p>Unless an <code class="docutils literal notranslate"><span class="pre">'r'</span></code> or <code class="docutils literal notranslate"><span class="pre">'R'</span></code> prefix is present, escape sequences in string and
+bytes literals are interpreted according to rules similar to those used by
+Standard C.  The recognized escape sequences are:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Escape Sequence</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\</span></code>&lt;newline&gt;</p></td>
+<td><p>Backslash and newline ignored</p></td>
+<td><p>(1)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\\</span></code></p></td>
+<td><p>Backslash (<code class="docutils literal notranslate"><span class="pre">\</span></code>)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\'</span></code></p></td>
+<td><p>Single quote (<code class="docutils literal notranslate"><span class="pre">'</span></code>)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\&quot;</span></code></p></td>
+<td><p>Double quote (<code class="docutils literal notranslate"><span class="pre">&quot;</span></code>)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\a</span></code></p></td>
+<td><p>ASCII Bell (BEL)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\b</span></code></p></td>
+<td><p>ASCII Backspace (BS)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\f</span></code></p></td>
+<td><p>ASCII Formfeed (FF)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\n</span></code></p></td>
+<td><p>ASCII Linefeed (LF)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\r</span></code></p></td>
+<td><p>ASCII Carriage Return (CR)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">\t</span></code></p></td>
+<td><p>ASCII Horizontal Tab (TAB)</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">\v</span></code></p></td>
+<td><p>ASCII Vertical Tab (VT)</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">{ooo}</span></code></p></td>
+<td><p>Character with octal value
+<em>ooo</em></p></td>
+<td><p>(2,4)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">\x</span><em><span class="pre">hh</span></em></code></p></td>
+<td><p>Character with hex value <em>hh</em></p></td>
+<td><p>(3,4)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Escape sequences only recognized in string literals are:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Escape Sequence</p></th>
+<th class="head"><p>Meaning</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">\N{</span><em><span class="pre">name</span></em><span class="pre">}</span></code></p></td>
+<td><p>Character named <em>name</em> in the
+Unicode database</p></td>
+<td><p>(5)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="samp docutils literal notranslate"><span class="pre">\u</span><em><span class="pre">xxxx</span></em></code></p></td>
+<td><p>Character with 16-bit hex value
+<em>xxxx</em></p></td>
+<td><p>(6)</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="samp docutils literal notranslate"><span class="pre">\U</span><em><span class="pre">xxxxxxxx</span></em></code></p></td>
+<td><p>Character with 32-bit hex value
+<em>xxxxxxxx</em></p></td>
+<td><p>(7)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Notes:</p>
+<ol class="arabic">
+<li><p>A backslash can be added at the end of a line to ignore the newline:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="s1">&#39;This string will not include </span><span class="se">\</span>
+</span><span data-line="2"><span class="gp">... </span><span class="s1">backslashes or newline characters.&#39;</span>
+</span><span data-line="3"><span class="go">&#39;This string will not include backslashes or newline characters.&#39;</span>
+</span></pre></div>
+</div>
+<p>The same result can be achieved using <a class="reference internal" href="#strings"><span class="std std-ref">triple-quoted strings</span></a>,
+or parentheses and <a class="reference internal" href="#string-concatenation"><span class="std std-ref">string literal concatenation</span></a>.</p>
+</li>
+<li><p>As in Standard C, up to three octal digits are accepted.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span>Octal escapes with value larger than <code class="docutils literal notranslate"><span class="pre">0o377</span></code> produce a
+<a class="reference internal" href="../library/exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>Octal escapes with value larger than <code class="docutils literal notranslate"><span class="pre">0o377</span></code> produce a
+<a class="reference internal" href="../library/exceptions.html#SyntaxWarning" title="SyntaxWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a>. In a future Python version they will be eventually
+a <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>.</p>
+</div>
+</li>
+<li><p>Unlike in Standard C, exactly two hex digits are required.</p></li>
+<li><p>In a bytes literal, hexadecimal and octal escapes denote the byte with the
+given value. In a string literal, these escapes denote a Unicode character
+with the given value.</p></li>
+<li><div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span>Support for name aliases <a class="footnote-reference brackets" href="#id15" id="id12" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> has been added.</p>
+</div>
+</li>
+<li><p>Exactly four hex digits are required.</p></li>
+<li><p>Any Unicode character can be encoded this way.  Exactly eight hex digits
+are required.</p></li>
+</ol>
+<p id="index-24">Unlike Standard C, all unrecognized escape sequences are left in the string
+unchanged, i.e., <em>the backslash is left in the result</em>.  (This behavior is
+useful when debugging: if an escape sequence is mistyped, the resulting output
+is more easily recognized as broken.)  It is also important to note that the
+escape sequences only recognized in string literals fall into the category of
+unrecognized escapes for bytes literals.</p>
+<blockquote>
+<div><div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>Unrecognized escape sequences produce a <a class="reference internal" href="../library/exceptions.html#DeprecationWarning" title="DeprecationWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">DeprecationWarning</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>Unrecognized escape sequences produce a <a class="reference internal" href="../library/exceptions.html#SyntaxWarning" title="SyntaxWarning"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxWarning</span></code></a>. In a future
+Python version they will be eventually a <a class="reference internal" href="../library/exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a>.</p>
+</div>
+</div></blockquote>
+<p>Even in a raw literal, quotes can be escaped with a backslash, but the
+backslash remains in the result; for example, <code class="docutils literal notranslate"><span class="pre">r&quot;\&quot;&quot;</span></code> is a valid string
+literal consisting of two characters: a backslash and a double quote; <code class="docutils literal notranslate"><span class="pre">r&quot;\&quot;</span></code>
+is not a valid string literal (even a raw string cannot end in an odd number of
+backslashes).  Specifically, <em>a raw literal cannot end in a single backslash</em>
+(since the backslash would escape the following quote character).  Note also
+that a single backslash followed by a newline is interpreted as those two
+characters as part of the literal, <em>not</em> as a line continuation.</p>
+</section>
+</section>
+<section id="string-literal-concatenation">
+<span id="string-concatenation"></span><h3><span class="section-number">2.4.2. </span>String literal concatenation<a class="headerlink" href="#string-literal-concatenation" title="Permalink to this heading">¶</a></h3>
+<p>Multiple adjacent string or bytes literals (delimited by whitespace), possibly
+using different quoting conventions, are allowed, and their meaning is the same
+as their concatenation.  Thus, <code class="docutils literal notranslate"><span class="pre">&quot;hello&quot;</span> <span class="pre">'world'</span></code> is equivalent to
+<code class="docutils literal notranslate"><span class="pre">&quot;helloworld&quot;</span></code>.  This feature can be used to reduce the number of backslashes
+needed, to split long strings conveniently across long lines, or even to add
+comments to parts of strings, for example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span><span class="s2">&quot;[A-Za-z_]&quot;</span>       <span class="c1"># letter or underscore</span>
+</span><span data-line="2">           <span class="s2">&quot;[A-Za-z0-9_]*&quot;</span>   <span class="c1"># letter, digit or underscore</span>
+</span><span data-line="3">          <span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Note that this feature is defined at the syntactical level, but implemented at
+compile time.  The ‘+’ operator must be used to concatenate string expressions
+at run time.  Also note that literal concatenation can use different quoting
+styles for each component (even mixing raw strings and triple quoted strings),
+and formatted string literals may be concatenated with plain string literals.</p>
+</section>
+<section id="formatted-string-literals">
+<span id="f-strings"></span><span id="index-25"></span><h3><span class="section-number">2.4.3. </span>Formatted string literals<a class="headerlink" href="#formatted-string-literals" title="Permalink to this heading">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.6.</span></p>
+</div>
+<p>A <em class="dfn">formatted string literal</em> or <em class="dfn">f-string</em> is a string literal
+that is prefixed with <code class="docutils literal notranslate"><span class="pre">'f'</span></code> or <code class="docutils literal notranslate"><span class="pre">'F'</span></code>.  These strings may contain
+replacement fields, which are expressions delimited by curly braces <code class="docutils literal notranslate"><span class="pre">{}</span></code>.
+While other string literals always have a constant value, formatted strings
+are really expressions evaluated at run time.</p>
+<p>Escape sequences are decoded like in ordinary string literals (except when
+a literal is also marked as a raw string).  After decoding, the grammar
+for the contents of the string is:</p>
+<pre>
+<strong id="grammar-token-python-grammar-f_string">f_string         </strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-literal_char"><code class="xref docutils literal notranslate"><span class="pre">literal_char</span></code></a> | &quot;{{&quot; | &quot;}}&quot; | <a class="reference internal" href="#grammar-token-python-grammar-replacement_field"><code class="xref docutils literal notranslate"><span class="pre">replacement_field</span></code></a>)*
+<strong id="grammar-token-python-grammar-replacement_field">replacement_field</strong> ::=  &quot;{&quot; <a class="reference internal" href="#grammar-token-python-grammar-f_expression"><code class="xref docutils literal notranslate"><span class="pre">f_expression</span></code></a> [&quot;=&quot;] [&quot;!&quot; <a class="reference internal" href="#grammar-token-python-grammar-conversion"><code class="xref docutils literal notranslate"><span class="pre">conversion</span></code></a>] [&quot;:&quot; <a class="reference internal" href="#grammar-token-python-grammar-format_spec"><code class="xref docutils literal notranslate"><span class="pre">format_spec</span></code></a>] &quot;}&quot;
+<strong id="grammar-token-python-grammar-f_expression">f_expression     </strong> ::=  (<a class="reference internal" href="expressions.html#grammar-token-python-grammar-conditional_expression"><code class="xref docutils literal notranslate"><span class="pre">conditional_expression</span></code></a> | &quot;*&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-or_expr"><code class="xref docutils literal notranslate"><span class="pre">or_expr</span></code></a>)
+                         (&quot;,&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-conditional_expression"><code class="xref docutils literal notranslate"><span class="pre">conditional_expression</span></code></a> | &quot;,&quot; &quot;*&quot; <a class="reference internal" href="expressions.html#grammar-token-python-grammar-or_expr"><code class="xref docutils literal notranslate"><span class="pre">or_expr</span></code></a>)* [&quot;,&quot;]
+                       | <a class="reference internal" href="expressions.html#grammar-token-python-grammar-yield_expression"><code class="xref docutils literal notranslate"><span class="pre">yield_expression</span></code></a>
+<strong id="grammar-token-python-grammar-conversion">conversion       </strong> ::=  &quot;s&quot; | &quot;r&quot; | &quot;a&quot;
+<strong id="grammar-token-python-grammar-format_spec">format_spec      </strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-literal_char"><code class="xref docutils literal notranslate"><span class="pre">literal_char</span></code></a> | NULL | <a class="reference internal" href="#grammar-token-python-grammar-replacement_field"><code class="xref docutils literal notranslate"><span class="pre">replacement_field</span></code></a>)*
+<strong id="grammar-token-python-grammar-literal_char">literal_char     </strong> ::=  &lt;any code point except &quot;{&quot;, &quot;}&quot; or NULL&gt;
+</pre>
+<p>The parts of the string outside curly braces are treated literally,
+except that any doubled curly braces <code class="docutils literal notranslate"><span class="pre">'{{'</span></code> or <code class="docutils literal notranslate"><span class="pre">'}}'</span></code> are replaced
+with the corresponding single curly brace.  A single opening curly
+bracket <code class="docutils literal notranslate"><span class="pre">'{'</span></code> marks a replacement field, which starts with a
+Python expression. To display both the expression text and its value after
+evaluation, (useful in debugging), an equal sign <code class="docutils literal notranslate"><span class="pre">'='</span></code> may be added after the
+expression. A conversion field, introduced by an exclamation point <code class="docutils literal notranslate"><span class="pre">'!'</span></code> may
+follow.  A format specifier may also be appended, introduced by a colon <code class="docutils literal notranslate"><span class="pre">':'</span></code>.
+A replacement field ends with a closing curly bracket <code class="docutils literal notranslate"><span class="pre">'}'</span></code>.</p>
+<p>Expressions in formatted string literals are treated like regular
+Python expressions surrounded by parentheses, with a few exceptions.
+An empty expression is not allowed, and both <a class="reference internal" href="expressions.html#lambda"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">lambda</span></code></a>  and
+assignment expressions <code class="docutils literal notranslate"><span class="pre">:=</span></code> must be surrounded by explicit parentheses.
+Each expression is evaluated in the context where the formatted string literal
+appears, in order from left to right.  Replacement expressions can contain
+newlines in both single-quoted and triple-quoted f-strings and they can contain
+comments.  Everything that comes after a <code class="docutils literal notranslate"><span class="pre">#</span></code> inside a replacement field
+is a comment (even closing braces and quotes). In that case, replacement fields
+must be closed in a different line.</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span><span data-line="1">&gt;&gt;&gt; f&quot;abc{a # This is a comment }&quot;
+</span><span data-line="2">... + 3}&quot;
+</span><span data-line="3">&#39;abc5&#39;
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>Prior to Python 3.7, an <a class="reference internal" href="expressions.html#await"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">await</span></code></a> expression and comprehensions
+containing an <a class="reference internal" href="compound_stmts.html#async-for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">async</span> <span class="pre">for</span></code></a> clause were illegal in the expressions
+in formatted string literals due to a problem with the implementation.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>Prior to Python 3.12, comments were not allowed inside f-string replacement
+fields.</p>
+</div>
+<p>When the equal sign <code class="docutils literal notranslate"><span class="pre">'='</span></code> is provided, the output will have the expression
+text, the <code class="docutils literal notranslate"><span class="pre">'='</span></code> and the evaluated value. Spaces after the opening brace
+<code class="docutils literal notranslate"><span class="pre">'{'</span></code>, within the expression and after the <code class="docutils literal notranslate"><span class="pre">'='</span></code> are all retained in the
+output. By default, the <code class="docutils literal notranslate"><span class="pre">'='</span></code> causes the <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a> of the expression to be
+provided, unless there is a format specified. When a format is specified it
+defaults to the <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> of the expression unless a conversion <code class="docutils literal notranslate"><span class="pre">'!r'</span></code> is
+declared.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8: </span>The equal sign <code class="docutils literal notranslate"><span class="pre">'='</span></code>.</p>
+</div>
+<p>If a conversion is specified, the result of evaluating the expression
+is converted before formatting.  Conversion <code class="docutils literal notranslate"><span class="pre">'!s'</span></code> calls <a class="reference internal" href="../library/stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a> on
+the result, <code class="docutils literal notranslate"><span class="pre">'!r'</span></code> calls <a class="reference internal" href="../library/functions.html#repr" title="repr"><code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code></a>, and <code class="docutils literal notranslate"><span class="pre">'!a'</span></code> calls <a class="reference internal" href="../library/functions.html#ascii" title="ascii"><code class="xref py py-func docutils literal notranslate"><span class="pre">ascii()</span></code></a>.</p>
+<p>The result is then formatted using the <a class="reference internal" href="../library/functions.html#format" title="format"><code class="xref py py-func docutils literal notranslate"><span class="pre">format()</span></code></a> protocol.  The
+format specifier is passed to the <a class="reference internal" href="datamodel.html#object.__format__" title="object.__format__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__format__()</span></code></a> method of the
+expression or conversion result.  An empty string is passed when the
+format specifier is omitted.  The formatted result is then included in
+the final value of the whole string.</p>
+<p>Top-level format specifiers may include nested replacement fields. These nested
+fields may include their own conversion fields and <a class="reference internal" href="../library/string.html#formatspec"><span class="std std-ref">format specifiers</span></a>, but may not include more deeply nested replacement fields. The
+<a class="reference internal" href="../library/string.html#formatspec"><span class="std std-ref">format specifier mini-language</span></a> is the same as that used by
+the <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a> method.</p>
+<p>Formatted string literals may be concatenated, but replacement fields
+cannot be split across literals.</p>
+<p>Some examples of formatted string literals:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Fred&quot;</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;He said his name is </span><span class="si">{</span><span class="n">name</span><span class="si">!r}</span><span class="s2">.&quot;</span>
+</span><span data-line="3"><span class="go">&quot;He said his name is &#39;Fred&#39;.&quot;</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;He said his name is </span><span class="si">{</span><span class="nb">repr</span><span class="p">(</span><span class="n">name</span><span class="p">)</span><span class="si">}</span><span class="s2">.&quot;</span>  <span class="c1"># repr() is equivalent to !r</span>
+</span><span data-line="5"><span class="go">&quot;He said his name is &#39;Fred&#39;.&quot;</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="n">width</span> <span class="o">=</span> <span class="mi">10</span>
+</span><span data-line="7"><span class="gp">&gt;&gt;&gt; </span><span class="n">precision</span> <span class="o">=</span> <span class="mi">4</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt; </span><span class="n">value</span> <span class="o">=</span> <span class="n">decimal</span><span class="o">.</span><span class="n">Decimal</span><span class="p">(</span><span class="s2">&quot;12.34567&quot;</span><span class="p">)</span>
+</span><span data-line="9"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;result: </span><span class="si">{</span><span class="n">value</span><span class="si">:{</span><span class="n">width</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">precision</span><span class="si">}}</span><span class="s2">&quot;</span>  <span class="c1"># nested fields</span>
+</span><span data-line="10"><span class="go">&#39;result:      12.35&#39;</span>
+</span><span data-line="11"><span class="gp">&gt;&gt;&gt; </span><span class="n">today</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">(</span><span class="n">year</span><span class="o">=</span><span class="mi">2017</span><span class="p">,</span> <span class="n">month</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">day</span><span class="o">=</span><span class="mi">27</span><span class="p">)</span>
+</span><span data-line="12"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">today</span><span class="si">:</span><span class="s2">%B %d, %Y</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># using date format specifier</span>
+</span><span data-line="13"><span class="go">&#39;January 27, 2017&#39;</span>
+</span><span data-line="14"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">today</span><span class="si">=:</span><span class="s2">%B %d, %Y</span><span class="si">}</span><span class="s2">&quot;</span> <span class="c1"># using date format specifier and debugging</span>
+</span><span data-line="15"><span class="go">&#39;today=January 27, 2017&#39;</span>
+</span><span data-line="16"><span class="gp">&gt;&gt;&gt; </span><span class="n">number</span> <span class="o">=</span> <span class="mi">1024</span>
+</span><span data-line="17"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">number</span><span class="si">:</span><span class="s2">#0x</span><span class="si">}</span><span class="s2">&quot;</span>  <span class="c1"># using integer format specifier</span>
+</span><span data-line="18"><span class="go">&#39;0x400&#39;</span>
+</span><span data-line="19"><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span> <span class="o">=</span> <span class="s2">&quot;bar&quot;</span>
+</span><span data-line="20"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="w"> </span><span class="n">foo</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span> <span class="c1"># preserves whitespace</span>
+</span><span data-line="21"><span class="go">&quot; foo = &#39;bar&#39;&quot;</span>
+</span><span data-line="22"><span class="gp">&gt;&gt;&gt; </span><span class="n">line</span> <span class="o">=</span> <span class="s2">&quot;The mill&#39;s closed&quot;</span>
+</span><span data-line="23"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="w"> </span><span class="si">= }</span><span class="s2">&quot;</span>
+</span><span data-line="24"><span class="go">&#39;line = &quot;The mill\&#39;s closed&quot;&#39;</span>
+</span><span data-line="25"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="w"> </span><span class="si">= :</span><span class="s2">20</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span data-line="26"><span class="go">&quot;line = The mill&#39;s closed   &quot;</span>
+</span><span data-line="27"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">line</span><span class="w"> </span><span class="si">= !r:</span><span class="s2">20</span><span class="si">}</span><span class="s2">&quot;</span>
+</span><span data-line="28"><span class="go">&#39;line = &quot;The mill\&#39;s closed&quot; &#39;</span>
+</span></pre></div>
+</div>
+<p>Reusing the outer f-string quoting type inside a replacement field is
+permitted:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="sa">f</span><span class="s2">&quot;abc </span><span class="si">{</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;x&quot;</span><span class="p">]</span><span class="si">}</span><span class="s2"> def&quot;</span>
+</span><span data-line="3"><span class="go">&#39;abc 2 def&#39;</span>
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>Prior to Python 3.12, reuse of the same quoting type of the outer f-string
+inside a replacement field was not possible.</p>
+</div>
+<p>Backslashes are also allowed in replacement fields and are evaluated the same
+way as in any other context:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">,</span> <span class="s2">&quot;c&quot;</span><span class="p">]</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;List a contains:</span><span class="se">\n</span><span class="si">{</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">a</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">List a contains:</span>
+</span><span data-line="4"><span class="go">a</span>
+</span><span data-line="5"><span class="go">b</span>
+</span><span data-line="6"><span class="go">c</span>
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>Prior to Python 3.12, backslashes were not permitted inside an f-string
+replacement field.</p>
+</div>
+<p>Formatted string literals cannot be used as docstrings, even if they do not
+include expressions.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">foo</span><span class="p">():</span>
+</span><span data-line="2"><span class="gp">... </span>    <span class="sa">f</span><span class="s2">&quot;Not a docstring&quot;</span>
+</span><span data-line="3"><span class="gp">...</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">foo</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">is</span> <span class="kc">None</span>
+</span><span data-line="5"><span class="go">True</span>
+</span></pre></div>
+</div>
+<p>See also <span class="target" id="index-26"></span><a class="pep reference external" href="https://peps.python.org/pep-0498/"><strong>PEP 498</strong></a> for the proposal that added formatted string literals,
+and <a class="reference internal" href="../library/stdtypes.html#str.format" title="str.format"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.format()</span></code></a>, which uses a related format string mechanism.</p>
+</section>
+<section id="numeric-literals">
+<span id="numbers"></span><h3><span class="section-number">2.4.4. </span>Numeric literals<a class="headerlink" href="#numeric-literals" title="Permalink to this heading">¶</a></h3>
+<p id="index-27">There are three types of numeric literals: integers, floating point numbers, and
+imaginary numbers.  There are no complex literals (complex numbers can be formed
+by adding a real number and an imaginary number).</p>
+<p>Note that numeric literals do not include a sign; a phrase like <code class="docutils literal notranslate"><span class="pre">-1</span></code> is
+actually an expression composed of the unary operator ‘<code class="docutils literal notranslate"><span class="pre">-</span></code>’ and the literal
+<code class="docutils literal notranslate"><span class="pre">1</span></code>.</p>
+</section>
+<section id="integer-literals">
+<span id="integers"></span><span id="index-28"></span><h3><span class="section-number">2.4.5. </span>Integer literals<a class="headerlink" href="#integer-literals" title="Permalink to this heading">¶</a></h3>
+<p>Integer literals are described by the following lexical definitions:</p>
+<pre>
+<strong id="grammar-token-python-grammar-integer">integer     </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-decinteger"><code class="xref docutils literal notranslate"><span class="pre">decinteger</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-bininteger"><code class="xref docutils literal notranslate"><span class="pre">bininteger</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-octinteger"><code class="xref docutils literal notranslate"><span class="pre">octinteger</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-hexinteger"><code class="xref docutils literal notranslate"><span class="pre">hexinteger</span></code></a>
+<strong id="grammar-token-python-grammar-decinteger">decinteger  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-nonzerodigit"><code class="xref docutils literal notranslate"><span class="pre">nonzerodigit</span></code></a> ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a>)* | &quot;0&quot;+ ([&quot;_&quot;] &quot;0&quot;)*
+<strong id="grammar-token-python-grammar-bininteger">bininteger  </strong> ::=  &quot;0&quot; (&quot;b&quot; | &quot;B&quot;) ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-bindigit"><code class="xref docutils literal notranslate"><span class="pre">bindigit</span></code></a>)+
+<strong id="grammar-token-python-grammar-octinteger">octinteger  </strong> ::=  &quot;0&quot; (&quot;o&quot; | &quot;O&quot;) ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-octdigit"><code class="xref docutils literal notranslate"><span class="pre">octdigit</span></code></a>)+
+<strong id="grammar-token-python-grammar-hexinteger">hexinteger  </strong> ::=  &quot;0&quot; (&quot;x&quot; | &quot;X&quot;) ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-hexdigit"><code class="xref docutils literal notranslate"><span class="pre">hexdigit</span></code></a>)+
+<strong id="grammar-token-python-grammar-nonzerodigit">nonzerodigit</strong> ::=  &quot;1&quot;...&quot;9&quot;
+<strong id="grammar-token-python-grammar-digit">digit       </strong> ::=  &quot;0&quot;...&quot;9&quot;
+<strong id="grammar-token-python-grammar-bindigit">bindigit    </strong> ::=  &quot;0&quot; | &quot;1&quot;
+<strong id="grammar-token-python-grammar-octdigit">octdigit    </strong> ::=  &quot;0&quot;...&quot;7&quot;
+<strong id="grammar-token-python-grammar-hexdigit">hexdigit    </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a> | &quot;a&quot;...&quot;f&quot; | &quot;A&quot;...&quot;F&quot;
+</pre>
+<p>There is no limit for the length of integer literals apart from what can be
+stored in available memory.</p>
+<p>Underscores are ignored for determining the numeric value of the literal.  They
+can be used to group digits for enhanced readability.  One underscore can occur
+between digits, and after base specifiers like <code class="docutils literal notranslate"><span class="pre">0x</span></code>.</p>
+<p>Note that leading zeros in a non-zero decimal number are not allowed. This is
+for disambiguation with C-style octal literals, which Python used before version
+3.0.</p>
+<p>Some examples of integer literals:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="mi">7</span>     <span class="mi">2147483647</span>                        <span class="mo">0o177</span>    <span class="mb">0b100110111</span>
+</span><span data-line="2"><span class="mi">3</span>     <span class="mi">79228162514264337593543950336</span>     <span class="mo">0o377</span>    <span class="mh">0xdeadbeef</span>
+</span><span data-line="3">      <span class="mi">100_000_000_000</span>                   <span class="mb">0b_1110_0101</span>
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>Underscores are now allowed for grouping purposes in literals.</p>
+</div>
+</section>
+<section id="floating-point-literals">
+<span id="floating"></span><span id="index-29"></span><h3><span class="section-number">2.4.6. </span>Floating point literals<a class="headerlink" href="#floating-point-literals" title="Permalink to this heading">¶</a></h3>
+<p>Floating point literals are described by the following lexical definitions:</p>
+<pre>
+<strong id="grammar-token-python-grammar-floatnumber">floatnumber  </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-pointfloat"><code class="xref docutils literal notranslate"><span class="pre">pointfloat</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-exponentfloat"><code class="xref docutils literal notranslate"><span class="pre">exponentfloat</span></code></a>
+<strong id="grammar-token-python-grammar-pointfloat">pointfloat   </strong> ::=  [<a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>] <a class="reference internal" href="#grammar-token-python-grammar-fraction"><code class="xref docutils literal notranslate"><span class="pre">fraction</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a> &quot;.&quot;
+<strong id="grammar-token-python-grammar-exponentfloat">exponentfloat</strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-pointfloat"><code class="xref docutils literal notranslate"><span class="pre">pointfloat</span></code></a>) <a class="reference internal" href="#grammar-token-python-grammar-exponent"><code class="xref docutils literal notranslate"><span class="pre">exponent</span></code></a>
+<strong id="grammar-token-python-grammar-digitpart">digitpart    </strong> ::=  <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a> ([&quot;_&quot;] <a class="reference internal" href="#grammar-token-python-grammar-digit"><code class="xref docutils literal notranslate"><span class="pre">digit</span></code></a>)*
+<strong id="grammar-token-python-grammar-fraction">fraction     </strong> ::=  &quot;.&quot; <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>
+<strong id="grammar-token-python-grammar-exponent">exponent     </strong> ::=  (&quot;e&quot; | &quot;E&quot;) [&quot;+&quot; | &quot;-&quot;] <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>
+</pre>
+<p>Note that the integer and exponent parts are always interpreted using radix 10.
+For example, <code class="docutils literal notranslate"><span class="pre">077e010</span></code> is legal, and denotes the same number as <code class="docutils literal notranslate"><span class="pre">77e10</span></code>. The
+allowed range of floating point literals is implementation-dependent.  As in
+integer literals, underscores are supported for digit grouping.</p>
+<p>Some examples of floating point literals:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="mf">3.14</span>    <span class="mf">10.</span>    <span class="mf">.001</span>    <span class="mf">1e100</span>    <span class="mf">3.14e-10</span>    <span class="mf">0e0</span>    <span class="mf">3.14_15_93</span>
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>Underscores are now allowed for grouping purposes in literals.</p>
+</div>
+</section>
+<section id="imaginary-literals">
+<span id="imaginary"></span><span id="index-30"></span><h3><span class="section-number">2.4.7. </span>Imaginary literals<a class="headerlink" href="#imaginary-literals" title="Permalink to this heading">¶</a></h3>
+<p>Imaginary literals are described by the following lexical definitions:</p>
+<pre>
+<strong id="grammar-token-python-grammar-imagnumber">imagnumber</strong> ::=  (<a class="reference internal" href="#grammar-token-python-grammar-floatnumber"><code class="xref docutils literal notranslate"><span class="pre">floatnumber</span></code></a> | <a class="reference internal" href="#grammar-token-python-grammar-digitpart"><code class="xref docutils literal notranslate"><span class="pre">digitpart</span></code></a>) (&quot;j&quot; | &quot;J&quot;)
+</pre>
+<p>An imaginary literal yields a complex number with a real part of 0.0.  Complex
+numbers are represented as a pair of floating point numbers and have the same
+restrictions on their range.  To create a complex number with a nonzero real
+part, add a floating point number to it, e.g., <code class="docutils literal notranslate"><span class="pre">(3+4j)</span></code>.  Some examples of
+imaginary literals:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="mf">3.14</span><span class="n">j</span>   <span class="mf">10.</span><span class="n">j</span>    <span class="mi">10</span><span class="n">j</span>     <span class="mf">.001</span><span class="n">j</span>   <span class="mf">1e100j</span>   <span class="mf">3.14e-10</span><span class="n">j</span>   <span class="mf">3.14_15_93</span><span class="n">j</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+<section id="operators">
+<span id="id13"></span><h2><span class="section-number">2.5. </span>Operators<a class="headerlink" href="#operators" title="Permalink to this heading">¶</a></h2>
+<p id="index-31">The following tokens are operators:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">+       -       *       **      /       //      %      @
+</span><span data-line="2">&lt;&lt;      &gt;&gt;      &amp;       |       ^       ~       :=
+</span><span data-line="3">&lt;       &gt;       &lt;=      &gt;=      ==      !=
+</span></pre></div>
+</div>
+</section>
+<section id="delimiters">
+<span id="id14"></span><h2><span class="section-number">2.6. </span>Delimiters<a class="headerlink" href="#delimiters" title="Permalink to this heading">¶</a></h2>
+<p id="index-32">The following tokens serve as delimiters in the grammar:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">(       )       [       ]       {       }
+</span><span data-line="2">,       :       .       ;       @       =       -&gt;
+</span><span data-line="3">+=      -=      *=      /=      //=     %=      @=
+</span><span data-line="4">&amp;=      |=      ^=      &gt;&gt;=     &lt;&lt;=     **=
+</span></pre></div>
+</div>
+<p>The period can also occur in floating-point and imaginary literals.  A sequence
+of three periods has a special meaning as an ellipsis literal. The second half
+of the list, the augmented assignment operators, serve lexically as delimiters,
+but also perform an operation.</p>
+<p>The following printing ASCII characters have special meaning as part of other
+tokens or are otherwise significant to the lexical analyzer:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">&#39;       &quot;       #       \
+</span></pre></div>
+</div>
+<p>The following printing ASCII characters are not used in Python.  Their
+occurrence outside string literals and comments is an unconditional error:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">$       ?       `
+</span></pre></div>
+</div>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id15" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id12">1</a><span class="fn-bracket">]</span></span>
+<p><a class="reference external" href="https://www.unicode.org/Public/15.1.0/ucd/NameAliases.txt">https://www.unicode.org/Public/15.1.0/ucd/NameAliases.txt</a></p>
+</aside>
+</aside>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="introduction.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><span class="section-number">1. </span>Introduction</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="datamodel.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title"><span class="section-number">3. </span>Data model</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

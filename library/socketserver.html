@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>socketserver — A framework for network servers - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="http.server — HTTP servers" href="http.server.html" /><link rel="prev" title="uuid — UUID objects according to RFC 4122" href="uuid.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="socketserver — A framework for network servers"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#socketserver.TCPServer"><code class="docutils literal notranslate"><span class="pre">TCPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.UDPServer"><code class="docutils literal notranslate"><span class="pre">UDPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.UnixStreamServer"><code class="docutils literal notranslate"><span class="pre">UnixStreamServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.UnixDatagramServer"><code class="docutils literal notranslate"><span class="pre">UnixDatagramServer</span></code></a></li>
+<li><a class="reference internal" href="#server-creation-notes">Server Creation Notes</a><ul>
+<li><a class="reference internal" href="#socketserver.ForkingMixIn"><code class="docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ThreadingMixIn"><code class="docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ForkingTCPServer"><code class="docutils literal notranslate"><span class="pre">ForkingTCPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ForkingUDPServer"><code class="docutils literal notranslate"><span class="pre">ForkingUDPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ThreadingTCPServer"><code class="docutils literal notranslate"><span class="pre">ThreadingTCPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ThreadingUDPServer"><code class="docutils literal notranslate"><span class="pre">ThreadingUDPServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ForkingUnixStreamServer"><code class="docutils literal notranslate"><span class="pre">ForkingUnixStreamServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ForkingUnixDatagramServer"><code class="docutils literal notranslate"><span class="pre">ForkingUnixDatagramServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ThreadingUnixStreamServer"><code class="docutils literal notranslate"><span class="pre">ThreadingUnixStreamServer</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.ThreadingUnixDatagramServer"><code class="docutils literal notranslate"><span class="pre">ThreadingUnixDatagramServer</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#server-objects">Server Objects</a><ul>
+<li><a class="reference internal" href="#socketserver.BaseServer"><code class="docutils literal notranslate"><span class="pre">BaseServer</span></code></a><ul>
+<li><a class="reference internal" href="#socketserver.BaseServer.fileno"><code class="docutils literal notranslate"><span class="pre">BaseServer.fileno()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.handle_request"><code class="docutils literal notranslate"><span class="pre">BaseServer.handle_request()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.serve_forever"><code class="docutils literal notranslate"><span class="pre">BaseServer.serve_forever()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.service_actions"><code class="docutils literal notranslate"><span class="pre">BaseServer.service_actions()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.shutdown"><code class="docutils literal notranslate"><span class="pre">BaseServer.shutdown()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.server_close"><code class="docutils literal notranslate"><span class="pre">BaseServer.server_close()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.address_family"><code class="docutils literal notranslate"><span class="pre">BaseServer.address_family</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass"><code class="docutils literal notranslate"><span class="pre">BaseServer.RequestHandlerClass</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.server_address"><code class="docutils literal notranslate"><span class="pre">BaseServer.server_address</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.socket"><code class="docutils literal notranslate"><span class="pre">BaseServer.socket</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.allow_reuse_address"><code class="docutils literal notranslate"><span class="pre">BaseServer.allow_reuse_address</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.request_queue_size"><code class="docutils literal notranslate"><span class="pre">BaseServer.request_queue_size</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.socket_type"><code class="docutils literal notranslate"><span class="pre">BaseServer.socket_type</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.timeout"><code class="docutils literal notranslate"><span class="pre">BaseServer.timeout</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.finish_request"><code class="docutils literal notranslate"><span class="pre">BaseServer.finish_request()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.get_request"><code class="docutils literal notranslate"><span class="pre">BaseServer.get_request()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.handle_error"><code class="docutils literal notranslate"><span class="pre">BaseServer.handle_error()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.handle_timeout"><code class="docutils literal notranslate"><span class="pre">BaseServer.handle_timeout()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.process_request"><code class="docutils literal notranslate"><span class="pre">BaseServer.process_request()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.server_activate"><code class="docutils literal notranslate"><span class="pre">BaseServer.server_activate()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.server_bind"><code class="docutils literal notranslate"><span class="pre">BaseServer.server_bind()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseServer.verify_request"><code class="docutils literal notranslate"><span class="pre">BaseServer.verify_request()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#request-handler-objects">Request Handler Objects</a><ul>
+<li><a class="reference internal" href="#socketserver.BaseRequestHandler"><code class="docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a><ul>
+<li><a class="reference internal" href="#socketserver.BaseRequestHandler.setup"><code class="docutils literal notranslate"><span class="pre">BaseRequestHandler.setup()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseRequestHandler.handle"><code class="docutils literal notranslate"><span class="pre">BaseRequestHandler.handle()</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.BaseRequestHandler.finish"><code class="docutils literal notranslate"><span class="pre">BaseRequestHandler.finish()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#socketserver.StreamRequestHandler"><code class="docutils literal notranslate"><span class="pre">StreamRequestHandler</span></code></a></li>
+<li><a class="reference internal" href="#socketserver.DatagramRequestHandler"><code class="docutils literal notranslate"><span class="pre">DatagramRequestHandler</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a><ul>
+<li><a class="reference internal" href="#socketserver-tcpserver-example"><code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code> Example</a></li>
+<li><a class="reference internal" href="#socketserver-udpserver-example"><code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.UDPServer</span></code> Example</a></li>
+<li><a class="reference internal" href="#asynchronous-mixins">Asynchronous Mixins</a></li>
+</ul>
+</li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/socketserver.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="internet.html"><span itemprop="name">Internet Protocols and Support</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="module-socketserver">
+<span id="socketserver-a-framework-for-network-servers"></span><h1><a class="reference internal" href="#module-socketserver" title="socketserver: A framework for network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a> — A framework for network servers<a class="headerlink" href="#module-socketserver" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/socketserver.py">Lib/socketserver.py</a></p>
+<hr class="docutils" />
+<p>The <a class="reference internal" href="#module-socketserver" title="socketserver: A framework for network servers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code></a> module simplifies the task of writing network servers.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
+<p>This module does not work or is not available on WebAssembly platforms
+<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
+<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a> for more information.</p>
+</div>
+<p>There are four basic concrete server classes:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.TCPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">TCPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.TCPServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This uses the internet TCP protocol, which provides for
+continuous streams of data between the client and server.
+If <em>bind_and_activate</em> is true, the constructor automatically attempts to
+invoke <a class="reference internal" href="#socketserver.BaseServer.server_bind" title="socketserver.BaseServer.server_bind"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_bind()</span></code></a> and
+<a class="reference internal" href="#socketserver.BaseServer.server_activate" title="socketserver.BaseServer.server_activate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_activate()</span></code></a>.  The other parameters are passed to
+the <a class="reference internal" href="#socketserver.BaseServer" title="socketserver.BaseServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseServer</span></code></a> base class.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.UDPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UDPServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UDPServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This uses datagrams, which are discrete packets of information that may
+arrive out of order or be lost while in transit.  The parameters are
+the same as for <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.UnixStreamServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixStreamServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixStreamServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.UnixDatagramServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">UnixDatagramServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bind_and_activate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.UnixDatagramServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>These more infrequently used classes are similar to the TCP and
+UDP classes, but use Unix domain sockets; they’re not available on
+non-Unix platforms.  The parameters are the same as for
+<a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a>.</p>
+</dd></dl>
+
+<p>These four classes process requests <em class="dfn">synchronously</em>; each request must be
+completed before the next request can be started.  This isn’t suitable if each
+request takes a long time to complete, because it requires a lot of computation,
+or because it returns a lot of data which the client is slow to process.  The
+solution is to create a separate process or thread to handle each request; the
+<a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> and <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> mix-in classes can be used to
+support asynchronous behaviour.</p>
+<p>Creating a server requires several steps.  First, you must create a request
+handler class by subclassing the <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a> class and
+overriding its <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method;
+this method will process incoming
+requests.  Second, you must instantiate one of the server classes, passing it
+the server’s address and the request handler class. It is recommended to use
+the server in a <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement. Then call the
+<a class="reference internal" href="#socketserver.BaseServer.handle_request" title="socketserver.BaseServer.handle_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_request()</span></code></a> or
+<a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> method of the server object to
+process one or many requests.  Finally, call <a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_close()</span></code></a>
+to close the socket (unless you used a <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code> statement).</p>
+<p>When inheriting from <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> for threaded connection behavior,
+you should explicitly declare how you want your threads to behave on an abrupt
+shutdown.  The <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> class defines an attribute
+<em>daemon_threads</em>, which indicates whether or not the server should wait for
+thread termination.  You should set the flag explicitly if you would like
+threads to behave autonomously; the default is <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, meaning that
+Python will not exit until all threads created by <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> have
+exited.</p>
+<p>Server classes have the same external methods and attributes, no matter what
+network protocol they use.</p>
+<section id="server-creation-notes">
+<h2>Server Creation Notes<a class="headerlink" href="#server-creation-notes" title="Permalink to this heading">¶</a></h2>
+<p>There are five classes in an inheritance diagram, four of which represent
+synchronous servers of four types:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="o">+------------+</span>
+</span><span data-line="2"><span class="o">|</span> <span class="n">BaseServer</span> <span class="o">|</span>
+</span><span data-line="3"><span class="o">+------------+</span>
+</span><span data-line="4">      <span class="o">|</span>
+</span><span data-line="5">      <span class="n">v</span>
+</span><span data-line="6"><span class="o">+-----------+</span>        <span class="o">+------------------+</span>
+</span><span data-line="7"><span class="o">|</span> <span class="n">TCPServer</span> <span class="o">|-------&gt;|</span> <span class="n">UnixStreamServer</span> <span class="o">|</span>
+</span><span data-line="8"><span class="o">+-----------+</span>        <span class="o">+------------------+</span>
+</span><span data-line="9">      <span class="o">|</span>
+</span><span data-line="10">      <span class="n">v</span>
+</span><span data-line="11"><span class="o">+-----------+</span>        <span class="o">+--------------------+</span>
+</span><span data-line="12"><span class="o">|</span> <span class="n">UDPServer</span> <span class="o">|-------&gt;|</span> <span class="n">UnixDatagramServer</span> <span class="o">|</span>
+</span><span data-line="13"><span class="o">+-----------+</span>        <span class="o">+--------------------+</span>
+</span></pre></div>
+</div>
+<p>Note that <a class="reference internal" href="#socketserver.UnixDatagramServer" title="socketserver.UnixDatagramServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnixDatagramServer</span></code></a> derives from <a class="reference internal" href="#socketserver.UDPServer" title="socketserver.UDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UDPServer</span></code></a>, not from
+<a class="reference internal" href="#socketserver.UnixStreamServer" title="socketserver.UnixStreamServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UnixStreamServer</span></code></a> — the only difference between an IP and a Unix
+server is the address family.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.ForkingMixIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingMixIn</span></span><a class="headerlink" href="#socketserver.ForkingMixIn" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingMixIn">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingMixIn</span></span><a class="headerlink" href="#socketserver.ThreadingMixIn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forking and threading versions of each type of server can be created
+using these mix-in classes.  For instance, <a class="reference internal" href="#socketserver.ThreadingUDPServer" title="socketserver.ThreadingUDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingUDPServer</span></code></a>
+is created as follows:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">ThreadingUDPServer</span><span class="p">(</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">UDPServer</span><span class="p">):</span>
+</span><span data-line="2">    <span class="k">pass</span>
+</span></pre></div>
+</div>
+<p>The mix-in class comes first, since it overrides a method defined in
+<a class="reference internal" href="#socketserver.UDPServer" title="socketserver.UDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">UDPServer</span></code></a>.  Setting the various attributes also changes the
+behavior of the underlying server mechanism.</p>
+<p><a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> and the Forking classes mentioned below are
+only available on POSIX platforms that support <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a>.</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">socketserver.ForkingMixIn.server_close()</span></code> waits until all child
+processes complete, except if
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">socketserver.ForkingMixIn.block_on_close</span></code> attribute is false.</p>
+<p><code class="xref py py-meth docutils literal notranslate"><span class="pre">socketserver.ThreadingMixIn.server_close()</span></code> waits until all non-daemon
+threads complete, except if
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">socketserver.ThreadingMixIn.block_on_close</span></code> attribute is false. Use
+daemonic threads by setting
+<code class="xref py py-data docutils literal notranslate"><span class="pre">ThreadingMixIn.daemon_threads</span></code> to <code class="docutils literal notranslate"><span class="pre">True</span></code> to not wait until threads
+complete.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span><code class="xref py py-meth docutils literal notranslate"><span class="pre">socketserver.ForkingMixIn.server_close()</span></code> and
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">socketserver.ThreadingMixIn.server_close()</span></code> now waits until all
+child processes and non-daemonic threads complete.
+Add a new <code class="xref py py-attr docutils literal notranslate"><span class="pre">socketserver.ForkingMixIn.block_on_close</span></code> class
+attribute to opt-in for the pre-3.7 behaviour.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.ForkingTCPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingTCPServer</span></span><a class="headerlink" href="#socketserver.ForkingTCPServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ForkingUDPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUDPServer</span></span><a class="headerlink" href="#socketserver.ForkingUDPServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingTCPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingTCPServer</span></span><a class="headerlink" href="#socketserver.ThreadingTCPServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingUDPServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUDPServer</span></span><a class="headerlink" href="#socketserver.ThreadingUDPServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ForkingUnixStreamServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixStreamServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ForkingUnixDatagramServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ForkingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ForkingUnixDatagramServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingUnixStreamServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixStreamServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixStreamServer" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.ThreadingUnixDatagramServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">ThreadingUnixDatagramServer</span></span><a class="headerlink" href="#socketserver.ThreadingUnixDatagramServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>These classes are pre-defined using the mix-in classes.</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.12: </span>The <code class="docutils literal notranslate"><span class="pre">ForkingUnixStreamServer</span></code> and <code class="docutils literal notranslate"><span class="pre">ForkingUnixDatagramServer</span></code> classes
+were added.</p>
+</div>
+<p>To implement a service, you must derive a class from <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a>
+and redefine its <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method.
+You can then run various versions of
+the service by combining one of the server classes with your request handler
+class.  The request handler class must be different for datagram or stream
+services.  This can be hidden by using the handler subclasses
+<a class="reference internal" href="#socketserver.StreamRequestHandler" title="socketserver.StreamRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">StreamRequestHandler</span></code></a> or <a class="reference internal" href="#socketserver.DatagramRequestHandler" title="socketserver.DatagramRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DatagramRequestHandler</span></code></a>.</p>
+<p>Of course, you still have to use your head!  For instance, it makes no sense to
+use a forking server if the service contains state in memory that can be
+modified by different requests, since the modifications in the child process
+would never reach the initial state kept in the parent process and passed to
+each child.  In this case, you can use a threading server, but you will probably
+have to use locks to protect the integrity of the shared data.</p>
+<p>On the other hand, if you are building an HTTP server where all data is stored
+externally (for instance, in the file system), a synchronous class will
+essentially render the service “deaf” while one request is being handled –
+which may be for a very long time if a client is slow to receive all the data it
+has requested.  Here a threading or forking server is appropriate.</p>
+<p>In some cases, it may be appropriate to process part of a request synchronously,
+but to finish processing in a forked child depending on the request data.  This
+can be implemented by using a synchronous server and doing an explicit fork in
+the request handler class <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method.</p>
+<p>Another approach to handling multiple simultaneous requests in an environment
+that supports neither threads nor <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a> (or where these are too
+expensive or inappropriate for the service) is to maintain an explicit table of
+partially finished requests and to use <a class="reference internal" href="selectors.html#module-selectors" title="selectors: High-level I/O multiplexing."><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code></a> to decide which
+request to work on next (or whether to handle a new incoming request).  This is
+particularly important for stream services where each client can potentially be
+connected for a long time (if threads or subprocesses cannot be used).</p>
+</section>
+<section id="server-objects">
+<h2>Server Objects<a class="headerlink" href="#server-objects" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.BaseServer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseServer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">server_address</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">RequestHandlerClass</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the superclass of all Server objects in the module.  It defines the
+interface, given below, but does not implement most of the methods, which is
+done in subclasses.  The two parameters are stored in the respective
+<a class="reference internal" href="#socketserver.BaseServer.server_address" title="socketserver.BaseServer.server_address"><code class="xref py py-attr docutils literal notranslate"><span class="pre">server_address</span></code></a> and <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a> attributes.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.fileno">
+<span class="sig-name descname"><span class="pre">fileno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.fileno" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an integer file descriptor for the socket on which the server is
+listening.  This function is most commonly passed to <a class="reference internal" href="selectors.html#module-selectors" title="selectors: High-level I/O multiplexing."><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code></a>, to
+allow monitoring multiple servers in the same process.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.handle_request">
+<span class="sig-name descname"><span class="pre">handle_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.handle_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Process a single request.  This function calls the following methods in
+order: <a class="reference internal" href="#socketserver.BaseServer.get_request" title="socketserver.BaseServer.get_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_request()</span></code></a>, <a class="reference internal" href="#socketserver.BaseServer.verify_request" title="socketserver.BaseServer.verify_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">verify_request()</span></code></a>, and
+<a class="reference internal" href="#socketserver.BaseServer.process_request" title="socketserver.BaseServer.process_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">process_request()</span></code></a>.  If the user-provided
+<a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method of the
+handler class raises an exception, the server’s <a class="reference internal" href="#socketserver.BaseServer.handle_error" title="socketserver.BaseServer.handle_error"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_error()</span></code></a> method
+will be called.  If no request is received within <a class="reference internal" href="#socketserver.BaseServer.timeout" title="socketserver.BaseServer.timeout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">timeout</span></code></a>
+seconds, <a class="reference internal" href="#socketserver.BaseServer.handle_timeout" title="socketserver.BaseServer.handle_timeout"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_timeout()</span></code></a> will be called and <a class="reference internal" href="#socketserver.BaseServer.handle_request" title="socketserver.BaseServer.handle_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_request()</span></code></a>
+will return.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.serve_forever">
+<span class="sig-name descname"><span class="pre">serve_forever</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">poll_interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.serve_forever" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle requests until an explicit <a class="reference internal" href="#socketserver.BaseServer.shutdown" title="socketserver.BaseServer.shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code></a> request.  Poll for
+shutdown every <em>poll_interval</em> seconds.
+Ignores the <a class="reference internal" href="#socketserver.BaseServer.timeout" title="socketserver.BaseServer.timeout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">timeout</span></code></a> attribute.  It
+also calls <a class="reference internal" href="#socketserver.BaseServer.service_actions" title="socketserver.BaseServer.service_actions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">service_actions()</span></code></a>, which may be used by a subclass or mixin
+to provide actions specific to a given service.  For example, the
+<a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> class uses <a class="reference internal" href="#socketserver.BaseServer.service_actions" title="socketserver.BaseServer.service_actions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">service_actions()</span></code></a> to clean up zombie
+child processes.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span>Added <code class="docutils literal notranslate"><span class="pre">service_actions</span></code> call to the <code class="docutils literal notranslate"><span class="pre">serve_forever</span></code> method.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.service_actions">
+<span class="sig-name descname"><span class="pre">service_actions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.service_actions" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is called in the <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> loop. This method can be
+overridden by subclasses or mixin classes to perform actions specific to
+a given service, such as cleanup actions.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.shutdown">
+<span class="sig-name descname"><span class="pre">shutdown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.shutdown" title="Permalink to this definition">¶</a></dt>
+<dd><p>Tell the <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> loop to stop and wait until it does.
+<a class="reference internal" href="#socketserver.BaseServer.shutdown" title="socketserver.BaseServer.shutdown"><code class="xref py py-meth docutils literal notranslate"><span class="pre">shutdown()</span></code></a> must be called while <a class="reference internal" href="#socketserver.BaseServer.serve_forever" title="socketserver.BaseServer.serve_forever"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serve_forever()</span></code></a> is running in a
+different thread otherwise it will deadlock.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_close">
+<span class="sig-name descname"><span class="pre">server_close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.server_close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clean up the server. May be overridden.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.address_family">
+<span class="sig-name descname"><span class="pre">address_family</span></span><a class="headerlink" href="#socketserver.BaseServer.address_family" title="Permalink to this definition">¶</a></dt>
+<dd><p>The family of protocols to which the server’s socket belongs.
+Common examples are <a class="reference internal" href="socket.html#socket.AF_INET" title="socket.AF_INET"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_INET</span></code></a> and <a class="reference internal" href="socket.html#socket.AF_UNIX" title="socket.AF_UNIX"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.AF_UNIX</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.RequestHandlerClass">
+<span class="sig-name descname"><span class="pre">RequestHandlerClass</span></span><a class="headerlink" href="#socketserver.BaseServer.RequestHandlerClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>The user-provided request handler class; an instance of this class is created
+for each request.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_address">
+<span class="sig-name descname"><span class="pre">server_address</span></span><a class="headerlink" href="#socketserver.BaseServer.server_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>The address on which the server is listening.  The format of addresses varies
+depending on the protocol family;
+see the documentation for the <a class="reference internal" href="socket.html#module-socket" title="socket: Low-level networking interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code></a> module
+for details.  For internet protocols, this is a tuple containing a string giving
+the address, and an integer port number: <code class="docutils literal notranslate"><span class="pre">('127.0.0.1',</span> <span class="pre">80)</span></code>, for example.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.socket">
+<span class="sig-name descname"><span class="pre">socket</span></span><a class="headerlink" href="#socketserver.BaseServer.socket" title="Permalink to this definition">¶</a></dt>
+<dd><p>The socket object on which the server will listen for incoming requests.</p>
+</dd></dl>
+
+<p>The server classes support the following class variables:</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.allow_reuse_address">
+<span class="sig-name descname"><span class="pre">allow_reuse_address</span></span><a class="headerlink" href="#socketserver.BaseServer.allow_reuse_address" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether the server will allow the reuse of an address.  This defaults to
+<a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, and can be set in subclasses to change the policy.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.request_queue_size">
+<span class="sig-name descname"><span class="pre">request_queue_size</span></span><a class="headerlink" href="#socketserver.BaseServer.request_queue_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>The size of the request queue.  If it takes a long time to process a single
+request, any requests that arrive while the server is busy are placed into a
+queue, up to <a class="reference internal" href="#socketserver.BaseServer.request_queue_size" title="socketserver.BaseServer.request_queue_size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">request_queue_size</span></code></a> requests.  Once the queue is full,
+further requests from clients will get a “Connection denied” error.  The default
+value is usually 5, but this can be overridden by subclasses.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.socket_type">
+<span class="sig-name descname"><span class="pre">socket_type</span></span><a class="headerlink" href="#socketserver.BaseServer.socket_type" title="Permalink to this definition">¶</a></dt>
+<dd><p>The type of socket used by the server; <a class="reference internal" href="socket.html#socket.SOCK_STREAM" title="socket.SOCK_STREAM"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.SOCK_STREAM</span></code></a> and
+<a class="reference internal" href="socket.html#socket.SOCK_DGRAM" title="socket.SOCK_DGRAM"><code class="xref py py-const docutils literal notranslate"><span class="pre">socket.SOCK_DGRAM</span></code></a> are two common values.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="socketserver.BaseServer.timeout">
+<span class="sig-name descname"><span class="pre">timeout</span></span><a class="headerlink" href="#socketserver.BaseServer.timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timeout duration, measured in seconds, or <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> if no timeout is
+desired.  If <a class="reference internal" href="#socketserver.BaseServer.handle_request" title="socketserver.BaseServer.handle_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_request()</span></code></a> receives no incoming requests within the
+timeout period, the <a class="reference internal" href="#socketserver.BaseServer.handle_timeout" title="socketserver.BaseServer.handle_timeout"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle_timeout()</span></code></a> method is called.</p>
+</dd></dl>
+
+<p>There are various server methods that can be overridden by subclasses of base
+server classes like <a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">TCPServer</span></code></a>; these methods aren’t useful to external
+users of the server object.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.finish_request">
+<span class="sig-name descname"><span class="pre">finish_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.finish_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Actually processes the request by instantiating <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a> and
+calling its <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.get_request">
+<span class="sig-name descname"><span class="pre">get_request</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.get_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must accept a request from the socket, and return a 2-tuple containing the <em>new</em>
+socket object to be used to communicate with the client, and the client’s
+address.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.handle_error">
+<span class="sig-name descname"><span class="pre">handle_error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.handle_error" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called if the <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a>
+method of a <a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a> instance raises
+an exception.  The default action is to print the traceback to
+standard error and continue handling further requests.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>Now only called for exceptions derived from the <a class="reference internal" href="exceptions.html#Exception" title="Exception"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Exception</span></code></a>
+class.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.handle_timeout">
+<span class="sig-name descname"><span class="pre">handle_timeout</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.handle_timeout" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function is called when the <a class="reference internal" href="#socketserver.BaseServer.timeout" title="socketserver.BaseServer.timeout"><code class="xref py py-attr docutils literal notranslate"><span class="pre">timeout</span></code></a> attribute has been set to a
+value other than <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> and the timeout period has passed with no
+requests being received.  The default action for forking servers is
+to collect the status of any child processes that have exited, while
+in threading servers this method does nothing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.process_request">
+<span class="sig-name descname"><span class="pre">process_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.process_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calls <a class="reference internal" href="#socketserver.BaseServer.finish_request" title="socketserver.BaseServer.finish_request"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finish_request()</span></code></a> to create an instance of the
+<a class="reference internal" href="#socketserver.BaseServer.RequestHandlerClass" title="socketserver.BaseServer.RequestHandlerClass"><code class="xref py py-attr docutils literal notranslate"><span class="pre">RequestHandlerClass</span></code></a>.  If desired, this function can create a new process
+or thread to handle the request; the <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> and
+<a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> classes do this.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_activate">
+<span class="sig-name descname"><span class="pre">server_activate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.server_activate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by the server’s constructor to activate the server.  The default behavior
+for a TCP server just invokes <a class="reference internal" href="socket.html#socket.socket.listen" title="socket.socket.listen"><code class="xref py py-meth docutils literal notranslate"><span class="pre">listen()</span></code></a>
+on the server’s socket.  May be overridden.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.server_bind">
+<span class="sig-name descname"><span class="pre">server_bind</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.server_bind" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called by the server’s constructor to bind the socket to the desired address.
+May be overridden.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseServer.verify_request">
+<span class="sig-name descname"><span class="pre">verify_request</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">client_address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseServer.verify_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>Must return a Boolean value; if the value is <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a>, the request will
+be processed, and if it’s <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, the request will be denied.  This
+function can be overridden to implement access controls for a server. The
+default implementation always returns <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a>.</p>
+</dd></dl>
+
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>Support for the <a class="reference internal" href="../glossary.html#term-context-manager"><span class="xref std std-term">context manager</span></a> protocol was added.  Exiting the
+context manager is equivalent to calling <a class="reference internal" href="#socketserver.BaseServer.server_close" title="socketserver.BaseServer.server_close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">server_close()</span></code></a>.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="request-handler-objects">
+<h2>Request Handler Objects<a class="headerlink" href="#request-handler-objects" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">BaseRequestHandler</span></span><a class="headerlink" href="#socketserver.BaseRequestHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the superclass of all request handler objects.  It defines
+the interface, given below.  A concrete request handler subclass must
+define a new <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method, and can override any of
+the other methods.  A new instance of the subclass is created for each
+request.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseRequestHandler.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called before the <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method to perform any initialization actions
+required.  The default implementation does nothing.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.handle">
+<span class="sig-name descname"><span class="pre">handle</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseRequestHandler.handle" title="Permalink to this definition">¶</a></dt>
+<dd><p>This function must do all the work required to service a request.  The
+default implementation does nothing.  Several instance attributes are
+available to it; the request is available as <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.request</span></code>; the client
+address as <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.client_address</span></code>; and the server instance as
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">self.server</span></code>, in case it needs access to per-server information.</p>
+<p>The type of <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.request</span></code> is different for datagram or stream
+services.  For stream services, <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.request</span></code> is a socket object; for
+datagram services, <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.request</span></code> is a pair of string and socket.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="socketserver.BaseRequestHandler.finish">
+<span class="sig-name descname"><span class="pre">finish</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#socketserver.BaseRequestHandler.finish" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the <a class="reference internal" href="#socketserver.BaseRequestHandler.handle" title="socketserver.BaseRequestHandler.handle"><code class="xref py py-meth docutils literal notranslate"><span class="pre">handle()</span></code></a> method to perform any clean-up actions
+required.  The default implementation does nothing.  If <a class="reference internal" href="#socketserver.BaseRequestHandler.setup" title="socketserver.BaseRequestHandler.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a>
+raises an exception, this function will not be called.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="socketserver.StreamRequestHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">StreamRequestHandler</span></span><a class="headerlink" href="#socketserver.StreamRequestHandler" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="socketserver.DatagramRequestHandler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">socketserver.</span></span><span class="sig-name descname"><span class="pre">DatagramRequestHandler</span></span><a class="headerlink" href="#socketserver.DatagramRequestHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>These <a class="reference internal" href="#socketserver.BaseRequestHandler" title="socketserver.BaseRequestHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseRequestHandler</span></code></a> subclasses override the
+<a class="reference internal" href="#socketserver.BaseRequestHandler.setup" title="socketserver.BaseRequestHandler.setup"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setup()</span></code></a> and <a class="reference internal" href="#socketserver.BaseRequestHandler.finish" title="socketserver.BaseRequestHandler.finish"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finish()</span></code></a>
+methods, and provide <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.rfile</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.wfile</span></code> attributes.
+The <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.rfile</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">self.wfile</span></code> attributes can be
+read or written, respectively, to get the request data or return data
+to the client.
+The <code class="xref py py-attr docutils literal notranslate"><span class="pre">rfile</span></code> attributes support the <a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a> readable interface,
+and <code class="xref py py-attr docutils literal notranslate"><span class="pre">wfile</span></code> attributes support the <code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code> writable interface.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span><code class="xref py py-attr docutils literal notranslate"><span class="pre">StreamRequestHandler.wfile</span></code> also supports the
+<a class="reference internal" href="io.html#io.BufferedIOBase" title="io.BufferedIOBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">io.BufferedIOBase</span></code></a> writable interface.</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<section id="socketserver-tcpserver-example">
+<h3><a class="reference internal" href="#socketserver.TCPServer" title="socketserver.TCPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.TCPServer</span></code></a> Example<a class="headerlink" href="#socketserver-tcpserver-example" title="Permalink to this heading">¶</a></h3>
+<p>This is the server side:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">socketserver</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">class</span> <span class="nc">MyTCPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+</span><span data-line="4"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="5"><span class="sd">    The request handler class for our server.</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="sd">    It is instantiated once per connection to the server, and must</span>
+</span><span data-line="8"><span class="sd">    override the handle() method to implement communication to the</span>
+</span><span data-line="9"><span class="sd">    client.</span>
+</span><span data-line="10"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="11">
+</span><span data-line="12">    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="13">        <span class="c1"># self.request is the TCP socket connected to the client</span>
+</span><span data-line="14">        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span data-line="15">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span data-line="16">        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</span><span data-line="17">        <span class="c1"># just send back the same data, but upper-cased</span>
+</span><span data-line="18">        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</span><span data-line="19">
+</span><span data-line="20"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span data-line="21">    <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+</span><span data-line="22">
+</span><span data-line="23">    <span class="c1"># Create the server, binding to localhost on port 9999</span>
+</span><span data-line="24">    <span class="k">with</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">MyTCPHandler</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+</span><span data-line="25">        <span class="c1"># Activate the server; this will keep running until you</span>
+</span><span data-line="26">        <span class="c1"># interrupt the program with Ctrl-C</span>
+</span><span data-line="27">        <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>An alternative request handler class that makes use of streams (file-like
+objects that simplify communication by providing the standard file interface):</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">MyTCPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">StreamRequestHandler</span><span class="p">):</span>
+</span><span data-line="2">
+</span><span data-line="3">    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="4">        <span class="c1"># self.rfile is a file-like object created by the handler;</span>
+</span><span data-line="5">        <span class="c1"># we can now use e.g. readline() instead of raw recv() calls</span>
+</span><span data-line="6">        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">rfile</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span data-line="7">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span data-line="8">        <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</span><span data-line="9">        <span class="c1"># Likewise, self.wfile is a file-like object used to write back</span>
+</span><span data-line="10">        <span class="c1"># to the client</span>
+</span><span data-line="11">        <span class="bp">self</span><span class="o">.</span><span class="n">wfile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">())</span>
+</span></pre></div>
+</div>
+<p>The difference is that the <code class="docutils literal notranslate"><span class="pre">readline()</span></code> call in the second handler will call
+<code class="docutils literal notranslate"><span class="pre">recv()</span></code> multiple times until it encounters a newline character, while the
+single <code class="docutils literal notranslate"><span class="pre">recv()</span></code> call in the first handler will just return what has been sent
+from the client in one <code class="docutils literal notranslate"><span class="pre">sendall()</span></code> call.</p>
+<p>This is the client side:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">socket</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">sys</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+</span><span data-line="5"><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># Create a socket (SOCK_STREAM means a TCP socket)</span>
+</span><span data-line="8"><span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
+</span><span data-line="9">    <span class="c1"># Connect to server and send data</span>
+</span><span data-line="10">    <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+</span><span data-line="11">    <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">))</span>
+</span><span data-line="12">
+</span><span data-line="13">    <span class="c1"># Receive data from the server and shut down</span>
+</span><span data-line="14">    <span class="n">received</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+</span><span data-line="15">
+</span><span data-line="16"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:     </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span data-line="17"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received</span><span class="p">))</span>
+</span></pre></div>
+</div>
+<p>The output of the example should look something like this:</p>
+<p>Server:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">$ </span>python<span class="w"> </span>TCPServer.py
+</span><span data-line="2"><span class="go">127.0.0.1 wrote:</span>
+</span><span data-line="3"><span class="go">b&#39;hello world with TCP&#39;</span>
+</span><span data-line="4"><span class="go">127.0.0.1 wrote:</span>
+</span><span data-line="5"><span class="go">b&#39;python is nice&#39;</span>
+</span></pre></div>
+</div>
+<p>Client:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">$ </span>python<span class="w"> </span>TCPClient.py<span class="w"> </span>hello<span class="w"> </span>world<span class="w"> </span>with<span class="w"> </span>TCP
+</span><span data-line="2"><span class="go">Sent:     hello world with TCP</span>
+</span><span data-line="3"><span class="go">Received: HELLO WORLD WITH TCP</span>
+</span><span data-line="4"><span class="gp">$ </span>python<span class="w"> </span>TCPClient.py<span class="w"> </span>python<span class="w"> </span>is<span class="w"> </span>nice
+</span><span data-line="5"><span class="go">Sent:     python is nice</span>
+</span><span data-line="6"><span class="go">Received: PYTHON IS NICE</span>
+</span></pre></div>
+</div>
+</section>
+<section id="socketserver-udpserver-example">
+<h3><a class="reference internal" href="#socketserver.UDPServer" title="socketserver.UDPServer"><code class="xref py py-class docutils literal notranslate"><span class="pre">socketserver.UDPServer</span></code></a> Example<a class="headerlink" href="#socketserver-udpserver-example" title="Permalink to this heading">¶</a></h3>
+<p>This is the server side:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">socketserver</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">class</span> <span class="nc">MyUDPHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+</span><span data-line="4"><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span data-line="5"><span class="sd">    This class works similar to the TCP handler class, except that</span>
+</span><span data-line="6"><span class="sd">    self.request consists of a pair of data and client socket, and since</span>
+</span><span data-line="7"><span class="sd">    there is no connection the client address must be given explicitly</span>
+</span><span data-line="8"><span class="sd">    when sending data back via sendto().</span>
+</span><span data-line="9"><span class="sd">    &quot;&quot;&quot;</span>
+</span><span data-line="10">
+</span><span data-line="11">    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="12">        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span data-line="13">        <span class="n">socket</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span data-line="14">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> wrote:&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
+</span><span data-line="15">        <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+</span><span data-line="16">        <span class="n">socket</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">upper</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">client_address</span><span class="p">)</span>
+</span><span data-line="17">
+</span><span data-line="18"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span data-line="19">    <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+</span><span data-line="20">    <span class="k">with</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">UDPServer</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">MyUDPHandler</span><span class="p">)</span> <span class="k">as</span> <span class="n">server</span><span class="p">:</span>
+</span><span data-line="21">        <span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>This is the client side:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">socket</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">sys</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">9999</span>
+</span><span data-line="5"><span class="n">data</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">sys</span><span class="o">.</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">:])</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="c1"># SOCK_DGRAM is the socket type to use for UDP sockets</span>
+</span><span data-line="8"><span class="n">sock</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_DGRAM</span><span class="p">)</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># As you can see, there is no connect() call; UDP has no connections.</span>
+</span><span data-line="11"><span class="c1"># Instead, data is directly sent to the recipient via sendto().</span>
+</span><span data-line="12"><span class="n">sock</span><span class="o">.</span><span class="n">sendto</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">data</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">),</span> <span class="p">(</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">))</span>
+</span><span data-line="13"><span class="n">received</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sent:     </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="p">))</span>
+</span><span data-line="16"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">received</span><span class="p">))</span>
+</span></pre></div>
+</div>
+<p>The output of the example should look exactly like for the TCP server example.</p>
+</section>
+<section id="asynchronous-mixins">
+<h3>Asynchronous Mixins<a class="headerlink" href="#asynchronous-mixins" title="Permalink to this heading">¶</a></h3>
+<p>To build asynchronous handlers, use the <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> and
+<a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> classes.</p>
+<p>An example for the <a class="reference internal" href="#socketserver.ThreadingMixIn" title="socketserver.ThreadingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ThreadingMixIn</span></code></a> class:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">socket</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">threading</span>
+</span><span data-line="3"><span class="kn">import</span> <span class="nn">socketserver</span>
+</span><span data-line="4">
+</span><span data-line="5"><span class="k">class</span> <span class="nc">ThreadedTCPRequestHandler</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">BaseRequestHandler</span><span class="p">):</span>
+</span><span data-line="6">
+</span><span data-line="7">    <span class="k">def</span> <span class="nf">handle</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="8">        <span class="n">data</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+</span><span data-line="9">        <span class="n">cur_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">current_thread</span><span class="p">()</span>
+</span><span data-line="10">        <span class="n">response</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">cur_thread</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+</span><span data-line="11">        <span class="bp">self</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="k">class</span> <span class="nc">ThreadedTCPServer</span><span class="p">(</span><span class="n">socketserver</span><span class="o">.</span><span class="n">ThreadingMixIn</span><span class="p">,</span> <span class="n">socketserver</span><span class="o">.</span><span class="n">TCPServer</span><span class="p">):</span>
+</span><span data-line="14">    <span class="k">pass</span>
+</span><span data-line="15">
+</span><span data-line="16"><span class="k">def</span> <span class="nf">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+</span><span data-line="17">    <span class="k">with</span> <span class="n">socket</span><span class="o">.</span><span class="n">socket</span><span class="p">(</span><span class="n">socket</span><span class="o">.</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">SOCK_STREAM</span><span class="p">)</span> <span class="k">as</span> <span class="n">sock</span><span class="p">:</span>
+</span><span data-line="18">        <span class="n">sock</span><span class="o">.</span><span class="n">connect</span><span class="p">((</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">))</span>
+</span><span data-line="19">        <span class="n">sock</span><span class="o">.</span><span class="n">sendall</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="s1">&#39;ascii&#39;</span><span class="p">))</span>
+</span><span data-line="20">        <span class="n">response</span> <span class="o">=</span> <span class="nb">str</span><span class="p">(</span><span class="n">sock</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1024</span><span class="p">),</span> <span class="s1">&#39;ascii&#39;</span><span class="p">)</span>
+</span><span data-line="21">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Received: </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">response</span><span class="p">))</span>
+</span><span data-line="22">
+</span><span data-line="23"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+</span><span data-line="24">    <span class="c1"># Port 0 means to select an arbitrary unused port</span>
+</span><span data-line="25">    <span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span> <span class="o">=</span> <span class="s2">&quot;localhost&quot;</span><span class="p">,</span> <span class="mi">0</span>
+</span><span data-line="26">
+</span><span data-line="27">    <span class="n">server</span> <span class="o">=</span> <span class="n">ThreadedTCPServer</span><span class="p">((</span><span class="n">HOST</span><span class="p">,</span> <span class="n">PORT</span><span class="p">),</span> <span class="n">ThreadedTCPRequestHandler</span><span class="p">)</span>
+</span><span data-line="28">    <span class="k">with</span> <span class="n">server</span><span class="p">:</span>
+</span><span data-line="29">        <span class="n">ip</span><span class="p">,</span> <span class="n">port</span> <span class="o">=</span> <span class="n">server</span><span class="o">.</span><span class="n">server_address</span>
+</span><span data-line="30">
+</span><span data-line="31">        <span class="c1"># Start a thread with the server -- that thread will then start one</span>
+</span><span data-line="32">        <span class="c1"># more thread for each request</span>
+</span><span data-line="33">        <span class="n">server_thread</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">server</span><span class="o">.</span><span class="n">serve_forever</span><span class="p">)</span>
+</span><span data-line="34">        <span class="c1"># Exit the server thread when the main thread terminates</span>
+</span><span data-line="35">        <span class="n">server_thread</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span data-line="36">        <span class="n">server_thread</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+</span><span data-line="37">        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Server loop running in thread:&quot;</span><span class="p">,</span> <span class="n">server_thread</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</span><span data-line="38">
+</span><span data-line="39">        <span class="n">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;Hello World 1&quot;</span><span class="p">)</span>
+</span><span data-line="40">        <span class="n">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;Hello World 2&quot;</span><span class="p">)</span>
+</span><span data-line="41">        <span class="n">client</span><span class="p">(</span><span class="n">ip</span><span class="p">,</span> <span class="n">port</span><span class="p">,</span> <span class="s2">&quot;Hello World 3&quot;</span><span class="p">)</span>
+</span><span data-line="42">
+</span><span data-line="43">        <span class="n">server</span><span class="o">.</span><span class="n">shutdown</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>The output of the example should look something like this:</p>
+<div class="highlight-shell-session notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">$ </span>python<span class="w"> </span>ThreadedTCPServer.py
+</span><span data-line="2"><span class="go">Server loop running in thread: Thread-1</span>
+</span><span data-line="3"><span class="go">Received: Thread-2: Hello World 1</span>
+</span><span data-line="4"><span class="go">Received: Thread-3: Hello World 2</span>
+</span><span data-line="5"><span class="go">Received: Thread-4: Hello World 3</span>
+</span></pre></div>
+</div>
+<p>The <a class="reference internal" href="#socketserver.ForkingMixIn" title="socketserver.ForkingMixIn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ForkingMixIn</span></code></a> class is used in the same way, except that the server
+will spawn a new process for each request.
+Available only on POSIX platforms that support <a class="reference internal" href="os.html#os.fork" title="os.fork"><code class="xref py py-func docutils literal notranslate"><span class="pre">fork()</span></code></a>.</p>
+</section>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="uuid.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="http.server.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

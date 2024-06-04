@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>signal — Set handlers for asynchronous events - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="mmap — Memory-mapped file support" href="mmap.html" /><link rel="prev" title="selectors — High-level I/O multiplexing" href="selectors.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="signal — Set handlers for asynchronous events"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#general-rules">General rules</a><ul>
+<li><a class="reference internal" href="#execution-of-python-signal-handlers">Execution of Python signal handlers</a></li>
+<li><a class="reference internal" href="#signals-and-threads">Signals and threads</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-contents">Module contents</a><ul>
+<li><a class="reference internal" href="#signal.Signals"><code class="docutils literal notranslate"><span class="pre">Signals</span></code></a></li>
+<li><a class="reference internal" href="#signal.Handlers"><code class="docutils literal notranslate"><span class="pre">Handlers</span></code></a></li>
+<li><a class="reference internal" href="#signal.Sigmasks"><code class="docutils literal notranslate"><span class="pre">Sigmasks</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIG_DFL"><code class="docutils literal notranslate"><span class="pre">SIG_DFL</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIG_IGN"><code class="docutils literal notranslate"><span class="pre">SIG_IGN</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGABRT"><code class="docutils literal notranslate"><span class="pre">SIGABRT</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGALRM"><code class="docutils literal notranslate"><span class="pre">SIGALRM</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGBREAK"><code class="docutils literal notranslate"><span class="pre">SIGBREAK</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGBUS"><code class="docutils literal notranslate"><span class="pre">SIGBUS</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGCHLD"><code class="docutils literal notranslate"><span class="pre">SIGCHLD</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGCLD"><code class="docutils literal notranslate"><span class="pre">SIGCLD</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGCONT"><code class="docutils literal notranslate"><span class="pre">SIGCONT</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGFPE"><code class="docutils literal notranslate"><span class="pre">SIGFPE</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGHUP"><code class="docutils literal notranslate"><span class="pre">SIGHUP</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGILL"><code class="docutils literal notranslate"><span class="pre">SIGILL</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGINT"><code class="docutils literal notranslate"><span class="pre">SIGINT</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGKILL"><code class="docutils literal notranslate"><span class="pre">SIGKILL</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGPIPE"><code class="docutils literal notranslate"><span class="pre">SIGPIPE</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGSEGV"><code class="docutils literal notranslate"><span class="pre">SIGSEGV</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGSTKFLT"><code class="docutils literal notranslate"><span class="pre">SIGSTKFLT</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGTERM"><code class="docutils literal notranslate"><span class="pre">SIGTERM</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGUSR1"><code class="docutils literal notranslate"><span class="pre">SIGUSR1</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGUSR2"><code class="docutils literal notranslate"><span class="pre">SIGUSR2</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIGWINCH"><code class="docutils literal notranslate"><span class="pre">SIGWINCH</span></code></a></li>
+<li><a class="reference internal" href="#signal.CTRL_C_EVENT"><code class="docutils literal notranslate"><span class="pre">CTRL_C_EVENT</span></code></a></li>
+<li><a class="reference internal" href="#signal.CTRL_BREAK_EVENT"><code class="docutils literal notranslate"><span class="pre">CTRL_BREAK_EVENT</span></code></a></li>
+<li><a class="reference internal" href="#signal.NSIG"><code class="docutils literal notranslate"><span class="pre">NSIG</span></code></a></li>
+<li><a class="reference internal" href="#signal.ITIMER_REAL"><code class="docutils literal notranslate"><span class="pre">ITIMER_REAL</span></code></a></li>
+<li><a class="reference internal" href="#signal.ITIMER_VIRTUAL"><code class="docutils literal notranslate"><span class="pre">ITIMER_VIRTUAL</span></code></a></li>
+<li><a class="reference internal" href="#signal.ITIMER_PROF"><code class="docutils literal notranslate"><span class="pre">ITIMER_PROF</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIG_BLOCK"><code class="docutils literal notranslate"><span class="pre">SIG_BLOCK</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIG_UNBLOCK"><code class="docutils literal notranslate"><span class="pre">SIG_UNBLOCK</span></code></a></li>
+<li><a class="reference internal" href="#signal.SIG_SETMASK"><code class="docutils literal notranslate"><span class="pre">SIG_SETMASK</span></code></a></li>
+<li><a class="reference internal" href="#signal.ItimerError"><code class="docutils literal notranslate"><span class="pre">ItimerError</span></code></a></li>
+<li><a class="reference internal" href="#signal.alarm"><code class="docutils literal notranslate"><span class="pre">alarm()</span></code></a></li>
+<li><a class="reference internal" href="#signal.getsignal"><code class="docutils literal notranslate"><span class="pre">getsignal()</span></code></a></li>
+<li><a class="reference internal" href="#signal.strsignal"><code class="docutils literal notranslate"><span class="pre">strsignal()</span></code></a></li>
+<li><a class="reference internal" href="#signal.valid_signals"><code class="docutils literal notranslate"><span class="pre">valid_signals()</span></code></a></li>
+<li><a class="reference internal" href="#signal.pause"><code class="docutils literal notranslate"><span class="pre">pause()</span></code></a></li>
+<li><a class="reference internal" href="#signal.raise_signal"><code class="docutils literal notranslate"><span class="pre">raise_signal()</span></code></a></li>
+<li><a class="reference internal" href="#signal.pidfd_send_signal"><code class="docutils literal notranslate"><span class="pre">pidfd_send_signal()</span></code></a></li>
+<li><a class="reference internal" href="#signal.pthread_kill"><code class="docutils literal notranslate"><span class="pre">pthread_kill()</span></code></a></li>
+<li><a class="reference internal" href="#signal.pthread_sigmask"><code class="docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a></li>
+<li><a class="reference internal" href="#signal.setitimer"><code class="docutils literal notranslate"><span class="pre">setitimer()</span></code></a></li>
+<li><a class="reference internal" href="#signal.getitimer"><code class="docutils literal notranslate"><span class="pre">getitimer()</span></code></a></li>
+<li><a class="reference internal" href="#signal.set_wakeup_fd"><code class="docutils literal notranslate"><span class="pre">set_wakeup_fd()</span></code></a></li>
+<li><a class="reference internal" href="#signal.siginterrupt"><code class="docutils literal notranslate"><span class="pre">siginterrupt()</span></code></a></li>
+<li><a class="reference internal" href="#signal.signal"><code class="docutils literal notranslate"><span class="pre">signal()</span></code></a></li>
+<li><a class="reference internal" href="#signal.sigpending"><code class="docutils literal notranslate"><span class="pre">sigpending()</span></code></a></li>
+<li><a class="reference internal" href="#signal.sigwait"><code class="docutils literal notranslate"><span class="pre">sigwait()</span></code></a></li>
+<li><a class="reference internal" href="#signal.sigwaitinfo"><code class="docutils literal notranslate"><span class="pre">sigwaitinfo()</span></code></a></li>
+<li><a class="reference internal" href="#signal.sigtimedwait"><code class="docutils literal notranslate"><span class="pre">sigtimedwait()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#examples">Examples</a></li>
+<li><a class="reference internal" href="#note-on-sigpipe">Note on SIGPIPE</a></li>
+<li><a class="reference internal" href="#note-on-signal-handlers-and-exceptions">Note on Signal Handlers and Exceptions</a></li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/signal.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="ipc.html"><span itemprop="name">Networking and Interprocess Communication</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="module-signal">
+<span id="signal-set-handlers-for-asynchronous-events"></span><h1><a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code></a> — Set handlers for asynchronous events<a class="headerlink" href="#module-signal" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/signal.py">Lib/signal.py</a></p>
+<hr class="docutils" />
+<p>This module provides mechanisms to use signal handlers in Python.</p>
+<section id="general-rules">
+<h2>General rules<a class="headerlink" href="#general-rules" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="#signal.signal" title="signal.signal"><code class="xref py py-func docutils literal notranslate"><span class="pre">signal.signal()</span></code></a> function allows defining custom handlers to be
+executed when a signal is received.  A small number of default handlers are
+installed: <a class="reference internal" href="#signal.SIGPIPE" title="signal.SIGPIPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGPIPE</span></code></a> is ignored (so write errors on pipes and sockets
+can be reported as ordinary Python exceptions) and <a class="reference internal" href="#signal.SIGINT" title="signal.SIGINT"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGINT</span></code></a> is
+translated into a <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> exception if the parent process
+has not changed it.</p>
+<p>A handler for a particular signal, once set, remains installed until it is
+explicitly reset (Python emulates the BSD style interface regardless of the
+underlying implementation), with the exception of the handler for
+<a class="reference internal" href="#signal.SIGCHLD" title="signal.SIGCHLD"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGCHLD</span></code></a>, which follows the underlying implementation.</p>
+<p>On WebAssembly platforms <code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>, signals
+are emulated and therefore behave differently. Several functions and signals
+are not available on these platforms.</p>
+<section id="execution-of-python-signal-handlers">
+<h3>Execution of Python signal handlers<a class="headerlink" href="#execution-of-python-signal-handlers" title="Permalink to this heading">¶</a></h3>
+<p>A Python signal handler does not get executed inside the low-level (C) signal
+handler.  Instead, the low-level signal handler sets a flag which tells the
+<a class="reference internal" href="../glossary.html#term-virtual-machine"><span class="xref std std-term">virtual machine</span></a> to execute the corresponding Python signal handler
+at a later point(for example at the next <a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a> instruction).
+This has consequences:</p>
+<ul class="simple">
+<li><p>It makes little sense to catch synchronous errors like <a class="reference internal" href="#signal.SIGFPE" title="signal.SIGFPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGFPE</span></code></a> or
+<a class="reference internal" href="#signal.SIGSEGV" title="signal.SIGSEGV"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGSEGV</span></code></a> that are caused by an invalid operation in C code.  Python
+will return from the signal handler to the C code, which is likely to raise
+the same signal again, causing Python to apparently hang.  From Python 3.3
+onwards, you can use the <a class="reference internal" href="faulthandler.html#module-faulthandler" title="faulthandler: Dump the Python traceback."><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code></a> module to report on synchronous
+errors.</p></li>
+<li><p>A long-running calculation implemented purely in C (such as regular
+expression matching on a large body of text) may run uninterrupted for an
+arbitrary amount of time, regardless of any signals received.  The Python
+signal handlers will be called when the calculation finishes.</p></li>
+<li><p>If the handler raises an exception, it will be raised “out of thin air” in
+the main thread. See the <a class="reference internal" href="#handlers-and-exceptions"><span class="std std-ref">note below</span></a> for a
+discussion.</p></li>
+</ul>
+</section>
+<section id="signals-and-threads">
+<span id="id1"></span><h3>Signals and threads<a class="headerlink" href="#signals-and-threads" title="Permalink to this heading">¶</a></h3>
+<p>Python signal handlers are always executed in the main Python thread of the main interpreter,
+even if the signal was received in another thread.  This means that signals
+can’t be used as a means of inter-thread communication.  You can use
+the synchronization primitives from the <a class="reference internal" href="threading.html#module-threading" title="threading: Thread-based parallelism."><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code></a> module instead.</p>
+<p>Besides, only the main thread of the main interpreter is allowed to set a new signal handler.</p>
+</section>
+</section>
+<section id="module-contents">
+<h2>Module contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span>signal (SIG*), handler (<a class="reference internal" href="#signal.SIG_DFL" title="signal.SIG_DFL"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_DFL</span></code></a>, <a class="reference internal" href="#signal.SIG_IGN" title="signal.SIG_IGN"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_IGN</span></code></a>) and sigmask
+(<a class="reference internal" href="#signal.SIG_BLOCK" title="signal.SIG_BLOCK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_BLOCK</span></code></a>, <a class="reference internal" href="#signal.SIG_UNBLOCK" title="signal.SIG_UNBLOCK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_UNBLOCK</span></code></a>, <a class="reference internal" href="#signal.SIG_SETMASK" title="signal.SIG_SETMASK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_SETMASK</span></code></a>)
+related constants listed below were turned into
+<a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enums</span></code></a> (<a class="reference internal" href="#signal.Signals" title="signal.Signals"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signals</span></code></a>, <a class="reference internal" href="#signal.Handlers" title="signal.Handlers"><code class="xref py py-class docutils literal notranslate"><span class="pre">Handlers</span></code></a> and <a class="reference internal" href="#signal.Sigmasks" title="signal.Sigmasks"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sigmasks</span></code></a> respectively).
+<a class="reference internal" href="#signal.getsignal" title="signal.getsignal"><code class="xref py py-func docutils literal notranslate"><span class="pre">getsignal()</span></code></a>, <a class="reference internal" href="#signal.pthread_sigmask" title="signal.pthread_sigmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a>, <a class="reference internal" href="#signal.sigpending" title="signal.sigpending"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigpending()</span></code></a> and
+<a class="reference internal" href="#signal.sigwait" title="signal.sigwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwait()</span></code></a> functions return human-readable
+<a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enums</span></code></a> as <a class="reference internal" href="#signal.Signals" title="signal.Signals"><code class="xref py py-class docutils literal notranslate"><span class="pre">Signals</span></code></a> objects.</p>
+</div>
+<p>The signal module defines three enums:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="signal.Signals">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">Signals</span></span><a class="headerlink" href="#signal.Signals" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection of SIG* constants and the CTRL_* constants.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="signal.Handlers">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">Handlers</span></span><a class="headerlink" href="#signal.Handlers" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection the constants <a class="reference internal" href="#signal.SIG_DFL" title="signal.SIG_DFL"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_DFL</span></code></a> and <a class="reference internal" href="#signal.SIG_IGN" title="signal.SIG_IGN"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_IGN</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="signal.Sigmasks">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">Sigmasks</span></span><a class="headerlink" href="#signal.Sigmasks" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="enum.html#enum.IntEnum" title="enum.IntEnum"><code class="xref py py-class docutils literal notranslate"><span class="pre">enum.IntEnum</span></code></a> collection the constants <a class="reference internal" href="#signal.SIG_BLOCK" title="signal.SIG_BLOCK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_BLOCK</span></code></a>, <a class="reference internal" href="#signal.SIG_UNBLOCK" title="signal.SIG_UNBLOCK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_UNBLOCK</span></code></a> and <a class="reference internal" href="#signal.SIG_SETMASK" title="signal.SIG_SETMASK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_SETMASK</span></code></a>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/sigprocmask(2)">sigprocmask(2)</a></em> and
+<em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/pthread_sigmask(3)">pthread_sigmask(3)</a></em> for further information.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<p>The variables defined in the <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code></a> module are:</p>
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIG_DFL">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIG_DFL</span></span><a class="headerlink" href="#signal.SIG_DFL" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is one of two standard signal handling options; it will simply perform
+the default function for the signal.  For example, on most systems the
+default action for <code class="xref py py-const docutils literal notranslate"><span class="pre">SIGQUIT</span></code> is to dump core and exit, while the
+default action for <a class="reference internal" href="#signal.SIGCHLD" title="signal.SIGCHLD"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGCHLD</span></code></a> is to simply ignore it.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIG_IGN">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIG_IGN</span></span><a class="headerlink" href="#signal.SIG_IGN" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is another standard signal handler, which will simply ignore the given
+signal.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGABRT">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGABRT</span></span><a class="headerlink" href="#signal.SIGABRT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Abort signal from <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/abort(3)">abort(3)</a></em>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGALRM">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGALRM</span></span><a class="headerlink" href="#signal.SIGALRM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Timer signal from <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/alarm(2)">alarm(2)</a></em>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGBREAK">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGBREAK</span></span><a class="headerlink" href="#signal.SIGBREAK" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interrupt from keyboard (CTRL + BREAK).</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Windows.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGBUS">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGBUS</span></span><a class="headerlink" href="#signal.SIGBUS" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bus error (bad memory access).</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGCHLD">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGCHLD</span></span><a class="headerlink" href="#signal.SIGCHLD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Child process stopped or terminated.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGCLD">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGCLD</span></span><a class="headerlink" href="#signal.SIGCLD" title="Permalink to this definition">¶</a></dt>
+<dd><p>Alias to <a class="reference internal" href="#signal.SIGCHLD" title="signal.SIGCHLD"><code class="xref py py-data docutils literal notranslate"><span class="pre">SIGCHLD</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGCONT">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGCONT</span></span><a class="headerlink" href="#signal.SIGCONT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Continue the process if it is currently stopped</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGFPE">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGFPE</span></span><a class="headerlink" href="#signal.SIGFPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Floating-point exception. For example, division by zero.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><a class="reference internal" href="exceptions.html#ZeroDivisionError" title="ZeroDivisionError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ZeroDivisionError</span></code></a> is raised when the second argument of a division
+or modulo operation is zero.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGHUP">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGHUP</span></span><a class="headerlink" href="#signal.SIGHUP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Hangup detected on controlling terminal or death of controlling process.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGILL">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGILL</span></span><a class="headerlink" href="#signal.SIGILL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Illegal instruction.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGINT">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGINT</span></span><a class="headerlink" href="#signal.SIGINT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Interrupt from keyboard (CTRL + C).</p>
+<p>Default action is to raise <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGKILL">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGKILL</span></span><a class="headerlink" href="#signal.SIGKILL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Kill signal.</p>
+<p>It cannot be caught, blocked, or ignored.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGPIPE">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGPIPE</span></span><a class="headerlink" href="#signal.SIGPIPE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Broken pipe: write to pipe with no readers.</p>
+<p>Default action is to ignore the signal.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGSEGV">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGSEGV</span></span><a class="headerlink" href="#signal.SIGSEGV" title="Permalink to this definition">¶</a></dt>
+<dd><p>Segmentation fault: invalid memory reference.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGSTKFLT">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGSTKFLT</span></span><a class="headerlink" href="#signal.SIGSTKFLT" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Stack fault on coprocessor. The Linux kernel does not raise this signal: it
+can only be raised in user space.</p>
+</div></blockquote>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Linux.</p>
+<p>On architectures where the signal is available. See
+the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/signal(7)">signal(7)</a></em> for further information.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.11.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGTERM">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGTERM</span></span><a class="headerlink" href="#signal.SIGTERM" title="Permalink to this definition">¶</a></dt>
+<dd><p>Termination signal.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGUSR1">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGUSR1</span></span><a class="headerlink" href="#signal.SIGUSR1" title="Permalink to this definition">¶</a></dt>
+<dd><p>User-defined signal 1.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGUSR2">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGUSR2</span></span><a class="headerlink" href="#signal.SIGUSR2" title="Permalink to this definition">¶</a></dt>
+<dd><p>User-defined signal 2.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIGWINCH">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIGWINCH</span></span><a class="headerlink" href="#signal.SIGWINCH" title="Permalink to this definition">¶</a></dt>
+<dd><p>Window resize signal.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">SIG*</span></span></dt>
+<dd><p>All the signal numbers are defined symbolically.  For example, the hangup signal
+is defined as <a class="reference internal" href="#signal.SIGHUP" title="signal.SIGHUP"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIGHUP</span></code></a>; the variable names are identical to the
+names used in C programs, as found in <code class="docutils literal notranslate"><span class="pre">&lt;signal.h&gt;</span></code>.  The Unix man page for
+‘<code class="xref c c-func docutils literal notranslate"><span class="pre">signal()</span></code>’ lists the existing signals (on some systems this is
+<em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/signal(2)">signal(2)</a></em>, on others the list is in <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/signal(7)">signal(7)</a></em>). Note that
+not all systems define the same set of signal names; only those names defined by
+the system are defined by this module.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.CTRL_C_EVENT">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">CTRL_C_EVENT</span></span><a class="headerlink" href="#signal.CTRL_C_EVENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The signal corresponding to the <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">C</kbd></kbd> keystroke event. This signal can
+only be used with <a class="reference internal" href="os.html#os.kill" title="os.kill"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.kill()</span></code></a>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Windows.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.CTRL_BREAK_EVENT">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">CTRL_BREAK_EVENT</span></span><a class="headerlink" href="#signal.CTRL_BREAK_EVENT" title="Permalink to this definition">¶</a></dt>
+<dd><p>The signal corresponding to the <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>+<kbd class="kbd docutils literal notranslate">Break</kbd></kbd> keystroke event. This signal can
+only be used with <a class="reference internal" href="os.html#os.kill" title="os.kill"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.kill()</span></code></a>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Windows.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.NSIG">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">NSIG</span></span><a class="headerlink" href="#signal.NSIG" title="Permalink to this definition">¶</a></dt>
+<dd><p>One more than the number of the highest signal number.
+Use <a class="reference internal" href="#signal.valid_signals" title="signal.valid_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">valid_signals()</span></code></a> to get valid signal numbers.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.ITIMER_REAL">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">ITIMER_REAL</span></span><a class="headerlink" href="#signal.ITIMER_REAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrements interval timer in real time, and delivers <a class="reference internal" href="#signal.SIGALRM" title="signal.SIGALRM"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGALRM</span></code></a> upon
+expiration.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.ITIMER_VIRTUAL">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">ITIMER_VIRTUAL</span></span><a class="headerlink" href="#signal.ITIMER_VIRTUAL" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrements interval timer only when the process is executing, and delivers
+SIGVTALRM upon expiration.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.ITIMER_PROF">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">ITIMER_PROF</span></span><a class="headerlink" href="#signal.ITIMER_PROF" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decrements interval timer both when the process executes and when the
+system is executing on behalf of the process. Coupled with ITIMER_VIRTUAL,
+this timer is usually used to profile the time spent by the application
+in user and kernel space. SIGPROF is delivered upon expiration.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIG_BLOCK">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIG_BLOCK</span></span><a class="headerlink" href="#signal.SIG_BLOCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>A possible value for the <em>how</em> parameter to <a class="reference internal" href="#signal.pthread_sigmask" title="signal.pthread_sigmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a>
+indicating that signals are to be blocked.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIG_UNBLOCK">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIG_UNBLOCK</span></span><a class="headerlink" href="#signal.SIG_UNBLOCK" title="Permalink to this definition">¶</a></dt>
+<dd><p>A possible value for the <em>how</em> parameter to <a class="reference internal" href="#signal.pthread_sigmask" title="signal.pthread_sigmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a>
+indicating that signals are to be unblocked.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="signal.SIG_SETMASK">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">SIG_SETMASK</span></span><a class="headerlink" href="#signal.SIG_SETMASK" title="Permalink to this definition">¶</a></dt>
+<dd><p>A possible value for the <em>how</em> parameter to <a class="reference internal" href="#signal.pthread_sigmask" title="signal.pthread_sigmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a>
+indicating that the signal mask is to be replaced.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<p>The <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code></a> module defines one exception:</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="signal.ItimerError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">ItimerError</span></span><a class="headerlink" href="#signal.ItimerError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Raised to signal an error from the underlying <a class="reference internal" href="#signal.setitimer" title="signal.setitimer"><code class="xref py py-func docutils literal notranslate"><span class="pre">setitimer()</span></code></a> or
+<a class="reference internal" href="#signal.getitimer" title="signal.getitimer"><code class="xref py py-func docutils literal notranslate"><span class="pre">getitimer()</span></code></a> implementation. Expect this error if an invalid
+interval timer or a negative time is passed to <a class="reference internal" href="#signal.setitimer" title="signal.setitimer"><code class="xref py py-func docutils literal notranslate"><span class="pre">setitimer()</span></code></a>.
+This error is a subtype of <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3: </span>This error used to be a subtype of <a class="reference internal" href="exceptions.html#IOError" title="IOError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">IOError</span></code></a>, which is now an
+alias of <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<p>The <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code></a> module defines the following functions:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.alarm">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">alarm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">time</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.alarm" title="Permalink to this definition">¶</a></dt>
+<dd><p>If <em>time</em> is non-zero, this function requests that a <a class="reference internal" href="#signal.SIGALRM" title="signal.SIGALRM"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGALRM</span></code></a> signal be
+sent to the process in <em>time</em> seconds. Any previously scheduled alarm is
+canceled (only one alarm can be scheduled at any time).  The returned value is
+then the number of seconds before any previously set alarm was to have been
+delivered. If <em>time</em> is zero, no alarm is scheduled, and any scheduled alarm is
+canceled.  If the return value is zero, no alarm is currently scheduled.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/alarm(2)">alarm(2)</a></em> for further information.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.getsignal">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">getsignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signalnum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.getsignal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current signal handler for the signal <em>signalnum</em>. The returned value
+may be a callable Python object, or one of the special values
+<a class="reference internal" href="#signal.SIG_IGN" title="signal.SIG_IGN"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIG_IGN</span></code></a>, <a class="reference internal" href="#signal.SIG_DFL" title="signal.SIG_DFL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIG_DFL</span></code></a> or <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a>.  Here,
+<a class="reference internal" href="#signal.SIG_IGN" title="signal.SIG_IGN"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIG_IGN</span></code></a> means that the signal was previously ignored,
+<a class="reference internal" href="#signal.SIG_DFL" title="signal.SIG_DFL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIG_DFL</span></code></a> means that the default way of handling the signal was
+previously in use, and <code class="docutils literal notranslate"><span class="pre">None</span></code> means that the previous signal handler was not
+installed from Python.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.strsignal">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">strsignal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signalnum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.strsignal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the description of signal <em>signalnum</em>, such as “Interrupt”
+for <a class="reference internal" href="#signal.SIGINT" title="signal.SIGINT"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGINT</span></code></a>. Returns <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> if <em>signalnum</em> has no
+description. Raises <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> if <em>signalnum</em> is invalid.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.valid_signals">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">valid_signals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#signal.valid_signals" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the set of valid signal numbers on this platform.  This can be
+less than <code class="docutils literal notranslate"><span class="pre">range(1,</span> <span class="pre">NSIG)</span></code> if some signals are reserved by the system
+for internal use.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.pause">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">pause</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#signal.pause" title="Permalink to this definition">¶</a></dt>
+<dd><p>Cause the process to sleep until a signal is received; the appropriate handler
+will then be called.  Returns nothing.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/signal(2)">signal(2)</a></em> for further information.</p>
+</div>
+<p>See also <a class="reference internal" href="#signal.sigwait" title="signal.sigwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwait()</span></code></a>, <a class="reference internal" href="#signal.sigwaitinfo" title="signal.sigwaitinfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwaitinfo()</span></code></a>, <a class="reference internal" href="#signal.sigtimedwait" title="signal.sigtimedwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigtimedwait()</span></code></a> and
+<a class="reference internal" href="#signal.sigpending" title="signal.sigpending"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigpending()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.raise_signal">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">raise_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.raise_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sends a signal to the calling process. Returns nothing.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.8.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.pidfd_send_signal">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">pidfd_send_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pidfd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">siginfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.pidfd_send_signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send signal <em>sig</em> to the process referred to by file descriptor <em>pidfd</em>.
+Python does not currently support the <em>siginfo</em> parameter; it must be
+<code class="docutils literal notranslate"><span class="pre">None</span></code>.  The <em>flags</em> argument is provided for future extensions; no flag
+values are currently defined.</p>
+<p>See the <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/pidfd_send_signal(2)">pidfd_send_signal(2)</a></em> man page for more information.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Linux &gt;= 5.1</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.9.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.pthread_kill">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">pthread_kill</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">thread_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">signalnum</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.pthread_kill" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send the signal <em>signalnum</em> to the thread <em>thread_id</em>, another thread in the
+same process as the caller.  The target thread can be executing any code
+(Python or not).  However, if the target thread is executing the Python
+interpreter, the Python signal handlers will be <a class="reference internal" href="#signals-and-threads"><span class="std std-ref">executed by the main
+thread of the main interpreter</span></a>.  Therefore, the only point of sending a
+signal to a particular Python thread would be to force a running system call
+to fail with <a class="reference internal" href="exceptions.html#InterruptedError" title="InterruptedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InterruptedError</span></code></a>.</p>
+<p>Use <a class="reference internal" href="threading.html#threading.get_ident" title="threading.get_ident"><code class="xref py py-func docutils literal notranslate"><span class="pre">threading.get_ident()</span></code></a> or the <a class="reference internal" href="threading.html#threading.Thread.ident" title="threading.Thread.ident"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ident</span></code></a>
+attribute of <a class="reference internal" href="threading.html#threading.Thread" title="threading.Thread"><code class="xref py py-class docutils literal notranslate"><span class="pre">threading.Thread</span></code></a> objects to get a suitable value
+for <em>thread_id</em>.</p>
+<p>If <em>signalnum</em> is 0, then no signal is sent, but error checking is still
+performed; this can be used to check if the target thread is still running.</p>
+<p class="audit-hook">Raises an <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">auditing event</span></a> <code class="docutils literal notranslate"><span class="pre">signal.pthread_kill</span></code> with arguments <code class="docutils literal notranslate"><span class="pre">thread_id</span></code>, <code class="docutils literal notranslate"><span class="pre">signalnum</span></code>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/pthread_kill(3)">pthread_kill(3)</a></em> for further  information.</p>
+</div>
+<p>See also <a class="reference internal" href="os.html#os.kill" title="os.kill"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.kill()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.pthread_sigmask">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">pthread_sigmask</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">how</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.pthread_sigmask" title="Permalink to this definition">¶</a></dt>
+<dd><p>Fetch and/or change the signal mask of the calling thread.  The signal mask
+is the set of signals whose delivery is currently blocked for the caller.
+Return the old signal mask as a set of signals.</p>
+<p>The behavior of the call is dependent on the value of <em>how</em>, as follows.</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#signal.SIG_BLOCK" title="signal.SIG_BLOCK"><code class="xref py py-data docutils literal notranslate"><span class="pre">SIG_BLOCK</span></code></a>: The set of blocked signals is the union of the current
+set and the <em>mask</em> argument.</p></li>
+<li><p><a class="reference internal" href="#signal.SIG_UNBLOCK" title="signal.SIG_UNBLOCK"><code class="xref py py-data docutils literal notranslate"><span class="pre">SIG_UNBLOCK</span></code></a>: The signals in <em>mask</em> are removed from the current
+set of blocked signals.  It is permissible to attempt to unblock a
+signal which is not blocked.</p></li>
+<li><p><a class="reference internal" href="#signal.SIG_SETMASK" title="signal.SIG_SETMASK"><code class="xref py py-data docutils literal notranslate"><span class="pre">SIG_SETMASK</span></code></a>: The set of blocked signals is set to the <em>mask</em>
+argument.</p></li>
+</ul>
+<p><em>mask</em> is a set of signal numbers (e.g. {<a class="reference internal" href="#signal.SIGINT" title="signal.SIGINT"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIGINT</span></code></a>,
+<a class="reference internal" href="#signal.SIGTERM" title="signal.SIGTERM"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIGTERM</span></code></a>}). Use <a class="reference internal" href="#signal.valid_signals" title="signal.valid_signals"><code class="xref py py-func docutils literal notranslate"><span class="pre">valid_signals()</span></code></a> for a full
+mask including all signals.</p>
+<p>For example, <code class="docutils literal notranslate"><span class="pre">signal.pthread_sigmask(signal.SIG_BLOCK,</span> <span class="pre">[])</span></code> reads the
+signal mask of the calling thread.</p>
+<p><a class="reference internal" href="#signal.SIGKILL" title="signal.SIGKILL"><code class="xref py py-data docutils literal notranslate"><span class="pre">SIGKILL</span></code></a> and <code class="xref py py-data docutils literal notranslate"><span class="pre">SIGSTOP</span></code> cannot be blocked.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/sigprocmask(2)">sigprocmask(2)</a></em> and
+<em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/pthread_sigmask(3)">pthread_sigmask(3)</a></em> for further information.</p>
+</div>
+<p>See also <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">pause()</span></code></a>, <a class="reference internal" href="#signal.sigpending" title="signal.sigpending"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigpending()</span></code></a> and <a class="reference internal" href="#signal.sigwait" title="signal.sigwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwait()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.setitimer">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">setitimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">seconds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.setitimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets given interval timer (one of <a class="reference internal" href="#signal.ITIMER_REAL" title="signal.ITIMER_REAL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.ITIMER_REAL</span></code></a>,
+<a class="reference internal" href="#signal.ITIMER_VIRTUAL" title="signal.ITIMER_VIRTUAL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.ITIMER_VIRTUAL</span></code></a> or <a class="reference internal" href="#signal.ITIMER_PROF" title="signal.ITIMER_PROF"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.ITIMER_PROF</span></code></a>) specified
+by <em>which</em> to fire after <em>seconds</em> (float is accepted, different from
+<a class="reference internal" href="#signal.alarm" title="signal.alarm"><code class="xref py py-func docutils literal notranslate"><span class="pre">alarm()</span></code></a>) and after that every <em>interval</em> seconds (if <em>interval</em>
+is non-zero). The interval timer specified by <em>which</em> can be cleared by
+setting <em>seconds</em> to zero.</p>
+<p>When an interval timer fires, a signal is sent to the process.
+The signal sent is dependent on the timer being used;
+<a class="reference internal" href="#signal.ITIMER_REAL" title="signal.ITIMER_REAL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.ITIMER_REAL</span></code></a> will deliver <a class="reference internal" href="#signal.SIGALRM" title="signal.SIGALRM"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGALRM</span></code></a>,
+<a class="reference internal" href="#signal.ITIMER_VIRTUAL" title="signal.ITIMER_VIRTUAL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.ITIMER_VIRTUAL</span></code></a> sends <code class="xref py py-const docutils literal notranslate"><span class="pre">SIGVTALRM</span></code>,
+and <a class="reference internal" href="#signal.ITIMER_PROF" title="signal.ITIMER_PROF"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.ITIMER_PROF</span></code></a> will deliver <code class="xref py py-const docutils literal notranslate"><span class="pre">SIGPROF</span></code>.</p>
+<p>The old values are returned as a tuple: (delay, interval).</p>
+<p>Attempting to pass an invalid interval timer will cause an
+<a class="reference internal" href="#signal.ItimerError" title="signal.ItimerError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ItimerError</span></code></a>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.getitimer">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">getitimer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">which</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.getitimer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns current value of a given interval timer specified by <em>which</em>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.set_wakeup_fd">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">set_wakeup_fd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn_on_full_buffer</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.set_wakeup_fd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the wakeup file descriptor to <em>fd</em>.  When a signal is received, the
+signal number is written as a single byte into the fd.  This can be used by
+a library to wakeup a poll or select call, allowing the signal to be fully
+processed.</p>
+<p>The old wakeup fd is returned (or -1 if file descriptor wakeup was not
+enabled).  If <em>fd</em> is -1, file descriptor wakeup is disabled.
+If not -1, <em>fd</em> must be non-blocking.  It is up to the library to remove
+any bytes from <em>fd</em> before calling poll or select again.</p>
+<p>When threads are enabled, this function can only be called
+from <a class="reference internal" href="#signals-and-threads"><span class="std std-ref">the main thread of the main interpreter</span></a>;
+attempting to call it from other threads will cause a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>
+exception to be raised.</p>
+<p>There are two common ways to use this function. In both approaches,
+you use the fd to wake up when a signal arrives, but then they
+differ in how they determine <em>which</em> signal or signals have
+arrived.</p>
+<p>In the first approach, we read the data out of the fd’s buffer, and
+the byte values give you the signal numbers. This is simple, but in
+rare cases it can run into a problem: generally the fd will have a
+limited amount of buffer space, and if too many signals arrive too
+quickly, then the buffer may become full, and some signals may be
+lost. If you use this approach, then you should set
+<code class="docutils literal notranslate"><span class="pre">warn_on_full_buffer=True</span></code>, which will at least cause a warning
+to be printed to stderr when signals are lost.</p>
+<p>In the second approach, we use the wakeup fd <em>only</em> for wakeups,
+and ignore the actual byte values. In this case, all we care about
+is whether the fd’s buffer is empty or non-empty; a full buffer
+doesn’t indicate a problem at all. If you use this approach, then
+you should set <code class="docutils literal notranslate"><span class="pre">warn_on_full_buffer=False</span></code>, so that your users
+are not confused by spurious warning messages.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span>On Windows, the function now also supports socket handles.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>Added <code class="docutils literal notranslate"><span class="pre">warn_on_full_buffer</span></code> parameter.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.siginterrupt">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">siginterrupt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signalnum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.siginterrupt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change system call restart behaviour: if <em>flag</em> is <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, system
+calls will be restarted when interrupted by signal <em>signalnum</em>, otherwise
+system calls will be interrupted.  Returns nothing.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/siginterrupt(3)">siginterrupt(3)</a></em> for further information.</p>
+</div>
+<p>Note that installing a signal handler with <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-func docutils literal notranslate"><span class="pre">signal()</span></code></a> will reset the
+restart behaviour to interruptible by implicitly calling
+<code class="xref c c-func docutils literal notranslate"><span class="pre">siginterrupt()</span></code> with a true <em>flag</em> value for the given signal.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.signal">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signalnum</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">handler</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.signal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the handler for signal <em>signalnum</em> to the function <em>handler</em>.  <em>handler</em> can
+be a callable Python object taking two arguments (see below), or one of the
+special values <a class="reference internal" href="#signal.SIG_IGN" title="signal.SIG_IGN"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIG_IGN</span></code></a> or <a class="reference internal" href="#signal.SIG_DFL" title="signal.SIG_DFL"><code class="xref py py-const docutils literal notranslate"><span class="pre">signal.SIG_DFL</span></code></a>.  The previous
+signal handler will be returned (see the description of <a class="reference internal" href="#signal.getsignal" title="signal.getsignal"><code class="xref py py-func docutils literal notranslate"><span class="pre">getsignal()</span></code></a>
+above).  (See the Unix man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/signal(2)">signal(2)</a></em> for further information.)</p>
+<p>When threads are enabled, this function can only be called
+from <a class="reference internal" href="#signals-and-threads"><span class="std std-ref">the main thread of the main interpreter</span></a>;
+attempting to call it from other threads will cause a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>
+exception to be raised.</p>
+<p>The <em>handler</em> is called with two arguments: the signal number and the current
+stack frame (<code class="docutils literal notranslate"><span class="pre">None</span></code> or a frame object; for a description of frame objects,
+see the <a class="reference internal" href="../reference/datamodel.html#frame-objects"><span class="std std-ref">description in the type hierarchy</span></a> or see the
+attribute descriptions in the <a class="reference internal" href="inspect.html#module-inspect" title="inspect: Extract information and source code from live objects."><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code></a> module).</p>
+<p>On Windows, <a class="reference internal" href="#module-signal" title="signal: Set handlers for asynchronous events."><code class="xref py py-func docutils literal notranslate"><span class="pre">signal()</span></code></a> can only be called with <a class="reference internal" href="#signal.SIGABRT" title="signal.SIGABRT"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGABRT</span></code></a>,
+<a class="reference internal" href="#signal.SIGFPE" title="signal.SIGFPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGFPE</span></code></a>, <a class="reference internal" href="#signal.SIGILL" title="signal.SIGILL"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGILL</span></code></a>, <a class="reference internal" href="#signal.SIGINT" title="signal.SIGINT"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGINT</span></code></a>, <a class="reference internal" href="#signal.SIGSEGV" title="signal.SIGSEGV"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGSEGV</span></code></a>,
+<a class="reference internal" href="#signal.SIGTERM" title="signal.SIGTERM"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGTERM</span></code></a>, or <a class="reference internal" href="#signal.SIGBREAK" title="signal.SIGBREAK"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGBREAK</span></code></a>.
+A <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> will be raised in any other case.
+Note that not all systems define the same set of signal names; an
+<a class="reference internal" href="exceptions.html#AttributeError" title="AttributeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">AttributeError</span></code></a> will be raised if a signal name is not defined as
+<code class="docutils literal notranslate"><span class="pre">SIG*</span></code> module level constant.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.sigpending">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">sigpending</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#signal.sigpending" title="Permalink to this definition">¶</a></dt>
+<dd><p>Examine the set of signals that are pending for delivery to the calling
+thread (i.e., the signals which have been raised while blocked).  Return the
+set of the pending signals.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/sigpending(2)">sigpending(2)</a></em> for further information.</p>
+</div>
+<p>See also <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">pause()</span></code></a>, <a class="reference internal" href="#signal.pthread_sigmask" title="signal.pthread_sigmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a> and <a class="reference internal" href="#signal.sigwait" title="signal.sigwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwait()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.sigwait">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">sigwait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.sigwait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suspend execution of the calling thread until the delivery of one of the
+signals specified in the signal set <em>sigset</em>.  The function accepts the signal
+(removes it from the pending list of signals), and returns the signal number.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/sigwait(3)">sigwait(3)</a></em> for further information.</p>
+</div>
+<p>See also <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">pause()</span></code></a>, <a class="reference internal" href="#signal.pthread_sigmask" title="signal.pthread_sigmask"><code class="xref py py-func docutils literal notranslate"><span class="pre">pthread_sigmask()</span></code></a>, <a class="reference internal" href="#signal.sigpending" title="signal.sigpending"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigpending()</span></code></a>,
+<a class="reference internal" href="#signal.sigwaitinfo" title="signal.sigwaitinfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwaitinfo()</span></code></a> and <a class="reference internal" href="#signal.sigtimedwait" title="signal.sigtimedwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigtimedwait()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.sigwaitinfo">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">sigwaitinfo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigset</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.sigwaitinfo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Suspend execution of the calling thread until the delivery of one of the
+signals specified in the signal set <em>sigset</em>.  The function accepts the
+signal and removes it from the pending list of signals. If one of the
+signals in <em>sigset</em> is already pending for the calling thread, the function
+will return immediately with information about that signal. The signal
+handler is not called for the delivered signal. The function raises an
+<a class="reference internal" href="exceptions.html#InterruptedError" title="InterruptedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">InterruptedError</span></code></a> if it is interrupted by a signal that is not in
+<em>sigset</em>.</p>
+<p>The return value is an object representing the data contained in the
+<code class="xref c c-type docutils literal notranslate"><span class="pre">siginfo_t</span></code> structure, namely: <code class="xref py py-attr docutils literal notranslate"><span class="pre">si_signo</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">si_code</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">si_errno</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">si_pid</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">si_uid</span></code>, <code class="xref py py-attr docutils literal notranslate"><span class="pre">si_status</span></code>,
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">si_band</span></code>.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/sigwaitinfo(2)">sigwaitinfo(2)</a></em> for further information.</p>
+</div>
+<p>See also <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">pause()</span></code></a>, <a class="reference internal" href="#signal.sigwait" title="signal.sigwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwait()</span></code></a> and <a class="reference internal" href="#signal.sigtimedwait" title="signal.sigtimedwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigtimedwait()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span>The function is now retried if interrupted by a signal not in <em>sigset</em>
+and the signal handler does not raise an exception (see <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0475/"><strong>PEP 475</strong></a> for
+the rationale).</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="signal.sigtimedwait">
+<span class="sig-prename descclassname"><span class="pre">signal.</span></span><span class="sig-name descname"><span class="pre">sigtimedwait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sigset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#signal.sigtimedwait" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#signal.sigwaitinfo" title="signal.sigwaitinfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwaitinfo()</span></code></a>, but takes an additional <em>timeout</em> argument
+specifying a timeout. If <em>timeout</em> is specified as <code class="docutils literal notranslate"><span class="pre">0</span></code>, a poll is
+performed. Returns <a class="reference internal" href="constants.html#None" title="None"><code class="xref py py-const docutils literal notranslate"><span class="pre">None</span></code></a> if a timeout occurs.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: Unix.</p>
+<p>See the man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/sigtimedwait(2)">sigtimedwait(2)</a></em> for further information.</p>
+</div>
+<p>See also <a class="reference internal" href="#signal.pause" title="signal.pause"><code class="xref py py-func docutils literal notranslate"><span class="pre">pause()</span></code></a>, <a class="reference internal" href="#signal.sigwait" title="signal.sigwait"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwait()</span></code></a> and <a class="reference internal" href="#signal.sigwaitinfo" title="signal.sigwaitinfo"><code class="xref py py-func docutils literal notranslate"><span class="pre">sigwaitinfo()</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.3.</span></p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span>The function is now retried with the recomputed <em>timeout</em> if interrupted
+by a signal not in <em>sigset</em> and the signal handler does not raise an
+exception (see <span class="target" id="index-1"></span><a class="pep reference external" href="https://peps.python.org/pep-0475/"><strong>PEP 475</strong></a> for the rationale).</p>
+</div>
+</dd></dl>
+
+</section>
+<section id="examples">
+<span id="signal-example"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<p>Here is a minimal example program. It uses the <a class="reference internal" href="#signal.alarm" title="signal.alarm"><code class="xref py py-func docutils literal notranslate"><span class="pre">alarm()</span></code></a> function to limit
+the time spent waiting to open a file; this is useful if the file is for a
+serial device that may not be turned on, which would normally cause the
+<a class="reference internal" href="os.html#os.open" title="os.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.open()</span></code></a> to hang indefinitely.  The solution is to set a 5-second alarm
+before opening the file; if the operation takes too long, the alarm signal will
+be sent, and the handler raises an exception.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">signal</span><span class="o">,</span> <span class="nn">os</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+</span><span data-line="4">    <span class="n">signame</span> <span class="o">=</span> <span class="n">signal</span><span class="o">.</span><span class="n">Signals</span><span class="p">(</span><span class="n">signum</span><span class="p">)</span><span class="o">.</span><span class="n">name</span>
+</span><span data-line="5">    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Signal handler called with signal </span><span class="si">{</span><span class="n">signame</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">signum</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+</span><span data-line="6">    <span class="k">raise</span> <span class="ne">OSError</span><span class="p">(</span><span class="s2">&quot;Couldn&#39;t open device!&quot;</span><span class="p">)</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="c1"># Set the signal handler and a 5-second alarm</span>
+</span><span data-line="9"><span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGALRM</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+</span><span data-line="10"><span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</span><span data-line="11">
+</span><span data-line="12"><span class="c1"># This open() may hang indefinitely</span>
+</span><span data-line="13"><span class="n">fd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="s1">&#39;/dev/ttyS0&#39;</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_RDWR</span><span class="p">)</span>
+</span><span data-line="14">
+</span><span data-line="15"><span class="n">signal</span><span class="o">.</span><span class="n">alarm</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>          <span class="c1"># Disable the alarm</span>
+</span></pre></div>
+</div>
+</section>
+<section id="note-on-sigpipe">
+<h2>Note on SIGPIPE<a class="headerlink" href="#note-on-sigpipe" title="Permalink to this heading">¶</a></h2>
+<p>Piping output of your program to tools like <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/head(1)">head(1)</a></em> will
+cause a <a class="reference internal" href="#signal.SIGPIPE" title="signal.SIGPIPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGPIPE</span></code></a> signal to be sent to your process when the receiver
+of its standard output closes early.  This results in an exception
+like <code class="code docutils literal notranslate"><span class="pre">BrokenPipeError:</span> <span class="pre">[Errno</span> <span class="pre">32]</span> <span class="pre">Broken</span> <span class="pre">pipe</span></code>.  To handle this
+case, wrap your entry point to catch this exception as follows:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">os</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">sys</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+</span><span data-line="5">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="6">        <span class="c1"># simulate large output (your code replaces this loop)</span>
+</span><span data-line="7">        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10000</span><span class="p">):</span>
+</span><span data-line="8">            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+</span><span data-line="9">        <span class="c1"># flush output here to force SIGPIPE to be triggered</span>
+</span><span data-line="10">        <span class="c1"># while inside this try block.</span>
+</span><span data-line="11">        <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+</span><span data-line="12">    <span class="k">except</span> <span class="ne">BrokenPipeError</span><span class="p">:</span>
+</span><span data-line="13">        <span class="c1"># Python flushes standard streams on exit; redirect remaining output</span>
+</span><span data-line="14">        <span class="c1"># to devnull to avoid another BrokenPipeError at shutdown</span>
+</span><span data-line="15">        <span class="n">devnull</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">open</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">devnull</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">O_WRONLY</span><span class="p">)</span>
+</span><span data-line="16">        <span class="n">os</span><span class="o">.</span><span class="n">dup2</span><span class="p">(</span><span class="n">devnull</span><span class="p">,</span> <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">fileno</span><span class="p">())</span>
+</span><span data-line="17">        <span class="n">sys</span><span class="o">.</span><span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># Python exits with error code 1 on EPIPE</span>
+</span><span data-line="18">
+</span><span data-line="19"><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+</span><span data-line="20">    <span class="n">main</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>Do not set <a class="reference internal" href="#signal.SIGPIPE" title="signal.SIGPIPE"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGPIPE</span></code></a>’s disposition to <a class="reference internal" href="#signal.SIG_DFL" title="signal.SIG_DFL"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIG_DFL</span></code></a> in
+order to avoid <a class="reference internal" href="exceptions.html#BrokenPipeError" title="BrokenPipeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">BrokenPipeError</span></code></a>.  Doing that would cause
+your program to exit unexpectedly whenever any socket
+connection is interrupted while your program is still writing to
+it.</p>
+</section>
+<section id="note-on-signal-handlers-and-exceptions">
+<span id="handlers-and-exceptions"></span><h2>Note on Signal Handlers and Exceptions<a class="headerlink" href="#note-on-signal-handlers-and-exceptions" title="Permalink to this heading">¶</a></h2>
+<p>If a signal handler raises an exception, the exception will be propagated to
+the main thread and may be raised after any <a class="reference internal" href="../glossary.html#term-bytecode"><span class="xref std std-term">bytecode</span></a> instruction. Most
+notably, a <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> may appear at any point during execution.
+Most Python code, including the standard library, cannot be made robust against
+this, and so a <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> (or any other exception resulting from
+a signal handler) may on rare occasions put the program in an unexpected state.</p>
+<p>To illustrate this issue, consider the following code:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">class</span> <span class="nc">SpamContext</span><span class="p">:</span>
+</span><span data-line="2">    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="3">        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span> <span class="o">=</span> <span class="n">threading</span><span class="o">.</span><span class="n">Lock</span><span class="p">()</span>
+</span><span data-line="4">
+</span><span data-line="5">    <span class="k">def</span> <span class="fm">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="6">        <span class="c1"># If KeyboardInterrupt occurs here, everything is fine</span>
+</span><span data-line="7">        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">acquire</span><span class="p">()</span>
+</span><span data-line="8">        <span class="c1"># If KeyboardInterrupt occurs here, __exit__ will not be called</span>
+</span><span data-line="9">        <span class="o">...</span>
+</span><span data-line="10">        <span class="c1"># KeyboardInterrupt could occur just before the function returns</span>
+</span><span data-line="11">
+</span><span data-line="12">    <span class="k">def</span> <span class="fm">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">exc_type</span><span class="p">,</span> <span class="n">exc_val</span><span class="p">,</span> <span class="n">exc_tb</span><span class="p">):</span>
+</span><span data-line="13">        <span class="o">...</span>
+</span><span data-line="14">        <span class="bp">self</span><span class="o">.</span><span class="n">lock</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>For many programs, especially those that merely want to exit on
+<a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a>, this is not a problem, but applications that are
+complex or require high reliability should avoid raising exceptions from signal
+handlers. They should also avoid catching <a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a> as a means
+of gracefully shutting down.  Instead, they should install their own
+<a class="reference internal" href="#signal.SIGINT" title="signal.SIGINT"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGINT</span></code></a> handler. Below is an example of an HTTP server that avoids
+<a class="reference internal" href="exceptions.html#KeyboardInterrupt" title="KeyboardInterrupt"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyboardInterrupt</span></code></a>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">signal</span>
+</span><span data-line="2"><span class="kn">import</span> <span class="nn">socket</span>
+</span><span data-line="3"><span class="kn">from</span> <span class="nn">selectors</span> <span class="kn">import</span> <span class="n">DefaultSelector</span><span class="p">,</span> <span class="n">EVENT_READ</span>
+</span><span data-line="4"><span class="kn">from</span> <span class="nn">http.server</span> <span class="kn">import</span> <span class="n">HTTPServer</span><span class="p">,</span> <span class="n">SimpleHTTPRequestHandler</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="n">interrupt_read</span><span class="p">,</span> <span class="n">interrupt_write</span> <span class="o">=</span> <span class="n">socket</span><span class="o">.</span><span class="n">socketpair</span><span class="p">()</span>
+</span><span data-line="7">
+</span><span data-line="8"><span class="k">def</span> <span class="nf">handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">):</span>
+</span><span data-line="9">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Signal handler called with signal&#39;</span><span class="p">,</span> <span class="n">signum</span><span class="p">)</span>
+</span><span data-line="10">    <span class="n">interrupt_write</span><span class="o">.</span><span class="n">send</span><span class="p">(</span><span class="sa">b</span><span class="s1">&#39;</span><span class="se">\0</span><span class="s1">&#39;</span><span class="p">)</span>
+</span><span data-line="11"><span class="n">signal</span><span class="o">.</span><span class="n">signal</span><span class="p">(</span><span class="n">signal</span><span class="o">.</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">handler</span><span class="p">)</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="k">def</span> <span class="nf">serve_forever</span><span class="p">(</span><span class="n">httpd</span><span class="p">):</span>
+</span><span data-line="14">    <span class="n">sel</span> <span class="o">=</span> <span class="n">DefaultSelector</span><span class="p">()</span>
+</span><span data-line="15">    <span class="n">sel</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">interrupt_read</span><span class="p">,</span> <span class="n">EVENT_READ</span><span class="p">)</span>
+</span><span data-line="16">    <span class="n">sel</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">httpd</span><span class="p">,</span> <span class="n">EVENT_READ</span><span class="p">)</span>
+</span><span data-line="17">
+</span><span data-line="18">    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span data-line="19">        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">sel</span><span class="o">.</span><span class="n">select</span><span class="p">():</span>
+</span><span data-line="20">            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">fileobj</span> <span class="o">==</span> <span class="n">interrupt_read</span><span class="p">:</span>
+</span><span data-line="21">                <span class="n">interrupt_read</span><span class="o">.</span><span class="n">recv</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="22">                <span class="k">return</span>
+</span><span data-line="23">            <span class="k">if</span> <span class="n">key</span><span class="o">.</span><span class="n">fileobj</span> <span class="o">==</span> <span class="n">httpd</span><span class="p">:</span>
+</span><span data-line="24">                <span class="n">httpd</span><span class="o">.</span><span class="n">handle_request</span><span class="p">()</span>
+</span><span data-line="25">
+</span><span data-line="26"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Serving on port 8000&quot;</span><span class="p">)</span>
+</span><span data-line="27"><span class="n">httpd</span> <span class="o">=</span> <span class="n">HTTPServer</span><span class="p">((</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="mi">8000</span><span class="p">),</span> <span class="n">SimpleHTTPRequestHandler</span><span class="p">)</span>
+</span><span data-line="28"><span class="n">serve_forever</span><span class="p">(</span><span class="n">httpd</span><span class="p">)</span>
+</span><span data-line="29"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Shutdown...&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="selectors.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="mmap.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>smtplib — SMTP protocol client - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="uuid — UUID objects according to RFC 4122" href="uuid.html" /><link rel="prev" title="imaplib — IMAP4 protocol client" href="imaplib.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="smtplib — SMTP protocol client"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#smtplib.SMTP"><code class="docutils literal notranslate"><span class="pre">SMTP</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP_SSL"><code class="docutils literal notranslate"><span class="pre">SMTP_SSL</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.LMTP"><code class="docutils literal notranslate"><span class="pre">LMTP</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPException"><code class="docutils literal notranslate"><span class="pre">SMTPException</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPServerDisconnected"><code class="docutils literal notranslate"><span class="pre">SMTPServerDisconnected</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPResponseException"><code class="docutils literal notranslate"><span class="pre">SMTPResponseException</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPSenderRefused"><code class="docutils literal notranslate"><span class="pre">SMTPSenderRefused</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPRecipientsRefused"><code class="docutils literal notranslate"><span class="pre">SMTPRecipientsRefused</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPDataError"><code class="docutils literal notranslate"><span class="pre">SMTPDataError</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPConnectError"><code class="docutils literal notranslate"><span class="pre">SMTPConnectError</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPHeloError"><code class="docutils literal notranslate"><span class="pre">SMTPHeloError</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPNotSupportedError"><code class="docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTPAuthenticationError"><code class="docutils literal notranslate"><span class="pre">SMTPAuthenticationError</span></code></a></li>
+<li><a class="reference internal" href="#smtp-objects">SMTP Objects</a><ul>
+<li><a class="reference internal" href="#smtplib.SMTP.set_debuglevel"><code class="docutils literal notranslate"><span class="pre">SMTP.set_debuglevel()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.docmd"><code class="docutils literal notranslate"><span class="pre">SMTP.docmd()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.connect"><code class="docutils literal notranslate"><span class="pre">SMTP.connect()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.helo"><code class="docutils literal notranslate"><span class="pre">SMTP.helo()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.ehlo"><code class="docutils literal notranslate"><span class="pre">SMTP.ehlo()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.ehlo_or_helo_if_needed"><code class="docutils literal notranslate"><span class="pre">SMTP.ehlo_or_helo_if_needed()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.has_extn"><code class="docutils literal notranslate"><span class="pre">SMTP.has_extn()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.verify"><code class="docutils literal notranslate"><span class="pre">SMTP.verify()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.login"><code class="docutils literal notranslate"><span class="pre">SMTP.login()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.auth"><code class="docutils literal notranslate"><span class="pre">SMTP.auth()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.starttls"><code class="docutils literal notranslate"><span class="pre">SMTP.starttls()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.sendmail"><code class="docutils literal notranslate"><span class="pre">SMTP.sendmail()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.send_message"><code class="docutils literal notranslate"><span class="pre">SMTP.send_message()</span></code></a></li>
+<li><a class="reference internal" href="#smtplib.SMTP.quit"><code class="docutils literal notranslate"><span class="pre">SMTP.quit()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#smtp-example">SMTP Example</a></li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/smtplib.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="internet.html"><span itemprop="name">Internet Protocols and Support</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="module-smtplib">
+<span id="smtplib-smtp-protocol-client"></span><h1><a class="reference internal" href="#module-smtplib" title="smtplib: SMTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code></a> — SMTP protocol client<a class="headerlink" href="#module-smtplib" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/smtplib.py">Lib/smtplib.py</a></p>
+<hr class="docutils" id="index-0" />
+<p>The <a class="reference internal" href="#module-smtplib" title="smtplib: SMTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code></a> module defines an SMTP client session object that can be used
+to send mail to any internet machine with an SMTP or ESMTP listener daemon.  For
+details of SMTP and ESMTP operation, consult <span class="target" id="index-1"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc821.html"><strong>RFC 821</strong></a> (Simple Mail Transfer
+Protocol) and <span class="target" id="index-2"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1869.html"><strong>RFC 1869</strong></a> (SMTP Service Extensions).</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
+<p>This module does not work or is not available on WebAssembly platforms
+<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
+<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a> for more information.</p>
+</div>
+<dl class="py class">
+<dt class="sig sig-object py" id="smtplib.SMTP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_hostname=None</span></span></em>, <span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">source_address=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a> instance encapsulates an SMTP connection.  It has methods
+that support a full repertoire of SMTP and ESMTP operations. If the optional
+<em>host</em> and <em>port</em> parameters are given, the SMTP <a class="reference internal" href="#smtplib.SMTP.connect" title="smtplib.SMTP.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">connect()</span></code></a> method is
+called with those parameters during initialization.  If specified,
+<em>local_hostname</em> is used as the FQDN of the local host in the HELO/EHLO
+command.  Otherwise, the local hostname is found using
+<a class="reference internal" href="socket.html#socket.getfqdn" title="socket.getfqdn"><code class="xref py py-func docutils literal notranslate"><span class="pre">socket.getfqdn()</span></code></a>.  If the <a class="reference internal" href="#smtplib.SMTP.connect" title="smtplib.SMTP.connect"><code class="xref py py-meth docutils literal notranslate"><span class="pre">connect()</span></code></a> call returns anything other
+than a success code, an <a class="reference internal" href="#smtplib.SMTPConnectError" title="smtplib.SMTPConnectError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPConnectError</span></code></a> is raised. The optional
+<em>timeout</em> parameter specifies a timeout in seconds for blocking operations
+like the connection attempt (if not specified, the global default timeout
+setting will be used).  If the timeout expires, <a class="reference internal" href="exceptions.html#TimeoutError" title="TimeoutError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TimeoutError</span></code></a> is
+raised.  The optional <em>source_address</em> parameter allows binding
+to some specific source address in a machine with multiple network
+interfaces, and/or to some specific source TCP port. It takes a 2-tuple
+<code class="docutils literal notranslate"><span class="pre">(host,</span> <span class="pre">port)</span></code>, for the socket to bind to as its source address before
+connecting. If omitted (or if <em>host</em> or <em>port</em> are <code class="docutils literal notranslate"><span class="pre">''</span></code> and/or <code class="docutils literal notranslate"><span class="pre">0</span></code>
+respectively) the OS default behavior will be used.</p>
+<p>For normal use, you should only require the initialization/connect,
+<a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sendmail()</span></code></a>, and <a class="reference internal" href="#smtplib.SMTP.quit" title="smtplib.SMTP.quit"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SMTP.quit()</span></code></a> methods.
+An example is included below.</p>
+<p>The <a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a> class supports the <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement.  When used
+like this, the SMTP <code class="docutils literal notranslate"><span class="pre">QUIT</span></code> command is issued automatically when the
+<code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code> statement exits.  E.g.:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">smtplib</span> <span class="kn">import</span> <span class="n">SMTP</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">SMTP</span><span class="p">(</span><span class="s2">&quot;domain.org&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">smtp</span><span class="p">:</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="n">smtp</span><span class="o">.</span><span class="n">noop</span><span class="p">()</span>
+</span><span data-line="4"><span class="gp">...</span>
+</span><span data-line="5"><span class="go">(250, b&#39;Ok&#39;)</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt;</span>
+</span></pre></div>
+</div>
+<p class="audit-hook"><p>All commands will raise an <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">auditing event</span></a>
+<code class="docutils literal notranslate"><span class="pre">smtplib.SMTP.send</span></code> with arguments <code class="docutils literal notranslate"><span class="pre">self</span></code> and <code class="docutils literal notranslate"><span class="pre">data</span></code>,
+where <code class="docutils literal notranslate"><span class="pre">data</span></code> is the bytes about to be sent to the remote host.</p>
+</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span>Support for the <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement was added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span><em>source_address</em> argument was added.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5: </span>The SMTPUTF8 extension (<span class="target" id="index-3"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc6531.html"><strong>RFC 6531</strong></a>) is now supported.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.9: </span>If the <em>timeout</em> parameter is set to be zero, it will raise a
+<a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a> to prevent the creation of a non-blocking socket.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="smtplib.SMTP_SSL">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTP_SSL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port=0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_hostname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">*</span></span></em>, <span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em>, <span class="optional">]</span><em class="sig-param"><span class="n"><span class="pre">context=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_address=None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP_SSL" title="Permalink to this definition">¶</a></dt>
+<dd><p>An <a class="reference internal" href="#smtplib.SMTP_SSL" title="smtplib.SMTP_SSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP_SSL</span></code></a> instance behaves exactly the same as instances of
+<a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a>. <a class="reference internal" href="#smtplib.SMTP_SSL" title="smtplib.SMTP_SSL"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP_SSL</span></code></a> should be used for situations where SSL is
+required from the beginning of the connection and using <code class="xref py py-meth docutils literal notranslate"><span class="pre">starttls()</span></code> is
+not appropriate. If <em>host</em> is not specified, the local host is used. If
+<em>port</em> is zero, the standard SMTP-over-SSL port (465) is used.  The optional
+arguments <em>local_hostname</em>, <em>timeout</em> and <em>source_address</em> have the same
+meaning as they do in the <a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a> class.  <em>context</em>, also optional,
+can contain a <a class="reference internal" href="ssl.html#ssl.SSLContext" title="ssl.SSLContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">SSLContext</span></code></a> and allows configuring various
+aspects of the secure connection.  Please read <a class="reference internal" href="ssl.html#ssl-security"><span class="std std-ref">Security considerations</span></a> for
+best practices.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span><em>context</em> was added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span>The <em>source_address</em> argument was added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.4: </span>The class now supports hostname check with
+<a class="reference internal" href="ssl.html#ssl.SSLContext.check_hostname" title="ssl.SSLContext.check_hostname"><code class="xref py py-attr docutils literal notranslate"><span class="pre">ssl.SSLContext.check_hostname</span></code></a> and <em>Server Name Indication</em> (see
+<a class="reference internal" href="ssl.html#ssl.HAS_SNI" title="ssl.HAS_SNI"><code class="xref py py-const docutils literal notranslate"><span class="pre">ssl.HAS_SNI</span></code></a>).</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.9: </span>If the <em>timeout</em> parameter is set to be zero, it will raise a
+<a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-class docutils literal notranslate"><span class="pre">ValueError</span></code></a> to prevent the creation of a non-blocking socket</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>The deprecated <em>keyfile</em> and <em>certfile</em> parameters have been removed.</p>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="smtplib.LMTP">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">LMTP</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host=''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port=LMTP_PORT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">local_hostname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">source_address=None</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.LMTP" title="Permalink to this definition">¶</a></dt>
+<dd><p>The LMTP protocol, which is very similar to ESMTP, is heavily based on the
+standard SMTP client. It’s common to use Unix sockets for LMTP, so our
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">connect()</span></code> method must support that as well as a regular host:port
+server. The optional arguments <em>local_hostname</em> and <em>source_address</em> have the
+same meaning as they do in the <a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a> class. To specify a Unix
+socket, you must use an absolute path for <em>host</em>, starting with a ‘/’.</p>
+<p>Authentication is supported, using the regular SMTP mechanism. When using a
+Unix socket, LMTP generally don’t support or require any authentication, but
+your mileage might vary.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.9: </span>The optional <em>timeout</em> parameter was added.</p>
+</div>
+</dd></dl>
+
+<p>A nice selection of exceptions is defined as well:</p>
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPException</span></span><a class="headerlink" href="#smtplib.SMTPException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Subclass of <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> that is the base exception class for all
+the other exceptions provided by this module.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.4: </span>SMTPException became subclass of <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a></p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPServerDisconnected">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPServerDisconnected</span></span><a class="headerlink" href="#smtplib.SMTPServerDisconnected" title="Permalink to this definition">¶</a></dt>
+<dd><p>This exception is raised when the server unexpectedly disconnects, or when an
+attempt is made to use the <a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a> instance before connecting it to a
+server.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPResponseException">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPResponseException</span></span><a class="headerlink" href="#smtplib.SMTPResponseException" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base class for all exceptions that include an SMTP error code. These exceptions
+are generated in some instances when the SMTP server returns an error code.  The
+error code is stored in the <code class="xref py py-attr docutils literal notranslate"><span class="pre">smtp_code</span></code> attribute of the error, and the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">smtp_error</span></code> attribute is set to the error message.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPSenderRefused">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPSenderRefused</span></span><a class="headerlink" href="#smtplib.SMTPSenderRefused" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sender address refused.  In addition to the attributes set by on all
+<a class="reference internal" href="#smtplib.SMTPResponseException" title="smtplib.SMTPResponseException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPResponseException</span></code></a> exceptions, this sets ‘sender’ to the string that
+the SMTP server refused.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPRecipientsRefused">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPRecipientsRefused</span></span><a class="headerlink" href="#smtplib.SMTPRecipientsRefused" title="Permalink to this definition">¶</a></dt>
+<dd><p>All recipient addresses refused.  The errors for each recipient are accessible
+through the attribute <code class="xref py py-attr docutils literal notranslate"><span class="pre">recipients</span></code>, which is a dictionary of exactly the
+same sort as <a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">SMTP.sendmail()</span></code></a> returns.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPDataError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPDataError</span></span><a class="headerlink" href="#smtplib.SMTPDataError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The SMTP server refused to accept the message data.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPConnectError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPConnectError</span></span><a class="headerlink" href="#smtplib.SMTPConnectError" title="Permalink to this definition">¶</a></dt>
+<dd><p>Error occurred during establishment of a connection  with the server.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPHeloError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPHeloError</span></span><a class="headerlink" href="#smtplib.SMTPHeloError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The server refused our <code class="docutils literal notranslate"><span class="pre">HELO</span></code> message.</p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPNotSupportedError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPNotSupportedError</span></span><a class="headerlink" href="#smtplib.SMTPNotSupportedError" title="Permalink to this definition">¶</a></dt>
+<dd><p>The command or option attempted is not supported by the server.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="smtplib.SMTPAuthenticationError">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">smtplib.</span></span><span class="sig-name descname"><span class="pre">SMTPAuthenticationError</span></span><a class="headerlink" href="#smtplib.SMTPAuthenticationError" title="Permalink to this definition">¶</a></dt>
+<dd><p>SMTP authentication went wrong.  Most probably the server didn’t accept the
+username/password combination provided.</p>
+</dd></dl>
+
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><span class="target" id="index-4"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc821.html"><strong>RFC 821</strong></a> - Simple Mail Transfer Protocol</dt><dd><p>Protocol definition for SMTP.  This document covers the model, operating
+procedure, and protocol details for SMTP.</p>
+</dd>
+<dt><span class="target" id="index-5"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc1869.html"><strong>RFC 1869</strong></a> - SMTP Service Extensions</dt><dd><p>Definition of the ESMTP extensions for SMTP.  This describes a framework for
+extending SMTP with new commands, supporting dynamic discovery of the commands
+provided by the server, and defines a few additional commands.</p>
+</dd>
+</dl>
+</div>
+<section id="smtp-objects">
+<span id="id1"></span><h2>SMTP Objects<a class="headerlink" href="#smtp-objects" title="Permalink to this heading">¶</a></h2>
+<p>An <a class="reference internal" href="#smtplib.SMTP" title="smtplib.SMTP"><code class="xref py py-class docutils literal notranslate"><span class="pre">SMTP</span></code></a> instance has the following methods:</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.set_debuglevel">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">set_debuglevel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">level</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.set_debuglevel" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the debug output level.  A value of 1 or <code class="docutils literal notranslate"><span class="pre">True</span></code> for <em>level</em> results in
+debug messages for connection and for all messages sent to and received from
+the server.  A value of 2 for <em>level</em> results in these messages being
+timestamped.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span>Added debuglevel 2.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.docmd">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">docmd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">args</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.docmd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a command <em>cmd</em> to the server.  The optional argument <em>args</em> is simply
+concatenated to the command, separated by a space.</p>
+<p>This returns a 2-tuple composed of a numeric response code and the actual
+response line (multiline responses are joined into one long line.)</p>
+<p>In normal operation it should not be necessary to call this method explicitly.
+It is used to implement other methods and may be useful for testing private
+extensions.</p>
+<p>If the connection to the server is lost while waiting for the reply,
+<a class="reference internal" href="#smtplib.SMTPServerDisconnected" title="smtplib.SMTPServerDisconnected"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPServerDisconnected</span></code></a> will be raised.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.connect">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">connect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">host</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'localhost'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">port</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to a host on a given port.  The defaults are to connect to the local
+host at the standard SMTP port (25). If the hostname ends with a colon (<code class="docutils literal notranslate"><span class="pre">':'</span></code>)
+followed by a number, that suffix will be stripped off and the number
+interpreted as the port number to use. This method is automatically invoked by
+the constructor if a host is specified during instantiation.  Returns a
+2-tuple of the response code and message sent by the server in its
+connection response.</p>
+<p class="audit-hook">Raises an <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">auditing event</span></a> <code class="docutils literal notranslate"><span class="pre">smtplib.connect</span></code> with arguments <code class="docutils literal notranslate"><span class="pre">self</span></code>, <code class="docutils literal notranslate"><span class="pre">host</span></code>, <code class="docutils literal notranslate"><span class="pre">port</span></code>.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.helo">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">helo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.helo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify yourself to the SMTP server using <code class="docutils literal notranslate"><span class="pre">HELO</span></code>.  The hostname argument
+defaults to the fully qualified domain name of the local host.
+The message returned by the server is stored as the <code class="xref py py-attr docutils literal notranslate"><span class="pre">helo_resp</span></code> attribute
+of the object.</p>
+<p>In normal operation it should not be necessary to call this method explicitly.
+It will be implicitly called by the <a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sendmail()</span></code></a> when necessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.ehlo">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">ehlo</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.ehlo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Identify yourself to an ESMTP server using <code class="docutils literal notranslate"><span class="pre">EHLO</span></code>.  The hostname argument
+defaults to the fully qualified domain name of the local host.  Examine the
+response for ESMTP option and store them for use by <a class="reference internal" href="#smtplib.SMTP.has_extn" title="smtplib.SMTP.has_extn"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_extn()</span></code></a>.
+Also sets several informational attributes: the message returned by
+the server is stored as the <code class="xref py py-attr docutils literal notranslate"><span class="pre">ehlo_resp</span></code> attribute, <code class="xref py py-attr docutils literal notranslate"><span class="pre">does_esmtp</span></code>
+is set to <code class="docutils literal notranslate"><span class="pre">True</span></code> or <code class="docutils literal notranslate"><span class="pre">False</span></code> depending on whether the server supports
+ESMTP, and <code class="xref py py-attr docutils literal notranslate"><span class="pre">esmtp_features</span></code> will be a dictionary containing the names
+of the SMTP service extensions this server supports, and their parameters
+(if any).</p>
+<p>Unless you wish to use <a class="reference internal" href="#smtplib.SMTP.has_extn" title="smtplib.SMTP.has_extn"><code class="xref py py-meth docutils literal notranslate"><span class="pre">has_extn()</span></code></a> before sending mail, it should not be
+necessary to call this method explicitly.  It will be implicitly called by
+<a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sendmail()</span></code></a> when necessary.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.ehlo_or_helo_if_needed">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">ehlo_or_helo_if_needed</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.ehlo_or_helo_if_needed" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method calls <a class="reference internal" href="#smtplib.SMTP.ehlo" title="smtplib.SMTP.ehlo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ehlo()</span></code></a> and/or <a class="reference internal" href="#smtplib.SMTP.helo" title="smtplib.SMTP.helo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">helo()</span></code></a> if there has been no
+previous <code class="docutils literal notranslate"><span class="pre">EHLO</span></code> or <code class="docutils literal notranslate"><span class="pre">HELO</span></code> command this session.  It tries ESMTP <code class="docutils literal notranslate"><span class="pre">EHLO</span></code>
+first.</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#smtplib.SMTPHeloError" title="smtplib.SMTPHeloError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPHeloError</span></code></a></dt><dd><p>The server didn’t reply properly to the <code class="docutils literal notranslate"><span class="pre">HELO</span></code> greeting.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.has_extn">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">has_extn</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.has_extn" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a> if <em>name</em> is in the set of SMTP service extensions returned
+by the server, <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a> otherwise. Case is ignored.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.verify">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">verify</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">address</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.verify" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the validity of an address on this server using SMTP <code class="docutils literal notranslate"><span class="pre">VRFY</span></code>. Returns a
+tuple consisting of code 250 and a full <span class="target" id="index-6"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc822.html"><strong>RFC 822</strong></a> address (including human
+name) if the user address is valid. Otherwise returns an SMTP error code of 400
+or greater and an error string.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Many sites disable SMTP <code class="docutils literal notranslate"><span class="pre">VRFY</span></code> in order to foil spammers.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.login">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">user</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">password</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_response_ok</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.login" title="Permalink to this definition">¶</a></dt>
+<dd><p>Log in on an SMTP server that requires authentication. The arguments are the
+username and the password to authenticate with. If there has been no previous
+<code class="docutils literal notranslate"><span class="pre">EHLO</span></code> or <code class="docutils literal notranslate"><span class="pre">HELO</span></code> command this session, this method tries ESMTP <code class="docutils literal notranslate"><span class="pre">EHLO</span></code>
+first. This method will return normally if the authentication was successful, or
+may raise the following exceptions:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#smtplib.SMTPHeloError" title="smtplib.SMTPHeloError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPHeloError</span></code></a></dt><dd><p>The server didn’t reply properly to the <code class="docutils literal notranslate"><span class="pre">HELO</span></code> greeting.</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPAuthenticationError" title="smtplib.SMTPAuthenticationError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPAuthenticationError</span></code></a></dt><dd><p>The server didn’t accept the username/password combination.</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPNotSupportedError" title="smtplib.SMTPNotSupportedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a></dt><dd><p>The <code class="docutils literal notranslate"><span class="pre">AUTH</span></code> command is not supported by the server.</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPException" title="smtplib.SMTPException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPException</span></code></a></dt><dd><p>No suitable authentication method was found.</p>
+</dd>
+</dl>
+<p>Each of the authentication methods supported by <a class="reference internal" href="#module-smtplib" title="smtplib: SMTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code></a> are tried in
+turn if they are advertised as supported by the server.  See <a class="reference internal" href="#smtplib.SMTP.auth" title="smtplib.SMTP.auth"><code class="xref py py-meth docutils literal notranslate"><span class="pre">auth()</span></code></a>
+for a list of supported authentication methods.  <em>initial_response_ok</em> is
+passed through to <a class="reference internal" href="#smtplib.SMTP.auth" title="smtplib.SMTP.auth"><code class="xref py py-meth docutils literal notranslate"><span class="pre">auth()</span></code></a>.</p>
+<p>Optional keyword argument <em>initial_response_ok</em> specifies whether, for
+authentication methods that support it, an “initial response” as specified
+in <span class="target" id="index-7"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4954.html"><strong>RFC 4954</strong></a> can be sent along with the <code class="docutils literal notranslate"><span class="pre">AUTH</span></code> command, rather than
+requiring a challenge/response.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span><a class="reference internal" href="#smtplib.SMTPNotSupportedError" title="smtplib.SMTPNotSupportedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a> may be raised, and the
+<em>initial_response_ok</em> parameter was added.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.auth">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">auth</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mechanism</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">authobject</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">initial_response_ok</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.auth" title="Permalink to this definition">¶</a></dt>
+<dd><p>Issue an <code class="docutils literal notranslate"><span class="pre">SMTP</span></code> <code class="docutils literal notranslate"><span class="pre">AUTH</span></code> command for the specified authentication
+<em>mechanism</em>, and handle the challenge response via <em>authobject</em>.</p>
+<p><em>mechanism</em> specifies which authentication mechanism is to
+be used as argument to the <code class="docutils literal notranslate"><span class="pre">AUTH</span></code> command; the valid values are
+those listed in the <code class="docutils literal notranslate"><span class="pre">auth</span></code> element of <code class="xref py py-attr docutils literal notranslate"><span class="pre">esmtp_features</span></code>.</p>
+<p><em>authobject</em> must be a callable object taking an optional single argument:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">data</span> <span class="o">=</span> <span class="n">authobject</span><span class="p">(</span><span class="n">challenge</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>If optional keyword argument <em>initial_response_ok</em> is true,
+<code class="docutils literal notranslate"><span class="pre">authobject()</span></code> will be called first with no argument.  It can return the
+<span class="target" id="index-8"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc4954.html"><strong>RFC 4954</strong></a> “initial response” ASCII <code class="docutils literal notranslate"><span class="pre">str</span></code> which will be encoded and sent with
+the <code class="docutils literal notranslate"><span class="pre">AUTH</span></code> command as below.  If the <code class="docutils literal notranslate"><span class="pre">authobject()</span></code> does not support an
+initial response (e.g. because it requires a challenge), it should return
+<code class="docutils literal notranslate"><span class="pre">None</span></code> when called with <code class="docutils literal notranslate"><span class="pre">challenge=None</span></code>.  If <em>initial_response_ok</em> is
+false, then <code class="docutils literal notranslate"><span class="pre">authobject()</span></code> will not be called first with <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>If the initial response check returns <code class="docutils literal notranslate"><span class="pre">None</span></code>, or if <em>initial_response_ok</em> is
+false, <code class="docutils literal notranslate"><span class="pre">authobject()</span></code> will be called to process the server’s challenge
+response; the <em>challenge</em> argument it is passed will be a <code class="docutils literal notranslate"><span class="pre">bytes</span></code>.  It
+should return ASCII <code class="docutils literal notranslate"><span class="pre">str</span></code> <em>data</em> that will be base64 encoded and sent to the
+server.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">SMTP</span></code> class provides <code class="docutils literal notranslate"><span class="pre">authobjects</span></code> for the <code class="docutils literal notranslate"><span class="pre">CRAM-MD5</span></code>, <code class="docutils literal notranslate"><span class="pre">PLAIN</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">LOGIN</span></code> mechanisms; they are named <code class="docutils literal notranslate"><span class="pre">SMTP.auth_cram_md5</span></code>,
+<code class="docutils literal notranslate"><span class="pre">SMTP.auth_plain</span></code>, and <code class="docutils literal notranslate"><span class="pre">SMTP.auth_login</span></code> respectively.  They all require
+that the <code class="docutils literal notranslate"><span class="pre">user</span></code> and <code class="docutils literal notranslate"><span class="pre">password</span></code> properties of the <code class="docutils literal notranslate"><span class="pre">SMTP</span></code> instance are
+set to appropriate values.</p>
+<p>User code does not normally need to call <code class="docutils literal notranslate"><span class="pre">auth</span></code> directly, but can instead
+call the <a class="reference internal" href="#smtplib.SMTP.login" title="smtplib.SMTP.login"><code class="xref py py-meth docutils literal notranslate"><span class="pre">login()</span></code></a> method, which will try each of the above mechanisms
+in turn, in the order listed.  <code class="docutils literal notranslate"><span class="pre">auth</span></code> is exposed to facilitate the
+implementation of authentication methods not (or not yet) supported
+directly by <a class="reference internal" href="#module-smtplib" title="smtplib: SMTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.starttls">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">starttls</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">context</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.starttls" title="Permalink to this definition">¶</a></dt>
+<dd><p>Put the SMTP connection in TLS (Transport Layer Security) mode.  All SMTP
+commands that follow will be encrypted.  You should then call <a class="reference internal" href="#smtplib.SMTP.ehlo" title="smtplib.SMTP.ehlo"><code class="xref py py-meth docutils literal notranslate"><span class="pre">ehlo()</span></code></a>
+again.</p>
+<p>If <em>keyfile</em> and <em>certfile</em> are provided, they are used to create an
+<a class="reference internal" href="ssl.html#ssl.SSLContext" title="ssl.SSLContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">ssl.SSLContext</span></code></a>.</p>
+<p>Optional <em>context</em> parameter is an <a class="reference internal" href="ssl.html#ssl.SSLContext" title="ssl.SSLContext"><code class="xref py py-class docutils literal notranslate"><span class="pre">ssl.SSLContext</span></code></a> object; This is
+an alternative to using a keyfile and a certfile and if specified both
+<em>keyfile</em> and <em>certfile</em> should be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>If there has been no previous <code class="docutils literal notranslate"><span class="pre">EHLO</span></code> or <code class="docutils literal notranslate"><span class="pre">HELO</span></code> command this session,
+this method tries ESMTP <code class="docutils literal notranslate"><span class="pre">EHLO</span></code> first.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.12: </span>The deprecated <em>keyfile</em> and <em>certfile</em> parameters have been removed.</p>
+</div>
+<dl class="simple">
+<dt><a class="reference internal" href="#smtplib.SMTPHeloError" title="smtplib.SMTPHeloError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPHeloError</span></code></a></dt><dd><p>The server didn’t reply properly to the <code class="docutils literal notranslate"><span class="pre">HELO</span></code> greeting.</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPNotSupportedError" title="smtplib.SMTPNotSupportedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a></dt><dd><p>The server does not support the STARTTLS extension.</p>
+</dd>
+<dt><a class="reference internal" href="exceptions.html#RuntimeError" title="RuntimeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">RuntimeError</span></code></a></dt><dd><p>SSL/TLS support is not available to your Python interpreter.</p>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span><em>context</em> was added.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.4: </span>The method now supports hostname check with
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">SSLContext.check_hostname</span></code> and <em>Server Name Indicator</em> (see
+<a class="reference internal" href="ssl.html#ssl.HAS_SNI" title="ssl.HAS_SNI"><code class="xref py py-const docutils literal notranslate"><span class="pre">HAS_SNI</span></code></a>).</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span>The error raised for lack of STARTTLS support is now the
+<a class="reference internal" href="#smtplib.SMTPNotSupportedError" title="smtplib.SMTPNotSupportedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a> subclass instead of the base
+<a class="reference internal" href="#smtplib.SMTPException" title="smtplib.SMTPException"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPException</span></code></a>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.sendmail">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">sendmail</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">from_addr</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_addrs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mail_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcpt_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.sendmail" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send mail.  The required arguments are an <span class="target" id="index-9"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc822.html"><strong>RFC 822</strong></a> from-address string, a list
+of <span class="target" id="index-10"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc822.html"><strong>RFC 822</strong></a> to-address strings (a bare string will be treated as a list with 1
+address), and a message string.  The caller may pass a list of ESMTP options
+(such as <code class="docutils literal notranslate"><span class="pre">8bitmime</span></code>) to be used in <code class="docutils literal notranslate"><span class="pre">MAIL</span> <span class="pre">FROM</span></code> commands as <em>mail_options</em>.
+ESMTP options (such as <code class="docutils literal notranslate"><span class="pre">DSN</span></code> commands) that should be used with all <code class="docutils literal notranslate"><span class="pre">RCPT</span></code>
+commands can be passed as <em>rcpt_options</em>.  (If you need to use different ESMTP
+options to different recipients you have to use the low-level methods such as
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">mail()</span></code>, <code class="xref py py-meth docutils literal notranslate"><span class="pre">rcpt()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">data()</span></code> to send the message.)</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <em>from_addr</em> and <em>to_addrs</em> parameters are used to construct the message
+envelope used by the transport agents.  <code class="docutils literal notranslate"><span class="pre">sendmail</span></code> does not modify the
+message headers in any way.</p>
+</div>
+<p><em>msg</em> may be a string containing characters in the ASCII range, or a byte
+string.  A string is encoded to bytes using the ascii codec, and lone <code class="docutils literal notranslate"><span class="pre">\r</span></code>
+and <code class="docutils literal notranslate"><span class="pre">\n</span></code> characters are converted to <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> characters.  A byte string is
+not modified.</p>
+<p>If there has been no previous <code class="docutils literal notranslate"><span class="pre">EHLO</span></code> or <code class="docutils literal notranslate"><span class="pre">HELO</span></code> command this session, this
+method tries ESMTP <code class="docutils literal notranslate"><span class="pre">EHLO</span></code> first. If the server does ESMTP, message size and
+each of the specified options will be passed to it (if the option is in the
+feature set the server advertises).  If <code class="docutils literal notranslate"><span class="pre">EHLO</span></code> fails, <code class="docutils literal notranslate"><span class="pre">HELO</span></code> will be tried
+and ESMTP options suppressed.</p>
+<p>This method will return normally if the mail is accepted for at least one
+recipient. Otherwise it will raise an exception.  That is, if this method does
+not raise an exception, then someone should get your mail. If this method does
+not raise an exception, it returns a dictionary, with one entry for each
+recipient that was refused.  Each entry contains a tuple of the SMTP error code
+and the accompanying error message sent by the server.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code> is included in <em>mail_options</em>, and the server supports it,
+<em>from_addr</em> and <em>to_addrs</em> may contain non-ASCII characters.</p>
+<p>This method may raise the following exceptions:</p>
+<dl class="simple">
+<dt><a class="reference internal" href="#smtplib.SMTPRecipientsRefused" title="smtplib.SMTPRecipientsRefused"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPRecipientsRefused</span></code></a></dt><dd><p>All recipients were refused.  Nobody got the mail.  The <code class="xref py py-attr docutils literal notranslate"><span class="pre">recipients</span></code>
+attribute of the exception object is a dictionary with information about the
+refused recipients (like the one returned when at least one recipient was
+accepted).</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPHeloError" title="smtplib.SMTPHeloError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPHeloError</span></code></a></dt><dd><p>The server didn’t reply properly to the <code class="docutils literal notranslate"><span class="pre">HELO</span></code> greeting.</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPSenderRefused" title="smtplib.SMTPSenderRefused"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPSenderRefused</span></code></a></dt><dd><p>The server didn’t accept the <em>from_addr</em>.</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPDataError" title="smtplib.SMTPDataError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPDataError</span></code></a></dt><dd><p>The server replied with an unexpected error code (other than a refusal of a
+recipient).</p>
+</dd>
+<dt><a class="reference internal" href="#smtplib.SMTPNotSupportedError" title="smtplib.SMTPNotSupportedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a></dt><dd><p><code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code> was given in the <em>mail_options</em> but is not supported by the
+server.</p>
+</dd>
+</dl>
+<p>Unless otherwise noted, the connection will be open even after an exception is
+raised.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span><em>msg</em> may be a byte string.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.5: </span><code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code> support added, and <a class="reference internal" href="#smtplib.SMTPNotSupportedError" title="smtplib.SMTPNotSupportedError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupportedError</span></code></a> may be
+raised if <code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code> is specified but the server does not support it.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.send_message">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">send_message</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">from_addr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_addrs</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mail_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcpt_options</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.send_message" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a convenience method for calling <a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sendmail()</span></code></a> with the message
+represented by an <a class="reference internal" href="email.compat32-message.html#email.message.Message" title="email.message.Message"><code class="xref py py-class docutils literal notranslate"><span class="pre">email.message.Message</span></code></a> object.  The arguments have
+the same meaning as for <a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sendmail()</span></code></a>, except that <em>msg</em> is a <code class="docutils literal notranslate"><span class="pre">Message</span></code>
+object.</p>
+<p>If <em>from_addr</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code> or <em>to_addrs</em> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, <code class="docutils literal notranslate"><span class="pre">send_message</span></code> fills
+those arguments with addresses extracted from the headers of <em>msg</em> as
+specified in <span class="target" id="index-11"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc5322.html"><strong>RFC 5322</strong></a>: <em>from_addr</em> is set to the <em class="mailheader">Sender</em>
+field if it is present, and otherwise to the <em class="mailheader">From</em> field.
+<em>to_addrs</em> combines the values (if any) of the <em class="mailheader">To</em>,
+<em class="mailheader">Cc</em>, and <em class="mailheader">Bcc</em> fields from <em>msg</em>.  If exactly one
+set of <em class="mailheader">Resent-*</em> headers appear in the message, the regular
+headers are ignored and the <em class="mailheader">Resent-*</em> headers are used instead.
+If the message contains more than one set of <em class="mailheader">Resent-*</em> headers,
+a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is raised, since there is no way to unambiguously detect
+the most recent set of <em class="mailheader">Resent-</em> headers.</p>
+<p><code class="docutils literal notranslate"><span class="pre">send_message</span></code> serializes <em>msg</em> using
+<a class="reference internal" href="email.generator.html#email.generator.BytesGenerator" title="email.generator.BytesGenerator"><code class="xref py py-class docutils literal notranslate"><span class="pre">BytesGenerator</span></code></a> with <code class="docutils literal notranslate"><span class="pre">\r\n</span></code> as the <em>linesep</em>, and
+calls <a class="reference internal" href="#smtplib.SMTP.sendmail" title="smtplib.SMTP.sendmail"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sendmail()</span></code></a> to transmit the resulting message.  Regardless of the
+values of <em>from_addr</em> and <em>to_addrs</em>, <code class="docutils literal notranslate"><span class="pre">send_message</span></code> does not transmit any
+<em class="mailheader">Bcc</em> or <em class="mailheader">Resent-Bcc</em> headers that may appear
+in <em>msg</em>.  If any of the addresses in <em>from_addr</em> and <em>to_addrs</em> contain
+non-ASCII characters and the server does not advertise <code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code> support,
+an <code class="xref py py-exc docutils literal notranslate"><span class="pre">SMTPNotSupported</span></code> error is raised.  Otherwise the <code class="docutils literal notranslate"><span class="pre">Message</span></code> is
+serialized with a clone of its <a class="reference internal" href="email.policy.html#module-email.policy" title="email.policy: Controlling the parsing and generating of messages"><code class="xref py py-mod docutils literal notranslate"><span class="pre">policy</span></code></a> with the
+<a class="reference internal" href="email.policy.html#email.policy.EmailPolicy.utf8" title="email.policy.EmailPolicy.utf8"><code class="xref py py-attr docutils literal notranslate"><span class="pre">utf8</span></code></a> attribute set to <code class="docutils literal notranslate"><span class="pre">True</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code> and <code class="docutils literal notranslate"><span class="pre">BODY=8BITMIME</span></code> are added to <em>mail_options</em>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.5: </span>Support for internationalized addresses (<code class="docutils literal notranslate"><span class="pre">SMTPUTF8</span></code>).</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="smtplib.SMTP.quit">
+<span class="sig-prename descclassname"><span class="pre">SMTP.</span></span><span class="sig-name descname"><span class="pre">quit</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#smtplib.SMTP.quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Terminate the SMTP session and close the connection.  Return the result of
+the SMTP <code class="docutils literal notranslate"><span class="pre">QUIT</span></code> command.</p>
+</dd></dl>
+
+<p>Low-level methods corresponding to the standard SMTP/ESMTP commands <code class="docutils literal notranslate"><span class="pre">HELP</span></code>,
+<code class="docutils literal notranslate"><span class="pre">RSET</span></code>, <code class="docutils literal notranslate"><span class="pre">NOOP</span></code>, <code class="docutils literal notranslate"><span class="pre">MAIL</span></code>, <code class="docutils literal notranslate"><span class="pre">RCPT</span></code>, and <code class="docutils literal notranslate"><span class="pre">DATA</span></code> are also supported.
+Normally these do not need to be called directly, so they are not documented
+here.  For details, consult the module code.</p>
+</section>
+<section id="smtp-example">
+<span id="id2"></span><h2>SMTP Example<a class="headerlink" href="#smtp-example" title="Permalink to this heading">¶</a></h2>
+<p>This example prompts the user for addresses needed in the message envelope (‘To’
+and ‘From’ addresses), and the message to be delivered.  Note that the headers
+to be included with the message must be included in the message as entered; this
+example doesn’t do any processing of the <span class="target" id="index-12"></span><a class="rfc reference external" href="https://datatracker.ietf.org/doc/html/rfc822.html"><strong>RFC 822</strong></a> headers.  In particular, the
+‘To’ and ‘From’ addresses must be included in the message headers explicitly.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">smtplib</span>
+</span><span data-line="2">
+</span><span data-line="3"><span class="k">def</span> <span class="nf">prompt</span><span class="p">(</span><span class="n">prompt</span><span class="p">):</span>
+</span><span data-line="4">    <span class="k">return</span> <span class="nb">input</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+</span><span data-line="5">
+</span><span data-line="6"><span class="n">fromaddr</span> <span class="o">=</span> <span class="n">prompt</span><span class="p">(</span><span class="s2">&quot;From: &quot;</span><span class="p">)</span>
+</span><span data-line="7"><span class="n">toaddrs</span>  <span class="o">=</span> <span class="n">prompt</span><span class="p">(</span><span class="s2">&quot;To: &quot;</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+</span><span data-line="8"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Enter message, end with ^D (Unix) or ^Z (Windows):&quot;</span><span class="p">)</span>
+</span><span data-line="9">
+</span><span data-line="10"><span class="c1"># Add the From: and To: headers at the start!</span>
+</span><span data-line="11"><span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;From: </span><span class="si">%s</span><span class="se">\r\n</span><span class="s2">To: </span><span class="si">%s</span><span class="se">\r\n\r\n</span><span class="s2">&quot;</span>
+</span><span data-line="12">       <span class="o">%</span> <span class="p">(</span><span class="n">fromaddr</span><span class="p">,</span> <span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">toaddrs</span><span class="p">)))</span>
+</span><span data-line="13"><span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+</span><span data-line="14">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="15">        <span class="n">line</span> <span class="o">=</span> <span class="nb">input</span><span class="p">()</span>
+</span><span data-line="16">    <span class="k">except</span> <span class="ne">EOFError</span><span class="p">:</span>
+</span><span data-line="17">        <span class="k">break</span>
+</span><span data-line="18">    <span class="k">if</span> <span class="ow">not</span> <span class="n">line</span><span class="p">:</span>
+</span><span data-line="19">        <span class="k">break</span>
+</span><span data-line="20">    <span class="n">msg</span> <span class="o">=</span> <span class="n">msg</span> <span class="o">+</span> <span class="n">line</span>
+</span><span data-line="21">
+</span><span data-line="22"><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Message length is&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">msg</span><span class="p">))</span>
+</span><span data-line="23">
+</span><span data-line="24"><span class="n">server</span> <span class="o">=</span> <span class="n">smtplib</span><span class="o">.</span><span class="n">SMTP</span><span class="p">(</span><span class="s1">&#39;localhost&#39;</span><span class="p">)</span>
+</span><span data-line="25"><span class="n">server</span><span class="o">.</span><span class="n">set_debuglevel</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="26"><span class="n">server</span><span class="o">.</span><span class="n">sendmail</span><span class="p">(</span><span class="n">fromaddr</span><span class="p">,</span> <span class="n">toaddrs</span><span class="p">,</span> <span class="n">msg</span><span class="p">)</span>
+</span><span data-line="27"><span class="n">server</span><span class="o">.</span><span class="n">quit</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>In general, you will want to use the <a class="reference internal" href="email.html#module-email" title="email: Package supporting the parsing, manipulating, and generating email messages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code></a> package’s features to
+construct an email message, which you can then send
+via <a class="reference internal" href="#smtplib.SMTP.send_message" title="smtplib.SMTP.send_message"><code class="xref py py-meth docutils literal notranslate"><span class="pre">send_message()</span></code></a>; see <a class="reference internal" href="email.examples.html#email-examples"><span class="std std-ref">email: Examples</span></a>.</p>
+</div>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="imaplib.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="uuid.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

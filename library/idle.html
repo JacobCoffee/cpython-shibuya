@@ -1,0 +1,1658 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>IDLE - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Development Tools" href="development.html" /><link rel="prev" title="tkinter.ttk — Tk themed widgets" href="tkinter.ttk.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="IDLE"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#menus">Menus</a><ul>
+<li><a class="reference internal" href="#file-menu-shell-and-editor">File menu (Shell and Editor)</a></li>
+<li><a class="reference internal" href="#edit-menu-shell-and-editor">Edit menu (Shell and Editor)</a></li>
+<li><a class="reference internal" href="#format-menu-editor-window-only">Format menu (Editor window only)</a></li>
+<li><a class="reference internal" href="#run-menu-editor-window-only">Run menu (Editor window only)</a></li>
+<li><a class="reference internal" href="#shell-menu-shell-window-only">Shell menu (Shell window only)</a></li>
+<li><a class="reference internal" href="#debug-menu-shell-window-only">Debug menu (Shell window only)</a></li>
+<li><a class="reference internal" href="#options-menu-shell-and-editor">Options menu (Shell and Editor)</a></li>
+<li><a class="reference internal" href="#window-menu-shell-and-editor">Window menu (Shell and Editor)</a></li>
+<li><a class="reference internal" href="#help-menu-shell-and-editor">Help menu (Shell and Editor)</a></li>
+<li><a class="reference internal" href="#context-menus">Context menus</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#editing-and-navigation">Editing and Navigation</a><ul>
+<li><a class="reference internal" href="#editor-windows">Editor windows</a></li>
+<li><a class="reference internal" href="#key-bindings">Key bindings</a></li>
+<li><a class="reference internal" href="#automatic-indentation">Automatic indentation</a></li>
+<li><a class="reference internal" href="#search-and-replace">Search and Replace</a></li>
+<li><a class="reference internal" href="#completions">Completions</a></li>
+<li><a class="reference internal" href="#calltips">Calltips</a></li>
+<li><a class="reference internal" href="#code-context">Code Context</a></li>
+<li><a class="reference internal" href="#shell-window">Shell window</a></li>
+<li><a class="reference internal" href="#text-colors">Text colors</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#startup-and-code-execution">Startup and Code Execution</a><ul>
+<li><a class="reference internal" href="#command-line-usage">Command line usage</a></li>
+<li><a class="reference internal" href="#startup-failure">Startup failure</a></li>
+<li><a class="reference internal" href="#running-user-code">Running user code</a></li>
+<li><a class="reference internal" href="#user-output-in-shell">User output in Shell</a></li>
+<li><a class="reference internal" href="#developing-tkinter-applications">Developing tkinter applications</a></li>
+<li><a class="reference internal" href="#running-without-a-subprocess">Running without a subprocess</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#help-and-preferences">Help and Preferences</a><ul>
+<li><a class="reference internal" href="#help-sources">Help sources</a></li>
+<li><a class="reference internal" href="#setting-preferences">Setting preferences</a></li>
+<li><a class="reference internal" href="#idle-on-macos">IDLE on macOS</a></li>
+<li><a class="reference internal" href="#extensions">Extensions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-idlelib">idlelib</a></li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/idle.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="tk.html"><span itemprop="name">Graphical User Interfaces with Tk</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name">IDLE</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="idle">
+<span id="id1"></span><h1>IDLE<a class="headerlink" href="#idle" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/idlelib/">Lib/idlelib/</a></p>
+<hr class="docutils" id="index-0" />
+<p>IDLE is Python’s Integrated Development and Learning Environment.</p>
+<p>IDLE has the following features:</p>
+<ul class="simple">
+<li><p>coded in 100% pure Python, using the <a class="reference internal" href="tkinter.html#module-tkinter" title="tkinter: Interface to Tcl/Tk for graphical user interfaces"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code></a> GUI toolkit</p></li>
+<li><p>cross-platform: works mostly the same on Windows, Unix, and macOS</p></li>
+<li><p>Python shell window (interactive interpreter) with colorizing
+of code input, output, and error messages</p></li>
+<li><p>multi-window text editor with multiple undo, Python colorizing,
+smart indent, call tips, auto completion, and other features</p></li>
+<li><p>search within any window, replace within editor windows, and search
+through multiple files (grep)</p></li>
+<li><p>debugger with persistent breakpoints, stepping, and viewing
+of global and local namespaces</p></li>
+<li><p>configuration, browsers, and other dialogs</p></li>
+</ul>
+<section id="menus">
+<h2>Menus<a class="headerlink" href="#menus" title="Permalink to this heading">¶</a></h2>
+<p>IDLE has two main window types, the Shell window and the Editor window.  It is
+possible to have multiple editor windows simultaneously.  On Windows and
+Linux, each has its own top menu.  Each menu documented below indicates
+which window type it is associated with.</p>
+<p>Output windows, such as used for Edit =&gt; Find in Files, are a subtype of editor
+window.  They currently have the same top menu but a different
+default title and context menu.</p>
+<p>On macOS, there is one application menu.  It dynamically changes according
+to the window currently selected.  It has an IDLE menu, and some entries
+described below are moved around to conform to Apple guidelines.</p>
+<section id="file-menu-shell-and-editor">
+<h3>File menu (Shell and Editor)<a class="headerlink" href="#file-menu-shell-and-editor" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>New File</dt><dd><p>Create a new file editing window.</p>
+</dd>
+<dt>Open…</dt><dd><p>Open an existing file with an Open dialog.</p>
+</dd>
+<dt>Open Module…</dt><dd><p>Open an existing module (searches sys.path).</p>
+</dd>
+<dt>Recent Files</dt><dd><p>Open a list of recent files.  Click one to open it.</p>
+</dd>
+</dl>
+<dl class="simple" id="index-1">
+<dt>Module Browser</dt><dd><p>Show functions, classes, and methods in the current Editor file in a
+tree structure.  In the shell, open a module first.</p>
+</dd>
+<dt>Path Browser</dt><dd><p>Show sys.path directories, modules, functions, classes and methods in a
+tree structure.</p>
+</dd>
+<dt>Save</dt><dd><p>Save the current window to the associated file, if there is one.  Windows
+that have been changed since being opened or last saved have a * before
+and after the window title.  If there is no associated file,
+do Save As instead.</p>
+</dd>
+<dt>Save As…</dt><dd><p>Save the current window with a Save As dialog.  The file saved becomes the
+new associated file for the window. (If your file namager is set to hide
+extensions, the current extension will be omitted in the file name box.
+If the new filename has no ‘.’, ‘.py’ and ‘.txt’ will be added for Python
+and text files, except that on macOS Aqua,’.py’ is added for all files.)</p>
+</dd>
+<dt>Save Copy As…</dt><dd><p>Save the current window to different file without changing the associated
+file.  (See Save As note above about filename extensions.)</p>
+</dd>
+<dt>Print Window</dt><dd><p>Print the current window to the default printer.</p>
+</dd>
+<dt>Close Window</dt><dd><p>Close the current window (if an unsaved editor, ask to save; if an unsaved
+Shell, ask to quit execution).  Calling <code class="docutils literal notranslate"><span class="pre">exit()</span></code> or <code class="docutils literal notranslate"><span class="pre">close()</span></code> in the Shell
+window also closes Shell.  If this is the only window, also exit IDLE.</p>
+</dd>
+<dt>Exit IDLE</dt><dd><p>Close all windows and quit IDLE (ask to save unsaved edit windows).</p>
+</dd>
+</dl>
+</section>
+<section id="edit-menu-shell-and-editor">
+<h3>Edit menu (Shell and Editor)<a class="headerlink" href="#edit-menu-shell-and-editor" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Undo</dt><dd><p>Undo the last change to the current window.  A maximum of 1000 changes may
+be undone.</p>
+</dd>
+<dt>Redo</dt><dd><p>Redo the last undone change to the current window.</p>
+</dd>
+<dt>Select All</dt><dd><p>Select the entire contents of the current window.</p>
+</dd>
+<dt>Cut</dt><dd><p>Copy selection into the system-wide clipboard; then delete the selection.</p>
+</dd>
+<dt>Copy</dt><dd><p>Copy selection into the system-wide clipboard.</p>
+</dd>
+<dt>Paste</dt><dd><p>Insert contents of the system-wide clipboard into the current window.</p>
+</dd>
+</dl>
+<p>The clipboard functions are also available in context menus.</p>
+<dl class="simple">
+<dt>Find…</dt><dd><p>Open a search dialog with many options</p>
+</dd>
+<dt>Find Again</dt><dd><p>Repeat the last search, if there is one.</p>
+</dd>
+<dt>Find Selection</dt><dd><p>Search for the currently selected string, if there is one.</p>
+</dd>
+<dt>Find in Files…</dt><dd><p>Open a file search dialog.  Put results in a new output window.</p>
+</dd>
+<dt>Replace…</dt><dd><p>Open a search-and-replace dialog.</p>
+</dd>
+<dt>Go to Line</dt><dd><p>Move the cursor to the beginning of the line requested and make that
+line visible.  A request past the end of the file goes to the end.
+Clear any selection and update the line and column status.</p>
+</dd>
+<dt>Show Completions</dt><dd><p>Open a scrollable list allowing selection of existing names. See
+<a class="reference internal" href="#completions"><span class="std std-ref">Completions</span></a> in the Editing and navigation section below.</p>
+</dd>
+<dt>Expand Word</dt><dd><p>Expand a prefix you have typed to match a full word in the same window;
+repeat to get a different expansion.</p>
+</dd>
+<dt>Show Call Tip</dt><dd><p>After an unclosed parenthesis for a function, open a small window with
+function parameter hints.  See <a class="reference internal" href="#calltips"><span class="std std-ref">Calltips</span></a> in the
+Editing and navigation section below.</p>
+</dd>
+<dt>Show Surrounding Parens</dt><dd><p>Highlight the surrounding parenthesis.</p>
+</dd>
+</dl>
+</section>
+<section id="format-menu-editor-window-only">
+<span id="format-menu"></span><h3>Format menu (Editor window only)<a class="headerlink" href="#format-menu-editor-window-only" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Format Paragraph</dt><dd><p>Reformat the current blank-line-delimited paragraph in comment block or
+multiline string or selected line in a string.  All lines in the
+paragraph will be formatted to less than N columns, where N defaults to 72.</p>
+</dd>
+<dt>Indent Region</dt><dd><p>Shift selected lines right by the indent width (default 4 spaces).</p>
+</dd>
+<dt>Dedent Region</dt><dd><p>Shift selected lines left by the indent width (default 4 spaces).</p>
+</dd>
+<dt>Comment Out Region</dt><dd><p>Insert ## in front of selected lines.</p>
+</dd>
+<dt>Uncomment Region</dt><dd><p>Remove leading # or ## from selected lines.</p>
+</dd>
+<dt>Tabify Region</dt><dd><p>Turn <em>leading</em> stretches of spaces into tabs. (Note: We recommend using
+4 space blocks to indent Python code.)</p>
+</dd>
+<dt>Untabify Region</dt><dd><p>Turn <em>all</em> tabs into the correct number of spaces.</p>
+</dd>
+<dt>Toggle Tabs</dt><dd><p>Open a dialog to switch between indenting with spaces and tabs.</p>
+</dd>
+<dt>New Indent Width</dt><dd><p>Open a dialog to change indent width. The accepted default by the Python
+community is 4 spaces.</p>
+</dd>
+<dt>Strip Trailing Chitespace</dt><dd><p>Remove trailing space and other whitespace characters after the last
+non-whitespace character of a line by applying str.rstrip to each line,
+including lines within multiline strings.  Except for Shell windows,
+remove extra newlines at the end of the file.</p>
+</dd>
+</dl>
+</section>
+<section id="run-menu-editor-window-only">
+<span id="index-2"></span><h3>Run menu (Editor window only)<a class="headerlink" href="#run-menu-editor-window-only" title="Permalink to this heading">¶</a></h3>
+<dl class="simple" id="run-module">
+<dt>Run Module</dt><dd><p>Do <a class="reference internal" href="#check-module"><span class="std std-ref">Check Module</span></a>.  If no error, restart the shell to clean the
+environment, then execute the module.  Output is displayed in the Shell
+window.  Note that output requires use of <code class="docutils literal notranslate"><span class="pre">print</span></code> or <code class="docutils literal notranslate"><span class="pre">write</span></code>.
+When execution is complete, the Shell retains focus and displays a prompt.
+At this point, one may interactively explore the result of execution.
+This is similar to executing a file with <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-i</span> <span class="pre">file</span></code> at a command
+line.</p>
+</dd>
+</dl>
+<dl class="simple" id="run-custom">
+<dt>Run… Customized</dt><dd><p>Same as <a class="reference internal" href="#run-module"><span class="std std-ref">Run Module</span></a>, but run the module with customized
+settings.  <em>Command Line Arguments</em> extend <a class="reference internal" href="sys.html#sys.argv" title="sys.argv"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a> as if passed
+on a command line. The module can be run in the Shell without restarting.</p>
+</dd>
+</dl>
+<dl class="simple" id="check-module">
+<dt>Check Module</dt><dd><p>Check the syntax of the module currently open in the Editor window. If the
+module has not been saved IDLE will either prompt the user to save or
+autosave, as selected in the General tab of the Idle Settings dialog.  If
+there is a syntax error, the approximate location is indicated in the
+Editor window.</p>
+</dd>
+</dl>
+<dl class="simple" id="python-shell">
+<dt>Python Shell</dt><dd><p>Open or wake up the Python Shell window.</p>
+</dd>
+</dl>
+</section>
+<section id="shell-menu-shell-window-only">
+<h3>Shell menu (Shell window only)<a class="headerlink" href="#shell-menu-shell-window-only" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>View Last Restart</dt><dd><p>Scroll the shell window to the last Shell restart.</p>
+</dd>
+<dt>Restart Shell</dt><dd><p>Restart the shell to clean the environment and reset display and exception handling.</p>
+</dd>
+<dt>Previous History</dt><dd><p>Cycle through earlier commands in history which match the current entry.</p>
+</dd>
+<dt>Next History</dt><dd><p>Cycle through later commands in history which match the current entry.</p>
+</dd>
+<dt>Interrupt Execution</dt><dd><p>Stop a running program.</p>
+</dd>
+</dl>
+</section>
+<section id="debug-menu-shell-window-only">
+<h3>Debug menu (Shell window only)<a class="headerlink" href="#debug-menu-shell-window-only" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Go to File/Line</dt><dd><p>Look on the current line. with the cursor, and the line above for a filename
+and line number.  If found, open the file if not already open, and show the
+line.  Use this to view source lines referenced in an exception traceback
+and lines found by Find in Files. Also available in the context menu of
+the Shell window and Output windows.</p>
+</dd>
+</dl>
+<dl class="simple" id="index-3">
+<dt>Debugger (toggle)</dt><dd><p>When activated, code entered in the Shell or run from an Editor will run
+under the debugger.  In the Editor, breakpoints can be set with the context
+menu.  This feature is still incomplete and somewhat experimental.</p>
+</dd>
+<dt>Stack Viewer</dt><dd><p>Show the stack traceback of the last exception in a tree widget, with
+access to locals and globals.</p>
+</dd>
+<dt>Auto-open Stack Viewer</dt><dd><p>Toggle automatically opening the stack viewer on an unhandled exception.</p>
+</dd>
+</dl>
+</section>
+<section id="options-menu-shell-and-editor">
+<h3>Options menu (Shell and Editor)<a class="headerlink" href="#options-menu-shell-and-editor" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Configure IDLE</dt><dd><p>Open a configuration dialog and change preferences for the following:
+fonts, indentation, keybindings, text color themes, startup windows and
+size, additional help sources, and extensions.  On macOS, open the
+configuration dialog by selecting Preferences in the application
+menu. For more details, see
+<a class="reference internal" href="#preferences"><span class="std std-ref">Setting preferences</span></a> under Help and preferences.</p>
+</dd>
+</dl>
+<p>Most configuration options apply to all windows or all future windows.
+The option items below only apply to the active window.</p>
+<dl class="simple">
+<dt>Show/Hide Code Context (Editor Window only)</dt><dd><p>Open a pane at the top of the edit window which shows the block context
+of the code which has scrolled above the top of the window.  See
+<a class="reference internal" href="#code-context"><span class="std std-ref">Code Context</span></a> in the Editing and Navigation section
+below.</p>
+</dd>
+<dt>Show/Hide Line Numbers (Editor Window only)</dt><dd><p>Open a column to the left of the edit window which shows the number
+of each line of text.  The default is off, which may be changed in the
+preferences (see <a class="reference internal" href="#preferences"><span class="std std-ref">Setting preferences</span></a>).</p>
+</dd>
+<dt>Zoom/Restore Height</dt><dd><p>Toggles the window between normal size and maximum height. The initial size
+defaults to 40 lines by 80 chars unless changed on the General tab of the
+Configure IDLE dialog.  The maximum height for a screen is determined by
+momentarily maximizing a window the first time one is zoomed on the screen.
+Changing screen settings may invalidate the saved height.  This toggle has
+no effect when a window is maximized.</p>
+</dd>
+</dl>
+</section>
+<section id="window-menu-shell-and-editor">
+<h3>Window menu (Shell and Editor)<a class="headerlink" href="#window-menu-shell-and-editor" title="Permalink to this heading">¶</a></h3>
+<p>Lists the names of all open windows; select one to bring it to the foreground
+(deiconifying it if necessary).</p>
+</section>
+<section id="help-menu-shell-and-editor">
+<h3>Help menu (Shell and Editor)<a class="headerlink" href="#help-menu-shell-and-editor" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>About IDLE</dt><dd><p>Display version, copyright, license, credits, and more.</p>
+</dd>
+<dt>IDLE Help</dt><dd><p>Display this IDLE document, detailing the menu options, basic editing and
+navigation, and other tips.</p>
+</dd>
+<dt>Python Docs</dt><dd><p>Access local Python documentation, if installed, or start a web browser
+and open docs.python.org showing the latest Python documentation.</p>
+</dd>
+<dt>Turtle Demo</dt><dd><p>Run the turtledemo module with example Python code and turtle drawings.</p>
+</dd>
+</dl>
+<p>Additional help sources may be added here with the Configure IDLE dialog under
+the General tab. See the <a class="reference internal" href="#help-sources"><span class="std std-ref">Help sources</span></a> subsection below
+for more on Help menu choices.</p>
+</section>
+<section id="context-menus">
+<span id="index-4"></span><h3>Context menus<a class="headerlink" href="#context-menus" title="Permalink to this heading">¶</a></h3>
+<p>Open a context menu by right-clicking in a window (Control-click on macOS).
+Context menus have the standard clipboard functions also on the Edit menu.</p>
+<dl class="simple">
+<dt>Cut</dt><dd><p>Copy selection into the system-wide clipboard; then delete the selection.</p>
+</dd>
+<dt>Copy</dt><dd><p>Copy selection into the system-wide clipboard.</p>
+</dd>
+<dt>Paste</dt><dd><p>Insert contents of the system-wide clipboard into the current window.</p>
+</dd>
+</dl>
+<p>Editor windows also have breakpoint functions.  Lines with a breakpoint set are
+specially marked.  Breakpoints only have an effect when running under the
+debugger.  Breakpoints for a file are saved in the user’s <code class="docutils literal notranslate"><span class="pre">.idlerc</span></code>
+directory.</p>
+<dl class="simple">
+<dt>Set Breakpoint</dt><dd><p>Set a breakpoint on the current line.</p>
+</dd>
+<dt>Clear Breakpoint</dt><dd><p>Clear the breakpoint on that line.</p>
+</dd>
+</dl>
+<p>Shell and Output windows also have the following.</p>
+<dl class="simple">
+<dt>Go to file/line</dt><dd><p>Same as in Debug menu.</p>
+</dd>
+</dl>
+<p>The Shell window also has an output squeezing facility explained in the <em>Python
+Shell window</em> subsection below.</p>
+<dl class="simple">
+<dt>Squeeze</dt><dd><p>If the cursor is over an output line, squeeze all the output between
+the code above and the prompt below down to a ‘Squeezed text’ label.</p>
+</dd>
+</dl>
+</section>
+</section>
+<section id="editing-and-navigation">
+<span id="id2"></span><h2>Editing and Navigation<a class="headerlink" href="#editing-and-navigation" title="Permalink to this heading">¶</a></h2>
+<section id="editor-windows">
+<h3>Editor windows<a class="headerlink" href="#editor-windows" title="Permalink to this heading">¶</a></h3>
+<p>IDLE may open editor windows when it starts, depending on settings
+and how you start IDLE.  Thereafter, use the File menu.  There can be only
+one open editor window for a given file.</p>
+<p>The title bar contains the name of the file, the full path, and the version
+of Python and IDLE running the window.  The status bar contains the line
+number (‘Ln’) and column number (‘Col’).  Line numbers start with 1;
+column numbers with 0.</p>
+<p>IDLE assumes that files with a known .py* extension contain Python code
+and that other files do not.  Run Python code with the Run menu.</p>
+</section>
+<section id="key-bindings">
+<h3>Key bindings<a class="headerlink" href="#key-bindings" title="Permalink to this heading">¶</a></h3>
+<p>In this section, ‘C’ refers to the <kbd class="kbd docutils literal notranslate">Control</kbd> key on Windows and Unix and
+the <kbd class="kbd docutils literal notranslate">Command</kbd> key on macOS.</p>
+<ul>
+<li><p><kbd class="kbd docutils literal notranslate">Backspace</kbd> deletes to the left; <kbd class="kbd docutils literal notranslate">Del</kbd> deletes to the right</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">Backspace</kbd></kbd> delete word left; <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">Del</kbd></kbd> delete word to the right</p></li>
+<li><p>Arrow keys and <kbd class="kbd docutils literal notranslate">Page Up</kbd>/<kbd class="kbd docutils literal notranslate">Page Down</kbd> to move around</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">LeftArrow</kbd></kbd> and <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">RightArrow</kbd></kbd> moves by words</p></li>
+<li><p><kbd class="kbd docutils literal notranslate">Home</kbd>/<kbd class="kbd docutils literal notranslate">End</kbd> go to begin/end of line</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">Home</kbd></kbd>/<kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">End</kbd></kbd> go to begin/end of file</p></li>
+<li><p>Some useful Emacs bindings are inherited from Tcl/Tk:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">a</kbd></kbd> beginning of line</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">e</kbd></kbd> end of line</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">k</kbd></kbd> kill line (but doesn’t put it in clipboard)</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">l</kbd></kbd> center window around the insertion point</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">b</kbd></kbd> go backward one character without deleting (usually you can
+also use the cursor key for this)</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">f</kbd></kbd> go forward one character without deleting (usually you can
+also use the cursor key for this)</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">p</kbd></kbd> go up one line (usually you can also use the cursor key for
+this)</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">d</kbd></kbd> delete next character</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Standard keybindings (like <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">c</kbd></kbd> to copy and <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">v</kbd></kbd> to paste)
+may work.  Keybindings are selected in the Configure IDLE dialog.</p>
+</section>
+<section id="automatic-indentation">
+<h3>Automatic indentation<a class="headerlink" href="#automatic-indentation" title="Permalink to this heading">¶</a></h3>
+<p>After a block-opening statement, the next line is indented by 4 spaces (in the
+Python Shell window by one tab).  After certain keywords (break, return etc.)
+the next line is dedented.  In leading indentation, <kbd class="kbd docutils literal notranslate">Backspace</kbd> deletes up
+to 4 spaces if they are there. <kbd class="kbd docutils literal notranslate">Tab</kbd> inserts spaces (in the Python
+Shell window one tab), number depends on Indent width. Currently, tabs
+are restricted to four spaces due to Tcl/Tk limitations.</p>
+<p>See also the indent/dedent region commands on the
+<a class="reference internal" href="#format-menu"><span class="std std-ref">Format menu</span></a>.</p>
+</section>
+<section id="search-and-replace">
+<h3>Search and Replace<a class="headerlink" href="#search-and-replace" title="Permalink to this heading">¶</a></h3>
+<p>Any selection becomes a search target.  However, only selections within
+a line work because searches are only performed within lines with the
+terminal newline removed.  If <code class="docutils literal notranslate"><span class="pre">[x]</span> <span class="pre">Regular</span> <span class="pre">expression</span></code> is checked, the
+target is interpreted according to the Python re module.</p>
+</section>
+<section id="completions">
+<span id="id3"></span><h3>Completions<a class="headerlink" href="#completions" title="Permalink to this heading">¶</a></h3>
+<p>Completions are supplied, when requested and available, for module
+names, attributes of classes or functions, or filenames.  Each request
+method displays a completion box with existing names.  (See tab
+completions below for an exception.) For any box, change the name
+being completed and the item highlighted in the box by
+typing and deleting characters; by hitting <kbd class="kbd docutils literal notranslate">Up</kbd>, <kbd class="kbd docutils literal notranslate">Down</kbd>,
+<kbd class="kbd docutils literal notranslate">PageUp</kbd>, <kbd class="kbd docutils literal notranslate">PageDown</kbd>, <kbd class="kbd docutils literal notranslate">Home</kbd>, and <kbd class="kbd docutils literal notranslate">End</kbd> keys;
+and by a single click within the box.  Close the box with <kbd class="kbd docutils literal notranslate">Escape</kbd>,
+<kbd class="kbd docutils literal notranslate">Enter</kbd>, and double <kbd class="kbd docutils literal notranslate">Tab</kbd> keys or clicks outside the box.
+A double click within the box selects and closes.</p>
+<p>One way to open a box is to type a key character and wait for a
+predefined interval.  This defaults to 2 seconds; customize it
+in the settings dialog.  (To prevent auto popups, set the delay to a
+large number of milliseconds, such as 100000000.) For imported module
+names or class or function attributes, type ‘.’.
+For filenames in the root directory, type <a class="reference internal" href="os.html#os.sep" title="os.sep"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.sep</span></code></a> or
+<a class="reference internal" href="os.html#os.altsep" title="os.altsep"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.altsep</span></code></a> immediately after an opening quote.  (On Windows,
+one can specify a drive first.)  Move into subdirectories by typing a
+directory name and a separator.</p>
+<p>Instead of waiting, or after a box is closed, open a completion box
+immediately with Show Completions on the Edit menu.  The default hot
+key is <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">space</kbd></kbd>.  If one types a prefix for the desired name
+before opening the box, the first match or near miss is made visible.
+The result is the same as if one enters a prefix
+after the box is displayed.  Show Completions after a quote completes
+filenames in the current directory instead of a root directory.</p>
+<p>Hitting <kbd class="kbd docutils literal notranslate">Tab</kbd> after a prefix usually has the same effect as Show
+Completions.  (With no prefix, it indents.)  However, if there is only
+one match to the prefix, that match is immediately added to the editor
+text without opening a box.</p>
+<p>Invoking ‘Show Completions’, or hitting <kbd class="kbd docutils literal notranslate">Tab</kbd> after a prefix,
+outside of a string and without a preceding ‘.’ opens a box with
+keywords, builtin names, and available module-level names.</p>
+<p>When editing code in an editor (as oppose to Shell), increase the
+available module-level names by running your code
+and not restarting the Shell thereafter.  This is especially useful
+after adding imports at the top of a file.  This also increases
+possible attribute completions.</p>
+<p>Completion boxes initially exclude names beginning with ‘_’ or, for
+modules, not included in ‘__all__’.  The hidden names can be accessed
+by typing ‘_’ after ‘.’, either before or after the box is opened.</p>
+</section>
+<section id="calltips">
+<span id="id4"></span><h3>Calltips<a class="headerlink" href="#calltips" title="Permalink to this heading">¶</a></h3>
+<p>A calltip is shown automatically when one types <kbd class="kbd docutils literal notranslate">(</kbd> after the name
+of an <em>accessible</em> function.  A function name expression may include
+dots and subscripts.  A calltip remains until it is clicked, the cursor
+is moved out of the argument area, or <kbd class="kbd docutils literal notranslate">)</kbd> is typed.  Whenever the
+cursor is in the argument part of a definition, select Edit and “Show
+Call Tip” on the menu or enter its shortcut to display a calltip.</p>
+<p>The calltip consists of the function’s signature and docstring up to
+the latter’s first blank line or the fifth non-blank line.  (Some builtin
+functions lack an accessible signature.)  A ‘/’ or ‘*’ in the signature
+indicates that the preceding or following arguments are passed by
+position or name (keyword) only.  Details are subject to change.</p>
+<p>In Shell, the accessible functions depends on what modules have been
+imported into the user process, including those imported by Idle itself,
+and which definitions have been run, all since the last restart.</p>
+<p>For example, restart the Shell and enter <code class="docutils literal notranslate"><span class="pre">itertools.count(</span></code>.  A calltip
+appears because Idle imports itertools into the user process for its own
+use.  (This could change.)  Enter <code class="docutils literal notranslate"><span class="pre">turtle.write(</span></code> and nothing appears.
+Idle does not itself import turtle.  The menu entry and shortcut also do
+nothing.  Enter <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">turtle</span></code>.  Thereafter, <code class="docutils literal notranslate"><span class="pre">turtle.write(</span></code>
+will display a calltip.</p>
+<p>In an editor, import statements have no effect until one runs the file.
+One might want to run a file after writing import statements, after
+adding function definitions, or after opening an existing file.</p>
+</section>
+<section id="code-context">
+<span id="id5"></span><h3>Code Context<a class="headerlink" href="#code-context" title="Permalink to this heading">¶</a></h3>
+<p>Within an editor window containing Python code, code context can be toggled
+in order to show or hide a pane at the top of the window.  When shown, this
+pane freezes the opening lines for block code, such as those beginning with
+<code class="docutils literal notranslate"><span class="pre">class</span></code>, <code class="docutils literal notranslate"><span class="pre">def</span></code>, or <code class="docutils literal notranslate"><span class="pre">if</span></code> keywords, that would have otherwise scrolled
+out of view.  The size of the pane will be expanded and contracted as needed
+to show the all current levels of context, up to the maximum number of
+lines defined in the Configure IDLE dialog (which defaults to 15).  If there
+are no current context lines and the feature is toggled on, a single blank
+line will display.  Clicking on a line in the context pane will move that
+line to the top of the editor.</p>
+<p>The text and background colors for the context pane can be configured under
+the Highlights tab in the Configure IDLE dialog.</p>
+</section>
+<section id="shell-window">
+<h3>Shell window<a class="headerlink" href="#shell-window" title="Permalink to this heading">¶</a></h3>
+<p>In IDLE’s Shell, enter, edit, and recall complete statements. (Most
+consoles and terminals only work with a single physical line at a time).</p>
+<p>Submit a single-line statement for execution by hitting <kbd class="kbd docutils literal notranslate">Return</kbd>
+with the cursor anywhere on the line.  If a line is extended with
+Backslash (<kbd class="kbd docutils literal notranslate">\</kbd>), the cursor must be on the last physical line.
+Submit a multi-line compound statement by entering a blank line after
+the statement.</p>
+<p>When one pastes code into Shell, it is not compiled and possibly executed
+until one hits <kbd class="kbd docutils literal notranslate">Return</kbd>, as specified above.
+One may edit pasted code first.
+If one pastes more than one statement into Shell, the result will be a
+<a class="reference internal" href="exceptions.html#SyntaxError" title="SyntaxError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SyntaxError</span></code></a> when multiple statements are compiled as if they were one.</p>
+<p>Lines containing <code class="docutils literal notranslate"><span class="pre">RESTART</span></code> mean that the user execution process has been
+re-started.  This occurs when the user execution process has crashed,
+when one requests a restart on the Shell menu, or when one runs code
+in an editor window.</p>
+<p>The editing features described in previous subsections work when entering
+code interactively.  IDLE’s Shell window also responds to the following keys.</p>
+<ul>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">c</kbd></kbd> interrupts executing command</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">d</kbd></kbd> sends end-of-file; closes window if typed at a <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span></code> prompt</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Alt</kbd>-<kbd class="kbd docutils literal notranslate">/</kbd></kbd> (Expand word) is also useful to reduce typing</p>
+<p>Command history</p>
+<ul class="simple">
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Alt</kbd>-<kbd class="kbd docutils literal notranslate">p</kbd></kbd> retrieves previous command matching what you have typed. On
+macOS use <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">p</kbd></kbd>.</p></li>
+<li><p><kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Alt</kbd>-<kbd class="kbd docutils literal notranslate">n</kbd></kbd> retrieves next. On macOS use <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">C</kbd>-<kbd class="kbd docutils literal notranslate">n</kbd></kbd>.</p></li>
+<li><p><kbd class="kbd docutils literal notranslate">Return</kbd> while the cursor is on any previous command
+retrieves that command</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="text-colors">
+<h3>Text colors<a class="headerlink" href="#text-colors" title="Permalink to this heading">¶</a></h3>
+<p>Idle defaults to black on white text, but colors text with special meanings.
+For the shell, these are shell output, shell error, user output, and
+user error.  For Python code, at the shell prompt or in an editor, these are
+keywords, builtin class and function names, names following <code class="docutils literal notranslate"><span class="pre">class</span></code> and
+<code class="docutils literal notranslate"><span class="pre">def</span></code>, strings, and comments. For any text window, these are the cursor (when
+present), found text (when possible), and selected text.</p>
+<p>IDLE also highlights the <a class="reference internal" href="../reference/lexical_analysis.html#soft-keywords"><span class="std std-ref">soft keywords</span></a> <a class="reference internal" href="../reference/compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">match</span></code></a>,
+<a class="reference internal" href="../reference/compound_stmts.html#match"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">case</span></code></a>, and <a class="reference internal" href="../reference/compound_stmts.html#wildcard-patterns"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">_</span></code></a> in
+pattern-matching statements. However, this highlighting is not perfect and
+will be incorrect in some rare cases, including some <code class="docutils literal notranslate"><span class="pre">_</span></code>-s in <code class="docutils literal notranslate"><span class="pre">case</span></code>
+patterns.</p>
+<p>Text coloring is done in the background, so uncolorized text is occasionally
+visible.  To change the color scheme, use the Configure IDLE dialog
+Highlighting tab.  The marking of debugger breakpoint lines in the editor and
+text in popups and dialogs is not user-configurable.</p>
+</section>
+</section>
+<section id="startup-and-code-execution">
+<h2>Startup and Code Execution<a class="headerlink" href="#startup-and-code-execution" title="Permalink to this heading">¶</a></h2>
+<p>Upon startup with the <code class="docutils literal notranslate"><span class="pre">-s</span></code> option, IDLE will execute the file referenced by
+the environment variables <span class="target" id="index-5"></span><code class="xref std std-envvar docutils literal notranslate"><span class="pre">IDLESTARTUP</span></code> or <span class="target" id="index-6"></span><a class="reference internal" href="../using/cmdline.html#envvar-PYTHONSTARTUP"><code class="xref std std-envvar docutils literal notranslate"><span class="pre">PYTHONSTARTUP</span></code></a>.
+IDLE first checks for <code class="docutils literal notranslate"><span class="pre">IDLESTARTUP</span></code>; if <code class="docutils literal notranslate"><span class="pre">IDLESTARTUP</span></code> is present the file
+referenced is run.  If <code class="docutils literal notranslate"><span class="pre">IDLESTARTUP</span></code> is not present, IDLE checks for
+<code class="docutils literal notranslate"><span class="pre">PYTHONSTARTUP</span></code>.  Files referenced by these environment variables are
+convenient places to store functions that are used frequently from the IDLE
+shell, or for executing import statements to import common modules.</p>
+<p>In addition, <code class="docutils literal notranslate"><span class="pre">Tk</span></code> also loads a startup file if it is present.  Note that the
+Tk file is loaded unconditionally.  This additional file is <code class="docutils literal notranslate"><span class="pre">.Idle.py</span></code> and is
+looked for in the user’s home directory.  Statements in this file will be
+executed in the Tk namespace, so this file is not useful for importing
+functions to be used from IDLE’s Python shell.</p>
+<section id="command-line-usage">
+<h3>Command line usage<a class="headerlink" href="#command-line-usage" title="Permalink to this heading">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">idle.py [-c command] [-d] [-e] [-h] [-i] [-r file] [-s] [-t title] [-] [arg] ...
+</span><span data-line="2">
+</span><span data-line="3">-c command  run command in the shell window
+</span><span data-line="4">-d          enable debugger and open shell window
+</span><span data-line="5">-e          open editor window
+</span><span data-line="6">-h          print help message with legal combinations and exit
+</span><span data-line="7">-i          open shell window
+</span><span data-line="8">-r file     run file in shell window
+</span><span data-line="9">-s          run $IDLESTARTUP or $PYTHONSTARTUP first, in shell window
+</span><span data-line="10">-t title    set title of shell window
+</span><span data-line="11">-           run stdin in shell (- must be last option before args)
+</span></pre></div>
+</div>
+<p>If there are arguments:</p>
+<ul class="simple">
+<li><p>If <code class="docutils literal notranslate"><span class="pre">-</span></code>, <code class="docutils literal notranslate"><span class="pre">-c</span></code>, or <code class="docutils literal notranslate"><span class="pre">r</span></code> is used, all arguments are placed in
+<code class="docutils literal notranslate"><span class="pre">sys.argv[1:...]</span></code> and <code class="docutils literal notranslate"><span class="pre">sys.argv[0]</span></code> is set to <code class="docutils literal notranslate"><span class="pre">''</span></code>, <code class="docutils literal notranslate"><span class="pre">'-c'</span></code>,
+or <code class="docutils literal notranslate"><span class="pre">'-r'</span></code>.  No editor window is opened, even if that is the default
+set in the Options dialog.</p></li>
+<li><p>Otherwise, arguments are files opened for editing and
+<code class="docutils literal notranslate"><span class="pre">sys.argv</span></code> reflects the arguments passed to IDLE itself.</p></li>
+</ul>
+</section>
+<section id="startup-failure">
+<h3>Startup failure<a class="headerlink" href="#startup-failure" title="Permalink to this heading">¶</a></h3>
+<p>IDLE uses a socket to communicate between the IDLE GUI process and the user
+code execution process.  A connection must be established whenever the Shell
+starts or restarts.  (The latter is indicated by a divider line that says
+‘RESTART’). If the user process fails to connect to the GUI process, it
+usually displays a <code class="docutils literal notranslate"><span class="pre">Tk</span></code> error box with a ‘cannot connect’ message
+that directs the user here.  It then exits.</p>
+<p>One specific connection failure on Unix systems results from
+misconfigured masquerading rules somewhere in a system’s network setup.
+When IDLE is started from a terminal, one will see a message starting
+with <code class="docutils literal notranslate"><span class="pre">**</span> <span class="pre">Invalid</span> <span class="pre">host:</span></code>.
+The valid value is <code class="docutils literal notranslate"><span class="pre">127.0.0.1</span> <span class="pre">(idlelib.rpc.LOCALHOST)</span></code>.
+One can diagnose with <code class="docutils literal notranslate"><span class="pre">tcpconnect</span> <span class="pre">-irv</span> <span class="pre">127.0.0.1</span> <span class="pre">6543</span></code> in one
+terminal window and <code class="docutils literal notranslate"><span class="pre">tcplisten</span> <span class="pre">&lt;same</span> <span class="pre">args&gt;</span></code> in another.</p>
+<p>A common cause of failure is a user-written file with the same name as a
+standard library module, such as <em>random.py</em> and <em>tkinter.py</em>. When such a
+file is located in the same directory as a file that is about to be run,
+IDLE cannot import the stdlib file.  The current fix is to rename the
+user file.</p>
+<p>Though less common than in the past, an antivirus or firewall program may
+stop the connection.  If the program cannot be taught to allow the
+connection, then it must be turned off for IDLE to work.  It is safe to
+allow this internal connection because no data is visible on external
+ports.  A similar problem is a network mis-configuration that blocks
+connections.</p>
+<p>Python installation issues occasionally stop IDLE: multiple versions can
+clash, or a single installation might need admin access.  If one undo the
+clash, or cannot or does not want to run as admin, it might be easiest to
+completely remove Python and start over.</p>
+<p>A zombie pythonw.exe process could be a problem.  On Windows, use Task
+Manager to check for one and stop it if there is.  Sometimes a restart
+initiated by a program crash or Keyboard Interrupt (control-C) may fail
+to connect.  Dismissing the error box or using Restart Shell on the Shell
+menu may fix a temporary problem.</p>
+<p>When IDLE first starts, it attempts to read user configuration files in
+<code class="docutils literal notranslate"><span class="pre">~/.idlerc/</span></code> (~ is one’s home directory).  If there is a problem, an error
+message should be displayed.  Leaving aside random disk glitches, this can
+be prevented by never editing the files by hand.  Instead, use the
+configuration dialog, under Options.  Once there is an error in a user
+configuration file, the best solution may be to delete it and start over
+with the settings dialog.</p>
+<p>If IDLE quits with no message, and it was not started from a console, try
+starting it from a console or terminal (<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">idlelib</span></code>) and see if
+this results in an error message.</p>
+<p>On Unix-based systems with tcl/tk older than <code class="docutils literal notranslate"><span class="pre">8.6.11</span></code> (see
+<code class="docutils literal notranslate"><span class="pre">About</span> <span class="pre">IDLE</span></code>) certain characters of certain fonts can cause
+a tk failure with a message to the terminal.  This can happen either
+if one starts IDLE to edit a file with such a character or later
+when entering such a character.  If one cannot upgrade tcl/tk,
+then re-configure IDLE to use a font that works better.</p>
+</section>
+<section id="running-user-code">
+<h3>Running user code<a class="headerlink" href="#running-user-code" title="Permalink to this heading">¶</a></h3>
+<p>With rare exceptions, the result of executing Python code with IDLE is
+intended to be the same as executing the same code by the default method,
+directly with Python in a text-mode system console or terminal window.
+However, the different interface and operation occasionally affect
+visible results.  For instance, <code class="docutils literal notranslate"><span class="pre">sys.modules</span></code> starts with more entries,
+and <code class="docutils literal notranslate"><span class="pre">threading.active_count()</span></code> returns 2 instead of 1.</p>
+<p>By default, IDLE runs user code in a separate OS process rather than in
+the user interface process that runs the shell and editor.  In the execution
+process, it replaces <code class="docutils literal notranslate"><span class="pre">sys.stdin</span></code>, <code class="docutils literal notranslate"><span class="pre">sys.stdout</span></code>, and <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code>
+with objects that get input from and send output to the Shell window.
+The original values stored in <code class="docutils literal notranslate"><span class="pre">sys.__stdin__</span></code>, <code class="docutils literal notranslate"><span class="pre">sys.__stdout__</span></code>, and
+<code class="docutils literal notranslate"><span class="pre">sys.__stderr__</span></code> are not touched, but may be <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+<p>Sending print output from one process to a text widget in another is
+slower than printing to a system terminal in the same process.
+This has the most effect when printing multiple arguments, as the string
+for each argument, each separator, the newline are sent separately.
+For development, this is usually not a problem, but if one wants to
+print faster in IDLE, format and join together everything one wants
+displayed together and then print a single string.  Both format strings
+and <a class="reference internal" href="stdtypes.html#str.join" title="str.join"><code class="xref py py-meth docutils literal notranslate"><span class="pre">str.join()</span></code></a> can help combine fields and lines.</p>
+<p>IDLE’s standard stream replacements are not inherited by subprocesses
+created in the execution process, whether directly by user code or by
+modules such as multiprocessing.  If such subprocess use <code class="docutils literal notranslate"><span class="pre">input</span></code> from
+sys.stdin or <code class="docutils literal notranslate"><span class="pre">print</span></code> or <code class="docutils literal notranslate"><span class="pre">write</span></code> to sys.stdout or sys.stderr,
+IDLE should be started in a command line window.  (On Windows,
+use <code class="docutils literal notranslate"><span class="pre">python</span></code> or <code class="docutils literal notranslate"><span class="pre">py</span></code> rather than <code class="docutils literal notranslate"><span class="pre">pythonw</span></code> or <code class="docutils literal notranslate"><span class="pre">pyw</span></code>.)
+The secondary subprocess
+will then be attached to that window for input and output.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">sys</span></code> is reset by user code, such as with <code class="docutils literal notranslate"><span class="pre">importlib.reload(sys)</span></code>,
+IDLE’s changes are lost and input from the keyboard and output to the screen
+will not work correctly.</p>
+<p>When Shell has the focus, it controls the keyboard and screen.  This is
+normally transparent, but functions that directly access the keyboard
+and screen will not work.  These include system-specific functions that
+determine whether a key has been pressed and if so, which.</p>
+<p>The IDLE code running in the execution process adds frames to the call stack
+that would not be there otherwise.  IDLE wraps <code class="docutils literal notranslate"><span class="pre">sys.getrecursionlimit</span></code> and
+<code class="docutils literal notranslate"><span class="pre">sys.setrecursionlimit</span></code> to reduce the effect of the additional stack
+frames.</p>
+<p>When user code raises SystemExit either directly or by calling sys.exit,
+IDLE returns to a Shell prompt instead of exiting.</p>
+</section>
+<section id="user-output-in-shell">
+<h3>User output in Shell<a class="headerlink" href="#user-output-in-shell" title="Permalink to this heading">¶</a></h3>
+<p>When a program outputs text, the result is determined by the
+corresponding output device.  When IDLE executes user code, <code class="docutils literal notranslate"><span class="pre">sys.stdout</span></code>
+and <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code> are connected to the display area of IDLE’s Shell.  Some of
+its features are inherited from the underlying Tk Text widget.  Others
+are programmed additions.  Where it matters, Shell is designed for development
+rather than production runs.</p>
+<p>For instance, Shell never throws away output.  A program that sends unlimited
+output to Shell will eventually fill memory, resulting in a memory error.
+In contrast, some system text windows only keep the last n lines of output.
+A Windows console, for instance, keeps a user-settable 1 to 9999 lines,
+with 300 the default.</p>
+<p>A Tk Text widget, and hence IDLE’s Shell, displays characters (codepoints) in
+the BMP (Basic Multilingual Plane) subset of Unicode.  Which characters are
+displayed with a proper glyph and which with a replacement box depends on the
+operating system and installed fonts.  Tab characters cause the following text
+to begin after the next tab stop. (They occur every 8 ‘characters’).  Newline
+characters cause following text to appear on a new line.  Other control
+characters are ignored or displayed as a space, box, or something else,
+depending on the operating system and font.  (Moving the text cursor through
+such output with arrow keys may exhibit some surprising spacing behavior.)</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span> <span class="o">=</span> <span class="s1">&#39;a</span><span class="se">\t</span><span class="s1">b</span><span class="se">\a</span><span class="s1">&lt;</span><span class="se">\x02</span><span class="s1">&gt;&lt;</span><span class="se">\r</span><span class="s1">&gt;</span><span class="se">\b</span><span class="s1">c</span><span class="se">\n</span><span class="s1">d&#39;</span>  <span class="c1"># Enter 22 chars.</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="nb">len</span><span class="p">(</span><span class="n">s</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">14</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">s</span>  <span class="c1"># Display repr(s)</span>
+</span><span data-line="5"><span class="go">&#39;a\tb\x07&lt;\x02&gt;&lt;\r&gt;\x08c\nd&#39;</span>
+</span><span data-line="6"><span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">s</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>  <span class="c1"># Display s as is.</span>
+</span><span data-line="7"><span class="go"># Result varies by OS and font.  Try it.</span>
+</span></pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">repr</span></code> function is used for interactive echo of expression
+values.  It returns an altered version of the input string in which
+control codes, some BMP codepoints, and all non-BMP codepoints are
+replaced with escape codes. As demonstrated above, it allows one to
+identify the characters in a string, regardless of how they are displayed.</p>
+<p>Normal and error output are generally kept separate (on separate lines)
+from code input and each other.  They each get different highlight colors.</p>
+<p>For SyntaxError tracebacks, the normal ‘^’ marking where the error was
+detected is replaced by coloring the text with an error highlight.
+When code run from a file causes other exceptions, one may right click
+on a traceback line to jump to the corresponding line in an IDLE editor.
+The file will be opened if necessary.</p>
+<p>Shell has a special facility for squeezing output lines down to a
+‘Squeezed text’ label.  This is done automatically
+for output over N lines (N = 50 by default).
+N can be changed in the PyShell section of the General
+page of the Settings dialog.  Output with fewer lines can be squeezed by
+right clicking on the output.  This can be useful lines long enough to slow
+down scrolling.</p>
+<p>Squeezed output is expanded in place by double-clicking the label.
+It can also be sent to the clipboard or a separate view window by
+right-clicking the label.</p>
+</section>
+<section id="developing-tkinter-applications">
+<h3>Developing tkinter applications<a class="headerlink" href="#developing-tkinter-applications" title="Permalink to this heading">¶</a></h3>
+<p>IDLE is intentionally different from standard Python in order to
+facilitate development of tkinter programs.  Enter <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">tkinter</span> <span class="pre">as</span> <span class="pre">tk;</span>
+<span class="pre">root</span> <span class="pre">=</span> <span class="pre">tk.Tk()</span></code> in standard Python and nothing appears.  Enter the same
+in IDLE and a tk window appears.  In standard Python, one must also enter
+<code class="docutils literal notranslate"><span class="pre">root.update()</span></code> to see the window.  IDLE does the equivalent in the
+background, about 20 times a second, which is about every 50 milliseconds.
+Next enter <code class="docutils literal notranslate"><span class="pre">b</span> <span class="pre">=</span> <span class="pre">tk.Button(root,</span> <span class="pre">text='button');</span> <span class="pre">b.pack()</span></code>.  Again,
+nothing visibly changes in standard Python until one enters <code class="docutils literal notranslate"><span class="pre">root.update()</span></code>.</p>
+<p>Most tkinter programs run <code class="docutils literal notranslate"><span class="pre">root.mainloop()</span></code>, which usually does not
+return until the tk app is destroyed.  If the program is run with
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-i</span></code> or from an IDLE editor, a <code class="docutils literal notranslate"><span class="pre">&gt;&gt;&gt;</span></code> shell prompt does not
+appear until <code class="docutils literal notranslate"><span class="pre">mainloop()</span></code> returns, at which time there is nothing left
+to interact with.</p>
+<p>When running a tkinter program from an IDLE editor, one can comment out
+the mainloop call.  One then gets a shell prompt immediately and can
+interact with the live application.  One just has to remember to
+re-enable the mainloop call when running in standard Python.</p>
+</section>
+<section id="running-without-a-subprocess">
+<h3>Running without a subprocess<a class="headerlink" href="#running-without-a-subprocess" title="Permalink to this heading">¶</a></h3>
+<p>By default, IDLE executes user code in a separate subprocess via a socket,
+which uses the internal loopback interface.  This connection is not
+externally visible and no data is sent to or received from the internet.
+If firewall software complains anyway, you can ignore it.</p>
+<p>If the attempt to make the socket connection fails, Idle will notify you.
+Such failures are sometimes transient, but if persistent, the problem
+may be either a firewall blocking the connection or misconfiguration of
+a particular system.  Until the problem is fixed, one can run Idle with
+the -n command line switch.</p>
+<p>If IDLE is started with the -n command line switch it will run in a
+single process and will not create the subprocess which runs the RPC
+Python execution server.  This can be useful if Python cannot create
+the subprocess or the RPC socket interface on your platform.  However,
+in this mode user code is not isolated from IDLE itself.  Also, the
+environment is not restarted when Run/Run Module (F5) is selected.  If
+your code has been modified, you must reload() the affected modules and
+re-import any specific items (e.g. from foo import baz) if the changes
+are to take effect.  For these reasons, it is preferable to run IDLE
+with the default subprocess if at all possible.</p>
+<div class="deprecated">
+<p><span class="versionmodified deprecated">Deprecated since version 3.4.</span></p>
+</div>
+</section>
+</section>
+<section id="help-and-preferences">
+<h2>Help and Preferences<a class="headerlink" href="#help-and-preferences" title="Permalink to this heading">¶</a></h2>
+<section id="help-sources">
+<span id="id6"></span><h3>Help sources<a class="headerlink" href="#help-sources" title="Permalink to this heading">¶</a></h3>
+<p>Help menu entry “IDLE Help” displays a formatted html version of the
+IDLE chapter of the Library Reference.  The result, in a read-only
+tkinter text window, is close to what one sees in a web browser.
+Navigate through the text with a mousewheel,
+the scrollbar, or up and down arrow keys held down.
+Or click the TOC (Table of Contents) button and select a section
+header in the opened box.</p>
+<p>Help menu entry “Python Docs” opens the extensive sources of help,
+including tutorials, available at <code class="docutils literal notranslate"><span class="pre">docs.python.org/x.y</span></code>, where ‘x.y’
+is the currently running Python version.  If your system
+has an off-line copy of the docs (this may be an installation option),
+that will be opened instead.</p>
+<p>Selected URLs can be added or removed from the help menu at any time using the
+General tab of the Configure IDLE dialog.</p>
+</section>
+<section id="setting-preferences">
+<span id="preferences"></span><h3>Setting preferences<a class="headerlink" href="#setting-preferences" title="Permalink to this heading">¶</a></h3>
+<p>The font preferences, highlighting, keys, and general preferences can be
+changed via Configure IDLE on the Option menu.
+Non-default user settings are saved in a <code class="docutils literal notranslate"><span class="pre">.idlerc</span></code> directory in the user’s
+home directory.  Problems caused by bad user configuration files are solved
+by editing or deleting one or more of the files in <code class="docutils literal notranslate"><span class="pre">.idlerc</span></code>.</p>
+<p>On the Font tab, see the text sample for the effect of font face and size
+on multiple characters in multiple languages.  Edit the sample to add
+other characters of personal interest.  Use the sample to select
+monospaced fonts.  If particular characters have problems in Shell or an
+editor, add them to the top of the sample and try changing first size
+and then font.</p>
+<p>On the Highlights and Keys tab, select a built-in or custom color theme
+and key set.  To use a newer built-in color theme or key set with older
+IDLEs, save it as a new custom theme or key set and it well be accessible
+to older IDLEs.</p>
+</section>
+<section id="idle-on-macos">
+<h3>IDLE on macOS<a class="headerlink" href="#idle-on-macos" title="Permalink to this heading">¶</a></h3>
+<p>Under System Preferences: Dock, one can set “Prefer tabs when opening
+documents” to “Always”.  This setting is not compatible with the tk/tkinter
+GUI framework used by IDLE, and it breaks a few IDLE features.</p>
+</section>
+<section id="extensions">
+<h3>Extensions<a class="headerlink" href="#extensions" title="Permalink to this heading">¶</a></h3>
+<p>IDLE contains an extension facility.  Preferences for extensions can be
+changed with the Extensions tab of the preferences dialog. See the
+beginning of config-extensions.def in the idlelib directory for further
+information.  The only current default extension is zzdummy, an example
+also used for testing.</p>
+</section>
+</section>
+<section id="module-idlelib">
+<span id="idlelib"></span><h2>idlelib<a class="headerlink" href="#module-idlelib" title="Permalink to this heading">¶</a></h2>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/idlelib">Lib/idlelib</a></p>
+<hr class="docutils" />
+<p>The Lib/idlelib package implements the IDLE application.  See the rest
+of this page for how to use IDLE.</p>
+<p>The files in idlelib are described in idlelib/README.txt.  Access it
+either in idlelib or click Help =&gt; About IDLE on the IDLE menu.  This
+file also maps IDLE menu items to the code that implements the item.
+Except for files listed under ‘Startup’, the idlelib code is ‘private’ in
+sense that feature changes can be backported (see <span class="target" id="index-7"></span><a class="pep reference external" href="https://peps.python.org/pep-0434/"><strong>PEP 434</strong></a>).</p>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="tkinter.ttk.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="development.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">Development Tools</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>

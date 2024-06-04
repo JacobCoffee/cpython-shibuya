@@ -1,0 +1,1548 @@
+<!DOCTYPE html>
+<html lang="en" data-accent-color="blue" data-content_root="">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>pdb — The Python Debugger - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="The Python Profilers" href="profile.html" /><link rel="prev" title="faulthandler — Dump the Python traceback" href="faulthandler.html" /><script>
+    function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
+    setColorMode(localStorage._theme||"auto");
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --sy-f-text: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+  --sy-f-heading: "Inter", var(--sy-f-sys), var(--sy-f-cjk), sans-serif;
+}
+</style>
+    <meta property="og:type" content="website"/><meta property="og:title" content="pdb — The Python Debugger"/>
+<meta name="twitter:card" content="summary"/>
+  </head>
+<body><div class="sy-head">
+  <div class="sy-head-blur"></div>
+  <div class="sy-head-inner sy-container mx-auto">
+    <a class="sy-head-brand" href="/">
+      
+      
+      <strong>Python</strong>
+    </a>
+    <div class="sy-head-nav" id="HeadNav">
+      <nav class="sy-head-links"><ul><li class="link"><a href="../index.html">Home</a></li>
+      <li class="link"><button type="button">
+            <span>Community</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../contribution-guide.html">
+                <span>Contributing</span>
+                <small>Learn how to contribute to the Type Lens project</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file">
+                <span>Code of Conduct</span>
+                <small>Review the etiquette for interacting with the Litestar community</small>
+              </a></li><li><a href="https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file">
+                <span>Security</span>
+                <small>Overview of Litestar's security protocols</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>About</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://litestar.dev/about/organization">
+                <span>Litestar Organization</span>
+                <small>Details about the Litestar organization</small>
+              </a></li><li><a href="../releases.html">
+                <span>Releases</span>
+                <small>Explore the release process, versioning, and deprecation policy for Litestar</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Release notes</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="../changelog.html">
+                <span>Changelog</span>
+                <small>All changes in the current major version</small>
+              </a></li></ul>
+      </li>
+      <li class="link"><button type="button">
+            <span>Help</span>
+            <i class="i-lucide chevron-down"></i>
+          </button>
+        <ul><li><a href="https://discord.gg/litestar">
+                <span>Discord Help Forum</span>
+                <small>Dedicated Discord help forum</small>
+              </a></li><li><a href="https://github.com/litestar-org/polyfactory/discussions">
+                <span>GitHub Discussions</span>
+                <small>GitHub Discussions</small>
+              </a></li><li><a href="https://stackoverflow.com/questions/tagged/polyfactory">
+                <span>Stack Overflow</span>
+                <small>We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow</small>
+              </a></li></ul>
+      </li><li class="link">
+          <a href="https://github.com/sponsors/Litestar-Org">
+            <span>Sponsor</span></a>
+        </li></ul></nav>
+      <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
+  <input type="text" name="q" placeholder="Search" />
+  <kbd>/</kbd>
+</form><div class="nav-versions">
+    <button type="button" aria-label="Versions">
+      <span class="md:hidden">Versions</span>
+      <span class="hidden md:inline">latest</span>
+      <i class="i-lucide chevron-down"></i>
+    </button>
+    <div class="nav-versions-choices"><ul><li><a href="/main">main</a></li></ul></div>
+  </div><div class="sy-head-socials flex items-center">
+</div></div>
+    </div>
+    <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
+data-aria-auto="Switch to light color mode"
+data-aria-light="Switch to dark color mode"
+data-aria-dark="Switch to auto color mode">
+<i class="i-lucide theme-icon"></i>
+</button><button class="md:hidden flex items-center js-menu" aria-label="Menu" type="button" aria-controls="HeadNav" aria-expanded="false">
+        <div class="hamburger">
+          <span class="hamburger_1"></span>
+          <span class="hamburger_2 -translate-x-2"></span>
+          <span class="hamburger_3 -translate-x-1"></span>
+        </div>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="sy-page sy-container flex mx-auto">
+  <aside id="lside" class="sy-lside md:w-72 md:shrink-0 print:hidden">
+    <div class="sy-lside-inner md:sticky">
+      <div class="sy-scrollbar p-6">
+        <div class="globaltoc" data-expand-depth="0"><ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.10.html">What’s New In Python 3.10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.9.html">What’s New In Python 3.9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.8.html">What’s New In Python 3.8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.7.html">What’s New In Python 3.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.6.html">What’s New In Python 3.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.5.html">What’s New In Python 3.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.4.html">What’s New In Python 3.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.3.html">What’s New In Python 3.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.2.html">What’s New In Python 3.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.1.html">What’s New In Python 3.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.0.html">What’s New In Python 3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.7.html">What’s New in Python 2.7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.6.html">What’s New in Python 2.6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.5.html">What’s New in Python 2.5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.4.html">What’s New in Python 2.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.3.html">What’s New in Python 2.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.2.html">What’s New in Python 2.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.1.html">What’s New in Python 2.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/2.0.html">What’s New in Python 2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/changelog.html">Changelog</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tutorial/index.html">The Python Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appetite.html">1. Whetting Your Appetite</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interpreter.html">2. Using the Python Interpreter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/introduction.html">3. An Informal Introduction to Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/controlflow.html">4. More Control Flow Tools</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/datastructures.html">5. Data Structures</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/modules.html">6. Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/inputoutput.html">7. Input and Output</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/errors.html">8. Errors and Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/classes.html">9. Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib.html">10. Brief Tour of the Standard Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/stdlib2.html">11. Brief Tour of the Standard Library — Part II</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../using/index.html">Python Setup and Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../using/cmdline.html">1. Command line and environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../reference/introduction.html">1. Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/lexical_analysis.html">2. Lexical analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/datamodel.html">3. Data model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/executionmodel.html">4. Execution model</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/import.html">5. The import system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/expressions.html">6. Expressions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/simple_stmts.html">7. Simple statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/compound_stmts.html">8. Compound statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/toplevel_components.html">9. Top-level components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../reference/grammar.html">10. Full Grammar specification</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">The Python Standard Library</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="functions.html">Built-in Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Built-in Constants</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stdtypes.html">Built-in Types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html">Built-in Exceptions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="text.html">Text Processing Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="string.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">string</span></code> — Common string operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="re.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">re</span></code> — Regular expression operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="difflib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">difflib</span></code> — Helpers for computing deltas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="textwrap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">textwrap</span></code> — Text wrapping and filling</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unicodedata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unicodedata</span></code> — Unicode Database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stringprep.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stringprep</span></code> — Internet String Preparation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="readline.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code> — GNU readline interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rlcompleter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">rlcompleter</span></code> — Completion function for GNU readline</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="binary.html">Binary Data Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="struct.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codecs.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codecs</span></code> — Codec registry and base classes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="datatypes.html">Data Types</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="datetime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">datetime</span></code> — Basic date and time types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zoneinfo.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zoneinfo</span></code> — IANA time zone support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="calendar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">calendar</span></code> — General calendar-related functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections</span></code> — Container datatypes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="collections.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">collections.abc</span></code> — Abstract Base Classes for Containers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="heapq.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">heapq</span></code> — Heap queue algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bisect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bisect</span></code> — Array bisection algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="array.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">array</span></code> — Efficient arrays of numeric values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weakref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">weakref</span></code> — Weak references</a></li>
+<li class="toctree-l3"><a class="reference internal" href="types.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">types</span></code> — Dynamic type creation and names for built-in types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copy</span></code> — Shallow and deep copy operations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pprint.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code> — Data pretty printer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reprlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reprlib</span></code> — Alternate <code class="xref py py-func docutils literal notranslate"><span class="pre">repr()</span></code> implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="enum.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">enum</span></code> — Support for enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="graphlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">graphlib</span></code> — Functionality to operate with graph-like structures</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="numeric.html">Numeric and Mathematical Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="functional.html">Functional Programming Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="itertools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">itertools</span></code> — Functions creating iterators for efficient looping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="functools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">functools</span></code> — Higher-order functions and operations on callable objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="operator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">operator</span></code> — Standard operators as functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="filesys.html">File and Directory Access</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pathlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pathlib</span></code> — Object-oriented filesystem paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="os.path.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os.path</span></code> — Common pathname manipulations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fileinput.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fileinput</span></code> — Iterate over lines from multiple input streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code> results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="filecmp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">filecmp</span></code> — File and Directory Comparisons</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tempfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tempfile</span></code> — Generate temporary files and directories</a></li>
+<li class="toctree-l3"><a class="reference internal" href="glob.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">glob</span></code> — Unix style pathname pattern expansion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fnmatch.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fnmatch</span></code> — Unix filename pattern matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="linecache.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">linecache</span></code> — Random access to text lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code> — High-level file operations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="persistence.html">Data Persistence</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="pickle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> — Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="copyreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">copyreg</span></code> — Register <code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code> support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shelve.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code> — Python object persistence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="marshal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">marshal</span></code> — Internal Python object serialization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dbm.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sqlite3.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code> — DB-API 2.0 interface for SQLite databases</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="archiving.html">Data Compression and Archiving</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code> — Compression compatible with <strong class="program">gzip</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="gzip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gzip</span></code> — Support for <strong class="program">gzip</strong> files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bz2.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bz2</span></code> — Support for <strong class="program">bzip2</strong> compression</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lzma.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">lzma</span></code> — Compression using the LZMA algorithm</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipfile</span></code> — Work with ZIP archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tarfile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tarfile</span></code> — Read and write tar archive files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="fileformats.html">File Formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="csv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="configparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">configparser</span></code> — Configuration file parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tomllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tomllib</span></code> — Parse TOML files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="netrc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">netrc</span></code> — netrc file processing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="plistlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">plistlib</span></code> — Generate and parse Apple <code class="docutils literal notranslate"><span class="pre">.plist</span></code> files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="crypto.html">Cryptographic Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="hashlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code> — Secure hashes and message digests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hmac.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">hmac</span></code> — Keyed-Hashing for Message Authentication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="secrets.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">secrets</span></code> — Generate secure random numbers for managing secrets</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="allos.html">Generic Operating System Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="os.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code> — Miscellaneous operating system interfaces</a></li>
+<li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="getpass.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getpass</span></code> — Portable password input</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code> — Terminal handling for character-cell displays</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.html#module-curses.textpad"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.textpad</span></code> — Text input widget for curses programs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.ascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.ascii</span></code> — Utilities for ASCII characters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="curses.panel.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses.panel</span></code> — A panel stack extension for curses</a></li>
+<li class="toctree-l3"><a class="reference internal" href="platform.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">platform</span></code> —  Access to underlying platform’s identifying data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="errno.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">errno</span></code> — Standard errno system symbols</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ctypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ctypes</span></code> — A foreign function library for Python</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="concurrency.html">Concurrent Execution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="threading.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code> — Thread-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing</span></code> — Process-based parallelism</a></li>
+<li class="toctree-l3"><a class="reference internal" href="multiprocessing.shared_memory.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">multiprocessing.shared_memory</span></code> — Shared memory for direct access across processes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.html">The <code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent</span></code> package</a></li>
+<li class="toctree-l3"><a class="reference internal" href="concurrent.futures.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code> — Launching parallel tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="subprocess.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sched.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sched</span></code> — Event scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="queue.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">queue</span></code> — A synchronized queue class</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextvars.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextvars</span></code> — Context Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="_thread.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code> — Low-level threading API</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="ipc.html">Networking and Interprocess Communication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="asyncio.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code> — Asynchronous I/O</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-runner.html">Runners</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-task.html">Coroutines and Tasks</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-stream.html">Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-sync.html">Synchronization Primitives</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-subprocess.html">Subprocesses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-queue.html">Queues</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-exceptions.html">Exceptions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-eventloop.html">Event Loop</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-future.html">Futures</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-protocol.html">Transports and Protocols</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-policy.html">Policies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-platforms.html">Platform Support</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-extending.html">Extending</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-api-index.html">High-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-llapi-index.html">Low-level API Index</a></li>
+<li class="toctree-l4"><a class="reference internal" href="asyncio-dev.html">Developing with asyncio</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="socket.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socket</span></code> — Low-level networking interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ssl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ssl</span></code> — TLS/SSL wrapper for socket objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="select.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code> — Waiting for I/O completion</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">selectors</span></code> — High-level I/O multiplexing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">signal</span></code> — Set handlers for asynchronous events</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mmap.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="netdata.html">Internet Data Handling</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code> — An email and MIME handling package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="email.message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message</span></code>: Representing an email message</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.parser</span></code>: Parsing email messages</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.generator.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.generator</span></code>: Generating MIME documents</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.policy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.policy</span></code>: Policy Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.errors.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.errors</span></code>: Exception and Defect classes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.headerregistry.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.headerregistry</span></code>: Custom Header Objects</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.contentmanager.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.contentmanager</span></code>: Managing MIME Content</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email</span></code>: Examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.compat32-message.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.message.Message</span></code>: Representing an email message using the <code class="xref py py-data docutils literal notranslate"><span class="pre">compat32</span></code> API</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.mime.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.mime</span></code>: Creating email and MIME objects from scratch</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.header.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.header</span></code>: Internationalized headers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.charset.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.charset</span></code>: Representing character sets</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.encoders.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.encoders</span></code>: Encoders</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.utils</span></code>: Miscellaneous utilities</a></li>
+<li class="toctree-l4"><a class="reference internal" href="email.iterators.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">email.iterators</span></code>: Iterators</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="json.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">json</span></code> — JSON encoder and decoder</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mailbox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mailbox</span></code> — Manipulate mailboxes in various formats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mimetypes.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">mimetypes</span></code> — Map filenames to MIME types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="base64.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">base64</span></code> — Base16, Base32, Base64, Base85 Data Encodings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="binascii.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">binascii</span></code> — Convert between binary and ASCII</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quopri.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">quopri</span></code> — Encode and decode MIME quoted-printable data</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="markup.html">Structured Markup Processing Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="html.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html</span></code> — HyperText Markup Language support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.parser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.parser</span></code> — Simple HTML and XHTML parser</a></li>
+<li class="toctree-l3"><a class="reference internal" href="html.entities.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">html.entities</span></code> — Definitions of HTML general entities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.html">XML Processing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.etree.elementtree.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.etree.ElementTree</span></code> — The ElementTree XML API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom</span></code> — The Document Object Model API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.minidom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.minidom</span></code> — Minimal DOM implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.dom.pulldom.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.dom.pulldom</span></code> — Support for building partial DOM trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax</span></code> — Support for SAX2 parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.handler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.utils.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.saxutils</span></code> — SAX Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xml.sax.reader.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.xmlreader</span></code> — Interface for XML parsers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyexpat.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.parsers.expat</span></code> — Fast XML parsing using Expat</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="internet.html">Internet Protocols and Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webbrowser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">webbrowser</span></code> — Convenient web-browser controller</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsgiref.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wsgiref</span></code> — WSGI Utilities and Reference Implementation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib</span></code> — URL handling modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.request</span></code> — Extensible library for opening URLs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.request.html#module-urllib.response"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.response</span></code> — Response classes used by urllib</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.parse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.parse</span></code> — Parse URLs into components</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.error.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.error</span></code> — Exception classes raised by urllib.request</a></li>
+<li class="toctree-l3"><a class="reference internal" href="urllib.robotparser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">urllib.robotparser</span></code> —  Parser for robots.txt</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http</span></code> — HTTP modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.client</span></code> — HTTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ftplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ftplib</span></code> — FTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="poplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">poplib</span></code> — POP3 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="imaplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">imaplib</span></code> — IMAP4 protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="smtplib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code> — SMTP protocol client</a></li>
+<li class="toctree-l3"><a class="reference internal" href="uuid.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">uuid</span></code> — UUID objects according to <strong>RFC 4122</strong></a></li>
+<li class="toctree-l3"><a class="reference internal" href="socketserver.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">socketserver</span></code> — A framework for network servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.server</span></code> — HTTP servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookies.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookies</span></code> — HTTP state management</a></li>
+<li class="toctree-l3"><a class="reference internal" href="http.cookiejar.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">http.cookiejar</span></code> — Cookie handling for HTTP clients</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc</span></code> — XMLRPC server and client modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.client.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.client</span></code> — XML-RPC client access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="xmlrpc.server.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">xmlrpc.server</span></code> — Basic XML-RPC servers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="ipaddress.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ipaddress</span></code> — IPv4/IPv6 manipulation library</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="mm.html">Multimedia Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="wave.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">wave</span></code> — Read and write WAV files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="colorsys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">colorsys</span></code> — Conversions between color systems</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="i18n.html">Internationalization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="gettext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gettext</span></code> — Multilingual internationalization services</a></li>
+<li class="toctree-l3"><a class="reference internal" href="locale.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">locale</span></code> — Internationalization services</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="frameworks.html">Program Frameworks</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="turtle.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">turtle</span></code> — Turtle graphics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="cmd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code> — Support for line-oriented command interpreters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shlex.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code> — Simple lexical analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tk.html">Graphical User Interfaces with Tk</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter</span></code> — Python interface to Tcl/Tk</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.colorchooser.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.colorchooser</span></code> — Color choosing dialog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.font.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.font</span></code> — Tkinter font wrapper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dialog.html">Tkinter Dialogs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.messagebox.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.messagebox</span></code> — Tkinter message prompts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.scrolledtext.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.scrolledtext</span></code> — Scrolled Text Widget</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.dnd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.dnd</span></code> — Drag and drop support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tkinter.ttk.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tkinter.ttk</span></code> — Tk themed widgets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="idle.html">IDLE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="development.html">Development Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="typing.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">typing</span></code> — Support for type hints</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pydoc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code> — Documentation generator and online help system</a></li>
+<li class="toctree-l3"><a class="reference internal" href="devmode.html">Python Development Mode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="doctest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code> — Test interactive Python examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest</span></code> — Unit testing framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — mock object library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="unittest.mock-examples.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test</span></code> — Regression tests package for Python</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support</span></code> — Utilities for the Python test suite</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.socket_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.socket_helper</span></code> — Utilities for socket tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.script_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.script_helper</span></code> — Utilities for the Python execution tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.bytecode_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.bytecode_helper</span></code> — Support tools for testing correct bytecode generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.threading_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.threading_helper</span></code> — Utilities for threading tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.os_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.os_helper</span></code> — Utilities for os tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.import_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.import_helper</span></code> — Utilities for import tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="test.html#module-test.support.warnings_helper"><code class="xref py py-mod docutils literal notranslate"><span class="pre">test.support.warnings_helper</span></code> — Utilities for warnings tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2 current"><a class="reference internal" href="debug.html">Debugging and Profiling</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="audit_events.html">Audit events table</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bdb.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code> — Debugger framework</a></li>
+<li class="toctree-l3"><a class="reference internal" href="faulthandler.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</a></li>
+<li class="toctree-l3"><a class="reference internal" href="profile.html">The Python Profilers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="timeit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">timeit</span></code> — Measure execution time of small code snippets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="trace.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">trace</span></code> — Trace or track Python statement execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tracemalloc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tracemalloc</span></code> — Trace memory allocations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="distribution.html">Software Packaging and Distribution</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ensurepip.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ensurepip</span></code> — Bootstrapping the <code class="docutils literal notranslate"><span class="pre">pip</span></code> installer</a></li>
+<li class="toctree-l3"><a class="reference internal" href="venv.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">venv</span></code> — Creation of virtual environments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="zipapp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipapp</span></code> — Manage executable Python zip archives</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="python.html">Python Runtime Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="sys.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys</span></code> — System-specific parameters and functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys.monitoring.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sys.monitoring</span></code> — Execution event monitoring</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sysconfig.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sysconfig</span></code> — Provide access to Python’s configuration information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="builtins.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">builtins</span></code> — Built-in objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__main__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code> — Top-level code environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="warnings.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">warnings</span></code> — Warning control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataclasses.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dataclasses</span></code> — Data Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="contextlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">contextlib</span></code> — Utilities for <code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code>-statement contexts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">abc</span></code> — Abstract Base Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="atexit.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code> — Exit handlers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="traceback.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code> — Print or retrieve a stack traceback</a></li>
+<li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
+<li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="custominterp.html">Custom Python Interpreters</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="code.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code> — Interpreter base classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="codeop.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">codeop</span></code> — Compile Python code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="modules.html">Importing Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="zipimport.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zipimport</span></code> — Import modules from Zip archives</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pkgutil.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pkgutil</span></code> — Package extension utility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="modulefinder.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">modulefinder</span></code> — Find modules used by a script</a></li>
+<li class="toctree-l3"><a class="reference internal" href="runpy.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">runpy</span></code> — Locating and executing Python modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib</span></code> — The implementation of <code class="xref std std-keyword docutils literal notranslate"><span class="pre">import</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources</span></code> – Package resource reading, opening and access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.resources.abc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.resources.abc</span></code> – Abstract base classes for resources</a></li>
+<li class="toctree-l3"><a class="reference internal" href="importlib.metadata.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">importlib.metadata</span></code> – Accessing package metadata</a></li>
+<li class="toctree-l3"><a class="reference internal" href="sys_path_init.html">The initialization of the <code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code> module search path</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="language.html">Python Language Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="ast.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ast</span></code> — Abstract Syntax Trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="symtable.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="token.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">token</span></code> — Constants used with Python parse trees</a></li>
+<li class="toctree-l3"><a class="reference internal" href="keyword.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">keyword</span></code> — Testing for Python keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tokenize.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tokenize</span></code> — Tokenizer for Python source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tabnanny.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tabnanny</span></code> — Detection of ambiguous indentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pyclbr.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pyclbr</span></code> — Python module browser support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="py_compile.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">py_compile</span></code> — Compile Python source files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="compileall.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">compileall</span></code> — Byte-compile Python libraries</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dis.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dis</span></code> — Disassembler for Python bytecode</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pickletools.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickletools</span></code> — Tools for pickle developers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="windows.html">MS Windows Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="msvcrt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">msvcrt</span></code> — Useful routines from the MS VC++ runtime</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winreg.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winreg</span></code> — Windows registry access</a></li>
+<li class="toctree-l3"><a class="reference internal" href="winsound.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">winsound</span></code> — Sound-playing interface for Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="unix.html">Unix Specific Services</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="posix.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">posix</span></code> — The most common POSIX system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pwd.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pwd</span></code> — The password database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="grp.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">grp</span></code> — The group database</a></li>
+<li class="toctree-l3"><a class="reference internal" href="termios.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">termios</span></code> — POSIX style tty control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">tty</span></code> — Terminal control functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pty.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pty</span></code> — Pseudo-terminal utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="fcntl.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fcntl</span></code> — The <code class="docutils literal notranslate"><span class="pre">fcntl</span></code> and <code class="docutils literal notranslate"><span class="pre">ioctl</span></code> system calls</a></li>
+<li class="toctree-l3"><a class="reference internal" href="resource.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">resource</span></code> — Resource usage information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="syslog.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">syslog</span></code> — Unix syslog library routines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cmdline.html">Modules command-line interface (CLI)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="superseded.html">Superseded Modules</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">optparse</span></code> — Parser for command line options</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="security_warnings.html">Security Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../extending/index.html">Extending and Embedding the Python Interpreter</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../extending/extending.html">1. Extending Python with C or C++</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes_tutorial.html">2. Defining Extension Types: Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/newtypes.html">3. Defining Extension Types: Assorted Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/building.html">4. Building C and C++ Extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/windows.html">5. Building C and C++ Extensions on Windows</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../extending/embedding.html">1. Embedding Python in Another Application</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../c-api/index.html">Python/C API Reference Manual</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/intro.html">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/stable.html">C API Stability</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/veryhigh.html">The Very High Level Layer</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/refcounting.html">Reference Counting</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/exceptions.html">Exception Handling</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/utilities.html">Utilities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html">Operating System Utilities</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#system-functions">System Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sys.html#process-control">Process Control</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/import.html">Importing Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/abstract.html">Abstract Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/object.html">Object Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/call.html">Call Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/number.html">Number Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/sequence.html">Sequence Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/mapping.html">Mapping Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iter.html">Iterator Protocol</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/buffer.html">Buffer Protocol</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/concrete.html">Concrete Objects Layer</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/type.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/unicode.html">Unicode Objects and Codecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html">Tuple Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/tuple.html#struct-sequence-objects">Struct Sequence Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/list.html">List Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/dict.html">Dictionary Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/set.html">Set Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/function.html">Function Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html">Instance Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/method.html#method-objects">Method Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/cell.html">Cell Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html">Code Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/code.html#extra-information">Extra information</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/file.html">File Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/module.html">Module Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/iterator.html">Iterator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/descriptor.html">Descriptor Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/slice.html">Slice Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/memoryview.html">MemoryView objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/weakref.html">Weak Reference Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/capsule.html">Capsules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/frame.html">Frame Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gen.html">Generator Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/coro.html">Coroutine Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/contextvars.html">Context Variables Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/datetime.html">DateTime Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typehints.html">Objects for Type Hinting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init.html">Initialization, Finalization, and Threads</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/init_config.html">Python Initialization Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/memory.html">Memory Management</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/objimpl.html">Object Implementation Support</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/allocation.html">Allocating Objects on the Heap</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/structures.html">Common Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html">Type Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#number-object-structures">Number Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#mapping-object-structures">Mapping Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#sequence-object-structures">Sequence Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#buffer-object-structures">Buffer Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#async-object-structures">Async Object Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#slot-type-typedefs">Slot Type typedefs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/typeobj.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/gcsupport.html">Supporting Cyclic Garbage Collection</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq/general.html">General Python FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/programming.html">Programming FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/design.html">Design and History FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/library.html">Library and Extension FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/extending.html">Extending/Embedding FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/windows.html">Python on Windows FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/gui.html">Graphic User Interface FAQ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../copyright.html">Copyright</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../license.html">History and License</a></li>
+</ul>
+
+        </div>
+      </div></div>
+  </aside>
+  <div class="lside-overlay js-menu" role="button" aria-label="Close left sidebar" aria-controls="lside" aria-expanded="false"></div>
+  <aside id="rside" class="sy-rside pb-3 w-64 shrink-0 order-last">
+    <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
+      <i class="i-lucide close"></i>
+    </button>
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
+<li><a class="reference internal" href="#pdb.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.runeval"><code class="docutils literal notranslate"><span class="pre">runeval()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.runcall"><code class="docutils literal notranslate"><span class="pre">runcall()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.set_trace"><code class="docutils literal notranslate"><span class="pre">set_trace()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.post_mortem"><code class="docutils literal notranslate"><span class="pre">post_mortem()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.pm"><code class="docutils literal notranslate"><span class="pre">pm()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.Pdb"><code class="docutils literal notranslate"><span class="pre">Pdb</span></code></a><ul>
+<li><a class="reference internal" href="#pdb.Pdb.run"><code class="docutils literal notranslate"><span class="pre">Pdb.run()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.Pdb.runeval"><code class="docutils literal notranslate"><span class="pre">Pdb.runeval()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.Pdb.runcall"><code class="docutils literal notranslate"><span class="pre">Pdb.runcall()</span></code></a></li>
+<li><a class="reference internal" href="#pdb.Pdb.set_trace"><code class="docutils literal notranslate"><span class="pre">Pdb.set_trace()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#debugger-commands">Debugger Commands</a></li>
+</ul>
+</div><div class="sy-deprecated">
+  You are using <code>relations.html</code> in <code>html_sidebars</code>. This
+  configuration does not work with Shibuya, which is why you're seeing this message.
+  Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
+  documentation on sidebar customisation in Shibuya</a> for more details.
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../bugs.html">Report a Bug</a></li>
+      <li>
+        <a href="https://github.com/python/cpython/blob/main/Doc/library/pdb.rst"
+            rel="nofollow">Show Source
+        </a>
+      </li>
+    </ul>
+  </div></div>
+  </aside>
+  <div class="rside-overlay js-menu" role="button" aria-label="Close Table of Contents" aria-controls="rside" aria-expanded="false"></div>
+  <main class="sy-main w-full max-sm:max-w-full print:pt-6"><div class="sy-breadcrumbs" role="navigation">
+  <div class="sy-breadcrumbs-inner flex items-center">
+    <div class="md:hidden mr-3">
+      <button class="js-menu" aria-label="Menu" type="button" aria-controls="lside" aria-expanded="false">
+        <i class="i-lucide menu"></i>
+      </button>
+    </div>
+    <ol class="flex-1" itemscope itemtype="https://schema.org/BreadcrumbList"><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="../contents.html"><span itemprop="name">Python</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="1" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="index.html"><span itemprop="name">The Python Standard Library</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="2" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a itemprop="item" href="debug.html"><span itemprop="name">Debugging and Profiling</span></a>
+        <span>/</span>
+        <meta itemprop="position" content="3" />
+      </li><li itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <strong itemprop="name"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code> — The Python Debugger</strong>
+        <meta itemprop="position" content="4" />
+      </li></ol>
+    <div class="xl:hidden ml-1">
+      <button class="js-menu" aria-label="Show table of contents" type="button" aria-controls="rside"
+        aria-expanded="false">
+        <i class="i-lucide outdent"></i>
+      </button>
+    </div>
+  </div>
+</div><div class="flex flex-col break-words justify-between">
+      <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
+        <article class="yue" role="main">
+          <section id="module-pdb">
+<span id="pdb-the-python-debugger"></span><span id="debugger"></span><h1><a class="reference internal" href="#module-pdb" title="pdb: The Python debugger for interactive interpreters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code></a> — The Python Debugger<a class="headerlink" href="#module-pdb" title="Permalink to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/pdb.py">Lib/pdb.py</a></p>
+<hr class="docutils" id="index-0" />
+<p>The module <a class="reference internal" href="#module-pdb" title="pdb: The Python debugger for interactive interpreters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code></a> defines an interactive source code debugger for Python
+programs.  It supports setting (conditional) breakpoints and single stepping at
+the source line level, inspection of stack frames, source code listing, and
+evaluation of arbitrary Python code in the context of any stack frame.  It also
+supports post-mortem debugging and can be called under program control.</p>
+<p id="index-1">The debugger is extensible – it is actually defined as the class <a class="reference internal" href="#pdb.Pdb" title="pdb.Pdb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pdb</span></code></a>.
+This is currently undocumented but easily understood by reading the source.  The
+extension interface uses the modules <a class="reference internal" href="bdb.html#module-bdb" title="bdb: Debugger framework."><code class="xref py py-mod docutils literal notranslate"><span class="pre">bdb</span></code></a> and <a class="reference internal" href="cmd.html#module-cmd" title="cmd: Build line-oriented command interpreters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmd</span></code></a>.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt>Module <a class="reference internal" href="faulthandler.html#module-faulthandler" title="faulthandler: Dump the Python traceback."><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code></a></dt><dd><p>Used to dump Python tracebacks explicitly, on a fault, after a timeout,
+or on a user signal.</p>
+</dd>
+<dt>Module <a class="reference internal" href="traceback.html#module-traceback" title="traceback: Print or retrieve a stack traceback."><code class="xref py py-mod docutils literal notranslate"><span class="pre">traceback</span></code></a></dt><dd><p>Standard interface to extract, format and print stack traces of Python programs.</p>
+</dd>
+</dl>
+</div>
+<p>The typical usage to break into the debugger is to insert:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>Or:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nb">breakpoint</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>at the location you want to break into the debugger, and then run the program.
+You can then step through the code following this statement, and continue
+running without the debugger using the <a class="reference internal" href="#pdbcommand-continue"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">continue</span></code></a> command.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.7: </span>The built-in <a class="reference internal" href="functions.html#breakpoint" title="breakpoint"><code class="xref py py-func docutils literal notranslate"><span class="pre">breakpoint()</span></code></a>, when called with defaults, can be used
+instead of <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">pdb;</span> <span class="pre">pdb.set_trace()</span></code>.</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span> <span class="nf">double</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span data-line="2">   <span class="nb">breakpoint</span><span class="p">()</span>
+</span><span data-line="3">   <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span data-line="4"><span class="n">val</span> <span class="o">=</span> <span class="mi">3</span>
+</span><span data-line="5"><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2"> * 2 is </span><span class="si">{</span><span class="n">double</span><span class="p">(</span><span class="n">val</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>The debugger’s prompt is <code class="docutils literal notranslate"><span class="pre">(Pdb)</span></code>, which is the indicator that you are in debug mode:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="o">&gt;</span> <span class="o">...</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="n">double</span><span class="p">()</span>
+</span><span data-line="2"><span class="o">-&gt;</span> <span class="k">return</span> <span class="n">x</span> <span class="o">*</span> <span class="mi">2</span>
+</span><span data-line="3"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">p</span> <span class="n">x</span>
+</span><span data-line="4"><span class="mi">3</span>
+</span><span data-line="5"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="k">continue</span>
+</span><span data-line="6"><span class="mi">3</span> <span class="o">*</span> <span class="mi">2</span> <span class="ow">is</span> <span class="mi">6</span>
+</span></pre></div>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.3: </span>Tab-completion via the <a class="reference internal" href="readline.html#module-readline" title="readline: GNU readline support for Python. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">readline</span></code></a> module is available for commands and
+command arguments, e.g. the current global and local names are offered as
+arguments of the <code class="docutils literal notranslate"><span class="pre">p</span></code> command.</p>
+</div>
+<p>You can also invoke <a class="reference internal" href="#module-pdb" title="pdb: The Python debugger for interactive interpreters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code></a> from the command line to debug other scripts.  For
+example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pdb</span> <span class="n">myscript</span><span class="o">.</span><span class="n">py</span>
+</span></pre></div>
+</div>
+<p>When invoked as a module, pdb will automatically enter post-mortem debugging if
+the program being debugged exits abnormally.  After post-mortem debugging (or
+after normal exit of the program), pdb will restart the program.  Automatic
+restarting preserves pdb’s state (such as breakpoints) and in most cases is more
+useful than quitting the debugger upon program’s exit.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2: </span><code class="docutils literal notranslate"><span class="pre">-c</span></code> option is introduced to execute commands as if given
+in a <code class="file docutils literal notranslate"><span class="pre">.pdbrc</span></code> file, see <a class="reference internal" href="#debugger-commands"><span class="std std-ref">Debugger Commands</span></a>.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.7: </span><code class="docutils literal notranslate"><span class="pre">-m</span></code> option is introduced to execute modules similar to the way
+<code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span></code> does. As with a script, the debugger will pause execution just
+before the first line of the module.</p>
+</div>
+<p>Typical usage to execute a statement under control of the debugger is:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pdb</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">pdb</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="s2">&quot;f(2)&quot;</span><span class="p">)</span>
+</span><span data-line="5"><span class="go">&gt; &lt;string&gt;(1)&lt;module&gt;()</span>
+</span><span data-line="6"><span class="go">(Pdb) continue</span>
+</span><span data-line="7"><span class="go">0.5</span>
+</span><span data-line="8"><span class="gp">&gt;&gt;&gt;</span>
+</span></pre></div>
+</div>
+<p>The typical usage to inspect a crashed program is:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">pdb</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span data-line="3"><span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">x</span><span class="p">)</span>
+</span><span data-line="4"><span class="gp">...</span>
+</span><span data-line="5"><span class="gp">&gt;&gt;&gt; </span><span class="n">f</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span data-line="6"><span class="gt">Traceback (most recent call last):</span>
+</span><span data-line="7">  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">1</span>, in <span class="n">&lt;module&gt;</span>
+</span><span data-line="8">  File <span class="nb">&quot;&lt;stdin&gt;&quot;</span>, line <span class="m">2</span>, in <span class="n">f</span>
+</span><span data-line="9"><span class="gr">ZeroDivisionError</span>: <span class="n">division by zero</span>
+</span><span data-line="10"><span class="gp">&gt;&gt;&gt; </span><span class="n">pdb</span><span class="o">.</span><span class="n">pm</span><span class="p">()</span>
+</span><span data-line="11"><span class="go">&gt; &lt;stdin&gt;(2)f()</span>
+</span><span data-line="12"><span class="go">(Pdb) p x</span>
+</span><span data-line="13"><span class="go">0</span>
+</span><span data-line="14"><span class="go">(Pdb)</span>
+</span></pre></div>
+</div>
+<p>The module defines the following functions; each enters the debugger in a
+slightly different way:</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="pdb.run">
+<span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.run" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the <em>statement</em> (given as a string or a code object) under debugger
+control.  The debugger prompt appears before any code is executed; you can
+set breakpoints and type <a class="reference internal" href="#pdbcommand-continue"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">continue</span></code></a>, or you can step through the
+statement using <a class="reference internal" href="#pdbcommand-step"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">step</span></code></a> or <a class="reference internal" href="#pdbcommand-next"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">next</span></code></a> (all these commands are
+explained below).  The optional <em>globals</em> and <em>locals</em> arguments specify the
+environment in which the code is executed; by default the dictionary of the
+module <a class="reference internal" href="__main__.html#module-__main__" title="__main__: The environment where top-level code is run. Covers command-line interfaces, import-time behavior, and ``__name__ == '__main__'``."><code class="xref py py-mod docutils literal notranslate"><span class="pre">__main__</span></code></a> is used.  (See the explanation of the built-in
+<a class="reference internal" href="functions.html#exec" title="exec"><code class="xref py py-func docutils literal notranslate"><span class="pre">exec()</span></code></a> or <a class="reference internal" href="functions.html#eval" title="eval"><code class="xref py py-func docutils literal notranslate"><span class="pre">eval()</span></code></a> functions.)</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pdb.runeval">
+<span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">runeval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.runeval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate the <em>expression</em> (given as a string or a code object) under debugger
+control.  When <a class="reference internal" href="#pdb.runeval" title="pdb.runeval"><code class="xref py py-func docutils literal notranslate"><span class="pre">runeval()</span></code></a> returns, it returns the value of the
+<em>expression</em>.  Otherwise this function is similar to <a class="reference internal" href="#pdb.run" title="pdb.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pdb.runcall">
+<span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">runcall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.runcall" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <em>function</em> (a function or method object, not a string) with the
+given arguments.  When <a class="reference internal" href="#pdb.runcall" title="pdb.runcall"><code class="xref py py-func docutils literal notranslate"><span class="pre">runcall()</span></code></a> returns, it returns whatever the
+function call returned.  The debugger prompt appears as soon as the function
+is entered.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pdb.set_trace">
+<span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">set_trace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">header</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.set_trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enter the debugger at the calling stack frame.  This is useful to hard-code
+a breakpoint at a given point in a program, even if the code is not
+otherwise being debugged (e.g. when an assertion fails).  If given,
+<em>header</em> is printed to the console just before debugging begins.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>The keyword-only argument <em>header</em>.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pdb.post_mortem">
+<span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">post_mortem</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">traceback</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.post_mortem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enter post-mortem debugging of the given <em>traceback</em> object.  If no
+<em>traceback</em> is given, it uses the one of the exception that is currently
+being handled (an exception must be being handled if the default is to be
+used).</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="pdb.pm">
+<span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">pm</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdb.pm" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enter post-mortem debugging of the exception found in
+<a class="reference internal" href="sys.html#sys.last_exc" title="sys.last_exc"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.last_exc</span></code></a>.</p>
+</dd></dl>
+
+<p>The <code class="docutils literal notranslate"><span class="pre">run*</span></code> functions and <a class="reference internal" href="#pdb.set_trace" title="pdb.set_trace"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_trace()</span></code></a> are aliases for instantiating the
+<a class="reference internal" href="#pdb.Pdb" title="pdb.Pdb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pdb</span></code></a> class and calling the method of the same name.  If you want to
+access further features, you have to do this yourself:</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="pdb.Pdb">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">pdb.</span></span><span class="sig-name descname"><span class="pre">Pdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">completekey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'tab'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">skip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nosigint</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">readrc</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.Pdb" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#pdb.Pdb" title="pdb.Pdb"><code class="xref py py-class docutils literal notranslate"><span class="pre">Pdb</span></code></a> is the debugger class.</p>
+<p>The <em>completekey</em>, <em>stdin</em> and <em>stdout</em> arguments are passed to the
+underlying <a class="reference internal" href="cmd.html#cmd.Cmd" title="cmd.Cmd"><code class="xref py py-class docutils literal notranslate"><span class="pre">cmd.Cmd</span></code></a> class; see the description there.</p>
+<p>The <em>skip</em> argument, if given, must be an iterable of glob-style module name
+patterns.  The debugger will not step into frames that originate in a module
+that matches one of these patterns. <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a></p>
+<p>By default, Pdb sets a handler for the SIGINT signal (which is sent when the
+user presses <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd></kbd> on the console) when you give a <a class="reference internal" href="#pdbcommand-continue"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">continue</span></code></a> command.
+This allows you to break into the debugger again by pressing <kbd class="kbd compound docutils literal notranslate"><kbd class="kbd docutils literal notranslate">Ctrl</kbd>-<kbd class="kbd docutils literal notranslate">C</kbd></kbd>.  If you
+want Pdb not to touch the SIGINT handler, set <em>nosigint</em> to true.</p>
+<p>The <em>readrc</em> argument defaults to true and controls whether Pdb will load
+.pdbrc files from the filesystem.</p>
+<p>Example call to enable tracing with <em>skip</em>:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">pdb</span><span class="p">;</span> <span class="n">pdb</span><span class="o">.</span><span class="n">Pdb</span><span class="p">(</span><span class="n">skip</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;django.*&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">set_trace</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p class="audit-hook">Raises an <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">auditing event</span></a> <code class="docutils literal notranslate"><span class="pre">pdb.Pdb</span></code> with no arguments.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.1: </span>The <em>skip</em> argument.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2: </span>The <em>nosigint</em> argument.  Previously, a SIGINT handler was never set by
+Pdb.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>The <em>readrc</em> argument.</p>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="pdb.Pdb.run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">statement</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.Pdb.run" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pdb.Pdb.runeval">
+<span class="sig-name descname"><span class="pre">runeval</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">expression</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">globals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.Pdb.runeval" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pdb.Pdb.runcall">
+<span class="sig-name descname"><span class="pre">runcall</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">function</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#pdb.Pdb.runcall" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="pdb.Pdb.set_trace">
+<span class="sig-name descname"><span class="pre">set_trace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#pdb.Pdb.set_trace" title="Permalink to this definition">¶</a></dt>
+<dd><p>See the documentation for the functions explained above.</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="debugger-commands">
+<span id="id2"></span><h2>Debugger Commands<a class="headerlink" href="#debugger-commands" title="Permalink to this heading">¶</a></h2>
+<p>The commands recognized by the debugger are listed below.  Most commands can be
+abbreviated to one or two letters as indicated; e.g. <code class="docutils literal notranslate"><span class="pre">h(elp)</span></code> means that
+either <code class="docutils literal notranslate"><span class="pre">h</span></code> or <code class="docutils literal notranslate"><span class="pre">help</span></code> can be used to enter the help command (but not <code class="docutils literal notranslate"><span class="pre">he</span></code>
+or <code class="docutils literal notranslate"><span class="pre">hel</span></code>, nor <code class="docutils literal notranslate"><span class="pre">H</span></code> or <code class="docutils literal notranslate"><span class="pre">Help</span></code> or <code class="docutils literal notranslate"><span class="pre">HELP</span></code>).  Arguments to commands must be
+separated by whitespace (spaces or tabs).  Optional arguments are enclosed in
+square brackets (<code class="docutils literal notranslate"><span class="pre">[]</span></code>) in the command syntax; the square brackets must not be
+typed.  Alternatives in the command syntax are separated by a vertical bar
+(<code class="docutils literal notranslate"><span class="pre">|</span></code>).</p>
+<p>Entering a blank line repeats the last command entered.  Exception: if the last
+command was a <a class="reference internal" href="#pdbcommand-list"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">list</span></code></a> command, the next 11 lines are listed.</p>
+<p>Commands that the debugger doesn’t recognize are assumed to be Python statements
+and are executed in the context of the program being debugged.  Python
+statements can also be prefixed with an exclamation point (<code class="docutils literal notranslate"><span class="pre">!</span></code>).  This is a
+powerful way to inspect the program being debugged; it is even possible to
+change a variable or call a function.  When an exception occurs in such a
+statement, the exception name is printed but the debugger’s state is not
+changed.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span>Expressions/Statements whose prefix is a pdb command are now correctly
+identified and executed.</p>
+</div>
+<p>The debugger supports <a class="reference internal" href="#debugger-aliases"><span class="std std-ref">aliases</span></a>.  Aliases can have
+parameters which allows one a certain level of adaptability to the context under
+examination.</p>
+<p>Multiple commands may be entered on a single line, separated by <code class="docutils literal notranslate"><span class="pre">;;</span></code>.  (A
+single <code class="docutils literal notranslate"><span class="pre">;</span></code> is not used as it is the separator for multiple commands in a line
+that is passed to the Python parser.)  No intelligence is applied to separating
+the commands; the input is split at the first <code class="docutils literal notranslate"><span class="pre">;;</span></code> pair, even if it is in the
+middle of a quoted string. A workaround for strings with double semicolons
+is to use implicit string concatenation <code class="docutils literal notranslate"><span class="pre">';'';'</span></code> or <code class="docutils literal notranslate"><span class="pre">&quot;;&quot;&quot;;&quot;</span></code>.</p>
+<p>To set a temporary global variable, use a <em>convenience variable</em>. A <em>convenience
+variable</em> is a variable whose name starts with <code class="docutils literal notranslate"><span class="pre">$</span></code>.  For example, <code class="docutils literal notranslate"><span class="pre">$foo</span> <span class="pre">=</span> <span class="pre">1</span></code>
+sets a global variable <code class="docutils literal notranslate"><span class="pre">$foo</span></code> which you can use in the debugger session.  The
+<em>convenience variables</em> are cleared when the program resumes execution so it’s
+less likely to interfere with your program compared to using normal variables
+like <code class="docutils literal notranslate"><span class="pre">foo</span> <span class="pre">=</span> <span class="pre">1</span></code>.</p>
+<p>There are three preset <em>convenience variables</em>:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">$_frame</span></code>: the current frame you are debugging</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$_retval</span></code>: the return value if the frame is returning</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">$_exception</span></code>: the exception if the frame is raising an exception</p></li>
+</ul>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.12.</span></p>
+</div>
+<p id="index-2">If a file <code class="file docutils literal notranslate"><span class="pre">.pdbrc</span></code> exists in the user’s home directory or in the current
+directory, it is read with <code class="docutils literal notranslate"><span class="pre">'utf-8'</span></code> encoding and executed as if it had been
+typed at the debugger prompt.  This is particularly useful for aliases.  If both
+files exist, the one in the home directory is read first and aliases defined there
+can be overridden by the local file.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span><code class="file docutils literal notranslate"><span class="pre">.pdbrc</span></code> is now read with <code class="docutils literal notranslate"><span class="pre">'utf-8'</span></code> encoding. Previously, it was read
+with the system locale encoding.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span><code class="file docutils literal notranslate"><span class="pre">.pdbrc</span></code> can now contain commands that continue debugging, such as
+<a class="reference internal" href="#pdbcommand-continue"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">continue</span></code></a> or <a class="reference internal" href="#pdbcommand-next"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">next</span></code></a>.  Previously, these commands had no
+effect.</p>
+</div>
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-help">
+<span class="sig-name descname"><span class="pre">h(elp)</span></span><span class="sig-prename descclassname"> <span class="pre">[command]</span></span><a class="headerlink" href="#pdbcommand-help" title="Permalink to this definition">¶</a></dt>
+<dd><p>Without argument, print the list of available commands.  With a <em>command</em> as
+argument, print help about that command.  <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">pdb</span></code> displays the full
+documentation (the docstring of the <a class="reference internal" href="#module-pdb" title="pdb: The Python debugger for interactive interpreters."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pdb</span></code></a> module).  Since the <em>command</em>
+argument must be an identifier, <code class="docutils literal notranslate"><span class="pre">help</span> <span class="pre">exec</span></code> must be entered to get help on
+the <code class="docutils literal notranslate"><span class="pre">!</span></code> command.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-where">
+<span class="sig-name descname"><span class="pre">w(here)</span></span><a class="headerlink" href="#pdbcommand-where" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a stack trace, with the most recent frame at the bottom.  An arrow (<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>)
+indicates the current frame, which determines the context of most commands.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-down">
+<span class="sig-name descname"><span class="pre">d(own)</span></span><span class="sig-prename descclassname"> <span class="pre">[count]</span></span><a class="headerlink" href="#pdbcommand-down" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the current frame <em>count</em> (default one) levels down in the stack trace
+(to a newer frame).</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-up">
+<span class="sig-name descname"><span class="pre">u(p)</span></span><span class="sig-prename descclassname"> <span class="pre">[count]</span></span><a class="headerlink" href="#pdbcommand-up" title="Permalink to this definition">¶</a></dt>
+<dd><p>Move the current frame <em>count</em> (default one) levels up in the stack trace (to
+an older frame).</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-break">
+<span class="sig-name descname"><span class="pre">b(reak)</span></span><span class="sig-prename descclassname"> <span class="pre">[([filename:]lineno</span> <span class="pre">|</span> <span class="pre">function)</span> <span class="pre">[,</span> <span class="pre">condition]]</span></span><a class="headerlink" href="#pdbcommand-break" title="Permalink to this definition">¶</a></dt>
+<dd><p>With a <em>lineno</em> argument, set a break there in the current file.  With a
+<em>function</em> argument, set a break at the first executable statement within
+that function.  The line number may be prefixed with a filename and a colon,
+to specify a breakpoint in another file (probably one that hasn’t been loaded
+yet).  The file is searched on <a class="reference internal" href="sys.html#sys.path" title="sys.path"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.path</span></code></a>.  Note that each breakpoint
+is assigned a number to which all the other breakpoint commands refer.</p>
+<p>If a second argument is present, it is an expression which must evaluate to
+true before the breakpoint is honored.</p>
+<p>Without argument, list all breaks, including for each breakpoint, the number
+of times that breakpoint has been hit, the current ignore count, and the
+associated condition if any.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-tbreak">
+<span class="sig-name descname"><span class="pre">tbreak</span></span><span class="sig-prename descclassname"> <span class="pre">[([filename:]lineno</span> <span class="pre">|</span> <span class="pre">function)</span> <span class="pre">[,</span> <span class="pre">condition]]</span></span><a class="headerlink" href="#pdbcommand-tbreak" title="Permalink to this definition">¶</a></dt>
+<dd><p>Temporary breakpoint, which is removed automatically when it is first hit.
+The arguments are the same as for <a class="reference internal" href="#pdbcommand-break"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">break</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-clear">
+<span class="sig-name descname"><span class="pre">cl(ear)</span></span><span class="sig-prename descclassname"> <span class="pre">[filename:lineno</span> <span class="pre">|</span> <span class="pre">bpnumber</span> <span class="pre">...]</span></span><a class="headerlink" href="#pdbcommand-clear" title="Permalink to this definition">¶</a></dt>
+<dd><p>With a <em>filename:lineno</em> argument, clear all the breakpoints at this line.
+With a space separated list of breakpoint numbers, clear those breakpoints.
+Without argument, clear all breaks (but first ask confirmation).</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-disable">
+<span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-prename descclassname"> <span class="pre">bpnumber</span> <span class="pre">[bpnumber</span> <span class="pre">...]</span></span><a class="headerlink" href="#pdbcommand-disable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable the breakpoints given as a space separated list of breakpoint
+numbers.  Disabling a breakpoint means it cannot cause the program to stop
+execution, but unlike clearing a breakpoint, it remains in the list of
+breakpoints and can be (re-)enabled.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-enable">
+<span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-prename descclassname"> <span class="pre">bpnumber</span> <span class="pre">[bpnumber</span> <span class="pre">...]</span></span><a class="headerlink" href="#pdbcommand-enable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enable the breakpoints specified.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-ignore">
+<span class="sig-name descname"><span class="pre">ignore</span></span><span class="sig-prename descclassname"> <span class="pre">bpnumber</span> <span class="pre">[count]</span></span><a class="headerlink" href="#pdbcommand-ignore" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the ignore count for the given breakpoint number.  If <em>count</em> is omitted,
+the ignore count is set to 0.  A breakpoint becomes active when the ignore
+count is zero.  When non-zero, the <em>count</em> is decremented each time the
+breakpoint is reached and the breakpoint is not disabled and any associated
+condition evaluates to true.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-condition">
+<span class="sig-name descname"><span class="pre">condition</span></span><span class="sig-prename descclassname"> <span class="pre">bpnumber</span> <span class="pre">[condition]</span></span><a class="headerlink" href="#pdbcommand-condition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set a new <em>condition</em> for the breakpoint, an expression which must evaluate
+to true before the breakpoint is honored.  If <em>condition</em> is absent, any
+existing condition is removed; i.e., the breakpoint is made unconditional.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-commands">
+<span class="sig-name descname"><span class="pre">commands</span></span><span class="sig-prename descclassname"> <span class="pre">[bpnumber]</span></span><a class="headerlink" href="#pdbcommand-commands" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specify a list of commands for breakpoint number <em>bpnumber</em>.  The commands
+themselves appear on the following lines.  Type a line containing just
+<code class="docutils literal notranslate"><span class="pre">end</span></code> to terminate the commands. An example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">commands</span> <span class="mi">1</span>
+</span><span data-line="2"><span class="p">(</span><span class="n">com</span><span class="p">)</span> <span class="n">p</span> <span class="n">some_variable</span>
+</span><span data-line="3"><span class="p">(</span><span class="n">com</span><span class="p">)</span> <span class="n">end</span>
+</span><span data-line="4"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>To remove all commands from a breakpoint, type <code class="docutils literal notranslate"><span class="pre">commands</span></code> and follow it
+immediately with <code class="docutils literal notranslate"><span class="pre">end</span></code>; that is, give no commands.</p>
+<p>With no <em>bpnumber</em> argument, <code class="docutils literal notranslate"><span class="pre">commands</span></code> refers to the last breakpoint set.</p>
+<p>You can use breakpoint commands to start your program up again.  Simply use
+the <a class="reference internal" href="#pdbcommand-continue"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">continue</span></code></a> command, or <a class="reference internal" href="#pdbcommand-step"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">step</span></code></a>,
+or any other command that resumes execution.</p>
+<p>Specifying any command resuming execution
+(currently <a class="reference internal" href="#pdbcommand-continue"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">continue</span></code></a>, <a class="reference internal" href="#pdbcommand-step"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">step</span></code></a>, <a class="reference internal" href="#pdbcommand-next"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">next</span></code></a>,
+<a class="reference internal" href="#pdbcommand-return"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">return</span></code></a>, <a class="reference internal" href="#pdbcommand-jump"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">jump</span></code></a>, <a class="reference internal" href="#pdbcommand-quit"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">quit</span></code></a> and their abbreviations)
+terminates the command list (as if
+that command was immediately followed by end). This is because any time you
+resume execution (even with a simple next or step), you may encounter another
+breakpoint—which could have its own command list, leading to ambiguities about
+which list to execute.</p>
+<p>If you use the <code class="docutils literal notranslate"><span class="pre">silent</span></code> command in the command list, the usual message about
+stopping at a breakpoint is not printed.  This may be desirable for breakpoints
+that are to print a specific message and then continue.  If none of the other
+commands print anything, you see no sign that the breakpoint was reached.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-step">
+<span class="sig-name descname"><span class="pre">s(tep)</span></span><a class="headerlink" href="#pdbcommand-step" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the current line, stop at the first possible occasion (either in a
+function that is called or on the next line in the current function).</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-next">
+<span class="sig-name descname"><span class="pre">n(ext)</span></span><a class="headerlink" href="#pdbcommand-next" title="Permalink to this definition">¶</a></dt>
+<dd><p>Continue execution until the next line in the current function is reached or
+it returns.  (The difference between <a class="reference internal" href="#pdbcommand-next"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">next</span></code></a> and <a class="reference internal" href="#pdbcommand-step"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">step</span></code></a> is
+that <a class="reference internal" href="#pdbcommand-step"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">step</span></code></a> stops inside a called function, while <a class="reference internal" href="#pdbcommand-next"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">next</span></code></a>
+executes called functions at (nearly) full speed, only stopping at the next
+line in the current function.)</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-until">
+<span class="sig-name descname"><span class="pre">unt(il)</span></span><span class="sig-prename descclassname"> <span class="pre">[lineno]</span></span><a class="headerlink" href="#pdbcommand-until" title="Permalink to this definition">¶</a></dt>
+<dd><p>Without argument, continue execution until the line with a number greater
+than the current one is reached.</p>
+<p>With <em>lineno</em>, continue execution until a line with a number greater or
+equal to <em>lineno</em> is reached.  In both cases, also stop when the current frame
+returns.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span>Allow giving an explicit line number.</p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-return">
+<span class="sig-name descname"><span class="pre">r(eturn)</span></span><a class="headerlink" href="#pdbcommand-return" title="Permalink to this definition">¶</a></dt>
+<dd><p>Continue execution until the current function returns.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-continue">
+<span class="sig-name descname"><span class="pre">c(ont(inue))</span></span><a class="headerlink" href="#pdbcommand-continue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Continue execution, only stop when a breakpoint is encountered.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-jump">
+<span class="sig-name descname"><span class="pre">j(ump)</span></span><span class="sig-prename descclassname"> <span class="pre">lineno</span></span><a class="headerlink" href="#pdbcommand-jump" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the next line that will be executed.  Only available in the bottom-most
+frame.  This lets you jump back and execute code again, or jump forward to
+skip code that you don’t want to run.</p>
+<p>It should be noted that not all jumps are allowed – for instance it is not
+possible to jump into the middle of a <a class="reference internal" href="../reference/compound_stmts.html#for"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">for</span></code></a> loop or out of a
+<a class="reference internal" href="../reference/compound_stmts.html#finally"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">finally</span></code></a> clause.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-list">
+<span class="sig-name descname"><span class="pre">l(ist)</span></span><span class="sig-prename descclassname"> <span class="pre">[first[,</span> <span class="pre">last]]</span></span><a class="headerlink" href="#pdbcommand-list" title="Permalink to this definition">¶</a></dt>
+<dd><p>List source code for the current file.  Without arguments, list 11 lines
+around the current line or continue the previous listing.  With <code class="docutils literal notranslate"><span class="pre">.</span></code> as
+argument, list 11 lines around the current line.  With one argument,
+list 11 lines around at that line.  With two arguments, list the given range;
+if the second argument is less than the first, it is interpreted as a count.</p>
+<p>The current line in the current frame is indicated by <code class="docutils literal notranslate"><span class="pre">-&gt;</span></code>.  If an
+exception is being debugged, the line where the exception was originally
+raised or propagated is indicated by <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code>, if it differs from the current
+line.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2: </span>The <code class="docutils literal notranslate"><span class="pre">&gt;&gt;</span></code> marker.</p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-ll">
+<span class="sig-name descname"><span class="pre">ll</span></span><span class="sig-prename descclassname"> <span class="pre">|</span> <span class="pre">longlist</span></span><a class="headerlink" href="#pdbcommand-ll" title="Permalink to this definition">¶</a></dt>
+<dd><p>List all source code for the current function or frame.  Interesting lines
+are marked as for <a class="reference internal" href="#pdbcommand-list"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">list</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-args">
+<span class="sig-name descname"><span class="pre">a(rgs)</span></span><a class="headerlink" href="#pdbcommand-args" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the arguments of the current function and their current values.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-p">
+<span class="sig-name descname"><span class="pre">p</span></span><span class="sig-prename descclassname"> <span class="pre">expression</span></span><a class="headerlink" href="#pdbcommand-p" title="Permalink to this definition">¶</a></dt>
+<dd><p>Evaluate <em>expression</em> in the current context and print its value.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">print()</span></code> can also be used, but is not a debugger command — this executes the
+Python <a class="reference internal" href="functions.html#print" title="print"><code class="xref py py-func docutils literal notranslate"><span class="pre">print()</span></code></a> function.</p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-pp">
+<span class="sig-name descname"><span class="pre">pp</span></span><span class="sig-prename descclassname"> <span class="pre">expression</span></span><a class="headerlink" href="#pdbcommand-pp" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like the <a class="reference internal" href="#pdbcommand-p"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">p</span></code></a> command, except the value of <em>expression</em> is
+pretty-printed using the <a class="reference internal" href="pprint.html#module-pprint" title="pprint: Data pretty printer."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pprint</span></code></a> module.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-whatis">
+<span class="sig-name descname"><span class="pre">whatis</span></span><span class="sig-prename descclassname"> <span class="pre">expression</span></span><a class="headerlink" href="#pdbcommand-whatis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the type of <em>expression</em>.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-source">
+<span class="sig-name descname"><span class="pre">source</span></span><span class="sig-prename descclassname"> <span class="pre">expression</span></span><a class="headerlink" href="#pdbcommand-source" title="Permalink to this definition">¶</a></dt>
+<dd><p>Try to get source code of <em>expression</em> and display it.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-prename descclassname"> <span class="pre">[expression]</span></span><a class="headerlink" href="#pdbcommand-display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the value of <em>expression</em> if it changed, each time execution stops
+in the current frame.</p>
+<p>Without <em>expression</em>, list all display expressions for the current frame.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Display evaluates <em>expression</em> and compares to the result of the previous
+evaluation of <em>expression</em>, so when the result is mutable, display may not
+be able to pick up the changes.</p>
+</div>
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">lst</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span data-line="2"><span class="nb">breakpoint</span><span class="p">()</span>
+</span><span data-line="3"><span class="k">pass</span>
+</span><span data-line="4"><span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="5"><span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>Display won’t realize <code class="docutils literal notranslate"><span class="pre">lst</span></code> has been changed because the result of evaluation
+is modified in place by <code class="docutils literal notranslate"><span class="pre">lst.append(1)</span></code> before being compared:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+</span><span data-line="2"><span class="o">-&gt;</span> <span class="k">pass</span>
+</span><span data-line="3"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">display</span> <span class="n">lst</span>
+</span><span data-line="4"><span class="n">display</span> <span class="n">lst</span><span class="p">:</span> <span class="p">[]</span>
+</span><span data-line="5"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">n</span>
+</span><span data-line="6"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+</span><span data-line="7"><span class="o">-&gt;</span> <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="8"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">n</span>
+</span><span data-line="9"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+</span><span data-line="10"><span class="o">-&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span data-line="11"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<p>You can do some tricks with copy mechanism to make it work:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+</span><span data-line="2"><span class="o">-&gt;</span> <span class="k">pass</span>
+</span><span data-line="3"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">display</span> <span class="n">lst</span><span class="p">[:]</span>
+</span><span data-line="4"><span class="n">display</span> <span class="n">lst</span><span class="p">[:]:</span> <span class="p">[]</span>
+</span><span data-line="5"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">n</span>
+</span><span data-line="6"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+</span><span data-line="7"><span class="o">-&gt;</span> <span class="n">lst</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span data-line="8"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">n</span>
+</span><span data-line="9"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span><span class="p">()</span>
+</span><span data-line="10"><span class="o">-&gt;</span> <span class="nb">print</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span>
+</span><span data-line="11"><span class="n">display</span> <span class="n">lst</span><span class="p">[:]:</span> <span class="p">[</span><span class="mi">1</span><span class="p">]</span>  <span class="p">[</span><span class="n">old</span><span class="p">:</span> <span class="p">[]]</span>
+</span><span data-line="12"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-undisplay">
+<span class="sig-name descname"><span class="pre">undisplay</span></span><span class="sig-prename descclassname"> <span class="pre">[expression]</span></span><a class="headerlink" href="#pdbcommand-undisplay" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do not display <em>expression</em> anymore in the current frame.  Without
+<em>expression</em>, clear all display expressions for the current frame.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-interact">
+<span class="sig-name descname"><span class="pre">interact</span></span><a class="headerlink" href="#pdbcommand-interact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Start an interactive interpreter (using the <a class="reference internal" href="code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-mod docutils literal notranslate"><span class="pre">code</span></code></a> module) whose global
+namespace contains all the (global and local) names found in the current
+scope.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.2.</span></p>
+</div>
+</dd></dl>
+
+<span class="target" id="debugger-aliases"></span><dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-alias">
+<span class="sig-name descname"><span class="pre">alias</span></span><span class="sig-prename descclassname"> <span class="pre">[name</span> <span class="pre">[command]]</span></span><a class="headerlink" href="#pdbcommand-alias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an alias called <em>name</em> that executes <em>command</em>.  The <em>command</em> must
+<em>not</em> be enclosed in quotes.  Replaceable parameters can be indicated by
+<code class="docutils literal notranslate"><span class="pre">%1</span></code>, <code class="docutils literal notranslate"><span class="pre">%2</span></code>, and so on, while <code class="docutils literal notranslate"><span class="pre">%*</span></code> is replaced by all the parameters.
+If <em>command</em> is omitted, the current alias for <em>name</em> is shown. If no
+arguments are given, all aliases are listed.</p>
+<p>Aliases may be nested and can contain anything that can be legally typed at
+the pdb prompt.  Note that internal pdb commands <em>can</em> be overridden by
+aliases.  Such a command is then hidden until the alias is removed.  Aliasing
+is recursively applied to the first word of the command line; all other words
+in the line are left alone.</p>
+<p>As an example, here are two useful aliases (especially when placed in the
+<code class="file docutils literal notranslate"><span class="pre">.pdbrc</span></code> file):</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="c1"># Print instance variables (usage &quot;pi classInst&quot;)</span>
+</span><span data-line="2"><span class="n">alias</span> <span class="n">pi</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="o">%</span><span class="mf">1.</span><span class="vm">__dict__</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;%1.</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="o">%</span><span class="mf">1.</span><span class="vm">__dict__</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</span><span data-line="3"><span class="c1"># Print instance variables in self</span>
+</span><span data-line="4"><span class="n">alias</span> <span class="n">ps</span> <span class="n">pi</span> <span class="bp">self</span>
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-unalias">
+<span class="sig-name descname"><span class="pre">unalias</span></span><span class="sig-prename descclassname"> <span class="pre">name</span></span><a class="headerlink" href="#pdbcommand-unalias" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete the specified alias <em>name</em>.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-0">
+<span class="sig-name descname"><span class="pre">!</span></span><span class="sig-prename descclassname"> <span class="pre">statement</span></span><a class="headerlink" href="#pdbcommand-0" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute the (one-line) <em>statement</em> in the context of the current stack frame.
+The exclamation point can be omitted unless the first word of the statement
+resembles a debugger command, e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">(Pdb) ! n=42
+</span><span data-line="2">(Pdb)
+</span></pre></div>
+</div>
+<p>To set a global variable, you can prefix the assignment command with a
+<a class="reference internal" href="../reference/simple_stmts.html#global"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">global</span></code></a> statement on the same line, e.g.:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span><span data-line="1">(Pdb) global list_options; list_options = [&#39;-l&#39;]
+</span><span data-line="2">(Pdb)
+</span></pre></div>
+</div>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-run">
+<span class="sig-name descname"><span class="pre">run</span></span><span class="sig-prename descclassname"> <span class="pre">[args</span> <span class="pre">...]</span></span><a class="headerlink" href="#pdbcommand-run" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object std" id="pdbcommand-restart">
+<span class="sig-name descname"><span class="pre">restart</span></span><span class="sig-prename descclassname"> <span class="pre">[args</span> <span class="pre">...]</span></span><a class="headerlink" href="#pdbcommand-restart" title="Permalink to this definition">¶</a></dt>
+<dd><p>Restart the debugged Python program.  If <em>args</em> is supplied, it is split
+with <a class="reference internal" href="shlex.html#module-shlex" title="shlex: Simple lexical analysis for Unix shell-like languages."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shlex</span></code></a> and the result is used as the new <a class="reference internal" href="sys.html#sys.argv" title="sys.argv"><code class="xref py py-data docutils literal notranslate"><span class="pre">sys.argv</span></code></a>.
+History, breakpoints, actions and debugger options are preserved.
+<a class="reference internal" href="#pdbcommand-restart"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">restart</span></code></a> is an alias for <a class="reference internal" href="#pdbcommand-run"><code class="xref std std-pdbcmd docutils literal notranslate"><span class="pre">run</span></code></a>.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-quit">
+<span class="sig-name descname"><span class="pre">q(uit)</span></span><a class="headerlink" href="#pdbcommand-quit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Quit from the debugger.  The program being executed is aborted.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-debug">
+<span class="sig-name descname"><span class="pre">debug</span></span><span class="sig-prename descclassname"> <span class="pre">code</span></span><a class="headerlink" href="#pdbcommand-debug" title="Permalink to this definition">¶</a></dt>
+<dd><p>Enter a recursive debugger that steps through <em>code</em>
+(which is an arbitrary expression or statement to be
+executed in the current environment).</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-retval">
+<span class="sig-name descname"><span class="pre">retval</span></span><a class="headerlink" href="#pdbcommand-retval" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print the return value for the last return of the current function.</p>
+</dd></dl>
+
+<dl class="std pdbcommand">
+<dt class="sig sig-object std" id="pdbcommand-exceptions">
+<span class="sig-name descname"><span class="pre">exceptions</span></span><span class="sig-prename descclassname"> <span class="pre">[excnumber]</span></span><a class="headerlink" href="#pdbcommand-exceptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>List or jump between chained exceptions.</p>
+<p>When using <code class="docutils literal notranslate"><span class="pre">pdb.pm()</span></code>  or <code class="docutils literal notranslate"><span class="pre">Pdb.post_mortem(...)</span></code> with a chained exception
+instead of a traceback, it allows the user to move between the
+chained exceptions using <code class="docutils literal notranslate"><span class="pre">exceptions</span></code> command to list exceptions, and
+<code class="docutils literal notranslate"><span class="pre">exception</span> <span class="pre">&lt;number&gt;</span></code> to switch to that exception.</p>
+<p>Example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span> <span class="nf">out</span><span class="p">():</span>
+</span><span data-line="2">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="3">        <span class="n">middle</span><span class="p">()</span>
+</span><span data-line="4">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="5">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;reraise middle() error&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+</span><span data-line="6">
+</span><span data-line="7"><span class="k">def</span> <span class="nf">middle</span><span class="p">():</span>
+</span><span data-line="8">    <span class="k">try</span><span class="p">:</span>
+</span><span data-line="9">        <span class="k">return</span> <span class="n">inner</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span><span data-line="10">    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span data-line="11">        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Middle fail&quot;</span><span class="p">)</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+</span><span data-line="14">    <span class="mi">1</span> <span class="o">/</span> <span class="n">x</span>
+</span><span data-line="15">
+</span><span data-line="16"> <span class="n">out</span><span class="p">()</span>
+</span></pre></div>
+</div>
+<p>calling <code class="docutils literal notranslate"><span class="pre">pdb.pm()</span></code> will allow to move between exceptions:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span><span class="n">out</span><span class="p">()</span>
+</span><span data-line="2"><span class="o">-&gt;</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;reraise middle() error&quot;</span><span class="p">)</span> <span class="kn">from</span> <span class="nn">e</span>
+</span><span data-line="3">
+</span><span data-line="4"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">exceptions</span>
+</span><span data-line="5">  <span class="mi">0</span> <span class="ne">ZeroDivisionError</span><span class="p">(</span><span class="s1">&#39;division by zero&#39;</span><span class="p">)</span>
+</span><span data-line="6">  <span class="mi">1</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;Middle fail&#39;</span><span class="p">)</span>
+</span><span data-line="7"><span class="o">&gt;</span> <span class="mi">2</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s1">&#39;reraise middle() error&#39;</span><span class="p">)</span>
+</span><span data-line="8">
+</span><span data-line="9"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">exceptions</span> <span class="mi">0</span>
+</span><span data-line="10"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span><span class="n">inner</span><span class="p">()</span>
+</span><span data-line="11"><span class="o">-&gt;</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">x</span>
+</span><span data-line="12">
+</span><span data-line="13"><span class="p">(</span><span class="n">Pdb</span><span class="p">)</span> <span class="n">up</span>
+</span><span data-line="14"><span class="o">&gt;</span> <span class="n">example</span><span class="o">.</span><span class="n">py</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="n">middle</span><span class="p">()</span>
+</span><span data-line="15"><span class="o">-&gt;</span> <span class="k">return</span> <span class="n">inner</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</span></pre></div>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">New in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id3" role="note">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Whether a frame is considered to originate in a certain module
+is determined by the <code class="docutils literal notranslate"><span class="pre">__name__</span></code> in the frame globals.</p>
+</aside>
+</aside>
+</section>
+</section>
+
+        </article><button class="back-to-top" type="button">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+    <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+  </svg>
+  <span>Back to top</span>
+</button><div class="navigation flex print:hidden"><div class="navigation-prev">
+    <a href="faulthandler.html">
+      <i class="i-lucide chevron-left"></i>
+      <div class="page-info">
+        <span>Previous</span><div class="title"><code class="xref py py-mod docutils literal notranslate"><span class="pre">faulthandler</span></code> — Dump the Python traceback</div></div>
+    </a>
+  </div><div class="navigation-next">
+    <a href="profile.html">
+      <div class="page-info">
+        <span>Next</span>
+        <div class="title">The Python Profilers</div>
+      </div>
+      <i class="i-lucide chevron-right"></i>
+    </a>
+  </div></div></div>
+    </div>
+  </main>
+</div>
+<footer class="sy-foot">
+  <div class="sy-foot-inner sy-container mx-auto">
+    <div class="sy-foot-reserved md:flex justify-between items-center">
+      <div class="sy-foot-copyright"><p>2001-2024, Python Software Foundation</p>
+  
+  <p>
+    Made with
+    
+    <a href="https://www.sphinx-doc.org/">Sphinx</a> and
+    
+    <a href="https://shibuya.lepture.com">Shibuya theme</a>.
+  </p>
+</div>
+      <div class="sy-foot-socials"></div>
+    </div>
+  </div>
+</footer>
+      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+      <script src="../_static/doctools.js"></script>
+      <script src="../_static/sphinx_highlight.js"></script>
+      <script src="../_static/shibuya.js"></script></body>
+</html>
