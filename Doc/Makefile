@@ -333,5 +333,8 @@ autobuild-stable-html:
 	esac
 	@$(MAKE) autobuild-dev-html
 
+docs-install:
+	uv pip install -r requirements.txt
+
 docs-serve:
 	sphinx-autobuild . build -j auto --port 8000
