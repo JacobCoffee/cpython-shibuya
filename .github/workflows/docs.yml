@@ -31,7 +31,9 @@ jobs:
         run: git fetch origin gh-pages --depth=1
 
       - name: Build docs
-        run: make docs-build -C Doc
+        run: |
+          cd Doc
+          sphinx-build -b html . build/html -a -j auto --keep-going
 
       - name: Create .nojekyll and index.html for redirection
         run: |
