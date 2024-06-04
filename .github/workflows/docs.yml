@@ -35,6 +35,10 @@ jobs:
           cd Doc
           sphinx-build -b html . build/html -a -j auto --keep-going
 
+      - name: Rename generated index.html
+        run: |
+          mv Doc/build/html/index.html Doc/build/html/indexcontent.html
+
       - name: Create .nojekyll and index.html for redirection
         run: |
           touch Doc/build/html/.nojekyll
@@ -43,11 +47,11 @@ jobs:
               <head>
                   <title>Page Redirection</title>
                   <meta charset='UTF-8'>
-                  <meta http-equiv='refresh' content='0; url='>
-                  <script type='text/javascript'>window.location.href = ''</script>
+                  <meta http-equiv='refresh' content='0; url=indexcontent.html'>
+                  <script type='text/javascript'>window.location.href = 'indexcontent.html'</script>
               </head>
               <body>
-                  You are being redirected. If this does not work, click <a href=''>this link</a>
+                  You are being redirected. If this does not work, click <a href='indexcontent.html'>this link</a>
               </body>
           </html>" > Doc/build/html/index.html
 
