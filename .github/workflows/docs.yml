@@ -23,15 +23,33 @@ jobs:
         uses: yezz123/setup-uv@v4
 
       - name: Install Dependencies
-        run: uv pip install -r Doc/requirements.txt --system
+        run: |
+          cd Doc
+          uv pip install -r requirements.txt --system
 
       - name: Fetch gh-pages
         run: git fetch origin gh-pages --depth=1
 
       - name: Build docs
-        run: python build_docs.py
+        run: make docs-build -C Doc
+
+      - name: Create .nojekyll and index.html for redirection
+        run: |
+          touch Doc/build/html/.nojekyll
+          echo "<!DOCTYPE HTML>
+          <html lang='en-US'>
+              <head>
+                  <title>Page Redirection</title>
+                  <meta charset='UTF-8'>
+                  <meta http-equiv='refresh' content='0; url=latest'>
+                  <script type='text/javascript'>window.location.href = 'latest'</script>
+              </head>
+              <body>
+                  You are being redirected. If this does not work, click <a href='latest'>this link</a>
+              </body>
+          </html>" > Doc/build/html/index.html
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: docs-build
+          folder: Doc/build/html
