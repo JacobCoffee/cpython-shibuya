@@ -357,7 +357,7 @@ if any('htmlhelp' in arg for arg in sys.argv):
 
 # Short title used e.g. for <title> HTML tags.
 html_short_title = '%s Documentation' % release
-html_title = "Polyfactory"
+html_title = "CPython Docs"
 html_show_sourcelink = True
 html_copy_source = True
 
