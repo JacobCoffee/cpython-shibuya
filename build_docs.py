@@ -21,7 +21,7 @@ REDIRECT_TEMPLATE = """
 
 
 def build(output_dir: str) -> None:
-    subprocess.run(["make", "docs"], check=True)  # noqa: S603 S607
+    subprocess.run(["make", "docs-build"], check=True)  # noqa: S603 S607
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
