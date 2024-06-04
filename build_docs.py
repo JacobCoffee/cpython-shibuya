@@ -21,7 +21,7 @@ REDIRECT_TEMPLATE = """
 
 
 def build(output_dir: str) -> None:
-    subprocess.run(["make", "-C", "Doc", "docs-build"], check=True)  # noqa: S603 S607
+    subprocess.run(["make", "-C", "Doc", "html"], check=True)  # noqa: S603 S607
 
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -30,7 +30,6 @@ def build(output_dir: str) -> None:
 
     docs_src_path = Path("Doc/build/html")
     shutil.copytree(docs_src_path, output_dir / "latest", dirs_exist_ok=True)
-
 
 if __name__ == "__main__":
     build("docs-build")

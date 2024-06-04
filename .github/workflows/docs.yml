@@ -23,8 +23,7 @@ jobs:
         uses: yezz123/setup-uv@v4
 
       - name: Install Dependencies
-        run: |
-          uv pip install -r Doc/requirements.txt --system
+        run: uv pip install -r Doc/requirements.txt --system
 
       - name: Fetch gh-pages
         run: git fetch origin gh-pages --depth=1
@@ -36,4 +35,3 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: docs-build
-
