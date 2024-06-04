@@ -44,7 +44,6 @@ except ImportError:
 else:
     extensions.append('sphinxext.opengraph')
 
-
 doctest_global_setup = '''
 try:
     import _tkinter
@@ -323,13 +322,89 @@ gettext_additional_targets = [
 # -----------------------
 
 # Use our custom theme.
-html_theme = 'python_docs_theme'
+html_theme = 'shibuya'
 html_theme_path = ['tools']
 html_theme_options = {
-    'collapsiblesidebar': True,
-    'issues_url': '/bugs.html',
-    'license_url': '/license.html',
-    'root_include_title': False,  # We use the version switcher instead.
+    "accent_color": "blue",
+    "logo_target": "/",
+    "navigation_with_keys": True,
+    "nav_links": [
+        {"title": "Home", "url": "index"},
+        {
+            "title": "Community",
+            "children": [
+                {
+                    "title": "Contributing",
+                    "summary": "Learn how to contribute to the Type Lens project",
+                    "url": "contribution-guide",
+                    "icon": "contributing",
+                },
+                {
+                    "title": "Code of Conduct",
+                    "summary": "Review the etiquette for interacting with the Litestar community",
+                    "url": "https://github.com/litestar-org/.github?tab=coc-ov-file",
+                    "icon": "coc",
+                },
+                {
+                    "title": "Security",
+                    "summary": "Overview of Litestar's security protocols",
+                    "url": "https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file",
+                    "icon": "coc",
+                },
+            ],
+        },
+        {
+            "title": "About",
+            "children": [
+                {
+                    "title": "Litestar Organization",
+                    "summary": "Details about the Litestar organization",
+                    "url": "https://litestar.dev/about/organization",
+                    "icon": "org",
+                },
+                {
+                    "title": "Releases",
+                    "summary": "Explore the release process, versioning, and deprecation policy for Litestar",
+                    "url": "releases",
+                    "icon": "releases",
+                },
+            ],
+        },
+        {
+            "title": "Release notes",
+            "children": [
+                {
+                    "title": "Changelog",
+                    "url": "changelog",
+                    "summary": "All changes in the current major version",
+                },
+            ],
+        },
+        {
+            "title": "Help",
+            "children": [
+                {
+                    "title": "Discord Help Forum",
+                    "summary": "Dedicated Discord help forum",
+                    "url": "https://discord.gg/litestar",
+                    "icon": "coc",
+                },
+                {
+                    "title": "GitHub Discussions",
+                    "summary": "GitHub Discussions",
+                    "url": "https://github.com/litestar-org/polyfactory/discussions",
+                    "icon": "coc",
+                },
+                {
+                    "title": "Stack Overflow",
+                    "summary": "We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow",
+                    "url": "https://stackoverflow.com/questions/tagged/polyfactory",
+                    "icon": "coc",
+                },
+            ],
+        },
+        {"title": "Sponsor", "url": "https://github.com/sponsors/Litestar-Org", "icon": "heart"},
+    ],
 }
 
 if os.getenv("READTHEDOCS"):
@@ -346,6 +421,9 @@ if any('htmlhelp' in arg for arg in sys.argv):
 
 # Short title used e.g. for <title> HTML tags.
 html_short_title = f'{release} Documentation'
+html_title = "CPython Documentation"
+html_show_sourcelink = True
+html_copy_source = True
 
 # Deployment preview information
 # (See .readthedocs.yml and https://docs.readthedocs.io/en/stable/reference/environment-variables.html)
@@ -356,7 +434,14 @@ html_context = {
     "is_deployment_preview": is_deployment_preview,
     "repository_url": repository_url or None,
     "pr_id": os.getenv("READTHEDOCS_VERSION"),
-    "enable_analytics": os.getenv("PYTHON_DOCS_ENABLE_ANALYTICS"),
+    "source_type": "github",
+    "source_user": "python",
+    "source_repo": "cpython",
+    "current_version": "latest",
+    "versions": [
+        ("main", "/main"),
+    ],
+    "version": release,
 }
 
 # This 'Last updated on:' timestamp is inserted at the bottom of every page.
@@ -532,8 +617,8 @@ coverage_c_regexes = {
 # (using re.match) -- the keys must be the same as in coverage_c_regexes.
 coverage_ignore_c_items = {
     # 'cfunction': [...]
+    #    'cfunction': [...]
 }
-
 
 # Options for the link checker
 # ----------------------------
@@ -604,6 +689,8 @@ extlinks_detect_hardcoded_links = True
 
 # Options for c_annotations
 # -------------------------
+# Options for extensions
+# ----------------------
 
 # Relative filename of the data files
 refcount_file = 'data/refcounts.dat'
