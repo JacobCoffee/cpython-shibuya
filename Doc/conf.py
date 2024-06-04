@@ -371,10 +371,6 @@ html_context = {
     "source_type": "github",
     "source_user": "python",
     "source_repo": "cpython",
-    "current_version": "latest",
-    "versions": [
-        ("main", "/main"),
-    ],
     "version": release,
 }
 
