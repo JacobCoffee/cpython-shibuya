@@ -1,6 +1,10 @@
 CPython as of 3.13.0a0, using the Shibuya theme
 ================================================
 
+`Shibuya Theme <https://shibuya.lepture.com/>`_ is a modern theme for Sphinx.
+
+It's hot!
+
 .. image:: index-example.png
 .. image:: stdlib-example.png
 
