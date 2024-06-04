@@ -359,7 +359,7 @@ html_context = {
     "source_type": "github",
     "source_user": "python",
     "source_repo": "cpython",
-    "version": 3.13,
+    "version": "3.13",
 }
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
