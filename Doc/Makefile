@@ -258,3 +258,6 @@ autobuild-stable-html:
 		exit 1;; \
 	esac
 	@make autobuild-dev-html
+
+docs-serve:
+	sphinx-autobuild . build -j auto --port 8000

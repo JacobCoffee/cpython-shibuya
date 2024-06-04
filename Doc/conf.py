@@ -6,7 +6,10 @@
 # The contents of this file are pickled, so don't put values in the namespace
 # that aren't pickleable (module imports are okay, they're removed automatically).
 
-import sys, os, time
+import sys
+import os
+import time
+
 sys.path.append(os.path.abspath('tools/extensions'))
 sys.path.append(os.path.abspath('includes'))
 
@@ -32,7 +35,6 @@ except ImportError:
 else:
     extensions.append('sphinxext.opengraph')
 
-
 doctest_global_setup = '''
 try:
     import _tkinter
@@ -54,6 +56,7 @@ copyright = '2001-%s, Python Software Foundation' % time.strftime('%Y')
 # We look for the Include/patchlevel.h file in the current Python source tree
 # and replace the values accordingly.
 import patchlevel
+
 version, release = patchlevel.get_version_info()
 
 # There are two options for replacing |today|: either, you set today to some
@@ -260,13 +263,89 @@ gettext_additional_targets = [
 # -----------------------
 
 # Use our custom theme.
-html_theme = 'python_docs_theme'
+html_theme = 'shibuya'
 html_theme_path = ['tools']
 html_theme_options = {
-    'collapsiblesidebar': True,
-    'issues_url': '/bugs.html',
-    'license_url': '/license.html',
-    'root_include_title': False   # We use the version switcher instead.
+    "accent_color": "blue",
+    "logo_target": "/",
+    "navigation_with_keys": True,
+    "nav_links": [
+        {"title": "Home", "url": "index"},
+        {
+            "title": "Community",
+            "children": [
+                {
+                    "title": "Contributing",
+                    "summary": "Learn how to contribute to the Type Lens project",
+                    "url": "contribution-guide",
+                    "icon": "contributing",
+                },
+                {
+                    "title": "Code of Conduct",
+                    "summary": "Review the etiquette for interacting with the Litestar community",
+                    "url": "https://github.com/litestar-org/.github?tab=coc-ov-file",
+                    "icon": "coc",
+                },
+                {
+                    "title": "Security",
+                    "summary": "Overview of Litestar's security protocols",
+                    "url": "https://github.com/litestar-org/.github?tab=coc-ov-file#security-ov-file",
+                    "icon": "coc",
+                },
+            ],
+        },
+        {
+            "title": "About",
+            "children": [
+                {
+                    "title": "Litestar Organization",
+                    "summary": "Details about the Litestar organization",
+                    "url": "https://litestar.dev/about/organization",
+                    "icon": "org",
+                },
+                {
+                    "title": "Releases",
+                    "summary": "Explore the release process, versioning, and deprecation policy for Litestar",
+                    "url": "releases",
+                    "icon": "releases",
+                },
+            ],
+        },
+        {
+            "title": "Release notes",
+            "children": [
+                {
+                    "title": "Changelog",
+                    "url": "changelog",
+                    "summary": "All changes in the current major version",
+                },
+            ],
+        },
+        {
+            "title": "Help",
+            "children": [
+                {
+                    "title": "Discord Help Forum",
+                    "summary": "Dedicated Discord help forum",
+                    "url": "https://discord.gg/litestar",
+                    "icon": "coc",
+                },
+                {
+                    "title": "GitHub Discussions",
+                    "summary": "GitHub Discussions",
+                    "url": "https://github.com/litestar-org/polyfactory/discussions",
+                    "icon": "coc",
+                },
+                {
+                    "title": "Stack Overflow",
+                    "summary": "We monitor the <code><b>polyfactory</b></code> tag on Stack Overflow",
+                    "url": "https://stackoverflow.com/questions/tagged/polyfactory",
+                    "icon": "coc",
+                },
+            ],
+        },
+        {"title": "Sponsor", "url": "https://github.com/sponsors/Litestar-Org", "icon": "heart"},
+    ],
 }
 
 # Override stylesheet fingerprinting for Windows CHM htmlhelp to fix GH-91207
@@ -278,6 +357,9 @@ if any('htmlhelp' in arg for arg in sys.argv):
 
 # Short title used e.g. for <title> HTML tags.
 html_short_title = '%s Documentation' % release
+html_title = "Polyfactory"
+html_show_sourcelink = True
+html_copy_source = True
 
 # Deployment preview information
 # (See .readthedocs.yml and https://docs.readthedocs.io/en/stable/reference/environment-variables.html)
@@ -285,7 +367,15 @@ repository_url = os.getenv("READTHEDOCS_GIT_CLONE_URL")
 html_context = {
     "is_deployment_preview": os.getenv("READTHEDOCS_VERSION_TYPE") == "external",
     "repository_url": repository_url.removesuffix(".git") if repository_url else None,
-    "pr_id": os.getenv("READTHEDOCS_VERSION")
+    "pr_id": os.getenv("READTHEDOCS_VERSION"),
+    "source_type": "github",
+    "source_user": "python",
+    "source_repo": "cpython",
+    "current_version": "latest",
+    "versions": [
+        ("main", "/main"),
+    ],
+    "version": release,
 }
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
@@ -320,7 +410,6 @@ htmlhelp_basename = 'python' + release.replace('.', '')
 
 # Split the index
 html_split_index = True
-
 
 # Options for LaTeX output
 # ------------------------
@@ -417,9 +506,8 @@ coverage_c_regexes = {
 # The coverage checker will ignore all C items whose names match these regexes
 # (using re.match) -- the keys must be the same as in coverage_c_regexes.
 coverage_ignore_c_items = {
-#    'cfunction': [...]
+    #    'cfunction': [...]
 }
-
 
 # Options for the link checker
 # ----------------------------
@@ -467,7 +555,6 @@ linkcheck_ignore = [
     # SSLError CertificateError, even though it is valid
     r'https://unix.org/version2/whatsnew/lp64_wp.html',
 ]
-
 
 # Options for extensions
 # ----------------------
