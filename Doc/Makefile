@@ -259,6 +259,9 @@ autobuild-stable-html:
 	esac
 	@make autobuild-dev-html
 
+make docs-build:
+	sphinx-build -M html . build/-E -a -j auto --keep-going
+
 docs-install:
 	uv pip install -r requirements.txt
 

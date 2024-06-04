@@ -1,0 +1,39 @@
+name: Documentation Building
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch: {}
+
+jobs:
+  docs:
+    permissions:
+      contents: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install uv
+        uses: yezz123/setup-uv@v4
+
+      - name: Install Dependencies
+        run: |
+          uv pip install -r Doc/requirements.txt --system
+
+      - name: Fetch gh-pages
+        run: git fetch origin gh-pages --depth=1
+
+      - name: Build docs
+        run: python build_docs.py
+
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs-build
+
