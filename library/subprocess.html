@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>subprocess — Subprocess management - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="sched — Event scheduler" href="sched.html" /><link rel="prev" title="concurrent.futures — Launching parallel tasks" href="concurrent.futures.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>subprocess — Subprocess management - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="sched — Event scheduler" href="sched.html" /><link rel="prev" title="concurrent.futures — Launching parallel tasks" href="concurrent.futures.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -688,115 +698,30 @@ data-aria-dark="Switch to auto color mode">
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
 <li><a class="reference internal" href="#using-the-subprocess-module">Using the <code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> Module</a><ul>
-<li><a class="reference internal" href="#subprocess.run"><code class="docutils literal notranslate"><span class="pre">run()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CompletedProcess"><code class="docutils literal notranslate"><span class="pre">CompletedProcess</span></code></a><ul>
-<li><a class="reference internal" href="#subprocess.CompletedProcess.args"><code class="docutils literal notranslate"><span class="pre">CompletedProcess.args</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CompletedProcess.returncode"><code class="docutils literal notranslate"><span class="pre">CompletedProcess.returncode</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CompletedProcess.stdout"><code class="docutils literal notranslate"><span class="pre">CompletedProcess.stdout</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CompletedProcess.stderr"><code class="docutils literal notranslate"><span class="pre">CompletedProcess.stderr</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CompletedProcess.check_returncode"><code class="docutils literal notranslate"><span class="pre">CompletedProcess.check_returncode()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#subprocess.DEVNULL"><code class="docutils literal notranslate"><span class="pre">DEVNULL</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.PIPE"><code class="docutils literal notranslate"><span class="pre">PIPE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STDOUT"><code class="docutils literal notranslate"><span class="pre">STDOUT</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.SubprocessError"><code class="docutils literal notranslate"><span class="pre">SubprocessError</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.TimeoutExpired"><code class="docutils literal notranslate"><span class="pre">TimeoutExpired</span></code></a><ul>
-<li><a class="reference internal" href="#subprocess.TimeoutExpired.cmd"><code class="docutils literal notranslate"><span class="pre">TimeoutExpired.cmd</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.TimeoutExpired.timeout"><code class="docutils literal notranslate"><span class="pre">TimeoutExpired.timeout</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.TimeoutExpired.output"><code class="docutils literal notranslate"><span class="pre">TimeoutExpired.output</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.TimeoutExpired.stdout"><code class="docutils literal notranslate"><span class="pre">TimeoutExpired.stdout</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.TimeoutExpired.stderr"><code class="docutils literal notranslate"><span class="pre">TimeoutExpired.stderr</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#subprocess.CalledProcessError"><code class="docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a><ul>
-<li><a class="reference internal" href="#subprocess.CalledProcessError.returncode"><code class="docutils literal notranslate"><span class="pre">CalledProcessError.returncode</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CalledProcessError.cmd"><code class="docutils literal notranslate"><span class="pre">CalledProcessError.cmd</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CalledProcessError.output"><code class="docutils literal notranslate"><span class="pre">CalledProcessError.output</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CalledProcessError.stdout"><code class="docutils literal notranslate"><span class="pre">CalledProcessError.stdout</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CalledProcessError.stderr"><code class="docutils literal notranslate"><span class="pre">CalledProcessError.stderr</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#frequently-used-arguments">Frequently Used Arguments</a></li>
-<li><a class="reference internal" href="#popen-constructor">Popen Constructor</a><ul>
-<li><a class="reference internal" href="#subprocess.Popen"><code class="docutils literal notranslate"><span class="pre">Popen</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#popen-constructor">Popen Constructor</a></li>
 <li><a class="reference internal" href="#exceptions">Exceptions</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#security-considerations">Security Considerations</a></li>
-<li><a class="reference internal" href="#popen-objects">Popen Objects</a><ul>
-<li><a class="reference internal" href="#subprocess.Popen.poll"><code class="docutils literal notranslate"><span class="pre">Popen.poll()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.wait"><code class="docutils literal notranslate"><span class="pre">Popen.wait()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.communicate"><code class="docutils literal notranslate"><span class="pre">Popen.communicate()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.send_signal"><code class="docutils literal notranslate"><span class="pre">Popen.send_signal()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.terminate"><code class="docutils literal notranslate"><span class="pre">Popen.terminate()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.kill"><code class="docutils literal notranslate"><span class="pre">Popen.kill()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.args"><code class="docutils literal notranslate"><span class="pre">Popen.args</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.stdin"><code class="docutils literal notranslate"><span class="pre">Popen.stdin</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.stdout"><code class="docutils literal notranslate"><span class="pre">Popen.stdout</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.stderr"><code class="docutils literal notranslate"><span class="pre">Popen.stderr</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.pid"><code class="docutils literal notranslate"><span class="pre">Popen.pid</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.Popen.returncode"><code class="docutils literal notranslate"><span class="pre">Popen.returncode</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#popen-objects">Popen Objects</a></li>
 <li><a class="reference internal" href="#windows-popen-helpers">Windows Popen Helpers</a><ul>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO</span></code></a><ul>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO.dwFlags</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO.hStdInput"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO.hStdInput</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO.hStdOutput"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO.hStdOutput</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO.hStdError"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO.hStdError</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO.wShowWindow"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO.wShowWindow</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTUPINFO.lpAttributeList"><code class="docutils literal notranslate"><span class="pre">STARTUPINFO.lpAttributeList</span></code></a></li>
+<li><a class="reference internal" href="#windows-constants">Windows Constants</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#windows-constants">Windows Constants</a><ul>
-<li><a class="reference internal" href="#subprocess.STD_INPUT_HANDLE"><code class="docutils literal notranslate"><span class="pre">STD_INPUT_HANDLE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STD_OUTPUT_HANDLE"><code class="docutils literal notranslate"><span class="pre">STD_OUTPUT_HANDLE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STD_ERROR_HANDLE"><code class="docutils literal notranslate"><span class="pre">STD_ERROR_HANDLE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.SW_HIDE"><code class="docutils literal notranslate"><span class="pre">SW_HIDE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTF_USESTDHANDLES"><code class="docutils literal notranslate"><span class="pre">STARTF_USESTDHANDLES</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.STARTF_USESHOWWINDOW"><code class="docutils literal notranslate"><span class="pre">STARTF_USESHOWWINDOW</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CREATE_NEW_CONSOLE"><code class="docutils literal notranslate"><span class="pre">CREATE_NEW_CONSOLE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CREATE_NEW_PROCESS_GROUP"><code class="docutils literal notranslate"><span class="pre">CREATE_NEW_PROCESS_GROUP</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.ABOVE_NORMAL_PRIORITY_CLASS"><code class="docutils literal notranslate"><span class="pre">ABOVE_NORMAL_PRIORITY_CLASS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.BELOW_NORMAL_PRIORITY_CLASS"><code class="docutils literal notranslate"><span class="pre">BELOW_NORMAL_PRIORITY_CLASS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.HIGH_PRIORITY_CLASS"><code class="docutils literal notranslate"><span class="pre">HIGH_PRIORITY_CLASS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.IDLE_PRIORITY_CLASS"><code class="docutils literal notranslate"><span class="pre">IDLE_PRIORITY_CLASS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.NORMAL_PRIORITY_CLASS"><code class="docutils literal notranslate"><span class="pre">NORMAL_PRIORITY_CLASS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.REALTIME_PRIORITY_CLASS"><code class="docutils literal notranslate"><span class="pre">REALTIME_PRIORITY_CLASS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CREATE_NO_WINDOW"><code class="docutils literal notranslate"><span class="pre">CREATE_NO_WINDOW</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.DETACHED_PROCESS"><code class="docutils literal notranslate"><span class="pre">DETACHED_PROCESS</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CREATE_DEFAULT_ERROR_MODE"><code class="docutils literal notranslate"><span class="pre">CREATE_DEFAULT_ERROR_MODE</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.CREATE_BREAKAWAY_FROM_JOB"><code class="docutils literal notranslate"><span class="pre">CREATE_BREAKAWAY_FROM_JOB</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a class="reference internal" href="#older-high-level-api">Older high-level API</a><ul>
-<li><a class="reference internal" href="#subprocess.call"><code class="docutils literal notranslate"><span class="pre">call()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.check_call"><code class="docutils literal notranslate"><span class="pre">check_call()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.check_output"><code class="docutils literal notranslate"><span class="pre">check_output()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#older-high-level-api">Older high-level API</a></li>
 <li><a class="reference internal" href="#replacing-older-functions-with-the-subprocess-module">Replacing Older Functions with the <code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> Module</a><ul>
 <li><a class="reference internal" href="#replacing-bin-sh-shell-command-substitution">Replacing <strong class="program">/bin/sh</strong> shell command substitution</a></li>
 <li><a class="reference internal" href="#replacing-shell-pipeline">Replacing shell pipeline</a></li>
-<li><a class="reference internal" href="#replacing-os-system">Replacing <code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code></a></li>
-<li><a class="reference internal" href="#replacing-the-os-spawn-family">Replacing the <code class="xref py py-func docutils literal notranslate"><span class="pre">os.spawn</span></code> family</a></li>
-<li><a class="reference internal" href="#replacing-os-popen-os-popen2-os-popen3">Replacing <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen2()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen3()</span></code></a></li>
-<li><a class="reference internal" href="#replacing-functions-from-the-popen2-module">Replacing functions from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">popen2</span></code> module</a></li>
+<li><a class="reference internal" href="#replacing-os-system">Replacing <code class="xref py py-func docutils literal notranslate">system()</span></code></a></li>
+<li><a class="reference internal" href="#replacing-the-os-spawn-family">Replacing the <code class="xref py py-func docutils literal notranslate">spawn</span></code> family</a></li>
+<li><a class="reference internal" href="#replacing-os-popen">Replacing <code class="xref py py-func docutils literal notranslate">popen()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#legacy-shell-invocation-functions">Legacy Shell Invocation Functions</a><ul>
-<li><a class="reference internal" href="#subprocess.getstatusoutput"><code class="docutils literal notranslate"><span class="pre">getstatusoutput()</span></code></a></li>
-<li><a class="reference internal" href="#subprocess.getoutput"><code class="docutils literal notranslate"><span class="pre">getoutput()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#legacy-shell-invocation-functions">Legacy Shell Invocation Functions</a></li>
 <li><a class="reference internal" href="#notes">Notes</a><ul>
 <li><a class="reference internal" href="#converting-an-argument-sequence-to-a-string-on-windows">Converting an argument sequence to a string on Windows</a></li>
-<li><a class="reference internal" href="#disabling-use-of-vfork-or-posix-spawn">Disabling use of <code class="docutils literal notranslate"><span class="pre">vfork()</span></code> or <code class="docutils literal notranslate"><span class="pre">posix_spawn()</span></code></a></li>
+<li><a class="reference internal" href="#disable-use-of-posix-spawn">Disable use of <code class="docutils literal notranslate"><span class="pre">posix_spawn()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -853,8 +778,8 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-subprocess">
-<span id="subprocess-subprocess-management"></span><h1><a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> — Subprocess management<a class="headerlink" href="#module-subprocess" title="Permalink to this heading">¶</a></h1>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/subprocess.py">Lib/subprocess.py</a></p>
+<span id="subprocess-subprocess-management"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code> — Subprocess management<a class="headerlink" href="#module-subprocess" title="Link to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/subprocess.py">Lib/subprocess.py</a></p>
 <hr class="docutils" />
 <p>The <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> module allows you to spawn new processes, connect to their
 input/output/error pipes, and obtain their return codes.  This module intends to
@@ -870,19 +795,18 @@ modules and functions can be found in the following sections.</p>
 <p><span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0324/"><strong>PEP 324</strong></a> – PEP proposing the subprocess module</p>
 </div>
 <div class="availability docutils container">
-<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
-<p>This module does not work or is not available on WebAssembly platforms
-<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
-<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a> for more information.</p>
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Android, not iOS, not WASI.</p>
+<p>This module is not supported on <a class="reference internal" href="intro.html#mobile-availability"><span class="std std-ref">mobile platforms</span></a>
+or <a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a>.</p>
 </div>
 <section id="using-the-subprocess-module">
-<h2>Using the <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> Module<a class="headerlink" href="#using-the-subprocess-module" title="Permalink to this heading">¶</a></h2>
+<h2>Using the <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> Module<a class="headerlink" href="#using-the-subprocess-module" title="Link to this heading">¶</a></h2>
 <p>The recommended approach to invoking subprocesses is to use the <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a>
 function for all use cases it can handle. For more advanced use cases, the
 underlying <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> interface can be used directly.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="subprocess.run">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">universal_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.run" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">run</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_output</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">universal_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.run" title="Link to this definition">¶</a></dt>
 <dd><p>Run the command described by <em>args</em>.  Wait for command to complete, then
 return a <a class="reference internal" href="#subprocess.CompletedProcess" title="subprocess.CompletedProcess"><code class="xref py py-class docutils literal notranslate"><span class="pre">CompletedProcess</span></code></a> instance.</p>
 <p>The arguments shown above are merely the most common ones, described below
@@ -893,10 +817,12 @@ this function are passed through to that interface. (<em>timeout</em>,  <em>inpu
 <em>check</em>, and <em>capture_output</em> are not.)</p>
 <p>If <em>capture_output</em> is true, stdout and stderr will be captured.
 When used, the internal <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> object is automatically created with
-<code class="docutils literal notranslate"><span class="pre">stdout=PIPE</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr=PIPE</span></code>. The <em>stdout</em> and <em>stderr</em> arguments may
-not be supplied at the same time as <em>capture_output</em>.  If you wish to capture
-and combine both streams into one, use <code class="docutils literal notranslate"><span class="pre">stdout=PIPE</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr=STDOUT</span></code>
-instead of <em>capture_output</em>.</p>
+<em>stdout</em> and <em>stderr</em> both set to <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a>.
+The <em>stdout</em> and <em>stderr</em> arguments may not be supplied at the same time as <em>capture_output</em>.
+If you wish to capture and combine both streams into one,
+set <em>stdout</em> to <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a>
+and <em>stderr</em> to <a class="reference internal" href="#subprocess.STDOUT" title="subprocess.STDOUT"><code class="xref py py-data docutils literal notranslate"><span class="pre">STDOUT</span></code></a>,
+instead of using <em>capture_output</em>.</p>
 <p>A <em>timeout</em> may be specified in seconds, it is internally passed on to
 <a class="reference internal" href="#subprocess.Popen.communicate" title="subprocess.Popen.communicate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Popen.communicate()</span></code></a>. If the timeout expires, the child process will be
 killed and waited for. The <a class="reference internal" href="#subprocess.TimeoutExpired" title="subprocess.TimeoutExpired"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TimeoutExpired</span></code></a> exception will be
@@ -908,7 +834,8 @@ process creation takes.</p>
 subprocess’s stdin.  If used it must be a byte sequence, or a string if
 <em>encoding</em> or <em>errors</em> is specified or <em>text</em> is true.  When
 used, the internal <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> object is automatically created with
-<code class="docutils literal notranslate"><span class="pre">stdin=PIPE</span></code>, and the <em>stdin</em> argument may not be used as well.</p>
+<em>stdin</em> set to <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a>,
+and the <em>stdin</em> argument may not be used as well.</p>
 <p>If <em>check</em> is true, and the process exits with a non-zero exit code, a
 <a class="reference internal" href="#subprocess.CalledProcessError" title="subprocess.CalledProcessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a> exception will be raised. Attributes of that
 exception hold the arguments, the exit code, and stdout and stderr if they
@@ -939,7 +866,7 @@ or bytes to bytes on POSIX platforms much like <a class="reference internal" hre
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.5.</span></p>
+<p><span class="versionmodified added">Added in version 3.5.</span></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.6: </span>Added <em>encoding</em> and <em>errors</em> parameters</p>
@@ -959,17 +886,17 @@ longer works.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="subprocess.CompletedProcess">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CompletedProcess</span></span><a class="headerlink" href="#subprocess.CompletedProcess" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CompletedProcess</span></span><a class="headerlink" href="#subprocess.CompletedProcess" title="Link to this definition">¶</a></dt>
 <dd><p>The return value from <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a>, representing a process that has finished.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CompletedProcess.args">
-<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#subprocess.CompletedProcess.args" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#subprocess.CompletedProcess.args" title="Link to this definition">¶</a></dt>
 <dd><p>The arguments used to launch the process. This may be a list or a string.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CompletedProcess.returncode">
-<span class="sig-name descname"><span class="pre">returncode</span></span><a class="headerlink" href="#subprocess.CompletedProcess.returncode" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">returncode</span></span><a class="headerlink" href="#subprocess.CompletedProcess.returncode" title="Link to this definition">¶</a></dt>
 <dd><p>Exit status of the child process. Typically, an exit status of 0 indicates
 that it ran successfully.</p>
 <p>A negative value <code class="docutils literal notranslate"><span class="pre">-N</span></code> indicates that the child was terminated by signal
@@ -978,7 +905,7 @@ that it ran successfully.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CompletedProcess.stdout">
-<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.CompletedProcess.stdout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.CompletedProcess.stdout" title="Link to this definition">¶</a></dt>
 <dd><p>Captured stdout from the child process. A bytes sequence, or a string if
 <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> was called with an encoding, errors, or text=True.
 <code class="docutils literal notranslate"><span class="pre">None</span></code> if stdout was not captured.</p>
@@ -989,7 +916,7 @@ stderr will be combined in this attribute, and <a class="reference internal" hre
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CompletedProcess.stderr">
-<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.CompletedProcess.stderr" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.CompletedProcess.stderr" title="Link to this definition">¶</a></dt>
 <dd><p>Captured stderr from the child process. A bytes sequence, or a string if
 <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> was called with an encoding, errors, or text=True.
 <code class="docutils literal notranslate"><span class="pre">None</span></code> if stderr was not captured.</p>
@@ -997,29 +924,29 @@ stderr will be combined in this attribute, and <a class="reference internal" hre
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.CompletedProcess.check_returncode">
-<span class="sig-name descname"><span class="pre">check_returncode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.CompletedProcess.check_returncode" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">check_returncode</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.CompletedProcess.check_returncode" title="Link to this definition">¶</a></dt>
 <dd><p>If <a class="reference internal" href="#subprocess.CompletedProcess.returncode" title="subprocess.CompletedProcess.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a> is non-zero, raise a <a class="reference internal" href="#subprocess.CalledProcessError" title="subprocess.CalledProcessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a>.</p>
 </dd></dl>
 
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.5.</span></p>
+<p><span class="versionmodified added">Added in version 3.5.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.DEVNULL">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">DEVNULL</span></span><a class="headerlink" href="#subprocess.DEVNULL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">DEVNULL</span></span><a class="headerlink" href="#subprocess.DEVNULL" title="Link to this definition">¶</a></dt>
 <dd><p>Special value that can be used as the <em>stdin</em>, <em>stdout</em> or <em>stderr</em> argument
 to <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> and indicates that the special file <a class="reference internal" href="os.html#os.devnull" title="os.devnull"><code class="xref py py-data docutils literal notranslate"><span class="pre">os.devnull</span></code></a>
 will be used.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.PIPE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">PIPE</span></span><a class="headerlink" href="#subprocess.PIPE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">PIPE</span></span><a class="headerlink" href="#subprocess.PIPE" title="Link to this definition">¶</a></dt>
 <dd><p>Special value that can be used as the <em>stdin</em>, <em>stdout</em> or <em>stderr</em> argument
 to <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> and indicates that a pipe to the standard stream should be
 opened.  Most useful with <a class="reference internal" href="#subprocess.Popen.communicate" title="subprocess.Popen.communicate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Popen.communicate()</span></code></a>.</p>
@@ -1027,7 +954,7 @@ opened.  Most useful with <a class="reference internal" href="#subprocess.Popen.
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.STDOUT">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STDOUT</span></span><a class="headerlink" href="#subprocess.STDOUT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STDOUT</span></span><a class="headerlink" href="#subprocess.STDOUT" title="Link to this definition">¶</a></dt>
 <dd><p>Special value that can be used as the <em>stderr</em> argument to <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> and
 indicates that standard error should go into the same handle as standard
 output.</p>
@@ -1035,33 +962,33 @@ output.</p>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="subprocess.SubprocessError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">SubprocessError</span></span><a class="headerlink" href="#subprocess.SubprocessError" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">SubprocessError</span></span><a class="headerlink" href="#subprocess.SubprocessError" title="Link to this definition">¶</a></dt>
 <dd><p>Base class for all other exceptions from this module.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="subprocess.TimeoutExpired">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">TimeoutExpired</span></span><a class="headerlink" href="#subprocess.TimeoutExpired" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">TimeoutExpired</span></span><a class="headerlink" href="#subprocess.TimeoutExpired" title="Link to this definition">¶</a></dt>
 <dd><p>Subclass of <a class="reference internal" href="#subprocess.SubprocessError" title="subprocess.SubprocessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SubprocessError</span></code></a>, raised when a timeout expires
 while waiting for a child process.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.TimeoutExpired.cmd">
-<span class="sig-name descname"><span class="pre">cmd</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.cmd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cmd</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.cmd" title="Link to this definition">¶</a></dt>
 <dd><p>Command that was used to spawn the child process.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.TimeoutExpired.timeout">
-<span class="sig-name descname"><span class="pre">timeout</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.timeout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">timeout</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.timeout" title="Link to this definition">¶</a></dt>
 <dd><p>Timeout in seconds.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.TimeoutExpired.output">
-<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.output" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.output" title="Link to this definition">¶</a></dt>
 <dd><p>Output of the child process if it was captured by <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> or
 <a class="reference internal" href="#subprocess.check_output" title="subprocess.check_output"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_output()</span></code></a>.  Otherwise, <code class="docutils literal notranslate"><span class="pre">None</span></code>.  This is always
 <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> when any output was captured regardless of the
@@ -1071,13 +998,13 @@ when no output was observed.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.TimeoutExpired.stdout">
-<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.stdout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.stdout" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for output, for symmetry with <a class="reference internal" href="#subprocess.TimeoutExpired.stderr" title="subprocess.TimeoutExpired.stderr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">stderr</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.TimeoutExpired.stderr">
-<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.stderr" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.TimeoutExpired.stderr" title="Link to this definition">¶</a></dt>
 <dd><p>Stderr output of the child process if it was captured by <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a>.
 Otherwise, <code class="docutils literal notranslate"><span class="pre">None</span></code>.  This is always <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> when stderr output
 was captured regardless of the <code class="docutils literal notranslate"><span class="pre">text=True</span></code> setting.  It may remain
@@ -1085,7 +1012,7 @@ was captured regardless of the <code class="docutils literal notranslate"><span 
 </dd></dl>
 
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.5: </span><em>stdout</em> and <em>stderr</em> attributes added</p>
@@ -1094,39 +1021,39 @@ was captured regardless of the <code class="docutils literal notranslate"><span 
 
 <dl class="py exception">
 <dt class="sig sig-object py" id="subprocess.CalledProcessError">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CalledProcessError</span></span><a class="headerlink" href="#subprocess.CalledProcessError" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CalledProcessError</span></span><a class="headerlink" href="#subprocess.CalledProcessError" title="Link to this definition">¶</a></dt>
 <dd><p>Subclass of <a class="reference internal" href="#subprocess.SubprocessError" title="subprocess.SubprocessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SubprocessError</span></code></a>, raised when a process run by
 <a class="reference internal" href="#subprocess.check_call" title="subprocess.check_call"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_call()</span></code></a>, <a class="reference internal" href="#subprocess.check_output" title="subprocess.check_output"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_output()</span></code></a>, or <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> (with <code class="docutils literal notranslate"><span class="pre">check=True</span></code>)
 returns a non-zero exit status.</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CalledProcessError.returncode">
-<span class="sig-name descname"><span class="pre">returncode</span></span><a class="headerlink" href="#subprocess.CalledProcessError.returncode" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">returncode</span></span><a class="headerlink" href="#subprocess.CalledProcessError.returncode" title="Link to this definition">¶</a></dt>
 <dd><p>Exit status of the child process.  If the process exited due to a
 signal, this will be the negative signal number.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CalledProcessError.cmd">
-<span class="sig-name descname"><span class="pre">cmd</span></span><a class="headerlink" href="#subprocess.CalledProcessError.cmd" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">cmd</span></span><a class="headerlink" href="#subprocess.CalledProcessError.cmd" title="Link to this definition">¶</a></dt>
 <dd><p>Command that was used to spawn the child process.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CalledProcessError.output">
-<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#subprocess.CalledProcessError.output" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">output</span></span><a class="headerlink" href="#subprocess.CalledProcessError.output" title="Link to this definition">¶</a></dt>
 <dd><p>Output of the child process if it was captured by <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> or
 <a class="reference internal" href="#subprocess.check_output" title="subprocess.check_output"><code class="xref py py-func docutils literal notranslate"><span class="pre">check_output()</span></code></a>.  Otherwise, <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CalledProcessError.stdout">
-<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.CalledProcessError.stdout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.CalledProcessError.stdout" title="Link to this definition">¶</a></dt>
 <dd><p>Alias for output, for symmetry with <a class="reference internal" href="#subprocess.CalledProcessError.stderr" title="subprocess.CalledProcessError.stderr"><code class="xref py py-attr docutils literal notranslate"><span class="pre">stderr</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.CalledProcessError.stderr">
-<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.CalledProcessError.stderr" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.CalledProcessError.stderr" title="Link to this definition">¶</a></dt>
 <dd><p>Stderr output of the child process if it was captured by <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a>.
 Otherwise, <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd></dl>
@@ -1137,7 +1064,7 @@ Otherwise, <code class="docutils literal notranslate"><span class="pre">None</sp
 </dd></dl>
 
 <section id="frequently-used-arguments">
-<span id="id1"></span><h3>Frequently Used Arguments<a class="headerlink" href="#frequently-used-arguments" title="Permalink to this heading">¶</a></h3>
+<span id="id1"></span><h3>Frequently Used Arguments<a class="headerlink" href="#frequently-used-arguments" title="Link to this heading">¶</a></h3>
 <p>To support a wide variety of use cases, the <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> constructor (and
 the convenience functions) accept a large number of optional arguments. For
 most typical use cases, many of these arguments can be safely left at their
@@ -1172,11 +1099,11 @@ information see the documentation of the <a class="reference internal" href="io.
 when the <em>newline</em> argument to its constructor is <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <p>If text mode is not used, <em>stdin</em>, <em>stdout</em> and <em>stderr</em> will be opened as
 binary streams. No encoding or line ending conversion is performed.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 3.6: </span>Added <em>encoding</em> and <em>errors</em> parameters.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.6: </span>Added the <em>encoding</em> and <em>errors</em> parameters.</p>
 </div>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7: </span>Added the <em>text</em> parameter as an alias for <em>universal_newlines</em>.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.7: </span>Added the <em>text</em> parameter as an alias for <em>universal_newlines</em>.</p>
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -1208,14 +1135,14 @@ instead of <code class="docutils literal notranslate"><span class="pre">locale.g
 detail in the <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> constructor documentation.</p>
 </section>
 <section id="popen-constructor">
-<h3>Popen Constructor<a class="headerlink" href="#popen-constructor" title="Permalink to this heading">¶</a></h3>
+<h3>Popen Constructor<a class="headerlink" href="#popen-constructor" title="Link to this heading">¶</a></h3>
 <p>The underlying process creation and management in this module is handled by
 the <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> class. It offers a lot of flexibility so that developers
 are able to handle the less common cases not covered by the convenience
 functions.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="subprocess.Popen">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">Popen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bufsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preexec_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">universal_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startupinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">creationflags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restore_signals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_new_session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pass_fds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">umask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipesize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">Popen</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bufsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">executable</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">preexec_fn</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">close_fds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">env</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">universal_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">startupinfo</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">creationflags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restore_signals</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">start_new_session</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pass_fds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">()</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_groups</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">user</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">umask</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pipesize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">process_group</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen" title="Link to this definition">¶</a></dt>
 <dd><p>Execute a child program in a new process.  On POSIX, the class uses
 <a class="reference internal" href="os.html#os.execvpe" title="os.execvpe"><code class="xref py py-meth docutils literal notranslate"><span class="pre">os.execvpe()</span></code></a>-like behavior to execute the child program.  On Windows,
 the class uses the Windows <code class="docutils literal notranslate"><span class="pre">CreateProcess()</span></code> function.  The arguments to
@@ -1451,7 +1378,7 @@ will be passed verbatim. (POSIX only)</p>
 <p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: POSIX</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.9.</span></p>
+<p><span class="versionmodified added">Added in version 3.9.</span></p>
 </div>
 <p>If <em>extra_groups</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the setgroups() system call will be
 made in the child process prior to the execution of the subprocess.
@@ -1462,7 +1389,7 @@ Integer values will be passed verbatim. (POSIX only)</p>
 <p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: POSIX</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.9.</span></p>
+<p><span class="versionmodified added">Added in version 3.9.</span></p>
 </div>
 <p>If <em>user</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, the setreuid() system call will be made in the
 child process prior to the execution of the subprocess. If the provided
@@ -1473,7 +1400,7 @@ be passed verbatim. (POSIX only)</p>
 <p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: POSIX</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.9.</span></p>
+<p><span class="versionmodified added">Added in version 3.9.</span></p>
 </div>
 <p>If <em>umask</em> is not negative, the umask() system call will be made in the
 child process prior to the execution of the subprocess.</p>
@@ -1481,7 +1408,7 @@ child process prior to the execution of the subprocess.</p>
 <p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: POSIX</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.9.</span></p>
+<p><span class="versionmodified added">Added in version 3.9.</span></p>
 </div>
 <p>If <em>env</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, it must be a mapping that defines the environment
 variables for the new process; these are used instead of the default
@@ -1500,16 +1427,15 @@ specified <em>env</em> <strong>must</strong> include a valid <span class="target
 The <em>universal_newlines</em> argument is equivalent  to <em>text</em> and is provided
 for backwards compatibility. By default, file objects are opened in binary mode.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.6: </span><em>encoding</em> and <em>errors</em> were added.</p>
+<p><span class="versionmodified added">Added in version 3.6: </span><em>encoding</em> and <em>errors</em> were added.</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7: </span><em>text</em> was added as a more readable alias for <em>universal_newlines</em>.</p>
+<p><span class="versionmodified added">Added in version 3.7: </span><em>text</em> was added as a more readable alias for <em>universal_newlines</em>.</p>
 </div>
 <p>If given, <em>startupinfo</em> will be a <a class="reference internal" href="#subprocess.STARTUPINFO" title="subprocess.STARTUPINFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">STARTUPINFO</span></code></a> object, which is
-passed to the underlying <code class="docutils literal notranslate"><span class="pre">CreateProcess</span></code> function.
-<em>creationflags</em>, if given, can be one or more of the following flags:</p>
-<blockquote>
-<div><ul class="simple">
+passed to the underlying <code class="docutils literal notranslate"><span class="pre">CreateProcess</span></code> function.</p>
+<p>If given, <em>creationflags</em>, can be one or more of the following flags:</p>
+<ul class="simple">
 <li><p><a class="reference internal" href="#subprocess.CREATE_NEW_CONSOLE" title="subprocess.CREATE_NEW_CONSOLE"><code class="xref py py-data docutils literal notranslate"><span class="pre">CREATE_NEW_CONSOLE</span></code></a></p></li>
 <li><p><a class="reference internal" href="#subprocess.CREATE_NEW_PROCESS_GROUP" title="subprocess.CREATE_NEW_PROCESS_GROUP"><code class="xref py py-data docutils literal notranslate"><span class="pre">CREATE_NEW_PROCESS_GROUP</span></code></a></p></li>
 <li><p><a class="reference internal" href="#subprocess.ABOVE_NORMAL_PRIORITY_CLASS" title="subprocess.ABOVE_NORMAL_PRIORITY_CLASS"><code class="xref py py-data docutils literal notranslate"><span class="pre">ABOVE_NORMAL_PRIORITY_CLASS</span></code></a></p></li>
@@ -1523,13 +1449,12 @@ passed to the underlying <code class="docutils literal notranslate"><span class=
 <li><p><a class="reference internal" href="#subprocess.CREATE_DEFAULT_ERROR_MODE" title="subprocess.CREATE_DEFAULT_ERROR_MODE"><code class="xref py py-data docutils literal notranslate"><span class="pre">CREATE_DEFAULT_ERROR_MODE</span></code></a></p></li>
 <li><p><a class="reference internal" href="#subprocess.CREATE_BREAKAWAY_FROM_JOB" title="subprocess.CREATE_BREAKAWAY_FROM_JOB"><code class="xref py py-data docutils literal notranslate"><span class="pre">CREATE_BREAKAWAY_FROM_JOB</span></code></a></p></li>
 </ul>
-</div></blockquote>
 <p><em>pipesize</em> can be used to change the size of the pipe when
 <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a> is used for <em>stdin</em>, <em>stdout</em> or <em>stderr</em>. The size of the pipe
 is only changed on platforms that support this (only Linux at this time of
 writing). Other platforms will ignore this parameter.</p>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 3.10: </span>The <code class="docutils literal notranslate"><span class="pre">pipesize</span></code> parameter was added.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.10: </span>Added the <em>pipesize</em> parameter.</p>
 </div>
 <p>Popen objects are supported as context managers via the <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement:
 on exit, standard file descriptors are closed, and the process is waited for.</p>
@@ -1560,7 +1485,7 @@ with a non-zero <a class="reference internal" href="#subprocess.Popen.returncode
 
 </section>
 <section id="exceptions">
-<h3>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this heading">¶</a></h3>
+<h3>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading">¶</a></h3>
 <p>Exceptions raised in the child process, before the new program has started to
 execute, will be re-raised in the parent.</p>
 <p>The most common exception raised is <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a>.  This occurs, for example,
@@ -1578,17 +1503,15 @@ code.</p>
 <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> and <a class="reference internal" href="#subprocess.Popen.communicate" title="subprocess.Popen.communicate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Popen.communicate()</span></code></a> will raise <a class="reference internal" href="#subprocess.TimeoutExpired" title="subprocess.TimeoutExpired"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TimeoutExpired</span></code></a> if
 the timeout expires before the process exits.</p>
 <p>Exceptions defined in this module all inherit from <a class="reference internal" href="#subprocess.SubprocessError" title="subprocess.SubprocessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SubprocessError</span></code></a>.</p>
-<blockquote>
-<div><div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3: </span>The <a class="reference internal" href="#subprocess.SubprocessError" title="subprocess.SubprocessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SubprocessError</span></code></a> base class was added.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.3: </span>The <a class="reference internal" href="#subprocess.SubprocessError" title="subprocess.SubprocessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">SubprocessError</span></code></a> base class was added.</p>
 </div>
-</div></blockquote>
 </section>
 </section>
 <section id="security-considerations">
-<span id="subprocess-security"></span><h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Permalink to this heading">¶</a></h2>
-<p>Unlike some other popen functions, this implementation will never
-implicitly call a system shell.  This means that all characters,
+<span id="subprocess-security"></span><h2>Security Considerations<a class="headerlink" href="#security-considerations" title="Link to this heading">¶</a></h2>
+<p>Unlike some other popen functions, this library will not
+implicitly choose to call a system shell.  This means that all characters,
 including shell metacharacters, can safely be passed to child processes.
 If the shell is invoked explicitly, via <code class="docutils literal notranslate"><span class="pre">shell=True</span></code>, it is the application’s
 responsibility to ensure that all whitespace and metacharacters are
@@ -1596,20 +1519,27 @@ quoted appropriately to avoid
 <a class="reference external" href="https://en.wikipedia.org/wiki/Shell_injection#Shell_injection">shell injection</a>
 vulnerabilities. On <a class="reference internal" href="shlex.html#shlex-quote-warning"><span class="std std-ref">some platforms</span></a>, it is possible
 to use <a class="reference internal" href="shlex.html#shlex.quote" title="shlex.quote"><code class="xref py py-func docutils literal notranslate"><span class="pre">shlex.quote()</span></code></a> for this escaping.</p>
+<p>On Windows, batch files (<code class="file docutils literal notranslate"><span class="pre">*.bat</span></code> or <code class="file docutils literal notranslate"><span class="pre">*.cmd</span></code>) may be launched by the
+operating system in a system shell regardless of the arguments passed to this
+library. This could result in arguments being parsed according to shell rules,
+but without any escaping added by Python. If you are intentionally launching a
+batch file with arguments from untrusted sources, consider passing
+<code class="docutils literal notranslate"><span class="pre">shell=True</span></code> to allow Python to escape special characters. See <a class="reference external" href="https://github.com/python/cpython/issues/114539">gh-114539</a>
+for additional discussion.</p>
 </section>
 <section id="popen-objects">
-<h2>Popen Objects<a class="headerlink" href="#popen-objects" title="Permalink to this heading">¶</a></h2>
+<h2>Popen Objects<a class="headerlink" href="#popen-objects" title="Link to this heading">¶</a></h2>
 <p>Instances of the <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> class have the following methods:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.Popen.poll">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">poll</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.poll" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">poll</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.poll" title="Link to this definition">¶</a></dt>
 <dd><p>Check if child process has terminated.  Set and return
 <a class="reference internal" href="#subprocess.Popen.returncode" title="subprocess.Popen.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a> attribute. Otherwise, returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.Popen.wait">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.wait" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">wait</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.wait" title="Link to this definition">¶</a></dt>
 <dd><p>Wait for child process to terminate.  Set and return
 <a class="reference internal" href="#subprocess.Popen.returncode" title="subprocess.Popen.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a> attribute.</p>
 <p>If the process does not terminate after <em>timeout</em> seconds, raise a
@@ -1624,9 +1554,10 @@ Use <a class="reference internal" href="#subprocess.Popen.communicate" title="su
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The function is implemented using a busy loop (non-blocking call and
-short sleeps). Use the <a class="reference internal" href="asyncio.html#module-asyncio" title="asyncio: Asynchronous I/O."><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code></a> module for an asynchronous wait:
-see <a class="reference internal" href="asyncio-subprocess.html#asyncio.create_subprocess_exec" title="asyncio.create_subprocess_exec"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.create_subprocess_exec</span></code></a>.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">timeout</span></code> parameter is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, then (on POSIX) the
+function is implemented using a busy loop (non-blocking call and short
+sleeps). Use the <a class="reference internal" href="asyncio.html#module-asyncio" title="asyncio: Asynchronous I/O."><code class="xref py py-mod docutils literal notranslate"><span class="pre">asyncio</span></code></a> module for an asynchronous wait: see
+<a class="reference internal" href="asyncio-subprocess.html#asyncio.create_subprocess_exec" title="asyncio.create_subprocess_exec"><code class="xref py py-class docutils literal notranslate"><span class="pre">asyncio.create_subprocess_exec</span></code></a>.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.3: </span><em>timeout</em> was added.</p>
@@ -1635,7 +1566,7 @@ see <a class="reference internal" href="asyncio-subprocess.html#asyncio.create_s
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.Popen.communicate">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">communicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.communicate" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">communicate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.communicate" title="Link to this definition">¶</a></dt>
 <dd><p>Interact with process: Send data to stdin.  Read data from stdout and stderr,
 until end-of-file is reached.  Wait for process to terminate and set the
 <a class="reference internal" href="#subprocess.Popen.returncode" title="subprocess.Popen.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a> attribute.  The optional <em>input</em> argument should be
@@ -1675,7 +1606,7 @@ size is large or unlimited.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.Popen.send_signal">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">send_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.send_signal" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">send_signal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">signal</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.send_signal" title="Link to this definition">¶</a></dt>
 <dd><p>Sends the signal <em>signal</em> to the child.</p>
 <p>Do nothing if the process completed.</p>
 <div class="admonition note">
@@ -1688,15 +1619,15 @@ parameter which includes <code class="docutils literal notranslate"><span class=
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.Popen.terminate">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.terminate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Stop the child. On POSIX OSs the method sends SIGTERM to the
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">terminate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.terminate" title="Link to this definition">¶</a></dt>
+<dd><p>Stop the child. On POSIX OSs the method sends <a class="reference internal" href="signal.html#signal.SIGTERM" title="signal.SIGTERM"><code class="xref py py-const docutils literal notranslate"><span class="pre">SIGTERM</span></code></a> to the
 child. On Windows the Win32 API function <code class="xref c c-func docutils literal notranslate"><span class="pre">TerminateProcess()</span></code> is called
 to stop the child.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="subprocess.Popen.kill">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">kill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.kill" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">kill</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.Popen.kill" title="Link to this definition">¶</a></dt>
 <dd><p>Kills the child. On POSIX OSs the function sends SIGKILL to the child.
 On Windows <a class="reference internal" href="#subprocess.Popen.kill" title="subprocess.Popen.kill"><code class="xref py py-meth docutils literal notranslate"><span class="pre">kill()</span></code></a> is an alias for <a class="reference internal" href="#subprocess.Popen.terminate" title="subprocess.Popen.terminate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">terminate()</span></code></a>.</p>
 </dd></dl>
@@ -1705,17 +1636,17 @@ On Windows <a class="reference internal" href="#subprocess.Popen.kill" title="su
 Reassigning them to new values is unsupported:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.Popen.args">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#subprocess.Popen.args" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">args</span></span><a class="headerlink" href="#subprocess.Popen.args" title="Link to this definition">¶</a></dt>
 <dd><p>The <em>args</em> argument as it was passed to <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> – a
 sequence of program arguments or else a single string.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.Popen.stdin">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">stdin</span></span><a class="headerlink" href="#subprocess.Popen.stdin" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">stdin</span></span><a class="headerlink" href="#subprocess.Popen.stdin" title="Link to this definition">¶</a></dt>
 <dd><p>If the <em>stdin</em> argument was <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a>, this attribute is a writeable
 stream object as returned by <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>. If the <em>encoding</em> or <em>errors</em>
 arguments were specified or the <em>text</em> or <em>universal_newlines</em> argument
@@ -1725,7 +1656,7 @@ If the <em>stdin</em> argument was not <a class="reference internal" href="#subp
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.Popen.stdout">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.Popen.stdout" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">stdout</span></span><a class="headerlink" href="#subprocess.Popen.stdout" title="Link to this definition">¶</a></dt>
 <dd><p>If the <em>stdout</em> argument was <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a>, this attribute is a readable
 stream object as returned by <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>. Reading from the stream provides
 output from the child process. If the <em>encoding</em> or <em>errors</em> arguments were
@@ -1736,7 +1667,7 @@ argument was not <a class="reference internal" href="#subprocess.PIPE" title="su
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.Popen.stderr">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.Popen.stderr" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">stderr</span></span><a class="headerlink" href="#subprocess.Popen.stderr" title="Link to this definition">¶</a></dt>
 <dd><p>If the <em>stderr</em> argument was <a class="reference internal" href="#subprocess.PIPE" title="subprocess.PIPE"><code class="xref py py-data docutils literal notranslate"><span class="pre">PIPE</span></code></a>, this attribute is a readable
 stream object as returned by <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>. Reading from the stream provides
 error output from the child process. If the <em>encoding</em> or <em>errors</em> arguments
@@ -1754,7 +1685,7 @@ child process.</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.Popen.pid">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">pid</span></span><a class="headerlink" href="#subprocess.Popen.pid" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">pid</span></span><a class="headerlink" href="#subprocess.Popen.pid" title="Link to this definition">¶</a></dt>
 <dd><p>The process ID of the child process.</p>
 <p>Note that if you set the <em>shell</em> argument to <code class="docutils literal notranslate"><span class="pre">True</span></code>, this is the process ID
 of the spawned shell.</p>
@@ -1762,7 +1693,7 @@ of the spawned shell.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.Popen.returncode">
-<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">returncode</span></span><a class="headerlink" href="#subprocess.Popen.returncode" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Popen.</span></span><span class="sig-name descname"><span class="pre">returncode</span></span><a class="headerlink" href="#subprocess.Popen.returncode" title="Link to this definition">¶</a></dt>
 <dd><p>The child return code. Initially <code class="docutils literal notranslate"><span class="pre">None</span></code>, <a class="reference internal" href="#subprocess.Popen.returncode" title="subprocess.Popen.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a> is set by
 a call to the <a class="reference internal" href="#subprocess.Popen.poll" title="subprocess.Popen.poll"><code class="xref py py-meth docutils literal notranslate"><span class="pre">poll()</span></code></a>, <a class="reference internal" href="#subprocess.Popen.wait" title="subprocess.Popen.wait"><code class="xref py py-meth docutils literal notranslate"><span class="pre">wait()</span></code></a>, or <a class="reference internal" href="#subprocess.Popen.communicate" title="subprocess.Popen.communicate"><code class="xref py py-meth docutils literal notranslate"><span class="pre">communicate()</span></code></a> methods
 if they detect that the process has terminated.</p>
@@ -1774,12 +1705,12 @@ time of the last method call.</p>
 
 </section>
 <section id="windows-popen-helpers">
-<h2>Windows Popen Helpers<a class="headerlink" href="#windows-popen-helpers" title="Permalink to this heading">¶</a></h2>
+<h2>Windows Popen Helpers<a class="headerlink" href="#windows-popen-helpers" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="#subprocess.STARTUPINFO" title="subprocess.STARTUPINFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">STARTUPINFO</span></code></a> class and following constants are only available
 on Windows.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTUPINFO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dwFlags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hStdInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hStdOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hStdError</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wShowWindow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lpAttributeList</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.STARTUPINFO" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTUPINFO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dwFlags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hStdInput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hStdOutput</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hStdError</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wShowWindow</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lpAttributeList</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.STARTUPINFO" title="Link to this definition">¶</a></dt>
 <dd><p>Partial support of the Windows
 <a class="reference external" href="https://msdn.microsoft.com/en-us/library/ms686331(v=vs.85).aspx">STARTUPINFO</a>
 structure is used for <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> creation.  The following attributes can
@@ -1789,7 +1720,7 @@ be set by passing them as keyword-only arguments.</p>
 </div>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO.dwFlags">
-<span class="sig-name descname"><span class="pre">dwFlags</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.dwFlags" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">dwFlags</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.dwFlags" title="Link to this definition">¶</a></dt>
 <dd><p>A bit field that determines whether certain <a class="reference internal" href="#subprocess.STARTUPINFO" title="subprocess.STARTUPINFO"><code class="xref py py-class docutils literal notranslate"><span class="pre">STARTUPINFO</span></code></a>
 attributes are used when the process creates a window.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">si</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">STARTUPINFO</span><span class="p">()</span>
@@ -1800,7 +1731,7 @@ attributes are used when the process creates a window.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO.hStdInput">
-<span class="sig-name descname"><span class="pre">hStdInput</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.hStdInput" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">hStdInput</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.hStdInput" title="Link to this definition">¶</a></dt>
 <dd><p>If <a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags" title="subprocess.STARTUPINFO.dwFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dwFlags</span></code></a> specifies <a class="reference internal" href="#subprocess.STARTF_USESTDHANDLES" title="subprocess.STARTF_USESTDHANDLES"><code class="xref py py-data docutils literal notranslate"><span class="pre">STARTF_USESTDHANDLES</span></code></a>, this attribute
 is the standard input handle for the process. If
 <a class="reference internal" href="#subprocess.STARTF_USESTDHANDLES" title="subprocess.STARTF_USESTDHANDLES"><code class="xref py py-data docutils literal notranslate"><span class="pre">STARTF_USESTDHANDLES</span></code></a> is not specified, the default for standard
@@ -1809,7 +1740,7 @@ input is the keyboard buffer.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO.hStdOutput">
-<span class="sig-name descname"><span class="pre">hStdOutput</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.hStdOutput" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">hStdOutput</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.hStdOutput" title="Link to this definition">¶</a></dt>
 <dd><p>If <a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags" title="subprocess.STARTUPINFO.dwFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dwFlags</span></code></a> specifies <a class="reference internal" href="#subprocess.STARTF_USESTDHANDLES" title="subprocess.STARTF_USESTDHANDLES"><code class="xref py py-data docutils literal notranslate"><span class="pre">STARTF_USESTDHANDLES</span></code></a>, this attribute
 is the standard output handle for the process. Otherwise, this attribute
 is ignored and the default for standard output is the console window’s
@@ -1818,7 +1749,7 @@ buffer.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO.hStdError">
-<span class="sig-name descname"><span class="pre">hStdError</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.hStdError" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">hStdError</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.hStdError" title="Link to this definition">¶</a></dt>
 <dd><p>If <a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags" title="subprocess.STARTUPINFO.dwFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dwFlags</span></code></a> specifies <a class="reference internal" href="#subprocess.STARTF_USESTDHANDLES" title="subprocess.STARTF_USESTDHANDLES"><code class="xref py py-data docutils literal notranslate"><span class="pre">STARTF_USESTDHANDLES</span></code></a>, this attribute
 is the standard error handle for the process. Otherwise, this attribute is
 ignored and the default for standard error is the console window’s buffer.</p>
@@ -1826,7 +1757,7 @@ ignored and the default for standard error is the console window’s buffer.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO.wShowWindow">
-<span class="sig-name descname"><span class="pre">wShowWindow</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.wShowWindow" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">wShowWindow</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.wShowWindow" title="Link to this definition">¶</a></dt>
 <dd><p>If <a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags" title="subprocess.STARTUPINFO.dwFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">dwFlags</span></code></a> specifies <a class="reference internal" href="#subprocess.STARTF_USESHOWWINDOW" title="subprocess.STARTF_USESHOWWINDOW"><code class="xref py py-data docutils literal notranslate"><span class="pre">STARTF_USESHOWWINDOW</span></code></a>, this attribute
 can be any of the values that can be specified in the <code class="docutils literal notranslate"><span class="pre">nCmdShow</span></code>
 parameter for the
@@ -1839,7 +1770,7 @@ ignored.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="subprocess.STARTUPINFO.lpAttributeList">
-<span class="sig-name descname"><span class="pre">lpAttributeList</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.lpAttributeList" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">lpAttributeList</span></span><a class="headerlink" href="#subprocess.STARTUPINFO.lpAttributeList" title="Link to this definition">¶</a></dt>
 <dd><p>A dictionary of additional attributes for process creation as given in
 <code class="docutils literal notranslate"><span class="pre">STARTUPINFOEX</span></code>, see
 <a class="reference external" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686880(v=vs.85).aspx">UpdateProcThreadAttribute</a>.</p>
@@ -1863,45 +1794,45 @@ handles.</p>
 </dd>
 </dl>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 </dd></dl>
 
 <section id="windows-constants">
-<h3>Windows Constants<a class="headerlink" href="#windows-constants" title="Permalink to this heading">¶</a></h3>
+<h3>Windows Constants<a class="headerlink" href="#windows-constants" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> module exposes the following constants.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.STD_INPUT_HANDLE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STD_INPUT_HANDLE</span></span><a class="headerlink" href="#subprocess.STD_INPUT_HANDLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STD_INPUT_HANDLE</span></span><a class="headerlink" href="#subprocess.STD_INPUT_HANDLE" title="Link to this definition">¶</a></dt>
 <dd><p>The standard input device. Initially, this is the console input buffer,
 <code class="docutils literal notranslate"><span class="pre">CONIN$</span></code>.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.STD_OUTPUT_HANDLE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STD_OUTPUT_HANDLE</span></span><a class="headerlink" href="#subprocess.STD_OUTPUT_HANDLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STD_OUTPUT_HANDLE</span></span><a class="headerlink" href="#subprocess.STD_OUTPUT_HANDLE" title="Link to this definition">¶</a></dt>
 <dd><p>The standard output device. Initially, this is the active console screen
 buffer, <code class="docutils literal notranslate"><span class="pre">CONOUT$</span></code>.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.STD_ERROR_HANDLE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STD_ERROR_HANDLE</span></span><a class="headerlink" href="#subprocess.STD_ERROR_HANDLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STD_ERROR_HANDLE</span></span><a class="headerlink" href="#subprocess.STD_ERROR_HANDLE" title="Link to this definition">¶</a></dt>
 <dd><p>The standard error device. Initially, this is the active console screen
 buffer, <code class="docutils literal notranslate"><span class="pre">CONOUT$</span></code>.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.SW_HIDE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">SW_HIDE</span></span><a class="headerlink" href="#subprocess.SW_HIDE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">SW_HIDE</span></span><a class="headerlink" href="#subprocess.SW_HIDE" title="Link to this definition">¶</a></dt>
 <dd><p>Hides the window. Another window will be activated.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.STARTF_USESTDHANDLES">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTF_USESTDHANDLES</span></span><a class="headerlink" href="#subprocess.STARTF_USESTDHANDLES" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTF_USESTDHANDLES</span></span><a class="headerlink" href="#subprocess.STARTF_USESTDHANDLES" title="Link to this definition">¶</a></dt>
 <dd><p>Specifies that the <a class="reference internal" href="#subprocess.STARTUPINFO.hStdInput" title="subprocess.STARTUPINFO.hStdInput"><code class="xref py py-attr docutils literal notranslate"><span class="pre">STARTUPINFO.hStdInput</span></code></a>,
 <a class="reference internal" href="#subprocess.STARTUPINFO.hStdOutput" title="subprocess.STARTUPINFO.hStdOutput"><code class="xref py py-attr docutils literal notranslate"><span class="pre">STARTUPINFO.hStdOutput</span></code></a>, and <a class="reference internal" href="#subprocess.STARTUPINFO.hStdError" title="subprocess.STARTUPINFO.hStdError"><code class="xref py py-attr docutils literal notranslate"><span class="pre">STARTUPINFO.hStdError</span></code></a> attributes
 contain additional information.</p>
@@ -1909,21 +1840,43 @@ contain additional information.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.STARTF_USESHOWWINDOW">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTF_USESHOWWINDOW</span></span><a class="headerlink" href="#subprocess.STARTF_USESHOWWINDOW" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTF_USESHOWWINDOW</span></span><a class="headerlink" href="#subprocess.STARTF_USESHOWWINDOW" title="Link to this definition">¶</a></dt>
 <dd><p>Specifies that the <a class="reference internal" href="#subprocess.STARTUPINFO.wShowWindow" title="subprocess.STARTUPINFO.wShowWindow"><code class="xref py py-attr docutils literal notranslate"><span class="pre">STARTUPINFO.wShowWindow</span></code></a> attribute contains
 additional information.</p>
 </dd></dl>
 
 <dl class="py data">
+<dt class="sig sig-object py" id="subprocess.STARTF_FORCEONFEEDBACK">
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTF_FORCEONFEEDBACK</span></span><a class="headerlink" href="#subprocess.STARTF_FORCEONFEEDBACK" title="Link to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags" title="subprocess.STARTUPINFO.dwFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">STARTUPINFO.dwFlags</span></code></a> parameter to specify that the
+<em>Working in Background</em> mouse cursor will be displayed while a
+process is launching. This is the default behavior for GUI
+processes.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="subprocess.STARTF_FORCEOFFFEEDBACK">
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">STARTF_FORCEOFFFEEDBACK</span></span><a class="headerlink" href="#subprocess.STARTF_FORCEOFFFEEDBACK" title="Link to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#subprocess.STARTUPINFO.dwFlags" title="subprocess.STARTUPINFO.dwFlags"><code class="xref py py-attr docutils literal notranslate"><span class="pre">STARTUPINFO.dwFlags</span></code></a> parameter to specify that the mouse
+cursor will not be changed when launching a process.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
 <dt class="sig sig-object py" id="subprocess.CREATE_NEW_CONSOLE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_NEW_CONSOLE</span></span><a class="headerlink" href="#subprocess.CREATE_NEW_CONSOLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_NEW_CONSOLE</span></span><a class="headerlink" href="#subprocess.CREATE_NEW_CONSOLE" title="Link to this definition">¶</a></dt>
 <dd><p>The new process has a new console, instead of inheriting its parent’s
 console (the default).</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.CREATE_NEW_PROCESS_GROUP">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_NEW_PROCESS_GROUP</span></span><a class="headerlink" href="#subprocess.CREATE_NEW_PROCESS_GROUP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_NEW_PROCESS_GROUP</span></span><a class="headerlink" href="#subprocess.CREATE_NEW_PROCESS_GROUP" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 group will be created. This flag is necessary for using <a class="reference internal" href="os.html#os.kill" title="os.kill"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.kill()</span></code></a>
 on the subprocess.</p>
@@ -1932,57 +1885,57 @@ on the subprocess.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.ABOVE_NORMAL_PRIORITY_CLASS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">ABOVE_NORMAL_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.ABOVE_NORMAL_PRIORITY_CLASS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">ABOVE_NORMAL_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.ABOVE_NORMAL_PRIORITY_CLASS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will have an above average priority.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.BELOW_NORMAL_PRIORITY_CLASS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">BELOW_NORMAL_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.BELOW_NORMAL_PRIORITY_CLASS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">BELOW_NORMAL_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.BELOW_NORMAL_PRIORITY_CLASS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will have a below average priority.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.HIGH_PRIORITY_CLASS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">HIGH_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.HIGH_PRIORITY_CLASS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">HIGH_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.HIGH_PRIORITY_CLASS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will have a high priority.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.IDLE_PRIORITY_CLASS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">IDLE_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.IDLE_PRIORITY_CLASS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">IDLE_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.IDLE_PRIORITY_CLASS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will have an idle (lowest) priority.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.NORMAL_PRIORITY_CLASS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">NORMAL_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.NORMAL_PRIORITY_CLASS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">NORMAL_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.NORMAL_PRIORITY_CLASS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
-will have an normal priority. (default)</p>
+will have a normal priority. (default)</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.REALTIME_PRIORITY_CLASS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">REALTIME_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.REALTIME_PRIORITY_CLASS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">REALTIME_PRIORITY_CLASS</span></span><a class="headerlink" href="#subprocess.REALTIME_PRIORITY_CLASS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will have realtime priority.
 You should almost never use REALTIME_PRIORITY_CLASS, because this interrupts
@@ -1990,64 +1943,64 @@ system threads that manage mouse input, keyboard input, and background disk
 flushing. This class can be appropriate for applications that “talk” directly
 to hardware or that perform brief tasks that should have limited interruptions.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.CREATE_NO_WINDOW">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_NO_WINDOW</span></span><a class="headerlink" href="#subprocess.CREATE_NO_WINDOW" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_NO_WINDOW</span></span><a class="headerlink" href="#subprocess.CREATE_NO_WINDOW" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will not create a window.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.DETACHED_PROCESS">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">DETACHED_PROCESS</span></span><a class="headerlink" href="#subprocess.DETACHED_PROCESS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">DETACHED_PROCESS</span></span><a class="headerlink" href="#subprocess.DETACHED_PROCESS" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 will not inherit its parent’s console.
 This value cannot be used with CREATE_NEW_CONSOLE.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.CREATE_DEFAULT_ERROR_MODE">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_DEFAULT_ERROR_MODE</span></span><a class="headerlink" href="#subprocess.CREATE_DEFAULT_ERROR_MODE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_DEFAULT_ERROR_MODE</span></span><a class="headerlink" href="#subprocess.CREATE_DEFAULT_ERROR_MODE" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 does not inherit the error mode of the calling process. Instead, the new
 process gets the default error mode.
 This feature is particularly useful for multithreaded shell applications
 that run with hard errors disabled.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="subprocess.CREATE_BREAKAWAY_FROM_JOB">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_BREAKAWAY_FROM_JOB</span></span><a class="headerlink" href="#subprocess.CREATE_BREAKAWAY_FROM_JOB" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">CREATE_BREAKAWAY_FROM_JOB</span></span><a class="headerlink" href="#subprocess.CREATE_BREAKAWAY_FROM_JOB" title="Link to this definition">¶</a></dt>
 <dd><p>A <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> <code class="docutils literal notranslate"><span class="pre">creationflags</span></code> parameter to specify that a new process
 is not associated with the job.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 </section>
 </section>
 <section id="older-high-level-api">
-<span id="call-function-trio"></span><h2>Older high-level API<a class="headerlink" href="#older-high-level-api" title="Permalink to this heading">¶</a></h2>
+<span id="call-function-trio"></span><h2>Older high-level API<a class="headerlink" href="#older-high-level-api" title="Link to this heading">¶</a></h2>
 <p>Prior to Python 3.5, these three functions comprised the high level API to
 subprocess. You can now use <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> in many cases, but lots of existing code
 calls these functions.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="subprocess.call">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.call" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.call" title="Link to this definition">¶</a></dt>
 <dd><p>Run the command described by <em>args</em>.  Wait for command to complete, then
 return the <a class="reference internal" href="#subprocess.Popen.returncode" title="subprocess.Popen.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a> attribute.</p>
 <p>Code needing to capture stdout or stderr should use <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> instead:</p>
@@ -2080,7 +2033,7 @@ longer works.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="subprocess.check_call">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">check_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.check_call" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">check_call</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.check_call" title="Link to this definition">¶</a></dt>
 <dd><p>Run command with arguments.  Wait for command to complete. If the return
 code was zero then return, otherwise raise <a class="reference internal" href="#subprocess.CalledProcessError" title="subprocess.CalledProcessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a>. The
 <a class="reference internal" href="#subprocess.CalledProcessError" title="subprocess.CalledProcessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a> object will have the return code in the
@@ -2117,7 +2070,7 @@ longer works.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="subprocess.check_output">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">check_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">universal_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.check_output" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">check_output</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stderr</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shell</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cwd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">universal_newlines</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">timeout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">other_popen_kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.check_output" title="Link to this definition">¶</a></dt>
 <dd><p>Run command with arguments and return its output.</p>
 <p>If the return code was non-zero it raises a <a class="reference internal" href="#subprocess.CalledProcessError" title="subprocess.CalledProcessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a>. The
 <a class="reference internal" href="#subprocess.CalledProcessError" title="subprocess.CalledProcessError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CalledProcessError</span></code></a> object will have the return code in the
@@ -2149,7 +2102,7 @@ or <em>universal_newlines</em> to <code class="docutils literal notranslate"><sp
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.1.</span></p>
+<p><span class="versionmodified added">Added in version 3.1.</span></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.3: </span><em>timeout</em> was added.</p>
@@ -2161,7 +2114,7 @@ or <em>universal_newlines</em> to <code class="docutils literal notranslate"><sp
 <p><span class="versionmodified changed">Changed in version 3.6: </span><em>encoding</em> and <em>errors</em> were added.  See <a class="reference internal" href="#subprocess.run" title="subprocess.run"><code class="xref py py-func docutils literal notranslate"><span class="pre">run()</span></code></a> for details.</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7: </span><em>text</em> was added as a more readable alias for <em>universal_newlines</em>.</p>
+<p><span class="versionmodified added">Added in version 3.7: </span><em>text</em> was added as a more readable alias for <em>universal_newlines</em>.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.12: </span>Changed Windows shell search order for <code class="docutils literal notranslate"><span class="pre">shell=True</span></code>. The current
@@ -2174,7 +2127,7 @@ longer works.</p>
 
 </section>
 <section id="replacing-older-functions-with-the-subprocess-module">
-<span id="subprocess-replacements"></span><h2>Replacing Older Functions with the <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> Module<a class="headerlink" href="#replacing-older-functions-with-the-subprocess-module" title="Permalink to this heading">¶</a></h2>
+<span id="subprocess-replacements"></span><h2>Replacing Older Functions with the <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> Module<a class="headerlink" href="#replacing-older-functions-with-the-subprocess-module" title="Link to this heading">¶</a></h2>
 <p>In this section, “a becomes b” means that b can be used as a replacement for a.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -2189,7 +2142,7 @@ return code. The output is still available as the
 <p>In the following examples, we assume that the relevant functions have already
 been imported from the <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> module.</p>
 <section id="replacing-bin-sh-shell-command-substitution">
-<h3>Replacing <strong class="program">/bin/sh</strong> shell command substitution<a class="headerlink" href="#replacing-bin-sh-shell-command-substitution" title="Permalink to this heading">¶</a></h3>
+<h3>Replacing <strong class="program">/bin/sh</strong> shell command substitution<a class="headerlink" href="#replacing-bin-sh-shell-command-substitution" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">output</span><span class="o">=</span><span class="k">$(</span>mycmd<span class="w"> </span>myarg<span class="k">)</span>
 </span></pre></div>
 </div>
@@ -2199,7 +2152,7 @@ been imported from the <a class="reference internal" href="#module-subprocess" t
 </div>
 </section>
 <section id="replacing-shell-pipeline">
-<h3>Replacing shell pipeline<a class="headerlink" href="#replacing-shell-pipeline" title="Permalink to this heading">¶</a></h3>
+<h3>Replacing shell pipeline<a class="headerlink" href="#replacing-shell-pipeline" title="Link to this heading">¶</a></h3>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">output</span><span class="o">=</span><span class="k">$(</span>dmesg<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>hda<span class="k">)</span>
 </span></pre></div>
 </div>
@@ -2223,7 +2176,7 @@ be used directly:</p>
 </div>
 </section>
 <section id="replacing-os-system">
-<h3>Replacing <a class="reference internal" href="os.html#os.system" title="os.system"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code></a><a class="headerlink" href="#replacing-os-system" title="Permalink to this heading">¶</a></h3>
+<h3>Replacing <a class="reference internal" href="os.html#os.system" title="os.system"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.system()</span></code></a><a class="headerlink" href="#replacing-os-system" title="Link to this heading">¶</a></h3>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">sts</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">system</span><span class="p">(</span><span class="s2">&quot;mycmd&quot;</span> <span class="o">+</span> <span class="s2">&quot; myarg&quot;</span><span class="p">)</span>
 </span><span data-line="2"><span class="c1"># becomes</span>
 </span><span data-line="3"><span class="n">retcode</span> <span class="o">=</span> <span class="n">call</span><span class="p">(</span><span class="s2">&quot;mycmd&quot;</span> <span class="o">+</span> <span class="s2">&quot; myarg&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
@@ -2251,7 +2204,7 @@ using the <a class="reference internal" href="#module-subprocess" title="subproc
 </div>
 </section>
 <section id="replacing-the-os-spawn-family">
-<h3>Replacing the <a class="reference internal" href="os.html#os.spawnl" title="os.spawnl"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.spawn</span></code></a> family<a class="headerlink" href="#replacing-the-os-spawn-family" title="Permalink to this heading">¶</a></h3>
+<h3>Replacing the <a class="reference internal" href="os.html#os.spawnl" title="os.spawnl"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.spawn</span></code></a> family<a class="headerlink" href="#replacing-the-os-spawn-family" title="Link to this heading">¶</a></h3>
 <p>P_NOWAIT example:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">pid</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">spawnlp</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">P_NOWAIT</span><span class="p">,</span> <span class="s2">&quot;/bin/mycmd&quot;</span><span class="p">,</span> <span class="s2">&quot;mycmd&quot;</span><span class="p">,</span> <span class="s2">&quot;myarg&quot;</span><span class="p">)</span>
 </span><span data-line="2"><span class="o">==&gt;</span>
@@ -2277,33 +2230,8 @@ using the <a class="reference internal" href="#module-subprocess" title="subproc
 </span></pre></div>
 </div>
 </section>
-<section id="replacing-os-popen-os-popen2-os-popen3">
-<h3>Replacing <a class="reference internal" href="os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen()</span></code></a>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen2()</span></code>, <code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen3()</span></code><a class="headerlink" href="#replacing-os-popen-os-popen2-os-popen3" title="Permalink to this heading">¶</a></h3>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">(</span><span class="n">child_stdin</span><span class="p">,</span> <span class="n">child_stdout</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen2</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
-</span><span data-line="2"><span class="o">==&gt;</span>
-</span><span data-line="3"><span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=</span><span class="n">bufsize</span><span class="p">,</span>
-</span><span data-line="4">          <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">close_fds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="5"><span class="p">(</span><span class="n">child_stdin</span><span class="p">,</span> <span class="n">child_stdout</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
-</span></pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">(</span><span class="n">child_stdin</span><span class="p">,</span>
-</span><span data-line="2"> <span class="n">child_stdout</span><span class="p">,</span>
-</span><span data-line="3"> <span class="n">child_stderr</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen3</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
-</span><span data-line="4"><span class="o">==&gt;</span>
-</span><span data-line="5"><span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=</span><span class="n">bufsize</span><span class="p">,</span>
-</span><span data-line="6">          <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">close_fds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="7"><span class="p">(</span><span class="n">child_stdin</span><span class="p">,</span>
-</span><span data-line="8"> <span class="n">child_stdout</span><span class="p">,</span>
-</span><span data-line="9"> <span class="n">child_stderr</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stderr</span><span class="p">)</span>
-</span></pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">(</span><span class="n">child_stdin</span><span class="p">,</span> <span class="n">child_stdout_and_stderr</span><span class="p">)</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen4</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">mode</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">)</span>
-</span><span data-line="2"><span class="o">==&gt;</span>
-</span><span data-line="3"><span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=</span><span class="n">bufsize</span><span class="p">,</span>
-</span><span data-line="4">          <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stderr</span><span class="o">=</span><span class="n">STDOUT</span><span class="p">,</span> <span class="n">close_fds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="5"><span class="p">(</span><span class="n">child_stdin</span><span class="p">,</span> <span class="n">child_stdout_and_stderr</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="p">)</span>
-</span></pre></div>
-</div>
+<section id="replacing-os-popen">
+<h3>Replacing <a class="reference internal" href="os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen()</span></code></a><a class="headerlink" href="#replacing-os-popen" title="Link to this heading">¶</a></h3>
 <p>Return code handling translates as follows:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">pipe</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">popen</span><span class="p">(</span><span class="n">cmd</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
 </span><span data-line="2"><span class="o">...</span>
@@ -2319,48 +2247,16 @@ using the <a class="reference internal" href="#module-subprocess" title="subproc
 </span></pre></div>
 </div>
 </section>
-<section id="replacing-functions-from-the-popen2-module">
-<h3>Replacing functions from the <code class="xref py py-mod docutils literal notranslate"><span class="pre">popen2</span></code> module<a class="headerlink" href="#replacing-functions-from-the-popen2-module" title="Permalink to this heading">¶</a></h3>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>If the cmd argument to popen2 functions is a string, the command is executed
-through /bin/sh.  If it is a list, the command is directly executed.</p>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">(</span><span class="n">child_stdout</span><span class="p">,</span> <span class="n">child_stdin</span><span class="p">)</span> <span class="o">=</span> <span class="n">popen2</span><span class="o">.</span><span class="n">popen2</span><span class="p">(</span><span class="s2">&quot;somestring&quot;</span><span class="p">,</span> <span class="n">bufsize</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-</span><span data-line="2"><span class="o">==&gt;</span>
-</span><span data-line="3"><span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">(</span><span class="s2">&quot;somestring&quot;</span><span class="p">,</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bufsize</span><span class="o">=</span><span class="n">bufsize</span><span class="p">,</span>
-</span><span data-line="4">          <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">close_fds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="5"><span class="p">(</span><span class="n">child_stdout</span><span class="p">,</span> <span class="n">child_stdin</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="p">)</span>
-</span></pre></div>
-</div>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">(</span><span class="n">child_stdout</span><span class="p">,</span> <span class="n">child_stdin</span><span class="p">)</span> <span class="o">=</span> <span class="n">popen2</span><span class="o">.</span><span class="n">popen2</span><span class="p">([</span><span class="s2">&quot;mycmd&quot;</span><span class="p">,</span> <span class="s2">&quot;myarg&quot;</span><span class="p">],</span> <span class="n">bufsize</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
-</span><span data-line="2"><span class="o">==&gt;</span>
-</span><span data-line="3"><span class="n">p</span> <span class="o">=</span> <span class="n">Popen</span><span class="p">([</span><span class="s2">&quot;mycmd&quot;</span><span class="p">,</span> <span class="s2">&quot;myarg&quot;</span><span class="p">],</span> <span class="n">bufsize</span><span class="o">=</span><span class="n">bufsize</span><span class="p">,</span>
-</span><span data-line="4">          <span class="n">stdin</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">stdout</span><span class="o">=</span><span class="n">PIPE</span><span class="p">,</span> <span class="n">close_fds</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-</span><span data-line="5"><span class="p">(</span><span class="n">child_stdout</span><span class="p">,</span> <span class="n">child_stdin</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">stdout</span><span class="p">,</span> <span class="n">p</span><span class="o">.</span><span class="n">stdin</span><span class="p">)</span>
-</span></pre></div>
-</div>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">popen2.Popen3</span></code> and <code class="xref py py-class docutils literal notranslate"><span class="pre">popen2.Popen4</span></code> basically work as
-<a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">subprocess.Popen</span></code></a>, except that:</p>
-<ul class="simple">
-<li><p><a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> raises an exception if the execution fails.</p></li>
-<li><p>The <em>capturestderr</em> argument is replaced with the <em>stderr</em> argument.</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">stdin=PIPE</span></code> and <code class="docutils literal notranslate"><span class="pre">stdout=PIPE</span></code> must be specified.</p></li>
-<li><p>popen2 closes all file descriptors by default, but you have to specify
-<code class="docutils literal notranslate"><span class="pre">close_fds=True</span></code> with <a class="reference internal" href="#subprocess.Popen" title="subprocess.Popen"><code class="xref py py-class docutils literal notranslate"><span class="pre">Popen</span></code></a> to guarantee this behavior on
-all platforms or past Python versions.</p></li>
-</ul>
-</section>
 </section>
 <section id="legacy-shell-invocation-functions">
-<h2>Legacy Shell Invocation Functions<a class="headerlink" href="#legacy-shell-invocation-functions" title="Permalink to this heading">¶</a></h2>
+<h2>Legacy Shell Invocation Functions<a class="headerlink" href="#legacy-shell-invocation-functions" title="Link to this heading">¶</a></h2>
 <p>This module also provides the following legacy functions from the 2.x
 <code class="docutils literal notranslate"><span class="pre">commands</span></code> module. These operations implicitly invoke the system shell and
 none of the guarantees described above regarding security and exception
 handling consistency are valid for these functions.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="subprocess.getstatusoutput">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">getstatusoutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.getstatusoutput" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">getstatusoutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.getstatusoutput" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">(exitcode,</span> <span class="pre">output)</span></code> of executing <em>cmd</em> in a shell.</p>
 <p>Execute the string <em>cmd</em> in a shell with <code class="xref py py-meth docutils literal notranslate"><span class="pre">Popen.check_output()</span></code> and
 return a 2-tuple <code class="docutils literal notranslate"><span class="pre">(exitcode,</span> <span class="pre">output)</span></code>.
@@ -2388,14 +2284,14 @@ of subprocess.  Example:</p>
 as it did in Python 3.3.3 and earlier.  exitcode has the same value as
 <a class="reference internal" href="#subprocess.Popen.returncode" title="subprocess.Popen.returncode"><code class="xref py py-attr docutils literal notranslate"><span class="pre">returncode</span></code></a>.</p>
 </div>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11: </span>Added <em>encoding</em> and <em>errors</em> arguments.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span>Added the <em>encoding</em> and <em>errors</em> parameters.</p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="subprocess.getoutput">
-<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">getoutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.getoutput" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">subprocess.</span></span><span class="sig-name descname"><span class="pre">getoutput</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cmd</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoding</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#subprocess.getoutput" title="Link to this definition">¶</a></dt>
 <dd><p>Return output (stdout and stderr) of executing <em>cmd</em> in a shell.</p>
 <p>Like <a class="reference internal" href="#subprocess.getstatusoutput" title="subprocess.getstatusoutput"><code class="xref py py-func docutils literal notranslate"><span class="pre">getstatusoutput()</span></code></a>, except the exit code is ignored and the return
 value is a string containing the command’s output.  Example:</p>
@@ -2409,16 +2305,16 @@ value is a string containing the command’s output.  Example:</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.3.4: </span>Windows support added</p>
 </div>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11: </span>Added <em>encoding</em> and <em>errors</em> arguments.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span>Added the <em>encoding</em> and <em>errors</em> parameters.</p>
 </div>
 </dd></dl>
 
 </section>
 <section id="notes">
-<h2>Notes<a class="headerlink" href="#notes" title="Permalink to this heading">¶</a></h2>
+<h2>Notes<a class="headerlink" href="#notes" title="Link to this heading">¶</a></h2>
 <section id="converting-an-argument-sequence-to-a-string-on-windows">
-<span id="converting-argument-sequence"></span><h3>Converting an argument sequence to a string on Windows<a class="headerlink" href="#converting-an-argument-sequence-to-a-string-on-windows" title="Permalink to this heading">¶</a></h3>
+<span id="converting-argument-sequence"></span><h3>Converting an argument sequence to a string on Windows<a class="headerlink" href="#converting-an-argument-sequence-to-a-string-on-windows" title="Link to this heading">¶</a></h3>
 <p>On Windows, an <em>args</em> sequence is converted to a string that can be parsed
 using the following rules (which correspond to the rules used by the MS C
 runtime):</p>
@@ -2447,36 +2343,23 @@ described in rule 3.</p></li>
 </dl>
 </div>
 </section>
-<section id="disabling-use-of-vfork-or-posix-spawn">
-<span id="disable-posix-spawn"></span><span id="disable-vfork"></span><h3>Disabling use of <code class="docutils literal notranslate"><span class="pre">vfork()</span></code> or <code class="docutils literal notranslate"><span class="pre">posix_spawn()</span></code><a class="headerlink" href="#disabling-use-of-vfork-or-posix-spawn" title="Permalink to this heading">¶</a></h3>
+<section id="disable-use-of-posix-spawn">
+<span id="disable-posix-spawn"></span><h3>Disable use of <code class="docutils literal notranslate"><span class="pre">posix_spawn()</span></code><a class="headerlink" href="#disable-use-of-posix-spawn" title="Link to this heading">¶</a></h3>
 <p>On Linux, <a class="reference internal" href="#module-subprocess" title="subprocess: Subprocess management."><code class="xref py py-mod docutils literal notranslate"><span class="pre">subprocess</span></code></a> defaults to using the <code class="docutils literal notranslate"><span class="pre">vfork()</span></code> system call
 internally when it is safe to do so rather than <code class="docutils literal notranslate"><span class="pre">fork()</span></code>. This greatly
 improves performance.</p>
-<p>If you ever encounter a presumed highly unusual situation where you need to
-prevent <code class="docutils literal notranslate"><span class="pre">vfork()</span></code> from being used by Python, you can set the
-<code class="xref py py-const docutils literal notranslate"><span class="pre">subprocess._USE_VFORK</span></code> attribute to a false value.</p>
-<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">subprocess</span><span class="o">.</span><span class="n">_USE_VFORK</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># See CPython issue gh-NNNNNN.</span>
-</span></pre></div>
-</div>
-<p>Setting this has no impact on use of <code class="docutils literal notranslate"><span class="pre">posix_spawn()</span></code> which could use
-<code class="docutils literal notranslate"><span class="pre">vfork()</span></code> internally within its libc implementation.  There is a similar
-<code class="xref py py-const docutils literal notranslate"><span class="pre">subprocess._USE_POSIX_SPAWN</span></code> attribute if you need to prevent use of
-that.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">subprocess</span><span class="o">.</span><span class="n">_USE_POSIX_SPAWN</span> <span class="o">=</span> <span class="kc">False</span>  <span class="c1"># See CPython issue gh-NNNNNN.</span>
 </span></pre></div>
 </div>
-<p>It is safe to set these to false on any Python version. They will have no
-effect on older versions when unsupported. Do not assume the attributes are
-available to read. Despite their names, a true value does not indicate that the
+<p>It is safe to set this to false on any Python version. It will have no
+effect on older or newer versions where unsupported. Do not assume the attribute
+is available to read. Despite the name, a true value does not indicate the
 corresponding function will be used, only that it may be.</p>
 <p>Please file issues any time you have to use these private knobs with a way to
 reproduce the issue you were seeing. Link to that issue from a comment in your
 code.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.8: </span><code class="docutils literal notranslate"><span class="pre">_USE_POSIX_SPAWN</span></code></p>
-</div>
-<div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11: </span><code class="docutils literal notranslate"><span class="pre">_USE_VFORK</span></code></p>
+<p><span class="versionmodified added">Added in version 3.8: </span><code class="docutils literal notranslate"><span class="pre">_USE_POSIX_SPAWN</span></code></p>
 </div>
 </section>
 </section>
@@ -2522,8 +2405,8 @@ code.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

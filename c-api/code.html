@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Code Objects - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="File Objects" href="file.html" /><link rel="prev" title="Cell Objects" href="cell.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Code Objects - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="File Objects" href="file.html" /><link rel="prev" title="Cell Objects" href="cell.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -743,39 +753,53 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="code-objects">
-<span id="codeobjects"></span><span id="index-0"></span><h1>Code Objects<a class="headerlink" href="#code-objects" title="Permalink to this heading">¶</a></h1>
+<span id="codeobjects"></span><span id="index-0"></span><h1>Code Objects<a class="headerlink" href="#code-objects" title="Link to this heading">¶</a></h1>
 <p>Code objects are a low-level detail of the CPython implementation.
 Each one represents a chunk of executable code that hasn’t yet been
 bound into a function.</p>
 <dl class="c type">
 <dt class="sig sig-object c" id="c.PyCodeObject">
-<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCodeObject</span></span></span><a class="headerlink" href="#c.PyCodeObject" title="Permalink to this definition">¶</a><br /></dt>
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCodeObject</span></span></span><a class="headerlink" href="#c.PyCodeObject" title="Link to this definition">¶</a><br /></dt>
 <dd><p>The C structure of the objects used to describe code objects.  The
 fields of this type are subject to change at any time.</p>
 </dd></dl>
 
 <dl class="c var">
 <dt class="sig sig-object c" id="c.PyCode_Type">
-<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><span class="n"><span class="pre">PyTypeObject</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Type</span></span></span><a class="headerlink" href="#c.PyCode_Type" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><span class="n"><span class="pre">PyTypeObject</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Type</span></span></span><a class="headerlink" href="#c.PyCode_Type" title="Link to this definition">¶</a><br /></dt>
 <dd><p>This is an instance of <a class="reference internal" href="type.html#c.PyTypeObject" title="PyTypeObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyTypeObject</span></code></a> representing the Python
-<a class="reference internal" href="../library/code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-class docutils literal notranslate"><span class="pre">code</span></code></a> type.</p>
+<a class="reference internal" href="../reference/datamodel.html#code-objects"><span class="std std-ref">code object</span></a>.</p>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_Check">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Check</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_Check" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return true if <em>co</em> is a <a class="reference internal" href="../library/code.html#module-code" title="code: Facilities to implement read-eval-print loops."><code class="xref py py-class docutils literal notranslate"><span class="pre">code</span></code></a> object.  This function always succeeds.</p>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Check</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_Check" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Return true if <em>co</em> is a <a class="reference internal" href="../reference/datamodel.html#code-objects"><span class="std std-ref">code object</span></a>.
+This function always succeeds.</p>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_GetNumFree">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetNumFree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetNumFree" title="Permalink to this definition">¶</a><br /></dt>
-<dd><p>Return the number of free variables in <em>co</em>.</p>
+<a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetNumFree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetNumFree" title="Link to this definition">¶</a><br /></dt>
+<dd><p>Return the number of free variables in a code object.</p>
+</dd></dl>
+
+<dl class="c function">
+<dt class="sig sig-object c" id="c.PyUnstable_Code_GetFirstFree">
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_GetFirstFree</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_GetFirstFree" title="Link to this definition">¶</a><br /></dt>
+<dd><div class="unstable-c-api warning admonition">
+<em>This is <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable API</span></a>. It may change without warning in minor releases.</em></div>
+<p>Return the position of the first free variable in a code object.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span>Renamed from <code class="docutils literal notranslate"><span class="pre">PyCode_GetFirstFree</span></code> as part of <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable C API</span></a>.
+The old name is deprecated, but will remain available until the
+signature changes again.</p>
+</div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyUnstable_Code_New">
-<a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_New</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">kwonlyargcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">nlocals</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">stacksize</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">flags</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">consts</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">varnames</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">freevars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cellvars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">qualname</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">firstlineno</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">linetable</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">exceptiontable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_New" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_New</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">kwonlyargcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">nlocals</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">stacksize</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">flags</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">consts</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">varnames</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">freevars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cellvars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">qualname</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">firstlineno</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">linetable</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">exceptiontable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_New" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="unstable-c-api warning admonition">
 <em>This is <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable API</span></a>. It may change without warning in minor releases.</em></div>
 <p>Return a new code object.  If you need a dummy code object to create a frame,
@@ -797,13 +821,13 @@ signature changes again.</p>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyUnstable_Code_NewWithPosOnlyArgs">
-<a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_NewWithPosOnlyArgs</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">posonlyargcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">kwonlyargcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">nlocals</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">stacksize</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">flags</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">consts</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">varnames</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">freevars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cellvars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">qualname</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">firstlineno</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">linetable</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">exceptiontable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_NewWithPosOnlyArgs" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_NewWithPosOnlyArgs</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">argcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">posonlyargcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">kwonlyargcount</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">nlocals</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">stacksize</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">flags</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">consts</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">names</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">varnames</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">freevars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">cellvars</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">name</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">qualname</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">firstlineno</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">linetable</span></span>, <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">exceptiontable</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_NewWithPosOnlyArgs" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="unstable-c-api warning admonition">
 <em>This is <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable API</span></a>. It may change without warning in minor releases.</em></div>
 <p>Similar to <a class="reference internal" href="#c.PyUnstable_Code_New" title="PyUnstable_Code_New"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyUnstable_Code_New()</span></code></a>, but with an extra “posonlyargcount” for positional-only arguments.
 The same caveats that apply to <code class="docutils literal notranslate"><span class="pre">PyUnstable_Code_New</span></code> also apply to this function.</p>
 <div class="versionadded" id="index-2">
-<p><span class="versionmodified added">New in version 3.8: </span>as <code class="docutils literal notranslate"><span class="pre">PyCode_NewWithPosOnlyArgs</span></code></p>
+<p><span class="versionmodified added">Added in version 3.8: </span>as <code class="docutils literal notranslate"><span class="pre">PyCode_NewWithPosOnlyArgs</span></code></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.11: </span>Added <code class="docutils literal notranslate"><span class="pre">qualname</span></code> and  <code class="docutils literal notranslate"><span class="pre">exceptiontable</span></code> parameters.</p>
@@ -817,35 +841,35 @@ signature changes again.</p>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_NewEmpty">
-<a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_NewEmpty</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">funcname</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">firstlineno</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_NewEmpty" title="Permalink to this definition">¶</a><br /></dt>
-<dd><em class="refcount">Return value: New reference.</em><p>Return a new empty code object with the specified filename,
+<a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_NewEmpty</span></span></span><span class="sig-paren">(</span><span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">filename</span></span>, <span class="k"><span class="pre">const</span></span><span class="w"> </span><span class="kt"><span class="pre">char</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">funcname</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">firstlineno</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_NewEmpty" title="Link to this definition">¶</a><br /></dt>
+<dd><em class="refcount return_new_ref">Return value: New reference.</em><p>Return a new empty code object with the specified filename,
 function name, and first line number. The resulting code
 object will raise an <code class="docutils literal notranslate"><span class="pre">Exception</span></code> if executed.</p>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_Addr2Line">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Addr2Line</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">byte_offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_Addr2Line" title="Permalink to this definition">¶</a><br /></dt>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Addr2Line</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">byte_offset</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_Addr2Line" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Return the line number of the instruction that occurs on or before <code class="docutils literal notranslate"><span class="pre">byte_offset</span></code> and ends after it.
 If you just need the line number of a frame, use <a class="reference internal" href="frame.html#c.PyFrame_GetLineNumber" title="PyFrame_GetLineNumber"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyFrame_GetLineNumber()</span></code></a> instead.</p>
-<p>For efficiently iterating over the line numbers in a code object, use <a class="reference external" href="https://peps.python.org/pep-0626/#out-of-process-debuggers-and-profilers">the API described in PEP 626</a>.</p>
+<p>For efficiently iterating over the line numbers in a code object, use <span class="target" id="index-3"></span><a class="pep reference external" href="https://peps.python.org/pep-0626/#out-of-process-debuggers-and-profilers"><strong>the API described in PEP 626</strong></a>.</p>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_Addr2Location">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Addr2Location</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">byte_offset</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">start_line</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">start_column</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">end_line</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">end_column</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_Addr2Location" title="Permalink to this definition">¶</a><br /></dt>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_Addr2Location</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">byte_offset</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">start_line</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">start_column</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">end_line</span></span>, <span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">end_column</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_Addr2Location" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Sets the passed <code class="docutils literal notranslate"><span class="pre">int</span></code> pointers to the source code line and column numbers
 for the instruction at <code class="docutils literal notranslate"><span class="pre">byte_offset</span></code>. Sets the value to <code class="docutils literal notranslate"><span class="pre">0</span></code> when
 information is not available for any particular element.</p>
 <p>Returns <code class="docutils literal notranslate"><span class="pre">1</span></code> if the function succeeds and 0 otherwise.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_GetCode">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetCode</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetCode" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetCode</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetCode" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Equivalent to the Python code <code class="docutils literal notranslate"><span class="pre">getattr(co,</span> <span class="pre">'co_code')</span></code>.
 Returns a strong reference to a <a class="reference internal" href="bytes.html#c.PyBytesObject" title="PyBytesObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyBytesObject</span></code></a> representing the
 bytecode in a code object. On error, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> is returned and an exception
@@ -854,83 +878,83 @@ is raised.</p>
 not necessarily represent the bytecode actually executed by CPython. The
 primary use case for this function is debuggers and profilers.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_GetVarnames">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetVarnames</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetVarnames" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetVarnames</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetVarnames" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Equivalent to the Python code <code class="docutils literal notranslate"><span class="pre">getattr(co,</span> <span class="pre">'co_varnames')</span></code>.
 Returns a new reference to a <a class="reference internal" href="tuple.html#c.PyTupleObject" title="PyTupleObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyTupleObject</span></code></a> containing the names of
 the local variables. On error, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> is returned and an exception
 is raised.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_GetCellvars">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetCellvars</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetCellvars" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetCellvars</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetCellvars" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Equivalent to the Python code <code class="docutils literal notranslate"><span class="pre">getattr(co,</span> <span class="pre">'co_cellvars')</span></code>.
 Returns a new reference to a <a class="reference internal" href="tuple.html#c.PyTupleObject" title="PyTupleObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyTupleObject</span></code></a> containing the names of
 the local variables that are referenced by nested functions. On error, <code class="docutils literal notranslate"><span class="pre">NULL</span></code>
 is returned and an exception is raised.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_GetFreevars">
-<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetFreevars</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetFreevars" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_GetFreevars</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_GetFreevars" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Equivalent to the Python code <code class="docutils literal notranslate"><span class="pre">getattr(co,</span> <span class="pre">'co_freevars')</span></code>.
 Returns a new reference to a <a class="reference internal" href="tuple.html#c.PyTupleObject" title="PyTupleObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyTupleObject</span></code></a> containing the names of
 the free variables. On error, <code class="docutils literal notranslate"><span class="pre">NULL</span></code> is returned and an exception is raised.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_AddWatcher">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_AddWatcher</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCode_WatchCallback" title="PyCode_WatchCallback"><span class="n"><span class="pre">PyCode_WatchCallback</span></span></a><span class="w"> </span><span class="n"><span class="pre">callback</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_AddWatcher" title="Permalink to this definition">¶</a><br /></dt>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_AddWatcher</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="#c.PyCode_WatchCallback" title="PyCode_WatchCallback"><span class="n"><span class="pre">PyCode_WatchCallback</span></span></a><span class="w"> </span><span class="n"><span class="pre">callback</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_AddWatcher" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Register <em>callback</em> as a code object watcher for the current interpreter.
 Return an ID which may be passed to <a class="reference internal" href="#c.PyCode_ClearWatcher" title="PyCode_ClearWatcher"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyCode_ClearWatcher()</span></code></a>.
 In case of error (e.g. no more watcher IDs available),
 return <code class="docutils literal notranslate"><span class="pre">-1</span></code> and set an exception.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.12.</span></p>
+<p><span class="versionmodified added">Added in version 3.12.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyCode_ClearWatcher">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_ClearWatcher</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">watcher_id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_ClearWatcher" title="Permalink to this definition">¶</a><br /></dt>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_ClearWatcher</span></span></span><span class="sig-paren">(</span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="n"><span class="pre">watcher_id</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyCode_ClearWatcher" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Clear watcher identified by <em>watcher_id</em> previously returned from
 <a class="reference internal" href="#c.PyCode_AddWatcher" title="PyCode_AddWatcher"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyCode_AddWatcher()</span></code></a> for the current interpreter.
 Return <code class="docutils literal notranslate"><span class="pre">0</span></code> on success, or <code class="docutils literal notranslate"><span class="pre">-1</span></code> and set an exception on error
 (e.g. if the given <em>watcher_id</em> was never registered.)</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.12.</span></p>
+<p><span class="versionmodified added">Added in version 3.12.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c type">
 <dt class="sig sig-object c" id="c.PyCodeEvent">
-<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCodeEvent</span></span></span><a class="headerlink" href="#c.PyCodeEvent" title="Permalink to this definition">¶</a><br /></dt>
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyCodeEvent</span></span></span><a class="headerlink" href="#c.PyCodeEvent" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Enumeration of possible code object watcher events:
 - <code class="docutils literal notranslate"><span class="pre">PY_CODE_EVENT_CREATE</span></code>
 - <code class="docutils literal notranslate"><span class="pre">PY_CODE_EVENT_DESTROY</span></code></p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.12.</span></p>
+<p><span class="versionmodified added">Added in version 3.12.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c type">
 <dt class="sig sig-object c" id="c.PyCode_WatchCallback">
-<span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_WatchCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#c.PyCodeEvent" title="PyCodeEvent"><span class="n"><span class="pre">PyCodeEvent</span></span></a><span class="w"> </span><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.PyCode_WatchCallback" title="Permalink to this definition">¶</a><br /></dt>
+<span class="k"><span class="pre">typedef</span></span><span class="w"> </span><span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="p"><span class="pre">(</span></span><span class="p"><span class="pre">*</span></span><span class="sig-name descname"><span class="n"><span class="pre">PyCode_WatchCallback</span></span></span><span class="p"><span class="pre">)</span></span><span class="p"><span class="pre">(</span></span><a class="reference internal" href="#c.PyCodeEvent" title="PyCodeEvent"><span class="n"><span class="pre">PyCodeEvent</span></span></a><span class="w"> </span><span class="n"><span class="pre">event</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#c.PyCodeObject" title="PyCodeObject"><span class="n"><span class="pre">PyCodeObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">co</span></span><span class="p"><span class="pre">)</span></span><a class="headerlink" href="#c.PyCode_WatchCallback" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Type of a code object watcher callback function.</p>
 <p>If <em>event</em> is <code class="docutils literal notranslate"><span class="pre">PY_CODE_EVENT_CREATE</span></code>, then the callback is invoked
 after <cite>co</cite> has been fully initialized. Otherwise, the callback is invoked
@@ -955,13 +979,13 @@ set. This means the callback may not call any other API that can set an
 exception unless it saves and clears the exception state first, and restores
 it before returning.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.12.</span></p>
+<p><span class="versionmodified added">Added in version 3.12.</span></p>
 </div>
 </dd></dl>
 
 </section>
 <section id="extra-information">
-<h1>Extra information<a class="headerlink" href="#extra-information" title="Permalink to this heading">¶</a></h1>
+<h1>Extra information<a class="headerlink" href="#extra-information" title="Link to this heading">¶</a></h1>
 <p>To support low-level extensions to frame evaluation, such as external
 just-in-time compilers, it is possible to attach arbitrary extra data to
 code objects.</p>
@@ -970,7 +994,7 @@ this functionality is a CPython implementation detail, and the API
 may change without deprecation warnings.</p>
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyUnstable_Eval_RequestCodeExtraIndex">
-<a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Eval_RequestCodeExtraIndex</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typeobj.html#c.freefunc" title="freefunc"><span class="n"><span class="pre">freefunc</span></span></a><span class="w"> </span><span class="n"><span class="pre">free</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Eval_RequestCodeExtraIndex" title="Permalink to this definition">¶</a><br /></dt>
+<a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Eval_RequestCodeExtraIndex</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="typeobj.html#c.freefunc" title="freefunc"><span class="n"><span class="pre">freefunc</span></span></a><span class="w"> </span><span class="n"><span class="pre">free</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Eval_RequestCodeExtraIndex" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="unstable-c-api warning admonition">
 <em>This is <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable API</span></a>. It may change without warning in minor releases.</em></div>
 <p>Return a new an opaque index value used to adding data to code objects.</p>
@@ -980,8 +1004,8 @@ data on individual code objects.</p>
 <p>If <em>free</em> is not <code class="docutils literal notranslate"><span class="pre">NULL</span></code>: when a code object is deallocated,
 <em>free</em> will be called on non-<code class="docutils literal notranslate"><span class="pre">NULL</span></code> data stored under the new index.
 Use <a class="reference internal" href="refcounting.html#c.Py_DecRef" title="Py_DecRef"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_DecRef()</span></code></a> when storing <a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><code class="xref c c-type docutils literal notranslate"><span class="pre">PyObject</span></code></a>.</p>
-<div class="versionadded" id="index-3">
-<p><span class="versionmodified added">New in version 3.6: </span>as <code class="docutils literal notranslate"><span class="pre">_PyEval_RequestCodeExtraIndex</span></code></p>
+<div class="versionadded" id="index-4">
+<p><span class="versionmodified added">Added in version 3.6: </span>as <code class="docutils literal notranslate"><span class="pre">_PyEval_RequestCodeExtraIndex</span></code></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.12: </span>Renamed to <code class="docutils literal notranslate"><span class="pre">PyUnstable_Eval_RequestCodeExtraIndex</span></code>.
@@ -992,15 +1016,15 @@ changes.</p>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyUnstable_Code_GetExtra">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_GetExtra</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">index</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">extra</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_GetExtra" title="Permalink to this definition">¶</a><br /></dt>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_GetExtra</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">index</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">extra</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_GetExtra" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="unstable-c-api warning admonition">
 <em>This is <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable API</span></a>. It may change without warning in minor releases.</em></div>
 <p>Set <em>extra</em> to the extra data stored under the given index.
 Return 0 on success. Set an exception and return -1 on failure.</p>
 <p>If no data was set under the index, set <em>extra</em> to <code class="docutils literal notranslate"><span class="pre">NULL</span></code> and return
 0 without setting an exception.</p>
-<div class="versionadded" id="index-4">
-<p><span class="versionmodified added">New in version 3.6: </span>as <code class="docutils literal notranslate"><span class="pre">_PyCode_GetExtra</span></code></p>
+<div class="versionadded" id="index-5">
+<p><span class="versionmodified added">Added in version 3.6: </span>as <code class="docutils literal notranslate"><span class="pre">_PyCode_GetExtra</span></code></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.12: </span>Renamed to <code class="docutils literal notranslate"><span class="pre">PyUnstable_Code_GetExtra</span></code>.
@@ -1011,13 +1035,13 @@ changes.</p>
 
 <dl class="c function">
 <dt class="sig sig-object c" id="c.PyUnstable_Code_SetExtra">
-<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_SetExtra</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">index</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">extra</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_SetExtra" title="Permalink to this definition">¶</a><br /></dt>
+<span class="kt"><span class="pre">int</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">PyUnstable_Code_SetExtra</span></span></span><span class="sig-paren">(</span><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n"><span class="pre">PyObject</span></span></a><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">code</span></span>, <a class="reference internal" href="intro.html#c.Py_ssize_t" title="Py_ssize_t"><span class="n"><span class="pre">Py_ssize_t</span></span></a><span class="w"> </span><span class="n"><span class="pre">index</span></span>, <span class="kt"><span class="pre">void</span></span><span class="w"> </span><span class="p"><span class="pre">*</span></span><span class="n"><span class="pre">extra</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyUnstable_Code_SetExtra" title="Link to this definition">¶</a><br /></dt>
 <dd><div class="unstable-c-api warning admonition">
 <em>This is <a class="reference internal" href="stable.html#unstable-c-api"><span class="std std-ref">Unstable API</span></a>. It may change without warning in minor releases.</em></div>
 <p>Set the extra data stored under the given index to <em>extra</em>.
 Return 0 on success. Set an exception and return -1 on failure.</p>
-<div class="versionadded" id="index-5">
-<p><span class="versionmodified added">New in version 3.6: </span>as <code class="docutils literal notranslate"><span class="pre">_PyCode_SetExtra</span></code></p>
+<div class="versionadded" id="index-6">
+<p><span class="versionmodified added">Added in version 3.6: </span>as <code class="docutils literal notranslate"><span class="pre">_PyCode_SetExtra</span></code></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.12: </span>Renamed to <code class="docutils literal notranslate"><span class="pre">PyUnstable_Code_SetExtra</span></code>.
@@ -1068,8 +1092,8 @@ changes.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

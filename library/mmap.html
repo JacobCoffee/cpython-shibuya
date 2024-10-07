@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>mmap — Memory-mapped file support - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Internet Data Handling" href="netdata.html" /><link rel="prev" title="signal — Set handlers for asynchronous events" href="signal.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>mmap — Memory-mapped file support - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Internet Data Handling" href="netdata.html" /><link rel="prev" title="signal — Set handlers for asynchronous events" href="signal.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -687,65 +697,8 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#mmap.mmap"><code class="docutils literal notranslate"><span class="pre">mmap</span></code></a><ul>
-<li><a class="reference internal" href="#mmap.mmap.close"><code class="docutils literal notranslate"><span class="pre">mmap.close()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.closed"><code class="docutils literal notranslate"><span class="pre">mmap.closed</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.find"><code class="docutils literal notranslate"><span class="pre">mmap.find()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.flush"><code class="docutils literal notranslate"><span class="pre">mmap.flush()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.madvise"><code class="docutils literal notranslate"><span class="pre">mmap.madvise()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.move"><code class="docutils literal notranslate"><span class="pre">mmap.move()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.read"><code class="docutils literal notranslate"><span class="pre">mmap.read()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.read_byte"><code class="docutils literal notranslate"><span class="pre">mmap.read_byte()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.readline"><code class="docutils literal notranslate"><span class="pre">mmap.readline()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.resize"><code class="docutils literal notranslate"><span class="pre">mmap.resize()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.rfind"><code class="docutils literal notranslate"><span class="pre">mmap.rfind()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.seek"><code class="docutils literal notranslate"><span class="pre">mmap.seek()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.size"><code class="docutils literal notranslate"><span class="pre">mmap.size()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.tell"><code class="docutils literal notranslate"><span class="pre">mmap.tell()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.write"><code class="docutils literal notranslate"><span class="pre">mmap.write()</span></code></a></li>
-<li><a class="reference internal" href="#mmap.mmap.write_byte"><code class="docutils literal notranslate"><span class="pre">mmap.write_byte()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#madv-constants">MADV_* Constants</a><ul>
-<li><a class="reference internal" href="#mmap.MADV_NORMAL"><code class="docutils literal notranslate"><span class="pre">MADV_NORMAL</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_RANDOM"><code class="docutils literal notranslate"><span class="pre">MADV_RANDOM</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_SEQUENTIAL"><code class="docutils literal notranslate"><span class="pre">MADV_SEQUENTIAL</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_WILLNEED"><code class="docutils literal notranslate"><span class="pre">MADV_WILLNEED</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_DONTNEED"><code class="docutils literal notranslate"><span class="pre">MADV_DONTNEED</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_REMOVE"><code class="docutils literal notranslate"><span class="pre">MADV_REMOVE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_DONTFORK"><code class="docutils literal notranslate"><span class="pre">MADV_DONTFORK</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_DOFORK"><code class="docutils literal notranslate"><span class="pre">MADV_DOFORK</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_HWPOISON"><code class="docutils literal notranslate"><span class="pre">MADV_HWPOISON</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_MERGEABLE"><code class="docutils literal notranslate"><span class="pre">MADV_MERGEABLE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_UNMERGEABLE"><code class="docutils literal notranslate"><span class="pre">MADV_UNMERGEABLE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_SOFT_OFFLINE"><code class="docutils literal notranslate"><span class="pre">MADV_SOFT_OFFLINE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_HUGEPAGE"><code class="docutils literal notranslate"><span class="pre">MADV_HUGEPAGE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_NOHUGEPAGE"><code class="docutils literal notranslate"><span class="pre">MADV_NOHUGEPAGE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_DONTDUMP"><code class="docutils literal notranslate"><span class="pre">MADV_DONTDUMP</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_DODUMP"><code class="docutils literal notranslate"><span class="pre">MADV_DODUMP</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_FREE"><code class="docutils literal notranslate"><span class="pre">MADV_FREE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_NOSYNC"><code class="docutils literal notranslate"><span class="pre">MADV_NOSYNC</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_AUTOSYNC"><code class="docutils literal notranslate"><span class="pre">MADV_AUTOSYNC</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_NOCORE"><code class="docutils literal notranslate"><span class="pre">MADV_NOCORE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_CORE"><code class="docutils literal notranslate"><span class="pre">MADV_CORE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_PROTECT"><code class="docutils literal notranslate"><span class="pre">MADV_PROTECT</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_FREE_REUSABLE"><code class="docutils literal notranslate"><span class="pre">MADV_FREE_REUSABLE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MADV_FREE_REUSE"><code class="docutils literal notranslate"><span class="pre">MADV_FREE_REUSE</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#map-constants">MAP_* Constants</a><ul>
-<li><a class="reference internal" href="#mmap.MAP_SHARED"><code class="docutils literal notranslate"><span class="pre">MAP_SHARED</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_PRIVATE"><code class="docutils literal notranslate"><span class="pre">MAP_PRIVATE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_DENYWRITE"><code class="docutils literal notranslate"><span class="pre">MAP_DENYWRITE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_EXECUTABLE"><code class="docutils literal notranslate"><span class="pre">MAP_EXECUTABLE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_ANON"><code class="docutils literal notranslate"><span class="pre">MAP_ANON</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_ANONYMOUS"><code class="docutils literal notranslate"><span class="pre">MAP_ANONYMOUS</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_POPULATE"><code class="docutils literal notranslate"><span class="pre">MAP_POPULATE</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_STACK"><code class="docutils literal notranslate"><span class="pre">MAP_STACK</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_ALIGNED_SUPER"><code class="docutils literal notranslate"><span class="pre">MAP_ALIGNED_SUPER</span></code></a></li>
-<li><a class="reference internal" href="#mmap.MAP_CONCEAL"><code class="docutils literal notranslate"><span class="pre">MAP_CONCEAL</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#madv-constants">MADV_* Constants</a></li>
+<li><a class="reference internal" href="#map-constants">MAP_* Constants</a></li>
 </ul>
 </div><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
@@ -800,12 +753,11 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-mmap">
-<span id="mmap-memory-mapped-file-support"></span><h1><a class="reference internal" href="#module-mmap" title="mmap: Interface to memory-mapped files for Unix and Windows."><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code></a> — Memory-mapped file support<a class="headerlink" href="#module-mmap" title="Permalink to this heading">¶</a></h1>
+<span id="mmap-memory-mapped-file-support"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">mmap</span></code> — Memory-mapped file support<a class="headerlink" href="#module-mmap" title="Link to this heading">¶</a></h1>
 <hr class="docutils" />
 <div class="availability docutils container">
-<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Emscripten, not WASI.</p>
-<p>This module does not work or is not available on WebAssembly platforms
-<code class="docutils literal notranslate"><span class="pre">wasm32-emscripten</span></code> and <code class="docutils literal notranslate"><span class="pre">wasm32-wasi</span></code>. See
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not WASI.</p>
+<p>This module does not work or is not available on WebAssembly. See
 <a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a> for more information.</p>
 </div>
 <p>Memory-mapped file objects behave like both <a class="reference internal" href="stdtypes.html#bytearray" title="bytearray"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytearray</span></code></a> and like
@@ -818,7 +770,7 @@ the current file position, and <code class="xref py py-meth docutils literal not
 <p>A memory-mapped file is created by the <a class="reference internal" href="#mmap.mmap" title="mmap.mmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">mmap</span></code></a> constructor, which is
 different on Unix and on Windows.  In either case you must provide a file
 descriptor for a file opened for update. If you wish to map an existing Python
-file object, use its <code class="xref py py-meth docutils literal notranslate"><span class="pre">fileno()</span></code> method to obtain the correct value for the
+file object, use its <a class="reference internal" href="io.html#io.IOBase.fileno" title="io.IOBase.fileno"><code class="xref py py-meth docutils literal notranslate"><span class="pre">fileno()</span></code></a> method to obtain the correct value for the
 <em>fileno</em> parameter.  Otherwise, you can open the file using the
 <a class="reference internal" href="os.html#os.open" title="os.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.open()</span></code></a> function, which returns a file descriptor directly (the file
 still needs to be closed when done).</p>
@@ -847,7 +799,7 @@ update the underlying file.</p>
 <p>To map anonymous memory, -1 should be passed as the fileno along with the length.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mmap.mmap">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">mmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagname=None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access=ACCESS_DEFAULT</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">mmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tagname</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ACCESS_DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap" title="Link to this definition">¶</a></dt>
 <dd><p><strong>(Windows version)</strong> Maps <em>length</em> bytes from the file specified by the
 file handle <em>fileno</em>, and creates a mmap object.  If <em>length</em> is larger
 than the current size of the file, the file is extended to contain <em>length</em>
@@ -859,8 +811,8 @@ the mapping.  Windows allows you to have many different mappings against
 the same file.  If you specify the name of an existing tag, that tag is
 opened, otherwise a new tag of this name is created.  If this parameter is
 omitted or <code class="docutils literal notranslate"><span class="pre">None</span></code>, the mapping is created without a name.  Avoiding the
-use of the tag parameter will assist in keeping your code portable between
-Unix and Windows.</p>
+use of the <em>tagname</em> parameter will assist in keeping your code portable
+between Unix and Windows.</p>
 <p><em>offset</em> may be specified as a non-negative integer offset. mmap references
 will be relative to the offset from the beginning of the file. <em>offset</em>
 defaults to 0.  <em>offset</em> must be a multiple of the <code class="xref py py-const docutils literal notranslate"><span class="pre">ALLOCATIONGRANULARITY</span></code>.</p>
@@ -869,7 +821,7 @@ defaults to 0.  <em>offset</em> must be a multiple of the <code class="xref py p
 
 <dl class="py class">
 <dt class="sig sig-object py">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">mmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags=MAP_SHARED</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prot=PROT_WRITE|PROT_READ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access=ACCESS_DEFAULT</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="optional">]</span><span class="sig-paren">)</span></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">mmap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fileno</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flags</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">MAP_SHARED</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">PROT_WRITE</span> <span class="pre">|</span> <span class="pre">PROT_READ</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">access</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">ACCESS_DEFAULT</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">trackfd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span></dt>
 <dd><p><strong>(Unix version)</strong> Maps <em>length</em> bytes from the file specified by the file
 descriptor <em>fileno</em>, and returns a mmap object.  If <em>length</em> is <code class="docutils literal notranslate"><span class="pre">0</span></code>, the
 maximum length of the map will be the current size of the file when
@@ -893,9 +845,18 @@ use this parameter.</p>
 will be relative to the offset from the beginning of the file. <em>offset</em>
 defaults to 0. <em>offset</em> must be a multiple of <code class="xref py py-const docutils literal notranslate"><span class="pre">ALLOCATIONGRANULARITY</span></code>
 which is equal to <code class="xref py py-const docutils literal notranslate"><span class="pre">PAGESIZE</span></code> on Unix systems.</p>
+<p>If <em>trackfd</em> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, the file descriptor specified by <em>fileno</em> will
+not be duplicated, and the resulting <code class="xref py py-class docutils literal notranslate"><span class="pre">mmap</span></code> object will not
+be associated with the map’s underlying file.
+This means that the <a class="reference internal" href="#mmap.mmap.size" title="mmap.mmap.size"><code class="xref py py-meth docutils literal notranslate"><span class="pre">size()</span></code></a> and <a class="reference internal" href="#mmap.mmap.resize" title="mmap.mmap.resize"><code class="xref py py-meth docutils literal notranslate"><span class="pre">resize()</span></code></a>
+methods will fail.
+This mode is useful to limit the number of open file descriptors.</p>
 <p>To ensure validity of the created memory mapping the file specified
 by the descriptor <em>fileno</em> is internally automatically synchronized
 with the physical backing store on macOS.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span>The <em>trackfd</em> parameter was added.</p>
+</div>
 <p>This example shows a simple way of using <a class="reference internal" href="#mmap.mmap" title="mmap.mmap"><code class="xref py py-class docutils literal notranslate"><span class="pre">mmap</span></code></a>:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">mmap</span>
 </span><span data-line="2">
@@ -929,7 +890,7 @@ statement:</p>
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.2: </span>Context manager support.</p>
+<p><span class="versionmodified added">Added in version 3.2: </span>Context manager support.</p>
 </div>
 <p>The next example demonstrates how to create an anonymous map and exchange
 data between the parent and child processes:</p>
@@ -952,7 +913,7 @@ data between the parent and child processes:</p>
 <p>Memory-mapped file objects support the following methods:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.close">
-<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.close" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.close" title="Link to this definition">¶</a></dt>
 <dd><p>Closes the mmap. Subsequent calls to other methods of the object will
 result in a ValueError exception being raised. This will not close
 the open file.</p>
@@ -960,16 +921,16 @@ the open file.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mmap.mmap.closed">
-<span class="sig-name descname"><span class="pre">closed</span></span><a class="headerlink" href="#mmap.mmap.closed" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">closed</span></span><a class="headerlink" href="#mmap.mmap.closed" title="Link to this definition">¶</a></dt>
 <dd><p><code class="docutils literal notranslate"><span class="pre">True</span></code> if the file is closed.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.2.</span></p>
+<p><span class="versionmodified added">Added in version 3.2.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.find">
-<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.find" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">find</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.find" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the lowest index in the object where the subsequence <em>sub</em> is
 found, such that <em>sub</em> is contained in the range [<em>start</em>, <em>end</em>].
 Optional arguments <em>start</em> and <em>end</em> are interpreted as in slice notation.
@@ -981,7 +942,7 @@ Returns <code class="docutils literal notranslate"><span class="pre">-1</span></
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.flush">
-<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.flush" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">flush</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">offset</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">size</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.flush" title="Link to this definition">¶</a></dt>
 <dd><p>Flushes changes made to the in-memory copy of a file back to disk. Without
 use of this call there is no guarantee that changes are written back before
 the object is destroyed.  If <em>offset</em> and <em>size</em> are specified, only
@@ -999,7 +960,7 @@ exception was raised on error under Unix.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.madvise">
-<span class="sig-name descname"><span class="pre">madvise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.madvise" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">madvise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">option</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">length</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.madvise" title="Link to this definition">¶</a></dt>
 <dd><p>Send advice <em>option</em> to the kernel about the memory region beginning at
 <em>start</em> and extending <em>length</em> bytes.  <em>option</em> must be one of the
 <a class="reference internal" href="#madvise-constants"><span class="std std-ref">MADV_* constants</span></a> available on the system.  If
@@ -1008,13 +969,13 @@ some systems (including Linux), <em>start</em> must be a multiple of the
 <code class="xref py py-const docutils literal notranslate"><span class="pre">PAGESIZE</span></code>.</p>
 <p>Availability: Systems with the <code class="docutils literal notranslate"><span class="pre">madvise()</span></code> system call.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.8.</span></p>
+<p><span class="versionmodified added">Added in version 3.8.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.move">
-<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.move" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">move</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dest</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">src</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.move" title="Link to this definition">¶</a></dt>
 <dd><p>Copy the <em>count</em> bytes starting at offset <em>src</em> to the destination index
 <em>dest</em>.  If the mmap was created with <code class="xref py py-const docutils literal notranslate"><span class="pre">ACCESS_READ</span></code>, then calls to
 move will raise a <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> exception.</p>
@@ -1022,7 +983,7 @@ move will raise a <a class="reference internal" href="exceptions.html#TypeError"
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.read">
-<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.read" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">read</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.read" title="Link to this definition">¶</a></dt>
 <dd><p>Return a <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> containing up to <em>n</em> bytes starting from the
 current file position. If the argument is omitted, <code class="docutils literal notranslate"><span class="pre">None</span></code> or negative,
 return all bytes from the current file position to the end of the
@@ -1035,14 +996,14 @@ returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.read_byte">
-<span class="sig-name descname"><span class="pre">read_byte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.read_byte" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">read_byte</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.read_byte" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a byte at the current file position as an integer, and advances
 the file position by 1.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.readline">
-<span class="sig-name descname"><span class="pre">readline</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.readline" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">readline</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.readline" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a single line, starting at the current file position and up to the
 next newline. The file position is updated to point after the bytes that were
 returned.</p>
@@ -1050,10 +1011,12 @@ returned.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.resize">
-<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newsize</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.resize" title="Permalink to this definition">¶</a></dt>
-<dd><p>Resizes the map and the underlying file, if any. If the mmap was created
-with <code class="xref py py-const docutils literal notranslate"><span class="pre">ACCESS_READ</span></code> or <code class="xref py py-const docutils literal notranslate"><span class="pre">ACCESS_COPY</span></code>, resizing the map will
-raise a <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> exception.</p>
+<span class="sig-name descname"><span class="pre">resize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">newsize</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.resize" title="Link to this definition">¶</a></dt>
+<dd><p>Resizes the map and the underlying file, if any.</p>
+<p>Resizing a map created with <em>access</em> of <code class="xref py py-const docutils literal notranslate"><span class="pre">ACCESS_READ</span></code> or
+<code class="xref py py-const docutils literal notranslate"><span class="pre">ACCESS_COPY</span></code>, will raise a <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> exception.
+Resizing a map created with with <em>trackfd</em> set to <code class="docutils literal notranslate"><span class="pre">False</span></code>,
+will raise a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> exception.</p>
 <p><strong>On Windows</strong>: Resizing the map will raise an <a class="reference internal" href="exceptions.html#OSError" title="OSError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">OSError</span></code></a> if there are other
 maps against the same named file. Resizing an anonymous map (ie against the
 pagefile) will silently create a new map with the original data copied over
@@ -1066,7 +1029,7 @@ Allows resize against an anonymous map on Windows</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.rfind">
-<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.rfind" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">rfind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sub</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">start</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">end</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.rfind" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the highest index in the object where the subsequence <em>sub</em> is
 found, such that <em>sub</em> is contained in the range [<em>start</em>, <em>end</em>].
 Optional arguments <em>start</em> and <em>end</em> are interpreted as in slice notation.
@@ -1078,29 +1041,41 @@ Returns <code class="docutils literal notranslate"><span class="pre">-1</span></
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.seek">
-<span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">whence</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.seek" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">seek</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pos</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">whence</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.seek" title="Link to this definition">¶</a></dt>
 <dd><p>Set the file’s current position.  <em>whence</em> argument is optional and
 defaults to <code class="docutils literal notranslate"><span class="pre">os.SEEK_SET</span></code> or <code class="docutils literal notranslate"><span class="pre">0</span></code> (absolute file positioning); other
 values are <code class="docutils literal notranslate"><span class="pre">os.SEEK_CUR</span></code> or <code class="docutils literal notranslate"><span class="pre">1</span></code> (seek relative to the current
 position) and <code class="docutils literal notranslate"><span class="pre">os.SEEK_END</span></code> or <code class="docutils literal notranslate"><span class="pre">2</span></code> (seek relative to the file’s end).</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span>Return the new absolute position instead of <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="mmap.mmap.seekable">
+<span class="sig-name descname"><span class="pre">seekable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.seekable" title="Link to this definition">¶</a></dt>
+<dd><p>Return whether the file supports seeking, and the return value is always <code class="docutils literal notranslate"><span class="pre">True</span></code>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.size">
-<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.size" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">size</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.size" title="Link to this definition">¶</a></dt>
 <dd><p>Return the length of the file, which can be larger than the size of the
 memory-mapped area.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.tell">
-<span class="sig-name descname"><span class="pre">tell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.tell" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">tell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.tell" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the current position of the file pointer.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.write">
-<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.write" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">write</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">bytes</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.write" title="Link to this definition">¶</a></dt>
 <dd><p>Write the bytes in <em>bytes</em> into memory at the current position of the
 file pointer and return the number of bytes written (never less than
 <code class="docutils literal notranslate"><span class="pre">len(bytes)</span></code>, since if the write fails, a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> will be
@@ -1117,7 +1092,7 @@ writing to it will raise a <a class="reference internal" href="exceptions.html#T
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mmap.mmap.write_byte">
-<span class="sig-name descname"><span class="pre">write_byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.write_byte" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">write_byte</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">byte</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mmap.mmap.write_byte" title="Link to this definition">¶</a></dt>
 <dd><p>Write the integer <em>byte</em> into memory at the current
 position of the file pointer; the file position is advanced by <code class="docutils literal notranslate"><span class="pre">1</span></code>. If
 the mmap was created with <code class="xref py py-const docutils literal notranslate"><span class="pre">ACCESS_READ</span></code>, then writing to it will
@@ -1127,88 +1102,110 @@ raise a <a class="reference internal" href="exceptions.html#TypeError" title="Ty
 </dd></dl>
 
 <section id="madv-constants">
-<span id="madvise-constants"></span><h2>MADV_* Constants<a class="headerlink" href="#madv-constants" title="Permalink to this heading">¶</a></h2>
+<span id="madvise-constants"></span><h2>MADV_* Constants<a class="headerlink" href="#madv-constants" title="Link to this heading">¶</a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="mmap.MADV_NORMAL">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NORMAL</span></span><a class="headerlink" href="#mmap.MADV_NORMAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NORMAL</span></span><a class="headerlink" href="#mmap.MADV_NORMAL" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_RANDOM">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_RANDOM</span></span><a class="headerlink" href="#mmap.MADV_RANDOM" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_RANDOM</span></span><a class="headerlink" href="#mmap.MADV_RANDOM" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_SEQUENTIAL">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_SEQUENTIAL</span></span><a class="headerlink" href="#mmap.MADV_SEQUENTIAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_SEQUENTIAL</span></span><a class="headerlink" href="#mmap.MADV_SEQUENTIAL" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_WILLNEED">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_WILLNEED</span></span><a class="headerlink" href="#mmap.MADV_WILLNEED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_WILLNEED</span></span><a class="headerlink" href="#mmap.MADV_WILLNEED" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_DONTNEED">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DONTNEED</span></span><a class="headerlink" href="#mmap.MADV_DONTNEED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DONTNEED</span></span><a class="headerlink" href="#mmap.MADV_DONTNEED" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_REMOVE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_REMOVE</span></span><a class="headerlink" href="#mmap.MADV_REMOVE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_REMOVE</span></span><a class="headerlink" href="#mmap.MADV_REMOVE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_DONTFORK">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DONTFORK</span></span><a class="headerlink" href="#mmap.MADV_DONTFORK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DONTFORK</span></span><a class="headerlink" href="#mmap.MADV_DONTFORK" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_DOFORK">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DOFORK</span></span><a class="headerlink" href="#mmap.MADV_DOFORK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DOFORK</span></span><a class="headerlink" href="#mmap.MADV_DOFORK" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_HWPOISON">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_HWPOISON</span></span><a class="headerlink" href="#mmap.MADV_HWPOISON" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_HWPOISON</span></span><a class="headerlink" href="#mmap.MADV_HWPOISON" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_MERGEABLE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_MERGEABLE</span></span><a class="headerlink" href="#mmap.MADV_MERGEABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_MERGEABLE</span></span><a class="headerlink" href="#mmap.MADV_MERGEABLE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_UNMERGEABLE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_UNMERGEABLE</span></span><a class="headerlink" href="#mmap.MADV_UNMERGEABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_UNMERGEABLE</span></span><a class="headerlink" href="#mmap.MADV_UNMERGEABLE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_SOFT_OFFLINE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_SOFT_OFFLINE</span></span><a class="headerlink" href="#mmap.MADV_SOFT_OFFLINE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_SOFT_OFFLINE</span></span><a class="headerlink" href="#mmap.MADV_SOFT_OFFLINE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_HUGEPAGE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_HUGEPAGE</span></span><a class="headerlink" href="#mmap.MADV_HUGEPAGE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_HUGEPAGE</span></span><a class="headerlink" href="#mmap.MADV_HUGEPAGE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_NOHUGEPAGE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NOHUGEPAGE</span></span><a class="headerlink" href="#mmap.MADV_NOHUGEPAGE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NOHUGEPAGE</span></span><a class="headerlink" href="#mmap.MADV_NOHUGEPAGE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_DONTDUMP">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DONTDUMP</span></span><a class="headerlink" href="#mmap.MADV_DONTDUMP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DONTDUMP</span></span><a class="headerlink" href="#mmap.MADV_DONTDUMP" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_DODUMP">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DODUMP</span></span><a class="headerlink" href="#mmap.MADV_DODUMP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_DODUMP</span></span><a class="headerlink" href="#mmap.MADV_DODUMP" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_FREE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_FREE</span></span><a class="headerlink" href="#mmap.MADV_FREE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_FREE</span></span><a class="headerlink" href="#mmap.MADV_FREE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_NOSYNC">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NOSYNC</span></span><a class="headerlink" href="#mmap.MADV_NOSYNC" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NOSYNC</span></span><a class="headerlink" href="#mmap.MADV_NOSYNC" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_AUTOSYNC">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_AUTOSYNC</span></span><a class="headerlink" href="#mmap.MADV_AUTOSYNC" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_AUTOSYNC</span></span><a class="headerlink" href="#mmap.MADV_AUTOSYNC" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_NOCORE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NOCORE</span></span><a class="headerlink" href="#mmap.MADV_NOCORE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_NOCORE</span></span><a class="headerlink" href="#mmap.MADV_NOCORE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_CORE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_CORE</span></span><a class="headerlink" href="#mmap.MADV_CORE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_CORE</span></span><a class="headerlink" href="#mmap.MADV_CORE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_PROTECT">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_PROTECT</span></span><a class="headerlink" href="#mmap.MADV_PROTECT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_PROTECT</span></span><a class="headerlink" href="#mmap.MADV_PROTECT" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_FREE_REUSABLE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_FREE_REUSABLE</span></span><a class="headerlink" href="#mmap.MADV_FREE_REUSABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_FREE_REUSABLE</span></span><a class="headerlink" href="#mmap.MADV_FREE_REUSABLE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MADV_FREE_REUSE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_FREE_REUSE</span></span><a class="headerlink" href="#mmap.MADV_FREE_REUSE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MADV_FREE_REUSE</span></span><a class="headerlink" href="#mmap.MADV_FREE_REUSE" title="Link to this definition">¶</a></dt>
 <dd><p>These options can be passed to <a class="reference internal" href="#mmap.mmap.madvise" title="mmap.mmap.madvise"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mmap.madvise()</span></code></a>.  Not every option will
 be present on every system.</p>
 <p>Availability: Systems with the madvise() system call.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.8.</span></p>
+<p><span class="versionmodified added">Added in version 3.8.</span></p>
 </div>
 </dd></dl>
 
 </section>
 <section id="map-constants">
-<span id="id1"></span><h2>MAP_* Constants<a class="headerlink" href="#map-constants" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2>MAP_* Constants<a class="headerlink" href="#map-constants" title="Link to this heading">¶</a></h2>
 <dl class="py data">
 <dt class="sig sig-object py" id="mmap.MAP_SHARED">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_SHARED</span></span><a class="headerlink" href="#mmap.MAP_SHARED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_SHARED</span></span><a class="headerlink" href="#mmap.MAP_SHARED" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MAP_PRIVATE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_PRIVATE</span></span><a class="headerlink" href="#mmap.MAP_PRIVATE" title="Permalink to this definition">¶</a></dt>
-<dt class="sig sig-object py" id="mmap.MAP_DENYWRITE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_DENYWRITE</span></span><a class="headerlink" href="#mmap.MAP_DENYWRITE" title="Permalink to this definition">¶</a></dt>
-<dt class="sig sig-object py" id="mmap.MAP_EXECUTABLE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_EXECUTABLE</span></span><a class="headerlink" href="#mmap.MAP_EXECUTABLE" title="Permalink to this definition">¶</a></dt>
-<dt class="sig sig-object py" id="mmap.MAP_ANON">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_ANON</span></span><a class="headerlink" href="#mmap.MAP_ANON" title="Permalink to this definition">¶</a></dt>
-<dt class="sig sig-object py" id="mmap.MAP_ANONYMOUS">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_ANONYMOUS</span></span><a class="headerlink" href="#mmap.MAP_ANONYMOUS" title="Permalink to this definition">¶</a></dt>
-<dt class="sig sig-object py" id="mmap.MAP_POPULATE">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_POPULATE</span></span><a class="headerlink" href="#mmap.MAP_POPULATE" title="Permalink to this definition">¶</a></dt>
-<dt class="sig sig-object py" id="mmap.MAP_STACK">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_STACK</span></span><a class="headerlink" href="#mmap.MAP_STACK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_PRIVATE</span></span><a class="headerlink" href="#mmap.MAP_PRIVATE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_32BIT">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_32BIT</span></span><a class="headerlink" href="#mmap.MAP_32BIT" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MAP_ALIGNED_SUPER">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_ALIGNED_SUPER</span></span><a class="headerlink" href="#mmap.MAP_ALIGNED_SUPER" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_ALIGNED_SUPER</span></span><a class="headerlink" href="#mmap.MAP_ALIGNED_SUPER" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_ANON">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_ANON</span></span><a class="headerlink" href="#mmap.MAP_ANON" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_ANONYMOUS">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_ANONYMOUS</span></span><a class="headerlink" href="#mmap.MAP_ANONYMOUS" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="mmap.MAP_CONCEAL">
-<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_CONCEAL</span></span><a class="headerlink" href="#mmap.MAP_CONCEAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_CONCEAL</span></span><a class="headerlink" href="#mmap.MAP_CONCEAL" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_DENYWRITE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_DENYWRITE</span></span><a class="headerlink" href="#mmap.MAP_DENYWRITE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_EXECUTABLE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_EXECUTABLE</span></span><a class="headerlink" href="#mmap.MAP_EXECUTABLE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_HASSEMAPHORE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_HASSEMAPHORE</span></span><a class="headerlink" href="#mmap.MAP_HASSEMAPHORE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_JIT">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_JIT</span></span><a class="headerlink" href="#mmap.MAP_JIT" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_NOCACHE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_NOCACHE</span></span><a class="headerlink" href="#mmap.MAP_NOCACHE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_NOEXTEND">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_NOEXTEND</span></span><a class="headerlink" href="#mmap.MAP_NOEXTEND" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_NORESERVE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_NORESERVE</span></span><a class="headerlink" href="#mmap.MAP_NORESERVE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_POPULATE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_POPULATE</span></span><a class="headerlink" href="#mmap.MAP_POPULATE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_RESILIENT_CODESIGN">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_RESILIENT_CODESIGN</span></span><a class="headerlink" href="#mmap.MAP_RESILIENT_CODESIGN" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_RESILIENT_MEDIA">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_RESILIENT_MEDIA</span></span><a class="headerlink" href="#mmap.MAP_RESILIENT_MEDIA" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_STACK">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_STACK</span></span><a class="headerlink" href="#mmap.MAP_STACK" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_TPRO">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_TPRO</span></span><a class="headerlink" href="#mmap.MAP_TPRO" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_TRANSLATED_ALLOW_EXECUTE">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_TRANSLATED_ALLOW_EXECUTE</span></span><a class="headerlink" href="#mmap.MAP_TRANSLATED_ALLOW_EXECUTE" title="Link to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="mmap.MAP_UNIX03">
+<span class="sig-prename descclassname"><span class="pre">mmap.</span></span><span class="sig-name descname"><span class="pre">MAP_UNIX03</span></span><a class="headerlink" href="#mmap.MAP_UNIX03" title="Link to this definition">¶</a></dt>
 <dd><p>These are the various flags that can be passed to <a class="reference internal" href="#mmap.mmap" title="mmap.mmap"><code class="xref py py-meth docutils literal notranslate"><span class="pre">mmap.mmap()</span></code></a>.  <a class="reference internal" href="#mmap.MAP_ALIGNED_SUPER" title="mmap.MAP_ALIGNED_SUPER"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_ALIGNED_SUPER</span></code></a>
 is only available at FreeBSD and <a class="reference internal" href="#mmap.MAP_CONCEAL" title="mmap.MAP_CONCEAL"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_CONCEAL</span></code></a> is only available at OpenBSD.  Note
 that some options might not be present on some systems.</p>
@@ -1216,11 +1213,17 @@ that some options might not be present on some systems.</p>
 <p><span class="versionmodified changed">Changed in version 3.10: </span>Added <a class="reference internal" href="#mmap.MAP_POPULATE" title="mmap.MAP_POPULATE"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_POPULATE</span></code></a> constant.</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11: </span>Added <a class="reference internal" href="#mmap.MAP_STACK" title="mmap.MAP_STACK"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_STACK</span></code></a> constant.</p>
+<p><span class="versionmodified added">Added in version 3.11: </span>Added <a class="reference internal" href="#mmap.MAP_STACK" title="mmap.MAP_STACK"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_STACK</span></code></a> constant.</p>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.12: </span>Added <a class="reference internal" href="#mmap.MAP_ALIGNED_SUPER" title="mmap.MAP_ALIGNED_SUPER"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_ALIGNED_SUPER</span></code></a> constant.
-Added <a class="reference internal" href="#mmap.MAP_CONCEAL" title="mmap.MAP_CONCEAL"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_CONCEAL</span></code></a> constant.</p>
+<p><span class="versionmodified added">Added in version 3.12: </span>Added <a class="reference internal" href="#mmap.MAP_ALIGNED_SUPER" title="mmap.MAP_ALIGNED_SUPER"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_ALIGNED_SUPER</span></code></a> and <a class="reference internal" href="#mmap.MAP_CONCEAL" title="mmap.MAP_CONCEAL"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_CONCEAL</span></code></a> constants.</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13: </span>Added <a class="reference internal" href="#mmap.MAP_32BIT" title="mmap.MAP_32BIT"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_32BIT</span></code></a>, <a class="reference internal" href="#mmap.MAP_HASSEMAPHORE" title="mmap.MAP_HASSEMAPHORE"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_HASSEMAPHORE</span></code></a>, <a class="reference internal" href="#mmap.MAP_JIT" title="mmap.MAP_JIT"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_JIT</span></code></a>,
+<a class="reference internal" href="#mmap.MAP_NOCACHE" title="mmap.MAP_NOCACHE"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_NOCACHE</span></code></a>, <a class="reference internal" href="#mmap.MAP_NOEXTEND" title="mmap.MAP_NOEXTEND"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_NOEXTEND</span></code></a>, <a class="reference internal" href="#mmap.MAP_NORESERVE" title="mmap.MAP_NORESERVE"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_NORESERVE</span></code></a>,
+<a class="reference internal" href="#mmap.MAP_RESILIENT_CODESIGN" title="mmap.MAP_RESILIENT_CODESIGN"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_RESILIENT_CODESIGN</span></code></a>, <a class="reference internal" href="#mmap.MAP_RESILIENT_MEDIA" title="mmap.MAP_RESILIENT_MEDIA"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_RESILIENT_MEDIA</span></code></a>,
+<a class="reference internal" href="#mmap.MAP_TPRO" title="mmap.MAP_TPRO"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_TPRO</span></code></a>, <a class="reference internal" href="#mmap.MAP_TRANSLATED_ALLOW_EXECUTE" title="mmap.MAP_TRANSLATED_ALLOW_EXECUTE"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_TRANSLATED_ALLOW_EXECUTE</span></code></a>, and
+<a class="reference internal" href="#mmap.MAP_UNIX03" title="mmap.MAP_UNIX03"><code class="xref py py-data docutils literal notranslate"><span class="pre">MAP_UNIX03</span></code></a> constants.</p>
 </div>
 </dd></dl>
 
@@ -1267,8 +1270,8 @@ Added <a class="reference internal" href="#mmap.MAP_CONCEAL" title="mmap.MAP_CON
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

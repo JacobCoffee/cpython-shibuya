@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>gc — Garbage Collector interface - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="inspect — Inspect live objects" href="inspect.html" /><link rel="prev" title="__future__ — Future statement definitions" href="__future__.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>gc — Garbage Collector interface - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="inspect — Inspect live objects" href="inspect.html" /><link rel="prev" title="__future__ — Future statement definitions" href="__future__.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -686,34 +696,7 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#gc.enable"><code class="docutils literal notranslate"><span class="pre">enable()</span></code></a></li>
-<li><a class="reference internal" href="#gc.disable"><code class="docutils literal notranslate"><span class="pre">disable()</span></code></a></li>
-<li><a class="reference internal" href="#gc.isenabled"><code class="docutils literal notranslate"><span class="pre">isenabled()</span></code></a></li>
-<li><a class="reference internal" href="#gc.collect"><code class="docutils literal notranslate"><span class="pre">collect()</span></code></a></li>
-<li><a class="reference internal" href="#gc.set_debug"><code class="docutils literal notranslate"><span class="pre">set_debug()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_debug"><code class="docutils literal notranslate"><span class="pre">get_debug()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_objects"><code class="docutils literal notranslate"><span class="pre">get_objects()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_stats"><code class="docutils literal notranslate"><span class="pre">get_stats()</span></code></a></li>
-<li><a class="reference internal" href="#gc.set_threshold"><code class="docutils literal notranslate"><span class="pre">set_threshold()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_count"><code class="docutils literal notranslate"><span class="pre">get_count()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_threshold"><code class="docutils literal notranslate"><span class="pre">get_threshold()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_referrers"><code class="docutils literal notranslate"><span class="pre">get_referrers()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_referents"><code class="docutils literal notranslate"><span class="pre">get_referents()</span></code></a></li>
-<li><a class="reference internal" href="#gc.is_tracked"><code class="docutils literal notranslate"><span class="pre">is_tracked()</span></code></a></li>
-<li><a class="reference internal" href="#gc.is_finalized"><code class="docutils literal notranslate"><span class="pre">is_finalized()</span></code></a></li>
-<li><a class="reference internal" href="#gc.freeze"><code class="docutils literal notranslate"><span class="pre">freeze()</span></code></a></li>
-<li><a class="reference internal" href="#gc.unfreeze"><code class="docutils literal notranslate"><span class="pre">unfreeze()</span></code></a></li>
-<li><a class="reference internal" href="#gc.get_freeze_count"><code class="docutils literal notranslate"><span class="pre">get_freeze_count()</span></code></a></li>
-<li><a class="reference internal" href="#gc.garbage"><code class="docutils literal notranslate"><span class="pre">garbage</span></code></a></li>
-<li><a class="reference internal" href="#gc.callbacks"><code class="docutils literal notranslate"><span class="pre">callbacks</span></code></a></li>
-<li><a class="reference internal" href="#gc.DEBUG_STATS"><code class="docutils literal notranslate"><span class="pre">DEBUG_STATS</span></code></a></li>
-<li><a class="reference internal" href="#gc.DEBUG_COLLECTABLE"><code class="docutils literal notranslate"><span class="pre">DEBUG_COLLECTABLE</span></code></a></li>
-<li><a class="reference internal" href="#gc.DEBUG_UNCOLLECTABLE"><code class="docutils literal notranslate"><span class="pre">DEBUG_UNCOLLECTABLE</span></code></a></li>
-<li><a class="reference internal" href="#gc.DEBUG_SAVEALL"><code class="docutils literal notranslate"><span class="pre">DEBUG_SAVEALL</span></code></a></li>
-<li><a class="reference internal" href="#gc.DEBUG_LEAK"><code class="docutils literal notranslate"><span class="pre">DEBUG_LEAK</span></code></a></li>
-</ul>
-</div><div class="sy-deprecated">
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
   configuration does not work with Shibuya, which is why you're seeing this message.
   Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
@@ -766,7 +749,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-gc">
-<span id="gc-garbage-collector-interface"></span><h1><a class="reference internal" href="#module-gc" title="gc: Interface to the cycle-detecting garbage collector."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code></a> — Garbage Collector interface<a class="headerlink" href="#module-gc" title="Permalink to this heading">¶</a></h1>
+<span id="gc-garbage-collector-interface"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface<a class="headerlink" href="#module-gc" title="Link to this heading">¶</a></h1>
 <hr class="docutils" />
 <p>This module provides an interface to the optional garbage collector.  It
 provides the ability to disable the collector, tune the collection frequency,
@@ -781,40 +764,47 @@ gc.garbage for inspection.</p>
 <p>The <a class="reference internal" href="#module-gc" title="gc: Interface to the cycle-detecting garbage collector."><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code></a> module provides the following functions:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.enable">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.enable" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">enable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.enable" title="Link to this definition">¶</a></dt>
 <dd><p>Enable automatic garbage collection.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.disable">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.disable" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">disable</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.disable" title="Link to this definition">¶</a></dt>
 <dd><p>Disable automatic garbage collection.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.isenabled">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">isenabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.isenabled" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">isenabled</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.isenabled" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if automatic collection is enabled.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.collect">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.collect" title="Permalink to this definition">¶</a></dt>
-<dd><p>With no arguments, run a full collection.  The optional argument <em>generation</em>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">collect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.collect" title="Link to this definition">¶</a></dt>
+<dd><p>Perform a collection.  The optional argument <em>generation</em>
 may be an integer specifying which generation to collect (from 0 to 2).  A
-<a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is raised if the generation number  is invalid. The number of
-unreachable objects found is returned.</p>
+<a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is raised if the generation number is invalid. The sum of
+collected objects and uncollectable objects is returned.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">gc.collect(0)</span></code> will perform a GC collection on the young generation.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">gc.collect(1)</span></code> will perform a GC collection on the young generation
+and an increment of the old generation.</p>
+<p>Calling <code class="docutils literal notranslate"><span class="pre">gc.collect(2)</span></code> or <code class="docutils literal notranslate"><span class="pre">gc.collect()</span></code> performs a full collection</p>
 <p>The free lists maintained for a number of built-in types are cleared
 whenever a full collection or collection of the highest generation (2)
 is run.  Not all items in some free lists may be freed due to the
 particular implementation, in particular <a class="reference internal" href="functions.html#float" title="float"><code class="xref py py-class docutils literal notranslate"><span class="pre">float</span></code></a>.</p>
 <p>The effect of calling <code class="docutils literal notranslate"><span class="pre">gc.collect()</span></code> while the interpreter is already
 performing a collection is undefined.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span><code class="docutils literal notranslate"><span class="pre">generation=1</span></code> performs an increment of collection.</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.set_debug">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">set_debug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.set_debug" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">set_debug</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">flags</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.set_debug" title="Link to this definition">¶</a></dt>
 <dd><p>Set the garbage collection debugging flags. Debugging information will be
 written to <code class="docutils literal notranslate"><span class="pre">sys.stderr</span></code>.  See below for a list of debugging flags which can be
 combined using bit operations to control debugging.</p>
@@ -822,25 +812,32 @@ combined using bit operations to control debugging.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_debug">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_debug</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_debug" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_debug</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_debug" title="Link to this definition">¶</a></dt>
 <dd><p>Return the debugging flags currently set.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_objects">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_objects" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_objects</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">generation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_objects" title="Link to this definition">¶</a></dt>
 <dd><p>Returns a list of all objects tracked by the collector, excluding the list
-returned. If <em>generation</em> is not None, return only the objects tracked by
-the collector that are in that generation.</p>
+returned. If <em>generation</em> is not <code class="docutils literal notranslate"><span class="pre">None</span></code>, return only the objects as follows:</p>
+<ul class="simple">
+<li><p>0: All objects in the young generation</p></li>
+<li><p>1: No objects, as there is no generation 1 (as of Python 3.13)</p></li>
+<li><p>2: All objects in the old generation</p></li>
+</ul>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.8: </span>New <em>generation</em> parameter.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span>Generation 1 is removed</p>
 </div>
 <p class="audit-hook">Raises an <a class="reference internal" href="sys.html#auditing"><span class="std std-ref">auditing event</span></a> <code class="docutils literal notranslate"><span class="pre">gc.get_objects</span></code> with argument <code class="docutils literal notranslate"><span class="pre">generation</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_stats">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_stats" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_stats</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_stats" title="Link to this definition">¶</a></dt>
 <dd><p>Return a list of three per-generation dictionaries containing collection
 statistics since interpreter start.  The number of keys may change
 in the future, but currently each dictionary will contain the following
@@ -854,47 +851,51 @@ to be uncollectable (and were therefore moved to the <a class="reference interna
 list) inside this generation.</p></li>
 </ul>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.set_threshold">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">set_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold0</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">threshold1</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">threshold2</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.set_threshold" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">set_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">threshold0</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">threshold1</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">threshold2</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.set_threshold" title="Link to this definition">¶</a></dt>
 <dd><p>Set the garbage collection thresholds (the collection frequency). Setting
 <em>threshold0</em> to zero disables collection.</p>
-<p>The GC classifies objects into three generations depending on how many
-collection sweeps they have survived.  New objects are placed in the youngest
-generation (generation <code class="docutils literal notranslate"><span class="pre">0</span></code>).  If an object survives a collection it is moved
-into the next older generation.  Since generation <code class="docutils literal notranslate"><span class="pre">2</span></code> is the oldest
-generation, objects in that generation remain there after a collection.  In
-order to decide when to run, the collector keeps track of the number object
+<p>The GC classifies objects into two generations depending on whether they have
+survived a collection. New objects are placed in the young generation. If an
+object survives a collection it is moved into the old generation.</p>
+<p>In order to decide when to run, the collector keeps track of the number of object
 allocations and deallocations since the last collection.  When the number of
 allocations minus the number of deallocations exceeds <em>threshold0</em>, collection
-starts.  Initially only generation <code class="docutils literal notranslate"><span class="pre">0</span></code> is examined.  If generation <code class="docutils literal notranslate"><span class="pre">0</span></code> has
-been examined more than <em>threshold1</em> times since generation <code class="docutils literal notranslate"><span class="pre">1</span></code> has been
-examined, then generation <code class="docutils literal notranslate"><span class="pre">1</span></code> is examined as well.
-With the third generation, things are a bit more complicated,
-see <a class="reference external" href="https://devguide.python.org/garbage_collector/#collecting-the-oldest-generation">Collecting the oldest generation</a> for more information.</p>
+starts. For each collection, all the objects in the young generation and some
+fraction of the old generation is collected.</p>
+<p>The fraction of the old generation that is collected is <strong>inversely</strong> proportional
+to <em>threshold1</em>. The larger <em>threshold1</em> is, the slower objects in the old generation
+are collected.
+For the default value of 10, 1% of the old generation is scanned during each collection.</p>
+<p><em>threshold2</em> is ignored.</p>
+<p>See <a class="reference external" href="https://devguide.python.org/garbage_collector">Garbage collector design</a> for more information.</p>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span><em>threshold2</em> is ignored</p>
+</div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_count">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_count" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_count" title="Link to this definition">¶</a></dt>
 <dd><p>Return the current collection  counts as a tuple of <code class="docutils literal notranslate"><span class="pre">(count0,</span> <span class="pre">count1,</span>
 <span class="pre">count2)</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_threshold">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_threshold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_threshold" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_threshold</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_threshold" title="Link to this definition">¶</a></dt>
 <dd><p>Return the current collection thresholds as a tuple of <code class="docutils literal notranslate"><span class="pre">(threshold0,</span>
 <span class="pre">threshold1,</span> <span class="pre">threshold2)</span></code>.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_referrers">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_referrers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">objs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_referrers" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_referrers</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">objs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_referrers" title="Link to this definition">¶</a></dt>
 <dd><p>Return the list of objects that directly refer to any of objs. This function
 will only locate those containers which support garbage collection; extension
 types which do refer to other objects but do not support garbage collection will
@@ -915,7 +916,7 @@ debugging.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_referents">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_referents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">objs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_referents" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_referents</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">objs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_referents" title="Link to this definition">¶</a></dt>
 <dd><p>Return a list of objects directly referred to by any of the arguments. The
 referents returned are those objects visited by the arguments’ C-level
 <a class="reference internal" href="../c-api/typeobj.html#c.PyTypeObject.tp_traverse" title="PyTypeObject.tp_traverse"><code class="xref c c-member docutils literal notranslate"><span class="pre">tp_traverse</span></code></a> methods (if any), and may not be all objects actually
@@ -928,7 +929,7 @@ from an argument, that integer object may or may not appear in the result list.<
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.is_tracked">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">is_tracked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.is_tracked" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">is_tracked</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.is_tracked" title="Link to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the object is currently tracked by the garbage collector,
 <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.  As a general rule, instances of atomic types aren’t
 tracked and instances of non-atomic types (containers, user-defined
@@ -950,13 +951,13 @@ in order to suppress the garbage collector footprint of simple instances
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.1.</span></p>
+<p><span class="versionmodified added">Added in version 3.1.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.is_finalized">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">is_finalized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.is_finalized" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">is_finalized</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">obj</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#gc.is_finalized" title="Link to this definition">¶</a></dt>
 <dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if the given object has been finalized by the
 garbage collector, <code class="docutils literal notranslate"><span class="pre">False</span></code> otherwise.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="kc">None</span>
@@ -974,13 +975,13 @@ garbage collector, <code class="docutils literal notranslate"><span class="pre">
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.9.</span></p>
+<p><span class="versionmodified added">Added in version 3.9.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.freeze">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">freeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.freeze" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">freeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.freeze" title="Link to this definition">¶</a></dt>
 <dd><p>Freeze all the objects tracked by the garbage collector; move them to a
 permanent generation and ignore them in all the future collections.</p>
 <p>If a process will <code class="docutils literal notranslate"><span class="pre">fork()</span></code> without <code class="docutils literal notranslate"><span class="pre">exec()</span></code>, avoiding unnecessary
@@ -992,26 +993,26 @@ originating in the parent process. To accomplish both, call <code class="docutil
 early in the parent process, <code class="docutils literal notranslate"><span class="pre">gc.freeze()</span></code> right before <code class="docutils literal notranslate"><span class="pre">fork()</span></code>, and
 <code class="docutils literal notranslate"><span class="pre">gc.enable()</span></code> early in child processes.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.unfreeze">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">unfreeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.unfreeze" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">unfreeze</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.unfreeze" title="Link to this definition">¶</a></dt>
 <dd><p>Unfreeze the objects in the permanent generation, put them back into the
 oldest generation.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="gc.get_freeze_count">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_freeze_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_freeze_count" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">get_freeze_count</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#gc.get_freeze_count" title="Link to this definition">¶</a></dt>
 <dd><p>Return the number of objects in the permanent generation.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
@@ -1019,7 +1020,7 @@ oldest generation.</p>
 values but should not rebind them):</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.garbage">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">garbage</span></span><a class="headerlink" href="#gc.garbage" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">garbage</span></span><a class="headerlink" href="#gc.garbage" title="Link to this definition">¶</a></dt>
 <dd><p>A list of objects which the collector found to be unreachable but could
 not be freed (uncollectable objects).  Starting with Python 3.4, this
 list should be empty most of the time, except when using instances of
@@ -1040,7 +1041,7 @@ up in <a class="reference internal" href="#gc.garbage" title="gc.garbage"><code 
 
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.callbacks">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">callbacks</span></span><a class="headerlink" href="#gc.callbacks" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">callbacks</span></span><a class="headerlink" href="#gc.callbacks" title="Link to this definition">¶</a></dt>
 <dd><p>A list of callbacks that will be invoked by the garbage collector before and
 after collection.  The callbacks will be called with two arguments,
 <em>phase</em> and <em>info</em>.</p>
@@ -1068,27 +1069,27 @@ takes.</p>
 types when they appear in <a class="reference internal" href="#gc.garbage" title="gc.garbage"><code class="xref py py-data docutils literal notranslate"><span class="pre">garbage</span></code></a>.</p>
 </div></blockquote>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <p>The following constants are provided for use with <a class="reference internal" href="#gc.set_debug" title="gc.set_debug"><code class="xref py py-func docutils literal notranslate"><span class="pre">set_debug()</span></code></a>:</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.DEBUG_STATS">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_STATS</span></span><a class="headerlink" href="#gc.DEBUG_STATS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_STATS</span></span><a class="headerlink" href="#gc.DEBUG_STATS" title="Link to this definition">¶</a></dt>
 <dd><p>Print statistics during collection.  This information can be useful when tuning
 the collection frequency.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.DEBUG_COLLECTABLE">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_COLLECTABLE</span></span><a class="headerlink" href="#gc.DEBUG_COLLECTABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_COLLECTABLE</span></span><a class="headerlink" href="#gc.DEBUG_COLLECTABLE" title="Link to this definition">¶</a></dt>
 <dd><p>Print information on collectable objects found.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.DEBUG_UNCOLLECTABLE">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_UNCOLLECTABLE</span></span><a class="headerlink" href="#gc.DEBUG_UNCOLLECTABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_UNCOLLECTABLE</span></span><a class="headerlink" href="#gc.DEBUG_UNCOLLECTABLE" title="Link to this definition">¶</a></dt>
 <dd><p>Print information of uncollectable objects found (objects which are not
 reachable but cannot be freed by the collector).  These objects will be added
 to the <code class="docutils literal notranslate"><span class="pre">garbage</span></code> list.</p>
@@ -1100,14 +1101,14 @@ to the <code class="docutils literal notranslate"><span class="pre">garbage</spa
 
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.DEBUG_SAVEALL">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_SAVEALL</span></span><a class="headerlink" href="#gc.DEBUG_SAVEALL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_SAVEALL</span></span><a class="headerlink" href="#gc.DEBUG_SAVEALL" title="Link to this definition">¶</a></dt>
 <dd><p>When set, all unreachable objects found will be appended to <em>garbage</em> rather
 than being freed.  This can be useful for debugging a leaking program.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="gc.DEBUG_LEAK">
-<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_LEAK</span></span><a class="headerlink" href="#gc.DEBUG_LEAK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gc.</span></span><span class="sig-name descname"><span class="pre">DEBUG_LEAK</span></span><a class="headerlink" href="#gc.DEBUG_LEAK" title="Link to this definition">¶</a></dt>
 <dd><p>The debugging flags necessary for the collector to print information about a
 leaking program (equal to <code class="docutils literal notranslate"><span class="pre">DEBUG_COLLECTABLE</span> <span class="pre">|</span> <span class="pre">DEBUG_UNCOLLECTABLE</span> <span class="pre">|</span>
 <span class="pre">DEBUG_SAVEALL</span></code>).</p>
@@ -1155,8 +1156,8 @@ leaking program (equal to <code class="docutils literal notranslate"><span class
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

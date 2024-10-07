@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>stat — Interpreting stat() results - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="filecmp — File and Directory Comparisons" href="filecmp.html" /><link rel="prev" title="fileinput — Iterate over lines from multiple input streams" href="fileinput.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>stat — Interpreting stat() results - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="filecmp — File and Directory Comparisons" href="filecmp.html" /><link rel="prev" title="fileinput — Iterate over lines from multiple input streams" href="fileinput.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -686,93 +696,7 @@ data-aria-dark="Switch to auto color mode">
     <button class="rside-close js-menu xl:hidden" aria-label="Close Table of Contents" type="button" aria-controls="rside" aria-expanded="false">
       <i class="i-lucide close"></i>
     </button>
-    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#stat.S_ISDIR"><code class="docutils literal notranslate"><span class="pre">S_ISDIR()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISCHR"><code class="docutils literal notranslate"><span class="pre">S_ISCHR()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISBLK"><code class="docutils literal notranslate"><span class="pre">S_ISBLK()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISREG"><code class="docutils literal notranslate"><span class="pre">S_ISREG()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISFIFO"><code class="docutils literal notranslate"><span class="pre">S_ISFIFO()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISLNK"><code class="docutils literal notranslate"><span class="pre">S_ISLNK()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISSOCK"><code class="docutils literal notranslate"><span class="pre">S_ISSOCK()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISDOOR"><code class="docutils literal notranslate"><span class="pre">S_ISDOOR()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISPORT"><code class="docutils literal notranslate"><span class="pre">S_ISPORT()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISWHT"><code class="docutils literal notranslate"><span class="pre">S_ISWHT()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IMODE"><code class="docutils literal notranslate"><span class="pre">S_IMODE()</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFMT"><code class="docutils literal notranslate"><span class="pre">S_IFMT()</span></code></a></li>
-<li><a class="reference internal" href="#stat.filemode"><code class="docutils literal notranslate"><span class="pre">filemode()</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_MODE"><code class="docutils literal notranslate"><span class="pre">ST_MODE</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_INO"><code class="docutils literal notranslate"><span class="pre">ST_INO</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_DEV"><code class="docutils literal notranslate"><span class="pre">ST_DEV</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_NLINK"><code class="docutils literal notranslate"><span class="pre">ST_NLINK</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_UID"><code class="docutils literal notranslate"><span class="pre">ST_UID</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_GID"><code class="docutils literal notranslate"><span class="pre">ST_GID</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_SIZE"><code class="docutils literal notranslate"><span class="pre">ST_SIZE</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_ATIME"><code class="docutils literal notranslate"><span class="pre">ST_ATIME</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_MTIME"><code class="docutils literal notranslate"><span class="pre">ST_MTIME</span></code></a></li>
-<li><a class="reference internal" href="#stat.ST_CTIME"><code class="docutils literal notranslate"><span class="pre">ST_CTIME</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFSOCK"><code class="docutils literal notranslate"><span class="pre">S_IFSOCK</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFLNK"><code class="docutils literal notranslate"><span class="pre">S_IFLNK</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFREG"><code class="docutils literal notranslate"><span class="pre">S_IFREG</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFBLK"><code class="docutils literal notranslate"><span class="pre">S_IFBLK</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFDIR"><code class="docutils literal notranslate"><span class="pre">S_IFDIR</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFCHR"><code class="docutils literal notranslate"><span class="pre">S_IFCHR</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFIFO"><code class="docutils literal notranslate"><span class="pre">S_IFIFO</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFDOOR"><code class="docutils literal notranslate"><span class="pre">S_IFDOOR</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFPORT"><code class="docutils literal notranslate"><span class="pre">S_IFPORT</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IFWHT"><code class="docutils literal notranslate"><span class="pre">S_IFWHT</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISUID"><code class="docutils literal notranslate"><span class="pre">S_ISUID</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISGID"><code class="docutils literal notranslate"><span class="pre">S_ISGID</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ISVTX"><code class="docutils literal notranslate"><span class="pre">S_ISVTX</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IRWXU"><code class="docutils literal notranslate"><span class="pre">S_IRWXU</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IRUSR"><code class="docutils literal notranslate"><span class="pre">S_IRUSR</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IWUSR"><code class="docutils literal notranslate"><span class="pre">S_IWUSR</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IXUSR"><code class="docutils literal notranslate"><span class="pre">S_IXUSR</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IRWXG"><code class="docutils literal notranslate"><span class="pre">S_IRWXG</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IRGRP"><code class="docutils literal notranslate"><span class="pre">S_IRGRP</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IWGRP"><code class="docutils literal notranslate"><span class="pre">S_IWGRP</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IXGRP"><code class="docutils literal notranslate"><span class="pre">S_IXGRP</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IRWXO"><code class="docutils literal notranslate"><span class="pre">S_IRWXO</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IROTH"><code class="docutils literal notranslate"><span class="pre">S_IROTH</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IWOTH"><code class="docutils literal notranslate"><span class="pre">S_IWOTH</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IXOTH"><code class="docutils literal notranslate"><span class="pre">S_IXOTH</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_ENFMT"><code class="docutils literal notranslate"><span class="pre">S_ENFMT</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IREAD"><code class="docutils literal notranslate"><span class="pre">S_IREAD</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IWRITE"><code class="docutils literal notranslate"><span class="pre">S_IWRITE</span></code></a></li>
-<li><a class="reference internal" href="#stat.S_IEXEC"><code class="docutils literal notranslate"><span class="pre">S_IEXEC</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_NODUMP"><code class="docutils literal notranslate"><span class="pre">UF_NODUMP</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_IMMUTABLE"><code class="docutils literal notranslate"><span class="pre">UF_IMMUTABLE</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_APPEND"><code class="docutils literal notranslate"><span class="pre">UF_APPEND</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_OPAQUE"><code class="docutils literal notranslate"><span class="pre">UF_OPAQUE</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_NOUNLINK"><code class="docutils literal notranslate"><span class="pre">UF_NOUNLINK</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_COMPRESSED"><code class="docutils literal notranslate"><span class="pre">UF_COMPRESSED</span></code></a></li>
-<li><a class="reference internal" href="#stat.UF_HIDDEN"><code class="docutils literal notranslate"><span class="pre">UF_HIDDEN</span></code></a></li>
-<li><a class="reference internal" href="#stat.SF_ARCHIVED"><code class="docutils literal notranslate"><span class="pre">SF_ARCHIVED</span></code></a></li>
-<li><a class="reference internal" href="#stat.SF_IMMUTABLE"><code class="docutils literal notranslate"><span class="pre">SF_IMMUTABLE</span></code></a></li>
-<li><a class="reference internal" href="#stat.SF_APPEND"><code class="docutils literal notranslate"><span class="pre">SF_APPEND</span></code></a></li>
-<li><a class="reference internal" href="#stat.SF_NOUNLINK"><code class="docutils literal notranslate"><span class="pre">SF_NOUNLINK</span></code></a></li>
-<li><a class="reference internal" href="#stat.SF_SNAPSHOT"><code class="docutils literal notranslate"><span class="pre">SF_SNAPSHOT</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_ARCHIVE"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_ARCHIVE</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_COMPRESSED"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_COMPRESSED</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_DEVICE"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_DEVICE</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_DIRECTORY"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_DIRECTORY</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_ENCRYPTED"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_ENCRYPTED</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_HIDDEN"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_HIDDEN</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_INTEGRITY_STREAM"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_INTEGRITY_STREAM</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_NORMAL"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_NORMAL</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_NOT_CONTENT_INDEXED</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_NO_SCRUB_DATA"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_NO_SCRUB_DATA</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_OFFLINE"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_OFFLINE</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_READONLY"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_READONLY</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_REPARSE_POINT"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_REPARSE_POINT</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_SPARSE_FILE"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_SPARSE_FILE</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_SYSTEM"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_SYSTEM</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_TEMPORARY"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_TEMPORARY</span></code></a></li>
-<li><a class="reference internal" href="#stat.FILE_ATTRIBUTE_VIRTUAL"><code class="docutils literal notranslate"><span class="pre">FILE_ATTRIBUTE_VIRTUAL</span></code></a></li>
-<li><a class="reference internal" href="#stat.IO_REPARSE_TAG_SYMLINK"><code class="docutils literal notranslate"><span class="pre">IO_REPARSE_TAG_SYMLINK</span></code></a></li>
-<li><a class="reference internal" href="#stat.IO_REPARSE_TAG_MOUNT_POINT"><code class="docutils literal notranslate"><span class="pre">IO_REPARSE_TAG_MOUNT_POINT</span></code></a></li>
-<li><a class="reference internal" href="#stat.IO_REPARSE_TAG_APPEXECLINK"><code class="docutils literal notranslate"><span class="pre">IO_REPARSE_TAG_APPEXECLINK</span></code></a></li>
-</ul>
-</div><div class="sy-deprecated">
+    <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
   configuration does not work with Shibuya, which is why you're seeing this message.
   Please see <a href="https://shibuya.lepture.com/customisation/sidebar/">
@@ -825,8 +749,8 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-stat">
-<span id="stat-interpreting-stat-results"></span><h1><a class="reference internal" href="#module-stat" title="stat: Utilities for interpreting the results of os.stat(), os.lstat() and os.fstat()."><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code></a> — Interpreting <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code></a> results<a class="headerlink" href="#module-stat" title="Permalink to this heading">¶</a></h1>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/stat.py">Lib/stat.py</a></p>
+<span id="stat-interpreting-stat-results"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code> — Interpreting <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">stat()</span></code></a> results<a class="headerlink" href="#module-stat" title="Link to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/stat.py">Lib/stat.py</a></p>
 <hr class="docutils" />
 <p>The <a class="reference internal" href="#module-stat" title="stat: Utilities for interpreting the results of os.stat(), os.lstat() and os.fstat()."><code class="xref py py-mod docutils literal notranslate"><span class="pre">stat</span></code></a> module defines constants and functions for interpreting the
 results of <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.stat()</span></code></a>, <a class="reference internal" href="os.html#os.fstat" title="os.fstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.fstat()</span></code></a> and <a class="reference internal" href="os.html#os.lstat" title="os.lstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.lstat()</span></code></a> (if they
@@ -839,70 +763,70 @@ exist).  For complete details about the <code class="xref c c-func docutils lite
 types:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISDIR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISDIR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISDIR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISDIR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISDIR" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a directory.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISCHR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISCHR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISCHR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISCHR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISCHR" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a character special device file.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISBLK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISBLK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISBLK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISBLK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISBLK" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a block special device file.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISREG">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISREG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISREG" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISREG</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISREG" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a regular file.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISFIFO">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISFIFO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISFIFO" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISFIFO</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISFIFO" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a FIFO (named pipe).</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISLNK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISLNK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISLNK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISLNK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISLNK" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a symbolic link.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISSOCK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISSOCK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISSOCK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISSOCK</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISSOCK" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a socket.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISDOOR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISDOOR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISDOOR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISDOOR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISDOOR" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a door.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISPORT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISPORT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISPORT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISPORT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISPORT" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from an event port.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_ISWHT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISWHT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISWHT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISWHT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_ISWHT" title="Link to this definition">¶</a></dt>
 <dd><p>Return non-zero if the mode is from a whiteout.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
@@ -910,7 +834,7 @@ types:</p>
 mode:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_IMODE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IMODE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_IMODE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IMODE</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_IMODE" title="Link to this definition">¶</a></dt>
 <dd><p>Return the portion of the file’s mode that can be set by
 <a class="reference internal" href="os.html#os.chmod" title="os.chmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.chmod()</span></code></a>—that is, the file’s permission bits, plus the sticky
 bit, set-group-id, and set-user-id bits (on systems that support them).</p>
@@ -918,7 +842,7 @@ bit, set-group-id, and set-user-id bits (on systems that support them).</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.S_IFMT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFMT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_IFMT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFMT</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.S_IFMT" title="Link to this definition">¶</a></dt>
 <dd><p>Return the portion of the file’s mode that describes the file type (used by the
 <code class="xref py py-func docutils literal notranslate"><span class="pre">S_IS*()</span></code> functions above).</p>
 </dd></dl>
@@ -961,10 +885,10 @@ devices.</p>
 readable string:</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="stat.filemode">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">filemode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.filemode" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">filemode</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#stat.filemode" title="Link to this definition">¶</a></dt>
 <dd><p>Convert a file’s mode to a string of the form ‘-rwxrwxrwx’.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.4: </span>The function supports <a class="reference internal" href="#stat.S_IFDOOR" title="stat.S_IFDOOR"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_IFDOOR</span></code></a>, <a class="reference internal" href="#stat.S_IFPORT" title="stat.S_IFPORT"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_IFPORT</span></code></a> and
@@ -976,61 +900,61 @@ readable string:</p>
 by <a class="reference internal" href="os.html#os.stat" title="os.stat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.stat()</span></code></a>, <a class="reference internal" href="os.html#os.fstat" title="os.fstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.fstat()</span></code></a> or <a class="reference internal" href="os.html#os.lstat" title="os.lstat"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.lstat()</span></code></a>.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_MODE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_MODE</span></span><a class="headerlink" href="#stat.ST_MODE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_MODE</span></span><a class="headerlink" href="#stat.ST_MODE" title="Link to this definition">¶</a></dt>
 <dd><p>Inode protection mode.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_INO">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_INO</span></span><a class="headerlink" href="#stat.ST_INO" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_INO</span></span><a class="headerlink" href="#stat.ST_INO" title="Link to this definition">¶</a></dt>
 <dd><p>Inode number.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_DEV">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_DEV</span></span><a class="headerlink" href="#stat.ST_DEV" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_DEV</span></span><a class="headerlink" href="#stat.ST_DEV" title="Link to this definition">¶</a></dt>
 <dd><p>Device inode resides on.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_NLINK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_NLINK</span></span><a class="headerlink" href="#stat.ST_NLINK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_NLINK</span></span><a class="headerlink" href="#stat.ST_NLINK" title="Link to this definition">¶</a></dt>
 <dd><p>Number of links to the inode.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_UID">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_UID</span></span><a class="headerlink" href="#stat.ST_UID" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_UID</span></span><a class="headerlink" href="#stat.ST_UID" title="Link to this definition">¶</a></dt>
 <dd><p>User id of the owner.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_GID">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_GID</span></span><a class="headerlink" href="#stat.ST_GID" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_GID</span></span><a class="headerlink" href="#stat.ST_GID" title="Link to this definition">¶</a></dt>
 <dd><p>Group id of the owner.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_SIZE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_SIZE</span></span><a class="headerlink" href="#stat.ST_SIZE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_SIZE</span></span><a class="headerlink" href="#stat.ST_SIZE" title="Link to this definition">¶</a></dt>
 <dd><p>Size in bytes of a plain file; amount of data waiting on some special files.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_ATIME">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_ATIME</span></span><a class="headerlink" href="#stat.ST_ATIME" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_ATIME</span></span><a class="headerlink" href="#stat.ST_ATIME" title="Link to this definition">¶</a></dt>
 <dd><p>Time of last access.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_MTIME">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_MTIME</span></span><a class="headerlink" href="#stat.ST_MTIME" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_MTIME</span></span><a class="headerlink" href="#stat.ST_MTIME" title="Link to this definition">¶</a></dt>
 <dd><p>Time of last modification.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.ST_CTIME">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_CTIME</span></span><a class="headerlink" href="#stat.ST_CTIME" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">ST_CTIME</span></span><a class="headerlink" href="#stat.ST_CTIME" title="Link to this definition">¶</a></dt>
 <dd><p>The “ctime” as reported by the operating system.  On some systems (like Unix) is
 the time of the last metadata change, and, on others (like Windows), is the
 creation time (see platform documentation for details).</p>
@@ -1048,70 +972,70 @@ on the implementation of the underlying system call.</p>
 <p>Use of the functions above is more portable than use of the first set of flags:</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFSOCK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFSOCK</span></span><a class="headerlink" href="#stat.S_IFSOCK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFSOCK</span></span><a class="headerlink" href="#stat.S_IFSOCK" title="Link to this definition">¶</a></dt>
 <dd><p>Socket.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFLNK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFLNK</span></span><a class="headerlink" href="#stat.S_IFLNK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFLNK</span></span><a class="headerlink" href="#stat.S_IFLNK" title="Link to this definition">¶</a></dt>
 <dd><p>Symbolic link.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFREG">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFREG</span></span><a class="headerlink" href="#stat.S_IFREG" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFREG</span></span><a class="headerlink" href="#stat.S_IFREG" title="Link to this definition">¶</a></dt>
 <dd><p>Regular file.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFBLK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFBLK</span></span><a class="headerlink" href="#stat.S_IFBLK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFBLK</span></span><a class="headerlink" href="#stat.S_IFBLK" title="Link to this definition">¶</a></dt>
 <dd><p>Block device.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFDIR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFDIR</span></span><a class="headerlink" href="#stat.S_IFDIR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFDIR</span></span><a class="headerlink" href="#stat.S_IFDIR" title="Link to this definition">¶</a></dt>
 <dd><p>Directory.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFCHR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFCHR</span></span><a class="headerlink" href="#stat.S_IFCHR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFCHR</span></span><a class="headerlink" href="#stat.S_IFCHR" title="Link to this definition">¶</a></dt>
 <dd><p>Character device.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFIFO">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFIFO</span></span><a class="headerlink" href="#stat.S_IFIFO" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFIFO</span></span><a class="headerlink" href="#stat.S_IFIFO" title="Link to this definition">¶</a></dt>
 <dd><p>FIFO.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFDOOR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFDOOR</span></span><a class="headerlink" href="#stat.S_IFDOOR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFDOOR</span></span><a class="headerlink" href="#stat.S_IFDOOR" title="Link to this definition">¶</a></dt>
 <dd><p>Door.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFPORT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFPORT</span></span><a class="headerlink" href="#stat.S_IFPORT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFPORT</span></span><a class="headerlink" href="#stat.S_IFPORT" title="Link to this definition">¶</a></dt>
 <dd><p>Event port.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IFWHT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFWHT</span></span><a class="headerlink" href="#stat.S_IFWHT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IFWHT</span></span><a class="headerlink" href="#stat.S_IFWHT" title="Link to this definition">¶</a></dt>
 <dd><p>Whiteout.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
@@ -1123,13 +1047,13 @@ on the implementation of the underlying system call.</p>
 <p>The following flags can also be used in the <em>mode</em> argument of <a class="reference internal" href="os.html#os.chmod" title="os.chmod"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.chmod()</span></code></a>:</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_ISUID">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISUID</span></span><a class="headerlink" href="#stat.S_ISUID" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISUID</span></span><a class="headerlink" href="#stat.S_ISUID" title="Link to this definition">¶</a></dt>
 <dd><p>Set UID bit.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_ISGID">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISGID</span></span><a class="headerlink" href="#stat.S_ISGID" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISGID</span></span><a class="headerlink" href="#stat.S_ISGID" title="Link to this definition">¶</a></dt>
 <dd><p>Set-group-ID bit.  This bit has several special uses.  For a directory
 it indicates that BSD semantics is to be used for that directory:
 files created there inherit their group ID from the directory, not
@@ -1142,7 +1066,7 @@ set, the set-group-ID bit indicates mandatory file/record locking
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_ISVTX">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISVTX</span></span><a class="headerlink" href="#stat.S_ISVTX" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ISVTX</span></span><a class="headerlink" href="#stat.S_ISVTX" title="Link to this definition">¶</a></dt>
 <dd><p>Sticky bit.  When this bit is set on a directory it means that a file
 in that directory can be renamed or deleted only by the owner of the
 file, by the owner of the directory, or by a privileged process.</p>
@@ -1150,79 +1074,79 @@ file, by the owner of the directory, or by a privileged process.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IRWXU">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRWXU</span></span><a class="headerlink" href="#stat.S_IRWXU" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRWXU</span></span><a class="headerlink" href="#stat.S_IRWXU" title="Link to this definition">¶</a></dt>
 <dd><p>Mask for file owner permissions.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IRUSR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRUSR</span></span><a class="headerlink" href="#stat.S_IRUSR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRUSR</span></span><a class="headerlink" href="#stat.S_IRUSR" title="Link to this definition">¶</a></dt>
 <dd><p>Owner has read permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IWUSR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWUSR</span></span><a class="headerlink" href="#stat.S_IWUSR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWUSR</span></span><a class="headerlink" href="#stat.S_IWUSR" title="Link to this definition">¶</a></dt>
 <dd><p>Owner has write permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IXUSR">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IXUSR</span></span><a class="headerlink" href="#stat.S_IXUSR" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IXUSR</span></span><a class="headerlink" href="#stat.S_IXUSR" title="Link to this definition">¶</a></dt>
 <dd><p>Owner has execute permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IRWXG">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRWXG</span></span><a class="headerlink" href="#stat.S_IRWXG" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRWXG</span></span><a class="headerlink" href="#stat.S_IRWXG" title="Link to this definition">¶</a></dt>
 <dd><p>Mask for group permissions.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IRGRP">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRGRP</span></span><a class="headerlink" href="#stat.S_IRGRP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRGRP</span></span><a class="headerlink" href="#stat.S_IRGRP" title="Link to this definition">¶</a></dt>
 <dd><p>Group has read permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IWGRP">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWGRP</span></span><a class="headerlink" href="#stat.S_IWGRP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWGRP</span></span><a class="headerlink" href="#stat.S_IWGRP" title="Link to this definition">¶</a></dt>
 <dd><p>Group has write permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IXGRP">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IXGRP</span></span><a class="headerlink" href="#stat.S_IXGRP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IXGRP</span></span><a class="headerlink" href="#stat.S_IXGRP" title="Link to this definition">¶</a></dt>
 <dd><p>Group has execute permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IRWXO">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRWXO</span></span><a class="headerlink" href="#stat.S_IRWXO" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IRWXO</span></span><a class="headerlink" href="#stat.S_IRWXO" title="Link to this definition">¶</a></dt>
 <dd><p>Mask for permissions for others (not in group).</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IROTH">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IROTH</span></span><a class="headerlink" href="#stat.S_IROTH" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IROTH</span></span><a class="headerlink" href="#stat.S_IROTH" title="Link to this definition">¶</a></dt>
 <dd><p>Others have read permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IWOTH">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWOTH</span></span><a class="headerlink" href="#stat.S_IWOTH" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWOTH</span></span><a class="headerlink" href="#stat.S_IWOTH" title="Link to this definition">¶</a></dt>
 <dd><p>Others have write permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IXOTH">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IXOTH</span></span><a class="headerlink" href="#stat.S_IXOTH" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IXOTH</span></span><a class="headerlink" href="#stat.S_IXOTH" title="Link to this definition">¶</a></dt>
 <dd><p>Others have execute permission.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_ENFMT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ENFMT</span></span><a class="headerlink" href="#stat.S_ENFMT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_ENFMT</span></span><a class="headerlink" href="#stat.S_ENFMT" title="Link to this definition">¶</a></dt>
 <dd><p>System V file locking enforcement.  This flag is shared with <a class="reference internal" href="#stat.S_ISGID" title="stat.S_ISGID"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_ISGID</span></code></a>:
 file/record locking is enforced on files that do not have the group
 execution bit (<a class="reference internal" href="#stat.S_IXGRP" title="stat.S_IXGRP"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_IXGRP</span></code></a>) set.</p>
@@ -1230,93 +1154,180 @@ execution bit (<a class="reference internal" href="#stat.S_IXGRP" title="stat.S_
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IREAD">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IREAD</span></span><a class="headerlink" href="#stat.S_IREAD" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IREAD</span></span><a class="headerlink" href="#stat.S_IREAD" title="Link to this definition">¶</a></dt>
 <dd><p>Unix V7 synonym for <a class="reference internal" href="#stat.S_IRUSR" title="stat.S_IRUSR"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_IRUSR</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IWRITE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWRITE</span></span><a class="headerlink" href="#stat.S_IWRITE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IWRITE</span></span><a class="headerlink" href="#stat.S_IWRITE" title="Link to this definition">¶</a></dt>
 <dd><p>Unix V7 synonym for <a class="reference internal" href="#stat.S_IWUSR" title="stat.S_IWUSR"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_IWUSR</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.S_IEXEC">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IEXEC</span></span><a class="headerlink" href="#stat.S_IEXEC" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">S_IEXEC</span></span><a class="headerlink" href="#stat.S_IEXEC" title="Link to this definition">¶</a></dt>
 <dd><p>Unix V7 synonym for <a class="reference internal" href="#stat.S_IXUSR" title="stat.S_IXUSR"><code class="xref py py-data docutils literal notranslate"><span class="pre">S_IXUSR</span></code></a>.</p>
 </dd></dl>
 
 <p>The following flags can be used in the <em>flags</em> argument of <a class="reference internal" href="os.html#os.chflags" title="os.chflags"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.chflags()</span></code></a>:</p>
 <dl class="py data">
+<dt class="sig sig-object py" id="stat.UF_SETTABLE">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_SETTABLE</span></span><a class="headerlink" href="#stat.UF_SETTABLE" title="Link to this definition">¶</a></dt>
+<dd><p>All user settable flags.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_NODUMP">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_NODUMP</span></span><a class="headerlink" href="#stat.UF_NODUMP" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_NODUMP</span></span><a class="headerlink" href="#stat.UF_NODUMP" title="Link to this definition">¶</a></dt>
 <dd><p>Do not dump the file.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_IMMUTABLE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_IMMUTABLE</span></span><a class="headerlink" href="#stat.UF_IMMUTABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_IMMUTABLE</span></span><a class="headerlink" href="#stat.UF_IMMUTABLE" title="Link to this definition">¶</a></dt>
 <dd><p>The file may not be changed.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_APPEND">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_APPEND</span></span><a class="headerlink" href="#stat.UF_APPEND" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_APPEND</span></span><a class="headerlink" href="#stat.UF_APPEND" title="Link to this definition">¶</a></dt>
 <dd><p>The file may only be appended to.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_OPAQUE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_OPAQUE</span></span><a class="headerlink" href="#stat.UF_OPAQUE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_OPAQUE</span></span><a class="headerlink" href="#stat.UF_OPAQUE" title="Link to this definition">¶</a></dt>
 <dd><p>The directory is opaque when viewed through a union stack.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_NOUNLINK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_NOUNLINK</span></span><a class="headerlink" href="#stat.UF_NOUNLINK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_NOUNLINK</span></span><a class="headerlink" href="#stat.UF_NOUNLINK" title="Link to this definition">¶</a></dt>
 <dd><p>The file may not be renamed or deleted.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_COMPRESSED">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_COMPRESSED</span></span><a class="headerlink" href="#stat.UF_COMPRESSED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_COMPRESSED</span></span><a class="headerlink" href="#stat.UF_COMPRESSED" title="Link to this definition">¶</a></dt>
 <dd><p>The file is stored compressed (macOS 10.6+).</p>
 </dd></dl>
 
 <dl class="py data">
+<dt class="sig sig-object py" id="stat.UF_TRACKED">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_TRACKED</span></span><a class="headerlink" href="#stat.UF_TRACKED" title="Link to this definition">¶</a></dt>
+<dd><p>Used for handling document IDs (macOS)</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="stat.UF_DATAVAULT">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_DATAVAULT</span></span><a class="headerlink" href="#stat.UF_DATAVAULT" title="Link to this definition">¶</a></dt>
+<dd><p>The file needs an entitlement for reading or writing (macOS 10.13+)</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
 <dt class="sig sig-object py" id="stat.UF_HIDDEN">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_HIDDEN</span></span><a class="headerlink" href="#stat.UF_HIDDEN" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">UF_HIDDEN</span></span><a class="headerlink" href="#stat.UF_HIDDEN" title="Link to this definition">¶</a></dt>
 <dd><p>The file should not be displayed in a GUI (macOS 10.5+).</p>
 </dd></dl>
 
 <dl class="py data">
+<dt class="sig sig-object py" id="stat.SF_SETTABLE">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_SETTABLE</span></span><a class="headerlink" href="#stat.SF_SETTABLE" title="Link to this definition">¶</a></dt>
+<dd><p>All super-user changeable flags</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="stat.SF_SUPPORTED">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_SUPPORTED</span></span><a class="headerlink" href="#stat.SF_SUPPORTED" title="Link to this definition">¶</a></dt>
+<dd><p>All super-user supported flags</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: macOS</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="stat.SF_SYNTHETIC">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_SYNTHETIC</span></span><a class="headerlink" href="#stat.SF_SYNTHETIC" title="Link to this definition">¶</a></dt>
+<dd><p>All super-user read-only synthetic flags</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: macOS</p>
+</div>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
 <dt class="sig sig-object py" id="stat.SF_ARCHIVED">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_ARCHIVED</span></span><a class="headerlink" href="#stat.SF_ARCHIVED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_ARCHIVED</span></span><a class="headerlink" href="#stat.SF_ARCHIVED" title="Link to this definition">¶</a></dt>
 <dd><p>The file may be archived.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.SF_IMMUTABLE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_IMMUTABLE</span></span><a class="headerlink" href="#stat.SF_IMMUTABLE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_IMMUTABLE</span></span><a class="headerlink" href="#stat.SF_IMMUTABLE" title="Link to this definition">¶</a></dt>
 <dd><p>The file may not be changed.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.SF_APPEND">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_APPEND</span></span><a class="headerlink" href="#stat.SF_APPEND" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_APPEND</span></span><a class="headerlink" href="#stat.SF_APPEND" title="Link to this definition">¶</a></dt>
 <dd><p>The file may only be appended to.</p>
 </dd></dl>
 
 <dl class="py data">
+<dt class="sig sig-object py" id="stat.SF_RESTRICTED">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_RESTRICTED</span></span><a class="headerlink" href="#stat.SF_RESTRICTED" title="Link to this definition">¶</a></dt>
+<dd><p>The file needs an entitlement to write to (macOS 10.13+)</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
 <dt class="sig sig-object py" id="stat.SF_NOUNLINK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_NOUNLINK</span></span><a class="headerlink" href="#stat.SF_NOUNLINK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_NOUNLINK</span></span><a class="headerlink" href="#stat.SF_NOUNLINK" title="Link to this definition">¶</a></dt>
 <dd><p>The file may not be renamed or deleted.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.SF_SNAPSHOT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_SNAPSHOT</span></span><a class="headerlink" href="#stat.SF_SNAPSHOT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_SNAPSHOT</span></span><a class="headerlink" href="#stat.SF_SNAPSHOT" title="Link to this definition">¶</a></dt>
 <dd><p>The file is a snapshot file.</p>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="stat.SF_FIRMLINK">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_FIRMLINK</span></span><a class="headerlink" href="#stat.SF_FIRMLINK" title="Link to this definition">¶</a></dt>
+<dd><p>The file is a firmlink (macOS 10.15+)</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
+<dl class="py data">
+<dt class="sig sig-object py" id="stat.SF_DATALESS">
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">SF_DATALESS</span></span><a class="headerlink" href="#stat.SF_DATALESS" title="Link to this definition">¶</a></dt>
+<dd><p>The file is a dataless object (macOS 10.15+)</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
 </dd></dl>
 
 <p>See the *BSD or macOS systems man page <em class="manpage"><a class="manpage reference external" href="https://manpages.debian.org/chflags(2)">chflags(2)</a></em> for more information.</p>
@@ -1326,41 +1337,41 @@ See the <a class="reference external" href="https://msdn.microsoft.com/en-us/lib
 for more detail on the meaning of these constants.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_ARCHIVE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_ARCHIVE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_ARCHIVE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_ARCHIVE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_ARCHIVE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_COMPRESSED">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_COMPRESSED</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_COMPRESSED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_COMPRESSED</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_COMPRESSED" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_DEVICE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_DEVICE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_DEVICE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_DEVICE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_DEVICE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_DIRECTORY">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_DIRECTORY</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_DIRECTORY" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_DIRECTORY</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_DIRECTORY" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_ENCRYPTED">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_ENCRYPTED</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_ENCRYPTED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_ENCRYPTED</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_ENCRYPTED" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_HIDDEN">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_HIDDEN</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_HIDDEN" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_HIDDEN</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_HIDDEN" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_INTEGRITY_STREAM">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_INTEGRITY_STREAM</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_INTEGRITY_STREAM" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_INTEGRITY_STREAM</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_INTEGRITY_STREAM" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_NORMAL">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_NORMAL</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_NORMAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_NORMAL</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_NORMAL" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_NOT_CONTENT_INDEXED</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_NOT_CONTENT_INDEXED</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_NOT_CONTENT_INDEXED" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_NO_SCRUB_DATA">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_NO_SCRUB_DATA</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_NO_SCRUB_DATA" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_NO_SCRUB_DATA</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_NO_SCRUB_DATA" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_OFFLINE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_OFFLINE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_OFFLINE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_OFFLINE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_OFFLINE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_READONLY">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_READONLY</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_READONLY" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_READONLY</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_READONLY" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_REPARSE_POINT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_REPARSE_POINT</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_REPARSE_POINT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_REPARSE_POINT</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_REPARSE_POINT" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_SPARSE_FILE">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_SPARSE_FILE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_SPARSE_FILE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_SPARSE_FILE</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_SPARSE_FILE" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_SYSTEM">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_SYSTEM</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_SYSTEM" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_SYSTEM</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_SYSTEM" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_TEMPORARY">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_TEMPORARY</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_TEMPORARY" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_TEMPORARY</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_TEMPORARY" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.FILE_ATTRIBUTE_VIRTUAL">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_VIRTUAL</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_VIRTUAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">FILE_ATTRIBUTE_VIRTUAL</span></span><a class="headerlink" href="#stat.FILE_ATTRIBUTE_VIRTUAL" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 3.5.</span></p>
+<p><span class="versionmodified added">Added in version 3.5.</span></p>
 </div>
 </dd></dl>
 
@@ -1369,13 +1380,13 @@ for more detail on the meaning of these constants.</p>
 constants, but are not an exhaustive list.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="stat.IO_REPARSE_TAG_SYMLINK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">IO_REPARSE_TAG_SYMLINK</span></span><a class="headerlink" href="#stat.IO_REPARSE_TAG_SYMLINK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">IO_REPARSE_TAG_SYMLINK</span></span><a class="headerlink" href="#stat.IO_REPARSE_TAG_SYMLINK" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.IO_REPARSE_TAG_MOUNT_POINT">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">IO_REPARSE_TAG_MOUNT_POINT</span></span><a class="headerlink" href="#stat.IO_REPARSE_TAG_MOUNT_POINT" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">IO_REPARSE_TAG_MOUNT_POINT</span></span><a class="headerlink" href="#stat.IO_REPARSE_TAG_MOUNT_POINT" title="Link to this definition">¶</a></dt>
 <dt class="sig sig-object py" id="stat.IO_REPARSE_TAG_APPEXECLINK">
-<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">IO_REPARSE_TAG_APPEXECLINK</span></span><a class="headerlink" href="#stat.IO_REPARSE_TAG_APPEXECLINK" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">stat.</span></span><span class="sig-name descname"><span class="pre">IO_REPARSE_TAG_APPEXECLINK</span></span><a class="headerlink" href="#stat.IO_REPARSE_TAG_APPEXECLINK" title="Link to this definition">¶</a></dt>
 <dd><div class="versionadded">
-<p><span class="versionmodified added">New in version 3.8.</span></p>
+<p><span class="versionmodified added">Added in version 3.8.</span></p>
 </div>
 </dd></dl>
 
@@ -1421,8 +1432,8 @@ constants, but are not an exhaustive list.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>1. Extending Python with C or C++ - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="2. Defining Extension Types: Tutorial" href="newtypes_tutorial.html" /><link rel="prev" title="Extending and Embedding the Python Interpreter" href="index.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>1. Extending Python with C or C++ - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="2. Defining Extension Types: Tutorial" href="newtypes_tutorial.html" /><link rel="prev" title="Extending and Embedding the Python Interpreter" href="index.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -755,7 +765,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="extending-python-with-c-or-c">
-<span id="extending-intro"></span><h1><span class="section-number">1. </span>Extending Python with C or C++<a class="headerlink" href="#extending-python-with-c-or-c" title="Permalink to this heading">¶</a></h1>
+<span id="extending-intro"></span><h1><span class="section-number">1. </span>Extending Python with C or C++<a class="headerlink" href="#extending-python-with-c-or-c" title="Link to this heading">¶</a></h1>
 <p>It is quite easy to add new built-in modules to Python, if you know how to
 program in C.  Such <em class="dfn">extension modules</em> can do two things that can’t be
 done directly in Python: they can implement new built-in object types, and they
@@ -779,7 +789,7 @@ portable between implementations of Python than writing and compiling a C
 extension module.</p>
 </div>
 <section id="a-simple-example">
-<span id="extending-simpleexample"></span><h2><span class="section-number">1.1. </span>A Simple Example<a class="headerlink" href="#a-simple-example" title="Permalink to this heading">¶</a></h2>
+<span id="extending-simpleexample"></span><h2><span class="section-number">1.1. </span>A Simple Example<a class="headerlink" href="#a-simple-example" title="Link to this heading">¶</a></h2>
 <p>Let’s create an extension module called <code class="docutils literal notranslate"><span class="pre">spam</span></code> (the favorite food of Monty
 Python fans…) and let’s say we want to create a Python interface to the C
 library function <code class="xref c c-func docutils literal notranslate"><span class="pre">system()</span></code> <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>. This function takes a null-terminated
@@ -854,7 +864,7 @@ latter case it also raises an appropriate exception so the calling function can
 return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> immediately (as we saw in the example).</p>
 </section>
 <section id="intermezzo-errors-and-exceptions">
-<span id="extending-errors"></span><h2><span class="section-number">1.2. </span>Intermezzo: Errors and Exceptions<a class="headerlink" href="#intermezzo-errors-and-exceptions" title="Permalink to this heading">¶</a></h2>
+<span id="extending-errors"></span><h2><span class="section-number">1.2. </span>Intermezzo: Errors and Exceptions<a class="headerlink" href="#intermezzo-errors-and-exceptions" title="Link to this heading">¶</a></h2>
 <p>An important convention throughout the Python interpreter is the following: when
 a function fails, it should set an exception condition and return an error value
 (usually <code class="docutils literal notranslate"><span class="pre">-1</span></code> or a <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointer).  Exception information is stored in
@@ -979,7 +989,7 @@ call to <a class="reference internal" href="../c-api/exceptions.html#c.PyErr_Set
 </div>
 </section>
 <section id="back-to-the-example">
-<span id="backtoexample"></span><h2><span class="section-number">1.3. </span>Back to the Example<a class="headerlink" href="#back-to-the-example" title="Permalink to this heading">¶</a></h2>
+<span id="backtoexample"></span><h2><span class="section-number">1.3. </span>Back to the Example<a class="headerlink" href="#back-to-the-example" title="Link to this heading">¶</a></h2>
 <p>Going back to our example function, you should now be able to understand this
 statement:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">PyArg_ParseTuple</span><span class="p">(</span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;s&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">&amp;</span><span class="n">command</span><span class="p">))</span>
@@ -1018,7 +1028,7 @@ genuine Python object rather than a <code class="docutils literal notranslate"><
 contexts, as we have seen.</p>
 </section>
 <section id="the-module-s-method-table-and-initialization-function">
-<span id="methodtable"></span><h2><span class="section-number">1.4. </span>The Module’s Method Table and Initialization Function<a class="headerlink" href="#the-module-s-method-table-and-initialization-function" title="Permalink to this heading">¶</a></h2>
+<span id="methodtable"></span><h2><span class="section-number">1.4. </span>The Module’s Method Table and Initialization Function<a class="headerlink" href="#the-module-s-method-table-and-initialization-function" title="Link to this heading">¶</a></h2>
 <p>I promised to show how <code class="xref c c-func docutils literal notranslate"><span class="pre">spam_system()</span></code> is called from Python programs.
 First, we need to list its name and address in a “method table”:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">static</span><span class="w"> </span><span class="n">PyMethodDef</span><span class="w"> </span><span class="n">SpamMethods</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span>
@@ -1150,7 +1160,7 @@ For details on multi-phase initialization, see <span class="target" id="index-0"
 </div>
 </section>
 <section id="compilation-and-linkage">
-<span id="compilation"></span><h2><span class="section-number">1.5. </span>Compilation and Linkage<a class="headerlink" href="#compilation-and-linkage" title="Permalink to this heading">¶</a></h2>
+<span id="compilation"></span><h2><span class="section-number">1.5. </span>Compilation and Linkage<a class="headerlink" href="#compilation-and-linkage" title="Link to this heading">¶</a></h2>
 <p>There are two more things to do before you can use your new extension: compiling
 and linking it with the Python system.  If you use dynamic loading, the details
 may depend on the style of dynamic loading your system uses; see the chapters
@@ -1178,7 +1188,7 @@ on the line in the configuration file as well, for instance:</p>
 </div>
 </section>
 <section id="calling-python-functions-from-c">
-<span id="callingpython"></span><h2><span class="section-number">1.6. </span>Calling Python Functions from C<a class="headerlink" href="#calling-python-functions-from-c" title="Permalink to this heading">¶</a></h2>
+<span id="callingpython"></span><h2><span class="section-number">1.6. </span>Calling Python Functions from C<a class="headerlink" href="#calling-python-functions-from-c" title="Link to this heading">¶</a></h2>
 <p>So far we have concentrated on making C functions callable from Python.  The
 reverse is also useful: calling Python functions from C. This is especially the
 case for libraries that support so-called “callback” functions.  If a C
@@ -1311,7 +1321,7 @@ the above example, we use <a class="reference internal" href="../c-api/arg.html#
 </div>
 </section>
 <section id="extracting-parameters-in-extension-functions">
-<span id="parsetuple"></span><h2><span class="section-number">1.7. </span>Extracting Parameters in Extension Functions<a class="headerlink" href="#extracting-parameters-in-extension-functions" title="Permalink to this heading">¶</a></h2>
+<span id="parsetuple"></span><h2><span class="section-number">1.7. </span>Extracting Parameters in Extension Functions<a class="headerlink" href="#extracting-parameters-in-extension-functions" title="Link to this heading">¶</a></h2>
 <p id="index-2">The <a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyArg_ParseTuple()</span></code></a> function is declared as follows:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kt">int</span><span class="w"> </span><span class="nf">PyArg_ParseTuple</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
 </span></pre></div>
@@ -1388,10 +1398,10 @@ at least overwrite random bits in memory.  So be careful!</p>
 </div>
 </section>
 <section id="keyword-parameters-for-extension-functions">
-<span id="parsetupleandkeywords"></span><h2><span class="section-number">1.8. </span>Keyword Parameters for Extension Functions<a class="headerlink" href="#keyword-parameters-for-extension-functions" title="Permalink to this heading">¶</a></h2>
+<span id="parsetupleandkeywords"></span><h2><span class="section-number">1.8. </span>Keyword Parameters for Extension Functions<a class="headerlink" href="#keyword-parameters-for-extension-functions" title="Link to this heading">¶</a></h2>
 <p id="index-3">The <a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTupleAndKeywords" title="PyArg_ParseTupleAndKeywords"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyArg_ParseTupleAndKeywords()</span></code></a> function is declared as follows:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kt">int</span><span class="w"> </span><span class="nf">PyArg_ParseTupleAndKeywords</span><span class="p">(</span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="n">kwdict</span><span class="p">,</span>
-</span><span data-line="2"><span class="w">                                </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">kwlist</span><span class="p">[],</span><span class="w"> </span><span class="p">...);</span>
+</span><span data-line="2"><span class="w">                                </span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="k">const</span><span class="w"> </span><span class="o">*</span><span class="n">kwlist</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
 </span></pre></div>
 </div>
 <p>The <em>arg</em> and <em>format</em> parameters are identical to those of the
@@ -1460,7 +1470,7 @@ Philbrick (<a class="reference external" href="mailto:philbrick&#37;&#52;&#48;hk
 </div>
 </section>
 <section id="building-arbitrary-values">
-<span id="buildvalue"></span><h2><span class="section-number">1.9. </span>Building Arbitrary Values<a class="headerlink" href="#building-arbitrary-values" title="Permalink to this heading">¶</a></h2>
+<span id="buildvalue"></span><h2><span class="section-number">1.9. </span>Building Arbitrary Values<a class="headerlink" href="#building-arbitrary-values" title="Link to this heading">¶</a></h2>
 <p>This function is the counterpart to <a class="reference internal" href="../c-api/arg.html#c.PyArg_ParseTuple" title="PyArg_ParseTuple"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyArg_ParseTuple()</span></code></a>.  It is declared
 as follows:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">PyObject</span><span class="w"> </span><span class="o">*</span><span class="nf">Py_BuildValue</span><span class="p">(</span><span class="k">const</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">format</span><span class="p">,</span><span class="w"> </span><span class="p">...);</span>
@@ -1499,7 +1509,7 @@ force it to return a tuple of size 0 or one, parenthesize the format string.</p>
 </div>
 </section>
 <section id="reference-counts">
-<span id="refcounts"></span><h2><span class="section-number">1.10. </span>Reference Counts<a class="headerlink" href="#reference-counts" title="Permalink to this heading">¶</a></h2>
+<span id="refcounts"></span><h2><span class="section-number">1.10. </span>Reference Counts<a class="headerlink" href="#reference-counts" title="Link to this heading">¶</a></h2>
 <p>In languages like C or C++, the programmer is responsible for dynamic allocation
 and deallocation of memory on the heap.  In C, this is done using the functions
 <code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code> and <code class="xref c c-func docutils literal notranslate"><span class="pre">free()</span></code>.  In C++, the operators <code class="docutils literal notranslate"><span class="pre">new</span></code> and
@@ -1511,7 +1521,7 @@ It is important to call <code class="xref c c-func docutils literal notranslate"
 is forgotten but <code class="xref c c-func docutils literal notranslate"><span class="pre">free()</span></code> is not called for it, the memory it occupies
 cannot be reused until the program terminates.  This is called a <em class="dfn">memory
 leak</em>.  On the other hand, if a program calls <code class="xref c c-func docutils literal notranslate"><span class="pre">free()</span></code> for a block and then
-continues to use the block, it creates a conflict with re-use of the block
+continues to use the block, it creates a conflict with reuse of the block
 through another <code class="xref c c-func docutils literal notranslate"><span class="pre">malloc()</span></code> call.  This is called <em class="dfn">using freed memory</em>.
 It has the same bad consequences as referencing uninitialized data — core
 dumps, wrong results, mysterious crashes.</p>
@@ -1560,7 +1570,7 @@ The <a class="reference internal" href="../library/gc.html#module-gc" title="gc:
 <a class="reference internal" href="../library/gc.html#gc.collect" title="gc.collect"><code class="xref py py-func docutils literal notranslate"><span class="pre">collect()</span></code></a> function), as well as configuration
 interfaces and the ability to disable the detector at runtime.</p>
 <section id="reference-counting-in-python">
-<span id="refcountsinpython"></span><h3><span class="section-number">1.10.1. </span>Reference Counting in Python<a class="headerlink" href="#reference-counting-in-python" title="Permalink to this heading">¶</a></h3>
+<span id="refcountsinpython"></span><h3><span class="section-number">1.10.1. </span>Reference Counting in Python<a class="headerlink" href="#reference-counting-in-python" title="Link to this heading">¶</a></h3>
 <p>There are two macros, <code class="docutils literal notranslate"><span class="pre">Py_INCREF(x)</span></code> and <code class="docutils literal notranslate"><span class="pre">Py_DECREF(x)</span></code>, which handle the
 incrementing and decrementing of the reference count. <a class="reference internal" href="../c-api/refcounting.html#c.Py_DECREF" title="Py_DECREF"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_DECREF()</span></code></a> also
 frees the object when the count reaches zero. For flexibility, it doesn’t call
@@ -1594,7 +1604,7 @@ owner responsibilities (the new owner must dispose of the reference properly, as
 well as the previous owner).</p>
 </section>
 <section id="ownership-rules">
-<span id="ownershiprules"></span><h3><span class="section-number">1.10.2. </span>Ownership Rules<a class="headerlink" href="#ownership-rules" title="Permalink to this heading">¶</a></h3>
+<span id="ownershiprules"></span><h3><span class="section-number">1.10.2. </span>Ownership Rules<a class="headerlink" href="#ownership-rules" title="Link to this heading">¶</a></h3>
 <p>Whenever an object reference is passed into or out of a function, it is part of
 the function’s interface specification whether ownership is transferred with the
 reference or not.</p>
@@ -1631,7 +1641,7 @@ be an owned reference — ownership is transferred from the function to its
 caller.</p>
 </section>
 <section id="thin-ice">
-<span id="thinice"></span><h3><span class="section-number">1.10.3. </span>Thin Ice<a class="headerlink" href="#thin-ice" title="Permalink to this heading">¶</a></h3>
+<span id="thinice"></span><h3><span class="section-number">1.10.3. </span>Thin Ice<a class="headerlink" href="#thin-ice" title="Link to this heading">¶</a></h3>
 <p>There are a few situations where seemingly harmless use of a borrowed reference
 can lead to problems.  These all have to do with implicit invocations of the
 interpreter, which can cause the owner of a reference to dispose of it.</p>
@@ -1701,7 +1711,7 @@ Obviously, the following function has the same problem as the previous one:</p>
 </div>
 </section>
 <section id="null-pointers">
-<span id="nullpointers"></span><h3><span class="section-number">1.10.4. </span>NULL Pointers<a class="headerlink" href="#null-pointers" title="Permalink to this heading">¶</a></h3>
+<span id="nullpointers"></span><h3><span class="section-number">1.10.4. </span>NULL Pointers<a class="headerlink" href="#null-pointers" title="Link to this heading">¶</a></h3>
 <p>In general, functions that take object references as arguments do not expect you
 to pass them <code class="docutils literal notranslate"><span class="pre">NULL</span></code> pointers, and will dump core (or cause later core dumps) if
 you do so.  Functions that return object references generally return <code class="docutils literal notranslate"><span class="pre">NULL</span></code> only
@@ -1727,7 +1737,7 @@ that it is always a tuple <a class="footnote-reference brackets" href="#id8" id=
 </section>
 </section>
 <section id="writing-extensions-in-c">
-<span id="cplusplus"></span><h2><span class="section-number">1.11. </span>Writing Extensions in C++<a class="headerlink" href="#writing-extensions-in-c" title="Permalink to this heading">¶</a></h2>
+<span id="cplusplus"></span><h2><span class="section-number">1.11. </span>Writing Extensions in C++<a class="headerlink" href="#writing-extensions-in-c" title="Link to this heading">¶</a></h2>
 <p>It is possible to write extension modules in C++.  Some restrictions apply.  If
 the main program (the Python interpreter) is compiled and linked by the C
 compiler, global or static objects with constructors cannot be used.  This is
@@ -1739,7 +1749,7 @@ already if the symbol <code class="docutils literal notranslate"><span class="pr
 define this symbol).</p>
 </section>
 <section id="providing-a-c-api-for-an-extension-module">
-<span id="using-capsules"></span><h2><span class="section-number">1.12. </span>Providing a C API for an Extension Module<a class="headerlink" href="#providing-a-c-api-for-an-extension-module" title="Permalink to this heading">¶</a></h2>
+<span id="using-capsules"></span><h2><span class="section-number">1.12. </span>Providing a C API for an Extension Module<a class="headerlink" href="#providing-a-c-api-for-an-extension-module" title="Link to this heading">¶</a></h2>
 <p>Many extension modules just provide new functions and types to be used from
 Python, but sometimes the code in an extension module can be useful for other
 extension modules. For example, an extension module could implement a type
@@ -1947,23 +1957,23 @@ Manual in the section <a class="reference internal" href="../c-api/capsule.html#
 code distribution).</p>
 <p class="rubric">Footnotes</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id5" role="note">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
 <p>An interface for this function already exists in the standard module <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code></a>
 — it was chosen as a simple and straightforward example.</p>
 </aside>
-<aside class="footnote brackets" id="id6" role="note">
+<aside class="footnote brackets" id="id6" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
 <p>The metaphor of “borrowing” a reference is not completely correct: the owner
 still has a copy of the reference.</p>
 </aside>
-<aside class="footnote brackets" id="id7" role="note">
+<aside class="footnote brackets" id="id7" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">3</a><span class="fn-bracket">]</span></span>
 <p>Checking that the reference count is at least 1 <strong>does not work</strong> — the
 reference count itself could be in freed memory and may thus be reused for
 another object!</p>
 </aside>
-<aside class="footnote brackets" id="id8" role="note">
+<aside class="footnote brackets" id="id8" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">4</a><span class="fn-bracket">]</span></span>
 <p>These guarantees don’t hold when you use the “old” style calling convention —
 this is still found in much existing code.</p>
@@ -2012,8 +2022,8 @@ this is still found in much existing code.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

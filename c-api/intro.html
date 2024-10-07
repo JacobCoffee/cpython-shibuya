@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Introduction - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="C API Stability" href="stable.html" /><link rel="prev" title="Python/C API Reference Manual" href="index.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Introduction - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="C API Stability" href="stable.html" /><link rel="prev" title="Python/C API Reference Manual" href="index.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -751,7 +761,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="introduction">
-<span id="api-intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">¶</a></h1>
+<span id="api-intro"></span><h1>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h1>
 <p>The Application Programmer’s Interface to Python gives C and C++ programmers
 access to the Python interpreter at a variety of levels.  The API is equally
 usable from C++, but for brevity it is generally referred to as the Python/C
@@ -772,7 +782,7 @@ provide a custom extension as well, so it’s probably a  good idea to become
 familiar with writing an extension before  attempting to embed Python in a real
 application.</p>
 <section id="coding-standards">
-<h2>Coding standards<a class="headerlink" href="#coding-standards" title="Permalink to this heading">¶</a></h2>
+<h2>Coding standards<a class="headerlink" href="#coding-standards" title="Link to this heading">¶</a></h2>
 <p>If you’re writing C code for inclusion in CPython, you <strong>must</strong> follow the
 guidelines and standards defined in <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0007/"><strong>PEP 7</strong></a>.  These guidelines apply
 regardless of the version of Python you are contributing to.  Following these
@@ -780,7 +790,7 @@ conventions is not necessary for your own third party extension modules,
 unless you eventually expect to contribute them to Python.</p>
 </section>
 <section id="include-files">
-<span id="api-includes"></span><h2>Include Files<a class="headerlink" href="#include-files" title="Permalink to this heading">¶</a></h2>
+<span id="api-includes"></span><h2>Include Files<a class="headerlink" href="#include-files" title="Link to this heading">¶</a></h2>
 <p>All function, type and macro definitions needed to use the Python/C API are
 included in your code by the following line:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="cp">#define PY_SSIZE_T_CLEAN</span>
@@ -828,14 +838,14 @@ header files properly declare the entry points to be <code class="docutils liter
 there is no need to do anything special to use the API from C++.</p>
 </section>
 <section id="useful-macros">
-<h2>Useful macros<a class="headerlink" href="#useful-macros" title="Permalink to this heading">¶</a></h2>
+<h2>Useful macros<a class="headerlink" href="#useful-macros" title="Link to this heading">¶</a></h2>
 <p>Several useful macros are defined in the Python header files.  Many are
 defined closer to where they are useful (e.g. <a class="reference internal" href="none.html#c.Py_RETURN_NONE" title="Py_RETURN_NONE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_RETURN_NONE</span></code></a>).
 Others of a more general utility are defined here.  This is not necessarily a
 complete listing.</p>
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.PyMODINIT_FUNC">
-<span class="sig-name descname"><span class="n"><span class="pre">PyMODINIT_FUNC</span></span></span><a class="headerlink" href="#c.PyMODINIT_FUNC" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">PyMODINIT_FUNC</span></span></span><a class="headerlink" href="#c.PyMODINIT_FUNC" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Declare an extension module <code class="docutils literal notranslate"><span class="pre">PyInit</span></code> initialization function. The function
 return type is <span class="c-expr sig sig-inline c"><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n">PyObject</span></a><span class="p">*</span></span>. The macro declares any special linkage
 declarations required by the platform, and for C++ declares the function as
@@ -860,16 +870,16 @@ item defined in the module file. Example:</p>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_ABS">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_ABS</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_ABS" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_ABS</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_ABS" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Return the absolute value of <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_ALWAYS_INLINE">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_ALWAYS_INLINE</span></span></span><a class="headerlink" href="#c.Py_ALWAYS_INLINE" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_ALWAYS_INLINE</span></span></span><a class="headerlink" href="#c.Py_ALWAYS_INLINE" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Ask the compiler to always inline a static inline function. The compiler can
 ignore it and decides to not inline the function.</p>
 <p>It can be used to inline performance critical static inline functions when
@@ -878,27 +888,27 @@ MSC disables function inlining when building in debug mode.</p>
 <p>Marking blindly a static inline function with Py_ALWAYS_INLINE can result in
 worse performances (due to increased code size for example). The compiler is
 usually smarter than the developer for the cost/benefit analysis.</p>
-<p>If Python is <a class="reference internal" href="../using/configure.html#debug-build"><span class="std std-ref">built in debug mode</span></a> (if the <code class="docutils literal notranslate"><span class="pre">Py_DEBUG</span></code>
+<p>If Python is <a class="reference internal" href="../using/configure.html#debug-build"><span class="std std-ref">built in debug mode</span></a> (if the <a class="reference internal" href="#c.Py_DEBUG" title="Py_DEBUG"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_DEBUG</span></code></a>
 macro is defined), the <a class="reference internal" href="#c.Py_ALWAYS_INLINE" title="Py_ALWAYS_INLINE"><code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_ALWAYS_INLINE</span></code></a> macro does nothing.</p>
 <p>It must be specified before the function return type. Usage:</p>
 <div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">static</span><span class="w"> </span><span class="kr">inline</span><span class="w"> </span><span class="n">Py_ALWAYS_INLINE</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">random</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="k">return</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span><span class="w"> </span><span class="p">}</span>
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_CHARMASK">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_CHARMASK</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">c</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_CHARMASK" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_CHARMASK</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">c</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_CHARMASK" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Argument must be a character or an integer in the range [-128, 127] or [0,
 255].  This macro returns <code class="docutils literal notranslate"><span class="pre">c</span></code> cast to an <code class="docutils literal notranslate"><span class="pre">unsigned</span> <span class="pre">char</span></code>.</p>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_DEPRECATED">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_DEPRECATED</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">version</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_DEPRECATED" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_DEPRECATED</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">version</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_DEPRECATED" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Use this for deprecated declarations.  The macro must be placed before the
 symbol name.</p>
 <p>Example:</p>
@@ -912,41 +922,41 @@ symbol name.</p>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_GETENV">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_GETENV</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_GETENV" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_GETENV</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">s</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_GETENV" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Like <code class="docutils literal notranslate"><span class="pre">getenv(s)</span></code>, but returns <code class="docutils literal notranslate"><span class="pre">NULL</span></code> if <a class="reference internal" href="../using/cmdline.html#cmdoption-E"><code class="xref std std-option docutils literal notranslate"><span class="pre">-E</span></code></a> was passed on the
 command line (see <a class="reference internal" href="init_config.html#c.PyConfig.use_environment" title="PyConfig.use_environment"><code class="xref c c-member docutils literal notranslate"><span class="pre">PyConfig.use_environment</span></code></a>).</p>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_MAX">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_MAX</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_MAX" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_MAX</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_MAX" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Return the maximum value between <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_MEMBER_SIZE">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_MEMBER_SIZE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">member</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_MEMBER_SIZE" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_MEMBER_SIZE</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">type</span></span>, <span class="n"><span class="pre">member</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_MEMBER_SIZE" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Return the size of a structure (<code class="docutils literal notranslate"><span class="pre">type</span></code>) <code class="docutils literal notranslate"><span class="pre">member</span></code> in bytes.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.6.</span></p>
+<p><span class="versionmodified added">Added in version 3.6.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_MIN">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_MIN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_MIN" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_MIN</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span>, <span class="n"><span class="pre">y</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_MIN" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Return the minimum value between <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_NO_INLINE">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_NO_INLINE</span></span></span><a class="headerlink" href="#c.Py_NO_INLINE" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_NO_INLINE</span></span></span><a class="headerlink" href="#c.Py_NO_INLINE" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Disable inlining on a function. For example, it reduces the C stack
 consumption: useful on LTO+PGO builds which heavily inline code (see
 <a class="reference external" href="https://bugs.python.org/issue?&#64;action=redirect&amp;bpo=33720">bpo-33720</a>).</p>
@@ -955,23 +965,23 @@ consumption: useful on LTO+PGO builds which heavily inline code (see
 </span></pre></div>
 </div>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.11.</span></p>
+<p><span class="versionmodified added">Added in version 3.11.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_STRINGIFY">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_STRINGIFY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_STRINGIFY" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_STRINGIFY</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">x</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_STRINGIFY" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Convert <code class="docutils literal notranslate"><span class="pre">x</span></code> to a C string.  E.g. <code class="docutils literal notranslate"><span class="pre">Py_STRINGIFY(123)</span></code> returns
 <code class="docutils literal notranslate"><span class="pre">&quot;123&quot;</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_UNREACHABLE">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_UNREACHABLE</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_UNREACHABLE" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_UNREACHABLE</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_UNREACHABLE" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Use this when you have a code path that cannot be reached by design.
 For example, in the <code class="docutils literal notranslate"><span class="pre">default:</span></code> clause in a <code class="docutils literal notranslate"><span class="pre">switch</span></code> statement for which
 all possible values are covered in <code class="docutils literal notranslate"><span class="pre">case</span></code> statements.  Use this in places
@@ -987,23 +997,23 @@ or if a system call returns a value out of the expected range.  In this
 case, it’s better to report the error to the caller.  If the error cannot
 be reported to caller, <a class="reference internal" href="sys.html#c.Py_FatalError" title="Py_FatalError"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_FatalError()</span></code></a> can be used.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.7.</span></p>
+<p><span class="versionmodified added">Added in version 3.7.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.Py_UNUSED">
-<span class="sig-name descname"><span class="n"><span class="pre">Py_UNUSED</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">arg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_UNUSED" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">Py_UNUSED</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">arg</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.Py_UNUSED" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Use this for unused arguments in a function definition to silence compiler
 warnings. Example: <code class="docutils literal notranslate"><span class="pre">int</span> <span class="pre">func(int</span> <span class="pre">a,</span> <span class="pre">int</span> <span class="pre">Py_UNUSED(b))</span> <span class="pre">{</span> <span class="pre">return</span> <span class="pre">a;</span> <span class="pre">}</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.PyDoc_STRVAR">
-<span class="sig-name descname"><span class="n"><span class="pre">PyDoc_STRVAR</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyDoc_STRVAR" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">PyDoc_STRVAR</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">name</span></span>, <span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyDoc_STRVAR" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Creates a variable with name <code class="docutils literal notranslate"><span class="pre">name</span></code> that can be used in docstrings.
 If Python is built without docstrings, the value will be empty.</p>
 <p>Use <a class="reference internal" href="#c.PyDoc_STRVAR" title="PyDoc_STRVAR"><code class="xref c c-macro docutils literal notranslate"><span class="pre">PyDoc_STRVAR</span></code></a> for docstrings to support building
@@ -1022,7 +1032,7 @@ Python without docstrings, as specified in <span class="target" id="index-1"></s
 
 <dl class="c macro">
 <dt class="sig sig-object c" id="c.PyDoc_STR">
-<span class="sig-name descname"><span class="n"><span class="pre">PyDoc_STR</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyDoc_STR" title="Permalink to this definition">¶</a><br /></dt>
+<span class="sig-name descname"><span class="n"><span class="pre">PyDoc_STR</span></span></span><span class="sig-paren">(</span><span class="n"><span class="pre">str</span></span><span class="sig-paren">)</span><a class="headerlink" href="#c.PyDoc_STR" title="Link to this definition">¶</a><br /></dt>
 <dd><p>Creates a docstring for the given input string or an empty string
 if docstrings are disabled.</p>
 <p>Use <a class="reference internal" href="#c.PyDoc_STR" title="PyDoc_STR"><code class="xref c c-macro docutils literal notranslate"><span class="pre">PyDoc_STR</span></code></a> in specifying docstrings to support
@@ -1039,7 +1049,7 @@ building Python without docstrings, as specified in <span class="target" id="ind
 
 </section>
 <section id="objects-types-and-reference-counts">
-<span id="api-objects"></span><h2>Objects, Types and Reference Counts<a class="headerlink" href="#objects-types-and-reference-counts" title="Permalink to this heading">¶</a></h2>
+<span id="api-objects"></span><h2>Objects, Types and Reference Counts<a class="headerlink" href="#objects-types-and-reference-counts" title="Link to this heading">¶</a></h2>
 <p id="index-3">Most Python/C API functions have one or more arguments as well as a return value
 of type <span class="c-expr sig sig-inline c"><a class="reference internal" href="structures.html#c.PyObject" title="PyObject"><span class="n">PyObject</span></a><span class="p">*</span></span>.  This type is a pointer to an opaque data type
 representing an arbitrary Python object.  Since all Python object types are
@@ -1057,7 +1067,7 @@ explained in <a class="reference internal" href="../reference/datamodel.html#typ
 to check whether an object is of that type; for instance, <code class="docutils literal notranslate"><span class="pre">PyList_Check(a)</span></code> is
 true if (and only if) the object pointed to by <em>a</em> is a Python list.</p>
 <section id="reference-counts">
-<span id="api-refcounts"></span><h3>Reference Counts<a class="headerlink" href="#reference-counts" title="Permalink to this heading">¶</a></h3>
+<span id="api-refcounts"></span><h3>Reference Counts<a class="headerlink" href="#reference-counts" title="Link to this heading">¶</a></h3>
 <p>The reference count is important because today’s computers have a  finite
 (and often severely limited) memory size; it counts how many different
 places there are that have a <a class="reference internal" href="../glossary.html#term-strong-reference"><span class="xref std std-term">strong reference</span></a> to an object.
@@ -1114,7 +1124,7 @@ These operations always create a new <a class="reference internal" href="../glos
 This leaves the caller with the responsibility to call <a class="reference internal" href="refcounting.html#c.Py_DECREF" title="Py_DECREF"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_DECREF()</span></code></a> when
 they are done with the result; this soon becomes second nature.</p>
 <section id="reference-count-details">
-<span id="api-refcountdetails"></span><h4>Reference Count Details<a class="headerlink" href="#reference-count-details" title="Permalink to this heading">¶</a></h4>
+<span id="api-refcountdetails"></span><h4>Reference Count Details<a class="headerlink" href="#reference-count-details" title="Link to this heading">¶</a></h4>
 <p>The reference count behavior of functions in the Python/C API is best  explained
 in terms of <em>ownership of references</em>.  Ownership pertains to references, never
 to objects (objects are not owned: they are always shared).  “Owning a
@@ -1269,7 +1279,7 @@ using <a class="reference internal" href="sequence.html#c.PySequence_GetItem" ti
 </section>
 </section>
 <section id="types">
-<span id="api-types"></span><span id="index-9"></span><h3>Types<a class="headerlink" href="#types" title="Permalink to this heading">¶</a></h3>
+<span id="api-types"></span><span id="index-9"></span><h3>Types<a class="headerlink" href="#types" title="Link to this heading">¶</a></h3>
 <p>There are few other data types that play a significant role in  the Python/C
 API; most are simple C types such as <span class="c-expr sig sig-inline c"><span class="kt">int</span></span>,  <span class="c-expr sig sig-inline c"><span class="kt">long</span></span>,
 <span class="c-expr sig sig-inline c"><span class="kt">double</span></span> and <span class="c-expr sig sig-inline c"><span class="kt">char</span><span class="p">*</span></span>.  A few structure types  are used to
@@ -1279,7 +1289,7 @@ of a complex number.  These will  be discussed together with the functions that
 use them.</p>
 <dl class="c type">
 <dt class="sig sig-object c" id="c.Py_ssize_t">
-<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Py_ssize_t</span></span></span><a class="headerlink" href="#c.Py_ssize_t" title="Permalink to this definition">¶</a><br /></dt>
+<span class="k"><span class="pre">type</span></span><span class="w"> </span><span class="sig-name descname"><span class="n"><span class="pre">Py_ssize_t</span></span></span><a class="headerlink" href="#c.Py_ssize_t" title="Link to this definition">¶</a><br /></dt>
 <dd><em class="stableabi"> Part of the <a class="reference internal" href="stable.html#stable"><span class="std std-ref">Stable ABI</span></a>.</em><p>A signed integral type such that <code class="docutils literal notranslate"><span class="pre">sizeof(Py_ssize_t)</span> <span class="pre">==</span> <span class="pre">sizeof(size_t)</span></code>.
 C99 doesn’t define such a thing directly (size_t is an unsigned integral type).
 See <span class="target" id="index-10"></span><a class="pep reference external" href="https://peps.python.org/pep-0353/"><strong>PEP 353</strong></a> for details. <code class="docutils literal notranslate"><span class="pre">PY_SSIZE_T_MAX</span></code> is the largest positive value
@@ -1289,7 +1299,7 @@ of type <a class="reference internal" href="#c.Py_ssize_t" title="Py_ssize_t"><c
 </section>
 </section>
 <section id="exceptions">
-<span id="api-exceptions"></span><h2>Exceptions<a class="headerlink" href="#exceptions" title="Permalink to this heading">¶</a></h2>
+<span id="api-exceptions"></span><h2>Exceptions<a class="headerlink" href="#exceptions" title="Link to this heading">¶</a></h2>
 <p>The Python programmer only needs to deal with exceptions if specific  error
 handling is required; unhandled exceptions are automatically  propagated to the
 caller, then to the caller’s caller, and so on, until they reach the top-level
@@ -1397,7 +1407,7 @@ Python, we show the equivalent Python code:</p>
 </span><span data-line="42"><span class="p">}</span>
 </span></pre></div>
 </div>
-<span class="target" id="index-16"></span><p id="index-17">This example represents an endorsed use of the <code class="docutils literal notranslate"><span class="pre">goto</span></code> statement  in C!
+<p id="index-17"><span id="index-16"></span>This example represents an endorsed use of the <code class="docutils literal notranslate"><span class="pre">goto</span></code> statement  in C!
 It illustrates the use of <a class="reference internal" href="exceptions.html#c.PyErr_ExceptionMatches" title="PyErr_ExceptionMatches"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyErr_ExceptionMatches()</span></code></a> and
 <a class="reference internal" href="exceptions.html#c.PyErr_Clear" title="PyErr_Clear"><code class="xref c c-func docutils literal notranslate"><span class="pre">PyErr_Clear()</span></code></a> to handle specific exceptions, and the use of
 <a class="reference internal" href="refcounting.html#c.Py_XDECREF" title="Py_XDECREF"><code class="xref c c-func docutils literal notranslate"><span class="pre">Py_XDECREF()</span></code></a> to dispose of owned references that may be <code class="docutils literal notranslate"><span class="pre">NULL</span></code> (note the
@@ -1408,7 +1418,7 @@ return value is initialized to <code class="docutils literal notranslate"><span 
 the final call made is successful.</p>
 </section>
 <section id="embedding-python">
-<span id="api-embedding"></span><h2>Embedding Python<a class="headerlink" href="#embedding-python" title="Permalink to this heading">¶</a></h2>
+<span id="api-embedding"></span><h2>Embedding Python<a class="headerlink" href="#embedding-python" title="Link to this heading">¶</a></h2>
 <p>The one important task that only embedders (as opposed to extension writers) of
 the Python interpreter have to worry about is the initialization, and possibly
 the finalization, of the Python interpreter.  Most functionality of the
@@ -1455,7 +1465,7 @@ does <em>not</em> free all memory allocated by the Python interpreter, e.g. memo
 allocated by extension modules currently cannot be released.</p>
 </section>
 <section id="debugging-builds">
-<span id="api-debugging"></span><h2>Debugging Builds<a class="headerlink" href="#debugging-builds" title="Permalink to this heading">¶</a></h2>
+<span id="api-debugging"></span><h2>Debugging Builds<a class="headerlink" href="#debugging-builds" title="Link to this heading">¶</a></h2>
 <p>Python can be built with several macros to enable extra checks of the
 interpreter and extension modules.  These checks tend to add a large amount of
 overhead to the runtime so they are not enabled by default.</p>
@@ -1464,6 +1474,11 @@ overhead to the runtime so they are not enabled by default.</p>
 available that support tracing of reference counts, debugging the memory
 allocator, or low-level profiling of the main interpreter loop.  Only the most
 frequently used builds will be described in the remainder of this section.</p>
+<dl class="c macro">
+<dt class="sig sig-object c" id="c.Py_DEBUG">
+<span class="sig-name descname"><span class="n"><span class="pre">Py_DEBUG</span></span></span><a class="headerlink" href="#c.Py_DEBUG" title="Link to this definition">¶</a><br /></dt>
+<dd></dd></dl>
+
 <p>Compiling the interpreter with the <code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_DEBUG</span></code> macro defined produces
 what is generally meant by <a class="reference internal" href="../using/configure.html#debug-build"><span class="std std-ref">a debug build of Python</span></a>.
 <code class="xref c c-macro docutils literal notranslate"><span class="pre">Py_DEBUG</span></code> is enabled in the Unix build by adding
@@ -1524,8 +1539,8 @@ for more detailed information.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

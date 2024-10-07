@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>xml.sax.handler — Base classes for SAX handlers - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="xml.sax.saxutils — SAX Utilities" href="xml.sax.utils.html" /><link rel="prev" title="xml.sax — Support for SAX2 parsers" href="xml.sax.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>xml.sax.handler — Base classes for SAX handlers - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="xml.sax.saxutils — SAX Utilities" href="xml.sax.utils.html" /><link rel="prev" title="xml.sax — Support for SAX2 parsers" href="xml.sax.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -687,62 +697,11 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler"><code class="docutils literal notranslate"><span class="pre">ContentHandler</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.DTDHandler"><code class="docutils literal notranslate"><span class="pre">DTDHandler</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.EntityResolver"><code class="docutils literal notranslate"><span class="pre">EntityResolver</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ErrorHandler"><code class="docutils literal notranslate"><span class="pre">ErrorHandler</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.LexicalHandler"><code class="docutils literal notranslate"><span class="pre">LexicalHandler</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.feature_namespaces"><code class="docutils literal notranslate"><span class="pre">feature_namespaces</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.feature_namespace_prefixes"><code class="docutils literal notranslate"><span class="pre">feature_namespace_prefixes</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.feature_string_interning"><code class="docutils literal notranslate"><span class="pre">feature_string_interning</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.feature_validation"><code class="docutils literal notranslate"><span class="pre">feature_validation</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.feature_external_ges"><code class="docutils literal notranslate"><span class="pre">feature_external_ges</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.feature_external_pes"><code class="docutils literal notranslate"><span class="pre">feature_external_pes</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.all_features"><code class="docutils literal notranslate"><span class="pre">all_features</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.property_lexical_handler"><code class="docutils literal notranslate"><span class="pre">property_lexical_handler</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.property_declaration_handler"><code class="docutils literal notranslate"><span class="pre">property_declaration_handler</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.property_dom_node"><code class="docutils literal notranslate"><span class="pre">property_dom_node</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.property_xml_string"><code class="docutils literal notranslate"><span class="pre">property_xml_string</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.all_properties"><code class="docutils literal notranslate"><span class="pre">all_properties</span></code></a></li>
-<li><a class="reference internal" href="#contenthandler-objects">ContentHandler Objects</a><ul>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.setDocumentLocator"><code class="docutils literal notranslate"><span class="pre">ContentHandler.setDocumentLocator()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.startDocument"><code class="docutils literal notranslate"><span class="pre">ContentHandler.startDocument()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.endDocument"><code class="docutils literal notranslate"><span class="pre">ContentHandler.endDocument()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.startPrefixMapping"><code class="docutils literal notranslate"><span class="pre">ContentHandler.startPrefixMapping()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.endPrefixMapping"><code class="docutils literal notranslate"><span class="pre">ContentHandler.endPrefixMapping()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.startElement"><code class="docutils literal notranslate"><span class="pre">ContentHandler.startElement()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.endElement"><code class="docutils literal notranslate"><span class="pre">ContentHandler.endElement()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.startElementNS"><code class="docutils literal notranslate"><span class="pre">ContentHandler.startElementNS()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.endElementNS"><code class="docutils literal notranslate"><span class="pre">ContentHandler.endElementNS()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.characters"><code class="docutils literal notranslate"><span class="pre">ContentHandler.characters()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.ignorableWhitespace"><code class="docutils literal notranslate"><span class="pre">ContentHandler.ignorableWhitespace()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.processingInstruction"><code class="docutils literal notranslate"><span class="pre">ContentHandler.processingInstruction()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ContentHandler.skippedEntity"><code class="docutils literal notranslate"><span class="pre">ContentHandler.skippedEntity()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#dtdhandler-objects">DTDHandler Objects</a><ul>
-<li><a class="reference internal" href="#xml.sax.handler.DTDHandler.notationDecl"><code class="docutils literal notranslate"><span class="pre">DTDHandler.notationDecl()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.DTDHandler.unparsedEntityDecl"><code class="docutils literal notranslate"><span class="pre">DTDHandler.unparsedEntityDecl()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#entityresolver-objects">EntityResolver Objects</a><ul>
-<li><a class="reference internal" href="#xml.sax.handler.EntityResolver.resolveEntity"><code class="docutils literal notranslate"><span class="pre">EntityResolver.resolveEntity()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#errorhandler-objects">ErrorHandler Objects</a><ul>
-<li><a class="reference internal" href="#xml.sax.handler.ErrorHandler.error"><code class="docutils literal notranslate"><span class="pre">ErrorHandler.error()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ErrorHandler.fatalError"><code class="docutils literal notranslate"><span class="pre">ErrorHandler.fatalError()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.ErrorHandler.warning"><code class="docutils literal notranslate"><span class="pre">ErrorHandler.warning()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#lexicalhandler-objects">LexicalHandler Objects</a><ul>
-<li><a class="reference internal" href="#xml.sax.handler.LexicalHandler.comment"><code class="docutils literal notranslate"><span class="pre">LexicalHandler.comment()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.LexicalHandler.startDTD"><code class="docutils literal notranslate"><span class="pre">LexicalHandler.startDTD()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.LexicalHandler.endDTD"><code class="docutils literal notranslate"><span class="pre">LexicalHandler.endDTD()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.LexicalHandler.startCDATA"><code class="docutils literal notranslate"><span class="pre">LexicalHandler.startCDATA()</span></code></a></li>
-<li><a class="reference internal" href="#xml.sax.handler.LexicalHandler.endCDATA"><code class="docutils literal notranslate"><span class="pre">LexicalHandler.endCDATA()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#contenthandler-objects">ContentHandler Objects</a></li>
+<li><a class="reference internal" href="#dtdhandler-objects">DTDHandler Objects</a></li>
+<li><a class="reference internal" href="#entityresolver-objects">EntityResolver Objects</a></li>
+<li><a class="reference internal" href="#errorhandler-objects">ErrorHandler Objects</a></li>
+<li><a class="reference internal" href="#lexicalhandler-objects">LexicalHandler Objects</a></li>
 </ul>
 </div><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
@@ -797,8 +756,8 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-xml.sax.handler">
-<span id="xml-sax-handler-base-classes-for-sax-handlers"></span><h1><a class="reference internal" href="#module-xml.sax.handler" title="xml.sax.handler: Base classes for SAX event handlers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code></a> — Base classes for SAX handlers<a class="headerlink" href="#module-xml.sax.handler" title="Permalink to this heading">¶</a></h1>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/xml/sax/handler.py">Lib/xml/sax/handler.py</a></p>
+<span id="xml-sax-handler-base-classes-for-sax-handlers"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code> — Base classes for SAX handlers<a class="headerlink" href="#module-xml.sax.handler" title="Link to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/xml/sax/handler.py">Lib/xml/sax/handler.py</a></p>
 <hr class="docutils" />
 <p>The SAX API defines five kinds of handlers: content handlers, DTD handlers,
 error handlers, entity resolvers and lexical handlers. Applications normally
@@ -808,7 +767,7 @@ Handler implementations should inherit from the base classes provided in the
 module <a class="reference internal" href="#module-xml.sax.handler" title="xml.sax.handler: Base classes for SAX event handlers."><code class="xref py py-mod docutils literal notranslate"><span class="pre">xml.sax.handler</span></code></a>, so that all methods get default implementations.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">ContentHandler</span></span><a class="headerlink" href="#xml.sax.handler.ContentHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">ContentHandler</span></span><a class="headerlink" href="#xml.sax.handler.ContentHandler" title="Link to this definition">¶</a></dt>
 <dd><p>This is the main callback interface in SAX, and the one most important to
 applications. The order of events in this interface mirrors the order of the
 information in the document.</p>
@@ -816,7 +775,7 @@ information in the document.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="xml.sax.handler.DTDHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">DTDHandler</span></span><a class="headerlink" href="#xml.sax.handler.DTDHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">DTDHandler</span></span><a class="headerlink" href="#xml.sax.handler.DTDHandler" title="Link to this definition">¶</a></dt>
 <dd><p>Handle DTD events.</p>
 <p>This interface specifies only those DTD events required for basic parsing
 (unparsed entities and attributes).</p>
@@ -824,7 +783,7 @@ information in the document.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="xml.sax.handler.EntityResolver">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">EntityResolver</span></span><a class="headerlink" href="#xml.sax.handler.EntityResolver" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">EntityResolver</span></span><a class="headerlink" href="#xml.sax.handler.EntityResolver" title="Link to this definition">¶</a></dt>
 <dd><p>Basic interface for resolving entities. If you create an object implementing
 this interface, then register the object with your Parser, the parser will call
 the method in your object to resolve all external entities.</p>
@@ -832,7 +791,7 @@ the method in your object to resolve all external entities.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="xml.sax.handler.ErrorHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">ErrorHandler</span></span><a class="headerlink" href="#xml.sax.handler.ErrorHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">ErrorHandler</span></span><a class="headerlink" href="#xml.sax.handler.ErrorHandler" title="Link to this definition">¶</a></dt>
 <dd><p>Interface used by the parser to present error and warning messages to the
 application.  The methods of this object control whether errors are immediately
 converted to exceptions or are handled in some other way.</p>
@@ -840,7 +799,7 @@ converted to exceptions or are handled in some other way.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="xml.sax.handler.LexicalHandler">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">LexicalHandler</span></span><a class="headerlink" href="#xml.sax.handler.LexicalHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">LexicalHandler</span></span><a class="headerlink" href="#xml.sax.handler.LexicalHandler" title="Link to this definition">¶</a></dt>
 <dd><p>Interface used by the parser to represent low frequency events which may not
 be of interest to many applications.</p>
 </dd></dl>
@@ -849,7 +808,7 @@ be of interest to many applications.</p>
 for the feature and property names.</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.feature_namespaces">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_namespaces</span></span><a class="headerlink" href="#xml.sax.handler.feature_namespaces" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_namespaces</span></span><a class="headerlink" href="#xml.sax.handler.feature_namespaces" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/namespaces&quot;</span></code></div>
 <div class="line">true: Perform Namespace processing.</div>
@@ -861,7 +820,7 @@ namespace-prefixes; default).</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.feature_namespace_prefixes">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_namespace_prefixes</span></span><a class="headerlink" href="#xml.sax.handler.feature_namespace_prefixes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_namespace_prefixes</span></span><a class="headerlink" href="#xml.sax.handler.feature_namespace_prefixes" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/namespace-prefixes&quot;</span></code></div>
 <div class="line">true: Report the original prefixed names and attributes used for Namespace
@@ -874,7 +833,7 @@ optionally do not report original prefixed names (default).</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.feature_string_interning">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_string_interning</span></span><a class="headerlink" href="#xml.sax.handler.feature_string_interning" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_string_interning</span></span><a class="headerlink" href="#xml.sax.handler.feature_string_interning" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/string-interning&quot;</span></code></div>
 <div class="line">true: All element names, prefixes, attribute names, Namespace URIs, and
@@ -886,7 +845,7 @@ local names are interned using the built-in intern function.</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.feature_validation">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_validation</span></span><a class="headerlink" href="#xml.sax.handler.feature_validation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_validation</span></span><a class="headerlink" href="#xml.sax.handler.feature_validation" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/validation&quot;</span></code></div>
 <div class="line">true: Report all validation errors (implies external-general-entities and
@@ -898,7 +857,7 @@ external-parameter-entities).</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.feature_external_ges">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_external_ges</span></span><a class="headerlink" href="#xml.sax.handler.feature_external_ges" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_external_ges</span></span><a class="headerlink" href="#xml.sax.handler.feature_external_ges" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/external-general-entities&quot;</span></code></div>
 <div class="line">true: Include all external general (text) entities.</div>
@@ -909,7 +868,7 @@ external-parameter-entities).</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.feature_external_pes">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_external_pes</span></span><a class="headerlink" href="#xml.sax.handler.feature_external_pes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">feature_external_pes</span></span><a class="headerlink" href="#xml.sax.handler.feature_external_pes" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/features/external-parameter-entities&quot;</span></code></div>
 <div class="line">true: Include all external parameter entities, including the external DTD
@@ -922,13 +881,13 @@ DTD subset.</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.all_features">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">all_features</span></span><a class="headerlink" href="#xml.sax.handler.all_features" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">all_features</span></span><a class="headerlink" href="#xml.sax.handler.all_features" title="Link to this definition">¶</a></dt>
 <dd><p>List of all features.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.property_lexical_handler">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_lexical_handler</span></span><a class="headerlink" href="#xml.sax.handler.property_lexical_handler" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_lexical_handler</span></span><a class="headerlink" href="#xml.sax.handler.property_lexical_handler" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/lexical-handler&quot;</span></code></div>
 <div class="line">data type: xml.sax.handler.LexicalHandler (not supported in Python 2)</div>
@@ -940,7 +899,7 @@ comments.</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.property_declaration_handler">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_declaration_handler</span></span><a class="headerlink" href="#xml.sax.handler.property_declaration_handler" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_declaration_handler</span></span><a class="headerlink" href="#xml.sax.handler.property_declaration_handler" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/declaration-handler&quot;</span></code></div>
 <div class="line">data type: xml.sax.sax2lib.DeclHandler (not supported in Python 2)</div>
@@ -952,7 +911,7 @@ than notations and unparsed entities.</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.property_dom_node">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_dom_node</span></span><a class="headerlink" href="#xml.sax.handler.property_dom_node" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_dom_node</span></span><a class="headerlink" href="#xml.sax.handler.property_dom_node" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/dom-node&quot;</span></code></div>
 <div class="line">data type: org.w3c.dom.Node (not supported in Python 2)</div>
@@ -964,7 +923,7 @@ a DOM iterator; when not parsing, the root DOM node for iteration.</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.property_xml_string">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_xml_string</span></span><a class="headerlink" href="#xml.sax.handler.property_xml_string" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">property_xml_string</span></span><a class="headerlink" href="#xml.sax.handler.property_xml_string" title="Link to this definition">¶</a></dt>
 <dd><div class="line-block">
 <div class="line">value: <code class="docutils literal notranslate"><span class="pre">&quot;http://xml.org/sax/properties/xml-string&quot;</span></code></div>
 <div class="line">data type: Bytes</div>
@@ -976,18 +935,18 @@ current event.</div>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="xml.sax.handler.all_properties">
-<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">all_properties</span></span><a class="headerlink" href="#xml.sax.handler.all_properties" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">xml.sax.handler.</span></span><span class="sig-name descname"><span class="pre">all_properties</span></span><a class="headerlink" href="#xml.sax.handler.all_properties" title="Link to this definition">¶</a></dt>
 <dd><p>List of all known property names.</p>
 </dd></dl>
 
 <section id="contenthandler-objects">
-<span id="content-handler-objects"></span><h2>ContentHandler Objects<a class="headerlink" href="#contenthandler-objects" title="Permalink to this heading">¶</a></h2>
+<span id="content-handler-objects"></span><h2>ContentHandler Objects<a class="headerlink" href="#contenthandler-objects" title="Link to this heading">¶</a></h2>
 <p>Users are expected to subclass <a class="reference internal" href="#xml.sax.handler.ContentHandler" title="xml.sax.handler.ContentHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">ContentHandler</span></code></a> to support their
 application.  The following methods are called by the parser on the appropriate
 events in the input document:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.setDocumentLocator">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">setDocumentLocator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locator</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.setDocumentLocator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">setDocumentLocator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">locator</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.setDocumentLocator" title="Link to this definition">¶</a></dt>
 <dd><p>Called by the parser to give the application a locator for locating the origin
 of document events.</p>
 <p>SAX parsers are strongly encouraged (though not absolutely required) to supply a
@@ -1007,7 +966,7 @@ any other time.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.startDocument">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startDocument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startDocument" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startDocument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startDocument" title="Link to this definition">¶</a></dt>
 <dd><p>Receive notification of the beginning of a document.</p>
 <p>The SAX parser will invoke this method only once, before any other methods in
 this interface or in DTDHandler (except for <a class="reference internal" href="#xml.sax.handler.ContentHandler.setDocumentLocator" title="xml.sax.handler.ContentHandler.setDocumentLocator"><code class="xref py py-meth docutils literal notranslate"><span class="pre">setDocumentLocator()</span></code></a>).</p>
@@ -1015,7 +974,7 @@ this interface or in DTDHandler (except for <a class="reference internal" href="
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.endDocument">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endDocument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endDocument" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endDocument</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endDocument" title="Link to this definition">¶</a></dt>
 <dd><p>Receive notification of the end of a document.</p>
 <p>The SAX parser will invoke this method only once, and it will be the last method
 invoked during the parse. The parser shall not invoke this method until it has
@@ -1025,7 +984,7 @@ of input.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.startPrefixMapping">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startPrefixMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startPrefixMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">uri</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="Link to this definition">¶</a></dt>
 <dd><p>Begin the scope of a prefix-URI Namespace mapping.</p>
 <p>The information from this event is not necessary for normal Namespace
 processing: the SAX XML reader will automatically replace prefixes for element
@@ -1046,7 +1005,7 @@ guaranteed.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.endPrefixMapping">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endPrefixMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endPrefixMapping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">prefix</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endPrefixMapping" title="Link to this definition">¶</a></dt>
 <dd><p>End the scope of a prefix-URI mapping.</p>
 <p>See <a class="reference internal" href="#xml.sax.handler.ContentHandler.startPrefixMapping" title="xml.sax.handler.ContentHandler.startPrefixMapping"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startPrefixMapping()</span></code></a> for details. This event will always occur after
 the corresponding <a class="reference internal" href="#xml.sax.handler.ContentHandler.endElement" title="xml.sax.handler.ContentHandler.endElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">endElement()</span></code></a> event, but the order of
@@ -1055,7 +1014,7 @@ the corresponding <a class="reference internal" href="#xml.sax.handler.ContentHa
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.startElement">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startElement" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startElement" title="Link to this definition">¶</a></dt>
 <dd><p>Signals the start of an element in non-namespace mode.</p>
 <p>The <em>name</em> parameter contains the raw XML 1.0 name of the element type as a
 string and the <em>attrs</em> parameter holds an object of the
@@ -1069,7 +1028,7 @@ object.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.endElement">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endElement" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endElement</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endElement" title="Link to this definition">¶</a></dt>
 <dd><p>Signals the end of an element in non-namespace mode.</p>
 <p>The <em>name</em> parameter contains the name of the element type, just as with the
 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startElement" title="xml.sax.handler.ContentHandler.startElement"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startElement()</span></code></a> event.</p>
@@ -1077,7 +1036,7 @@ object.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.startElementNS">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startElementNS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startElementNS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">startElementNS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">attrs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.startElementNS" title="Link to this definition">¶</a></dt>
 <dd><p>Signals the start of an element in namespace mode.</p>
 <p>The <em>name</em> parameter contains the name of the element type as a <code class="docutils literal notranslate"><span class="pre">(uri,</span>
 <span class="pre">localname)</span></code> tuple, the <em>qname</em> parameter contains the raw XML 1.0 name used in
@@ -1095,7 +1054,7 @@ attributes, use the <a class="reference internal" href="copy.html#module-copy" t
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.endElementNS">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endElementNS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endElementNS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">endElementNS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">qname</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.endElementNS" title="Link to this definition">¶</a></dt>
 <dd><p>Signals the end of an element in namespace mode.</p>
 <p>The <em>name</em> parameter contains the name of the element type, just as with the
 <a class="reference internal" href="#xml.sax.handler.ContentHandler.startElementNS" title="xml.sax.handler.ContentHandler.startElementNS"><code class="xref py py-meth docutils literal notranslate"><span class="pre">startElementNS()</span></code></a> method, likewise the <em>qname</em> parameter.</p>
@@ -1103,7 +1062,7 @@ attributes, use the <a class="reference internal" href="copy.html#module-copy" t
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.characters">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">characters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.characters" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">characters</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.characters" title="Link to this definition">¶</a></dt>
 <dd><p>Receive notification of character data.</p>
 <p>The Parser will call this method to report each chunk of character data. SAX
 parsers may return all contiguous character data in a single chunk, or they may
@@ -1124,7 +1083,7 @@ instead of slicing content with the old <em>offset</em> and <em>length</em> para
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.ignorableWhitespace">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">ignorableWhitespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">whitespace</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.ignorableWhitespace" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">ignorableWhitespace</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">whitespace</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.ignorableWhitespace" title="Link to this definition">¶</a></dt>
 <dd><p>Receive notification of ignorable whitespace in element content.</p>
 <p>Validating Parsers must use this method to report each chunk of ignorable
 whitespace (see the W3C XML 1.0 recommendation, section 2.10): non-validating
@@ -1138,7 +1097,7 @@ information.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.processingInstruction">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">processingInstruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.processingInstruction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">processingInstruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.processingInstruction" title="Link to this definition">¶</a></dt>
 <dd><p>Receive notification of a processing instruction.</p>
 <p>The Parser will invoke this method once for each processing instruction found:
 note that processing instructions may occur before or after the main document
@@ -1149,7 +1108,7 @@ text declaration (XML 1.0, section 4.3.1) using this method.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ContentHandler.skippedEntity">
-<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">skippedEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.skippedEntity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ContentHandler.</span></span><span class="sig-name descname"><span class="pre">skippedEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ContentHandler.skippedEntity" title="Link to this definition">¶</a></dt>
 <dd><p>Receive notification of a skipped entity.</p>
 <p>The Parser will invoke this method once for each entity skipped. Non-validating
 processors may skip entities if they have not seen the declarations (because,
@@ -1160,26 +1119,26 @@ may skip external entities, depending on the values of the
 
 </section>
 <section id="dtdhandler-objects">
-<span id="dtd-handler-objects"></span><h2>DTDHandler Objects<a class="headerlink" href="#dtdhandler-objects" title="Permalink to this heading">¶</a></h2>
+<span id="dtd-handler-objects"></span><h2>DTDHandler Objects<a class="headerlink" href="#dtdhandler-objects" title="Link to this heading">¶</a></h2>
 <p><a class="reference internal" href="#xml.sax.handler.DTDHandler" title="xml.sax.handler.DTDHandler"><code class="xref py py-class docutils literal notranslate"><span class="pre">DTDHandler</span></code></a> instances provide the following methods:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.DTDHandler.notationDecl">
-<span class="sig-prename descclassname"><span class="pre">DTDHandler.</span></span><span class="sig-name descname"><span class="pre">notationDecl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">systemId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.DTDHandler.notationDecl" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">DTDHandler.</span></span><span class="sig-name descname"><span class="pre">notationDecl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">systemId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.DTDHandler.notationDecl" title="Link to this definition">¶</a></dt>
 <dd><p>Handle a notation declaration event.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.DTDHandler.unparsedEntityDecl">
-<span class="sig-prename descclassname"><span class="pre">DTDHandler.</span></span><span class="sig-name descname"><span class="pre">unparsedEntityDecl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">systemId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.DTDHandler.unparsedEntityDecl" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">DTDHandler.</span></span><span class="sig-name descname"><span class="pre">unparsedEntityDecl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">publicId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">systemId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndata</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.DTDHandler.unparsedEntityDecl" title="Link to this definition">¶</a></dt>
 <dd><p>Handle an unparsed entity declaration event.</p>
 </dd></dl>
 
 </section>
 <section id="entityresolver-objects">
-<span id="entity-resolver-objects"></span><h2>EntityResolver Objects<a class="headerlink" href="#entityresolver-objects" title="Permalink to this heading">¶</a></h2>
+<span id="entity-resolver-objects"></span><h2>EntityResolver Objects<a class="headerlink" href="#entityresolver-objects" title="Link to this heading">¶</a></h2>
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.EntityResolver.resolveEntity">
-<span class="sig-prename descclassname"><span class="pre">EntityResolver.</span></span><span class="sig-name descname"><span class="pre">resolveEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">publicId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">systemId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.EntityResolver.resolveEntity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EntityResolver.</span></span><span class="sig-name descname"><span class="pre">resolveEntity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">publicId</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">systemId</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.EntityResolver.resolveEntity" title="Link to this definition">¶</a></dt>
 <dd><p>Resolve the system identifier of an entity and return either the system
 identifier to read from as a string, or an InputSource to read from. The default
 implementation returns <em>systemId</em>.</p>
@@ -1187,7 +1146,7 @@ implementation returns <em>systemId</em>.</p>
 
 </section>
 <section id="errorhandler-objects">
-<span id="sax-error-handler"></span><h2>ErrorHandler Objects<a class="headerlink" href="#errorhandler-objects" title="Permalink to this heading">¶</a></h2>
+<span id="sax-error-handler"></span><h2>ErrorHandler Objects<a class="headerlink" href="#errorhandler-objects" title="Link to this heading">¶</a></h2>
 <p>Objects with this interface are used to receive error and warning information
 from the <a class="reference internal" href="xml.sax.reader.html#xml.sax.xmlreader.XMLReader" title="xml.sax.xmlreader.XMLReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">XMLReader</span></code></a>.  If you create an object that
 implements this interface, then register the object with your
@@ -1199,7 +1158,7 @@ only parameter.  Errors and warnings may be converted to an exception by raising
 the passed-in exception object.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ErrorHandler.error">
-<span class="sig-prename descclassname"><span class="pre">ErrorHandler.</span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.error" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ErrorHandler.</span></span><span class="sig-name descname"><span class="pre">error</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.error" title="Link to this definition">¶</a></dt>
 <dd><p>Called when the parser encounters a recoverable error.  If this method does not
 raise an exception, parsing may continue, but further document information
 should not be expected by the application.  Allowing the parser to continue may
@@ -1208,14 +1167,14 @@ allow additional errors to be discovered in the input document.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ErrorHandler.fatalError">
-<span class="sig-prename descclassname"><span class="pre">ErrorHandler.</span></span><span class="sig-name descname"><span class="pre">fatalError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.fatalError" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ErrorHandler.</span></span><span class="sig-name descname"><span class="pre">fatalError</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.fatalError" title="Link to this definition">¶</a></dt>
 <dd><p>Called when the parser encounters an error it cannot recover from; parsing is
 expected to terminate when this method returns.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.ErrorHandler.warning">
-<span class="sig-prename descclassname"><span class="pre">ErrorHandler.</span></span><span class="sig-name descname"><span class="pre">warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.warning" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">ErrorHandler.</span></span><span class="sig-name descname"><span class="pre">warning</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">exception</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.ErrorHandler.warning" title="Link to this definition">¶</a></dt>
 <dd><p>Called when the parser presents minor warning information to the application.
 Parsing is expected to continue when this method returns, and document
 information will continue to be passed to the application. Raising an exception
@@ -1224,7 +1183,7 @@ in this method will cause parsing to end.</p>
 
 </section>
 <section id="lexicalhandler-objects">
-<span id="lexical-handler-objects"></span><h2>LexicalHandler Objects<a class="headerlink" href="#lexicalhandler-objects" title="Permalink to this heading">¶</a></h2>
+<span id="lexical-handler-objects"></span><h2>LexicalHandler Objects<a class="headerlink" href="#lexicalhandler-objects" title="Link to this heading">¶</a></h2>
 <p>Optional SAX2 handler for lexical events.</p>
 <p>This handler is used to obtain lexical information about an XML
 document. Lexical information includes information describing the
@@ -1236,27 +1195,27 @@ with the property identifier
 <code class="docutils literal notranslate"><span class="pre">'http://xml.org/sax/properties/lexical-handler'</span></code>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.LexicalHandler.comment">
-<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.comment" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.comment" title="Link to this definition">¶</a></dt>
 <dd><p>Reports a comment anywhere in the document (including the DTD and
 outside the document element).</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.LexicalHandler.startDTD">
-<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">startDTD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.startDTD" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">startDTD</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">public_id</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">system_id</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.startDTD" title="Link to this definition">¶</a></dt>
 <dd><p>Reports the start of the DTD declarations if the document has an
 associated DTD.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.LexicalHandler.endDTD">
-<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">endDTD</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.endDTD" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">endDTD</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.endDTD" title="Link to this definition">¶</a></dt>
 <dd><p>Reports the end of DTD declaration.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.LexicalHandler.startCDATA">
-<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">startCDATA</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.startCDATA" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">startCDATA</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.startCDATA" title="Link to this definition">¶</a></dt>
 <dd><p>Reports the start of a CDATA marked section.</p>
 <p>The contents of the CDATA marked section will be reported through
 the characters handler.</p>
@@ -1264,7 +1223,7 @@ the characters handler.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="xml.sax.handler.LexicalHandler.endCDATA">
-<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">endCDATA</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.endCDATA" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">LexicalHandler.</span></span><span class="sig-name descname"><span class="pre">endCDATA</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#xml.sax.handler.LexicalHandler.endCDATA" title="Link to this definition">¶</a></dt>
 <dd><p>Reports the end of a CDATA marked section.</p>
 </dd></dl>
 
@@ -1311,8 +1270,8 @@ the characters handler.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

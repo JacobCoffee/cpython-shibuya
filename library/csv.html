@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>csv — CSV File Reading and Writing - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="configparser — Configuration file parser" href="configparser.html" /><link rel="prev" title="File Formats" href="fileformats.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>csv — CSV File Reading and Writing - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="configparser — Configuration file parser" href="configparser.html" /><link rel="prev" title="File Formats" href="fileformats.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -687,59 +697,10 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#module-contents">Module Contents</a><ul>
-<li><a class="reference internal" href="#csv.reader"><code class="docutils literal notranslate"><span class="pre">reader()</span></code></a></li>
-<li><a class="reference internal" href="#csv.writer"><code class="docutils literal notranslate"><span class="pre">writer()</span></code></a></li>
-<li><a class="reference internal" href="#csv.register_dialect"><code class="docutils literal notranslate"><span class="pre">register_dialect()</span></code></a></li>
-<li><a class="reference internal" href="#csv.unregister_dialect"><code class="docutils literal notranslate"><span class="pre">unregister_dialect()</span></code></a></li>
-<li><a class="reference internal" href="#csv.get_dialect"><code class="docutils literal notranslate"><span class="pre">get_dialect()</span></code></a></li>
-<li><a class="reference internal" href="#csv.list_dialects"><code class="docutils literal notranslate"><span class="pre">list_dialects()</span></code></a></li>
-<li><a class="reference internal" href="#csv.field_size_limit"><code class="docutils literal notranslate"><span class="pre">field_size_limit()</span></code></a></li>
-<li><a class="reference internal" href="#csv.DictReader"><code class="docutils literal notranslate"><span class="pre">DictReader</span></code></a></li>
-<li><a class="reference internal" href="#csv.DictWriter"><code class="docutils literal notranslate"><span class="pre">DictWriter</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect"><code class="docutils literal notranslate"><span class="pre">Dialect</span></code></a></li>
-<li><a class="reference internal" href="#csv.excel"><code class="docutils literal notranslate"><span class="pre">excel</span></code></a></li>
-<li><a class="reference internal" href="#csv.excel_tab"><code class="docutils literal notranslate"><span class="pre">excel_tab</span></code></a></li>
-<li><a class="reference internal" href="#csv.unix_dialect"><code class="docutils literal notranslate"><span class="pre">unix_dialect</span></code></a></li>
-<li><a class="reference internal" href="#csv.Sniffer"><code class="docutils literal notranslate"><span class="pre">Sniffer</span></code></a><ul>
-<li><a class="reference internal" href="#csv.Sniffer.sniff"><code class="docutils literal notranslate"><span class="pre">Sniffer.sniff()</span></code></a></li>
-<li><a class="reference internal" href="#csv.Sniffer.has_header"><code class="docutils literal notranslate"><span class="pre">Sniffer.has_header()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#csv.QUOTE_ALL"><code class="docutils literal notranslate"><span class="pre">QUOTE_ALL</span></code></a></li>
-<li><a class="reference internal" href="#csv.QUOTE_MINIMAL"><code class="docutils literal notranslate"><span class="pre">QUOTE_MINIMAL</span></code></a></li>
-<li><a class="reference internal" href="#csv.QUOTE_NONNUMERIC"><code class="docutils literal notranslate"><span class="pre">QUOTE_NONNUMERIC</span></code></a></li>
-<li><a class="reference internal" href="#csv.QUOTE_NONE"><code class="docutils literal notranslate"><span class="pre">QUOTE_NONE</span></code></a></li>
-<li><a class="reference internal" href="#csv.QUOTE_NOTNULL"><code class="docutils literal notranslate"><span class="pre">QUOTE_NOTNULL</span></code></a></li>
-<li><a class="reference internal" href="#csv.QUOTE_STRINGS"><code class="docutils literal notranslate"><span class="pre">QUOTE_STRINGS</span></code></a></li>
-<li><a class="reference internal" href="#csv.Error"><code class="docutils literal notranslate"><span class="pre">Error</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#dialects-and-formatting-parameters">Dialects and Formatting Parameters</a><ul>
-<li><a class="reference internal" href="#csv.Dialect.delimiter"><code class="docutils literal notranslate"><span class="pre">Dialect.delimiter</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.doublequote"><code class="docutils literal notranslate"><span class="pre">Dialect.doublequote</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.escapechar"><code class="docutils literal notranslate"><span class="pre">Dialect.escapechar</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.lineterminator"><code class="docutils literal notranslate"><span class="pre">Dialect.lineterminator</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.quotechar"><code class="docutils literal notranslate"><span class="pre">Dialect.quotechar</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.quoting"><code class="docutils literal notranslate"><span class="pre">Dialect.quoting</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.skipinitialspace"><code class="docutils literal notranslate"><span class="pre">Dialect.skipinitialspace</span></code></a></li>
-<li><a class="reference internal" href="#csv.Dialect.strict"><code class="docutils literal notranslate"><span class="pre">Dialect.strict</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#reader-objects">Reader Objects</a><ul>
-<li><a class="reference internal" href="#csv.csvreader.__next__"><code class="docutils literal notranslate"><span class="pre">csvreader.__next__()</span></code></a></li>
-<li><a class="reference internal" href="#csv.csvreader.dialect"><code class="docutils literal notranslate"><span class="pre">csvreader.dialect</span></code></a></li>
-<li><a class="reference internal" href="#csv.csvreader.line_num"><code class="docutils literal notranslate"><span class="pre">csvreader.line_num</span></code></a></li>
-<li><a class="reference internal" href="#csv.DictReader.fieldnames"><code class="docutils literal notranslate"><span class="pre">DictReader.fieldnames</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#writer-objects">Writer Objects</a><ul>
-<li><a class="reference internal" href="#csv.csvwriter.writerow"><code class="docutils literal notranslate"><span class="pre">csvwriter.writerow()</span></code></a></li>
-<li><a class="reference internal" href="#csv.csvwriter.writerows"><code class="docutils literal notranslate"><span class="pre">csvwriter.writerows()</span></code></a></li>
-<li><a class="reference internal" href="#csv.csvwriter.dialect"><code class="docutils literal notranslate"><span class="pre">csvwriter.dialect</span></code></a></li>
-<li><a class="reference internal" href="#csv.DictWriter.writeheader"><code class="docutils literal notranslate"><span class="pre">DictWriter.writeheader()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#module-contents">Module Contents</a></li>
+<li><a class="reference internal" href="#dialects-and-formatting-parameters">Dialects and Formatting Parameters</a></li>
+<li><a class="reference internal" href="#reader-objects">Reader Objects</a></li>
+<li><a class="reference internal" href="#writer-objects">Writer Objects</a></li>
 <li><a class="reference internal" href="#examples">Examples</a></li>
 </ul>
 </div><div class="sy-deprecated">
@@ -795,8 +756,8 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-csv">
-<span id="csv-csv-file-reading-and-writing"></span><h1><a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> — CSV File Reading and Writing<a class="headerlink" href="#module-csv" title="Permalink to this heading">¶</a></h1>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/csv.py">Lib/csv.py</a></p>
+<span id="csv-csv-file-reading-and-writing"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code> — CSV File Reading and Writing<a class="headerlink" href="#module-csv" title="Link to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/csv.py">Lib/csv.py</a></p>
 <hr class="docutils" id="index-0" />
 <p>The so-called CSV (Comma Separated Values) format is the most common import and
 export format for spreadsheets and databases.  CSV format was used for many
@@ -825,15 +786,17 @@ using the <a class="reference internal" href="#csv.DictReader" title="csv.DictRe
 </dl>
 </div>
 <section id="module-contents">
-<span id="csv-contents"></span><h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading">¶</a></h2>
+<span id="csv-contents"></span><h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> module defines the following functions:</p>
-<span class="target" id="index-3"></span><dl class="py function">
+<dl class="py function" id="index-3">
 <dt class="sig sig-object py" id="csv.reader">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csvfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fmtparams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.reader" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a reader object which will iterate over lines in the given <em>csvfile</em>.
-<em>csvfile</em> can be any object which supports the <a class="reference internal" href="../glossary.html#term-iterator"><span class="xref std std-term">iterator</span></a> protocol and returns a
-string each time its <code class="xref py py-meth docutils literal notranslate"><span class="pre">__next__()</span></code> method is called — <a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">file objects</span></a> and list objects are both suitable.   If <em>csvfile</em> is a file object,
-it should be opened with <code class="docutils literal notranslate"><span class="pre">newline=''</span></code>. <a class="footnote-reference brackets" href="#id3" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>  An optional
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">reader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csvfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fmtparams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.reader" title="Link to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#reader-objects"><span class="std std-ref">reader object</span></a> that will process
+lines from the given <em>csvfile</em>.  A csvfile must be an iterable of
+strings, each in the reader’s defined csv format.
+A csvfile is most commonly a file-like object or list.
+If <em>csvfile</em> is a file object,
+it should be opened with <code class="docutils literal notranslate"><span class="pre">newline=''</span></code>. <a class="footnote-reference brackets" href="#id4" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>  An optional
 <em>dialect</em> parameter can be given which is used to define a set of parameters
 specific to a particular CSV dialect.  It may be an instance of a subclass of
 the <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> class or one of the strings returned by the
@@ -858,11 +821,11 @@ option is specified (in which case unquoted fields are transformed into floats).
 
 <dl class="py function">
 <dt class="sig sig-object py" id="csv.writer">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csvfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fmtparams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.writer" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">writer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">csvfile</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">fmtparams</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.writer" title="Link to this definition">¶</a></dt>
 <dd><p>Return a writer object responsible for converting the user’s data into delimited
 strings on the given file-like object.  <em>csvfile</em> can be any object with a
-<code class="xref py py-func docutils literal notranslate"><span class="pre">write()</span></code> method.  If <em>csvfile</em> is a file object, it should be opened with
-<code class="docutils literal notranslate"><span class="pre">newline=''</span></code> <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.  An optional <em>dialect</em>
+<a class="reference internal" href="io.html#io.TextIOBase.write" title="io.TextIOBase.write"><code class="xref py py-meth docutils literal notranslate"><span class="pre">write()</span></code></a> method.  If <em>csvfile</em> is a file object, it should be opened with
+<code class="docutils literal notranslate"><span class="pre">newline=''</span></code> <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.  An optional <em>dialect</em>
 parameter can be given which is used to define a set of parameters specific to a
 particular CSV dialect.  It may be an instance of a subclass of the
 <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> class or one of the strings returned by the
@@ -888,7 +851,7 @@ All other non-string data are stringified with <a class="reference internal" hre
 
 <dl class="py function">
 <dt class="sig sig-object py" id="csv.register_dialect">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">register_dialect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">**fmtparams</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.register_dialect" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">register_dialect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">**fmtparams</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.register_dialect" title="Link to this definition">¶</a></dt>
 <dd><p>Associate <em>dialect</em> with <em>name</em>.  <em>name</em> must be a string. The
 dialect can be specified either by passing a sub-class of <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a>, or
 by <em>fmtparams</em> keyword arguments, or both, with keyword arguments overriding
@@ -898,14 +861,14 @@ parameters, see section <a class="reference internal" href="#csv-fmt-params"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="csv.unregister_dialect">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">unregister_dialect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.unregister_dialect" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">unregister_dialect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.unregister_dialect" title="Link to this definition">¶</a></dt>
 <dd><p>Delete the dialect associated with <em>name</em> from the dialect registry.  An
 <a class="reference internal" href="#csv.Error" title="csv.Error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Error</span></code></a> is raised if <em>name</em> is not a registered dialect name.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="csv.get_dialect">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">get_dialect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.get_dialect" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">get_dialect</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.get_dialect" title="Link to this definition">¶</a></dt>
 <dd><p>Return the dialect associated with <em>name</em>.  An <a class="reference internal" href="#csv.Error" title="csv.Error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Error</span></code></a> is raised if
 <em>name</em> is not a registered dialect name.  This function returns an immutable
 <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a>.</p>
@@ -913,13 +876,13 @@ parameters, see section <a class="reference internal" href="#csv-fmt-params"><sp
 
 <dl class="py function">
 <dt class="sig sig-object py" id="csv.list_dialects">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">list_dialects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.list_dialects" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">list_dialects</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.list_dialects" title="Link to this definition">¶</a></dt>
 <dd><p>Return the names of all registered dialects.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="csv.field_size_limit">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">field_size_limit</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">new_limit</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.field_size_limit" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">field_size_limit</span></span><span class="sig-paren">(</span><span class="optional">[</span><em class="sig-param"><span class="n"><span class="pre">new_limit</span></span></em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.field_size_limit" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the current maximum field size allowed by the parser. If <em>new_limit</em> is
 given, this becomes the new limit.</p>
 </dd></dl>
@@ -927,14 +890,16 @@ given, this becomes the new limit.</p>
 <p>The <a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> module defines the following classes:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.DictReader">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">DictReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictReader" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">DictReader</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restkey</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictReader" title="Link to this definition">¶</a></dt>
 <dd><p>Create an object that operates like a regular reader but maps the
 information in each row to a <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a> whose keys are given by the
 optional <em>fieldnames</em> parameter.</p>
 <p>The <em>fieldnames</em> parameter is a <a class="reference internal" href="../glossary.html#term-sequence"><span class="xref std std-term">sequence</span></a>.  If <em>fieldnames</em> is
 omitted, the values in the first row of file <em>f</em> will be used as the
-fieldnames.  Regardless of how the fieldnames are determined, the
-dictionary preserves their original ordering.</p>
+fieldnames and will be omitted from the results. If
+<em>fieldnames</em> is provided, they will be used and the first row will be
+included in the results.  Regardless of how the fieldnames are determined,
+the dictionary preserves their original ordering.</p>
 <p>If a row has more fields than fieldnames, the remaining data is put in a
 list and stored with the fieldname specified by <em>restkey</em> (which defaults
 to <code class="docutils literal notranslate"><span class="pre">None</span></code>).  If a non-blank row has fewer fields than fieldnames, the
@@ -967,13 +932,13 @@ to <code class="docutils literal notranslate"><span class="pre">None</span></cod
 
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.DictWriter">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">DictWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrasaction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raise'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictWriter" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">DictWriter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fieldnames</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">restval</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extrasaction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'raise'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dialect</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'excel'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwds</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictWriter" title="Link to this definition">¶</a></dt>
 <dd><p>Create an object which operates like a regular writer but maps dictionaries
 onto output rows.  The <em>fieldnames</em> parameter is a <a class="reference internal" href="collections.abc.html#module-collections.abc" title="collections.abc: Abstract base classes for containers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">sequence</span></code></a> of keys that identify the order in which values in the
-dictionary passed to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">writerow()</span></code> method are written to file
+dictionary passed to the <a class="reference internal" href="#csv.csvwriter.writerow" title="csv.csvwriter.writerow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">writerow()</span></code></a> method are written to file
 <em>f</em>.  The optional <em>restval</em> parameter specifies the value to be
 written if the dictionary is missing a key in <em>fieldnames</em>.  If the
-dictionary passed to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">writerow()</span></code> method contains a key not found in
+dictionary passed to the <a class="reference internal" href="#csv.csvwriter.writerow" title="csv.csvwriter.writerow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">writerow()</span></code></a> method contains a key not found in
 <em>fieldnames</em>, the optional <em>extrasaction</em> parameter indicates what action to
 take.
 If it is set to <code class="docutils literal notranslate"><span class="pre">'raise'</span></code>, the default value, a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a>
@@ -1001,7 +966,7 @@ of the <a class="reference internal" href="#csv.DictWriter" title="csv.DictWrite
 
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.Dialect">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">Dialect</span></span><a class="headerlink" href="#csv.Dialect" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">Dialect</span></span><a class="headerlink" href="#csv.Dialect" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> class is a container class whose attributes contain
 information for how to handle doublequotes, whitespace, delimiters, etc.
 Due to the lack of a strict CSV specification, different applications
@@ -1014,44 +979,43 @@ classes through their initializer (<code class="docutils literal notranslate"><s
 </span><span data-line="2">
 </span><span data-line="3"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;students.csv&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">csvfile</span><span class="p">:</span>
 </span><span data-line="4">    <span class="n">writer</span> <span class="o">=</span> <span class="n">csv</span><span class="o">.</span><span class="n">writer</span><span class="p">(</span><span class="n">csvfile</span><span class="p">,</span> <span class="n">dialect</span><span class="o">=</span><span class="s1">&#39;unix&#39;</span><span class="p">)</span>
-</span><span data-line="5">                                 <span class="o">^^^^^^^^^^^^^^</span>
 </span></pre></div>
 </div>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.excel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">excel</span></span><a class="headerlink" href="#csv.excel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">excel</span></span><a class="headerlink" href="#csv.excel" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#csv.excel" title="csv.excel"><code class="xref py py-class docutils literal notranslate"><span class="pre">excel</span></code></a> class defines the usual properties of an Excel-generated CSV
 file.  It is registered with the dialect name <code class="docutils literal notranslate"><span class="pre">'excel'</span></code>.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.excel_tab">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">excel_tab</span></span><a class="headerlink" href="#csv.excel_tab" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">excel_tab</span></span><a class="headerlink" href="#csv.excel_tab" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#csv.excel_tab" title="csv.excel_tab"><code class="xref py py-class docutils literal notranslate"><span class="pre">excel_tab</span></code></a> class defines the usual properties of an Excel-generated
 TAB-delimited file.  It is registered with the dialect name <code class="docutils literal notranslate"><span class="pre">'excel-tab'</span></code>.</p>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.unix_dialect">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">unix_dialect</span></span><a class="headerlink" href="#csv.unix_dialect" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">unix_dialect</span></span><a class="headerlink" href="#csv.unix_dialect" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#csv.unix_dialect" title="csv.unix_dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">unix_dialect</span></code></a> class defines the usual properties of a CSV file
 generated on UNIX systems, i.e. using <code class="docutils literal notranslate"><span class="pre">'\n'</span></code> as line terminator and quoting
 all fields.  It is registered with the dialect name <code class="docutils literal notranslate"><span class="pre">'unix'</span></code>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.2.</span></p>
+<p><span class="versionmodified added">Added in version 3.2.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="csv.Sniffer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">Sniffer</span></span><a class="headerlink" href="#csv.Sniffer" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">Sniffer</span></span><a class="headerlink" href="#csv.Sniffer" title="Link to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="#csv.Sniffer" title="csv.Sniffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sniffer</span></code></a> class is used to deduce the format of a CSV file.</p>
 <p>The <a class="reference internal" href="#csv.Sniffer" title="csv.Sniffer"><code class="xref py py-class docutils literal notranslate"><span class="pre">Sniffer</span></code></a> class provides two methods:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="csv.Sniffer.sniff">
-<span class="sig-name descname"><span class="pre">sniff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.Sniffer.sniff" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">sniff</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiters</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.Sniffer.sniff" title="Link to this definition">¶</a></dt>
 <dd><p>Analyze the given <em>sample</em> and return a <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> subclass
 reflecting the parameters found.  If the optional <em>delimiters</em> parameter
 is given, it is interpreted as a string containing possible valid
@@ -1060,18 +1024,16 @@ delimiter characters.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="csv.Sniffer.has_header">
-<span class="sig-name descname"><span class="pre">has_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.Sniffer.has_header" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_header</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sample</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.Sniffer.has_header" title="Link to this definition">¶</a></dt>
 <dd><p>Analyze the sample text (presumed to be in CSV format) and return
 <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a> if the first row appears to be a series of column headers.
 Inspecting each column, one of two key criteria will be considered to
 estimate if the sample contains a header:</p>
-<blockquote>
-<div><ul class="simple">
+<ul class="simple">
 <li><p>the second through n-th rows contain numeric values</p></li>
 <li><p>the second through n-th rows contain strings where at least one value’s
 length differs from that of the putative header of that column.</p></li>
 </ul>
-</div></blockquote>
 <p>Twenty rows after the first row are sampled; if more than half of columns +
 rows meet the criteria, <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a> is returned.</p>
 </dd></dl>
@@ -1091,16 +1053,16 @@ negatives.</p>
 </span><span data-line="5">    <span class="c1"># ... process CSV file contents here ...</span>
 </span></pre></div>
 </div>
-<p>The <a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> module defines the following constants:</p>
+<p id="csv-constants">The <a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> module defines the following constants:</p>
 <dl class="py data">
 <dt class="sig sig-object py" id="csv.QUOTE_ALL">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_ALL</span></span><a class="headerlink" href="#csv.QUOTE_ALL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_ALL</span></span><a class="headerlink" href="#csv.QUOTE_ALL" title="Link to this definition">¶</a></dt>
 <dd><p>Instructs <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects to quote all fields.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="csv.QUOTE_MINIMAL">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_MINIMAL</span></span><a class="headerlink" href="#csv.QUOTE_MINIMAL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_MINIMAL</span></span><a class="headerlink" href="#csv.QUOTE_MINIMAL" title="Link to this definition">¶</a></dt>
 <dd><p>Instructs <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects to only quote those fields which contain
 special characters such as <em>delimiter</em>, <em>quotechar</em> or any of the characters in
 <em>lineterminator</em>.</p>
@@ -1108,14 +1070,14 @@ special characters such as <em>delimiter</em>, <em>quotechar</em> or any of the 
 
 <dl class="py data">
 <dt class="sig sig-object py" id="csv.QUOTE_NONNUMERIC">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_NONNUMERIC</span></span><a class="headerlink" href="#csv.QUOTE_NONNUMERIC" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_NONNUMERIC</span></span><a class="headerlink" href="#csv.QUOTE_NONNUMERIC" title="Link to this definition">¶</a></dt>
 <dd><p>Instructs <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects to quote all non-numeric fields.</p>
 <p>Instructs <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">reader</span></code></a> objects to convert all non-quoted fields to type <em>float</em>.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="csv.QUOTE_NONE">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_NONE</span></span><a class="headerlink" href="#csv.QUOTE_NONE" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_NONE</span></span><a class="headerlink" href="#csv.QUOTE_NONE" title="Link to this definition">¶</a></dt>
 <dd><p>Instructs <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects to never quote fields.  When the current
 <em>delimiter</em> occurs in output data it is preceded by the current <em>escapechar</em>
 character.  If <em>escapechar</em> is not set, the writer will raise <a class="reference internal" href="#csv.Error" title="csv.Error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Error</span></code></a> if
@@ -1125,38 +1087,44 @@ any characters that require escaping are encountered.</p>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="csv.QUOTE_NOTNULL">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_NOTNULL</span></span><a class="headerlink" href="#csv.QUOTE_NOTNULL" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_NOTNULL</span></span><a class="headerlink" href="#csv.QUOTE_NOTNULL" title="Link to this definition">¶</a></dt>
 <dd><p>Instructs <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects to quote all fields which are not
 <code class="docutils literal notranslate"><span class="pre">None</span></code>.  This is similar to <a class="reference internal" href="#csv.QUOTE_ALL" title="csv.QUOTE_ALL"><code class="xref py py-data docutils literal notranslate"><span class="pre">QUOTE_ALL</span></code></a>, except that if a
 field value is <code class="docutils literal notranslate"><span class="pre">None</span></code> an empty (unquoted) string is written.</p>
-<p>Instructs <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">reader</span></code></a> objects to interpret an empty (unquoted) field as None and
-to otherwise behave as <a class="reference internal" href="#csv.QUOTE_ALL" title="csv.QUOTE_ALL"><code class="xref py py-data docutils literal notranslate"><span class="pre">QUOTE_ALL</span></code></a>.</p>
+<p>Instructs <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">reader</span></code></a> objects to interpret an empty (unquoted) field
+as <code class="docutils literal notranslate"><span class="pre">None</span></code> and to otherwise behave as <a class="reference internal" href="#csv.QUOTE_ALL" title="csv.QUOTE_ALL"><code class="xref py py-data docutils literal notranslate"><span class="pre">QUOTE_ALL</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.12.</span></p>
+</div>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="csv.QUOTE_STRINGS">
-<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_STRINGS</span></span><a class="headerlink" href="#csv.QUOTE_STRINGS" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">QUOTE_STRINGS</span></span><a class="headerlink" href="#csv.QUOTE_STRINGS" title="Link to this definition">¶</a></dt>
 <dd><p>Instructs <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects to always place quotes around fields
 which are strings.  This is similar to <a class="reference internal" href="#csv.QUOTE_NONNUMERIC" title="csv.QUOTE_NONNUMERIC"><code class="xref py py-data docutils literal notranslate"><span class="pre">QUOTE_NONNUMERIC</span></code></a>, except that if a
 field value is <code class="docutils literal notranslate"><span class="pre">None</span></code> an empty (unquoted) string is written.</p>
 <p>Instructs <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">reader</span></code></a> objects to interpret an empty (unquoted) string as <code class="docutils literal notranslate"><span class="pre">None</span></code> and
 to otherwise behave as <a class="reference internal" href="#csv.QUOTE_NONNUMERIC" title="csv.QUOTE_NONNUMERIC"><code class="xref py py-data docutils literal notranslate"><span class="pre">QUOTE_NONNUMERIC</span></code></a>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.12.</span></p>
+</div>
 </dd></dl>
 
 <p>The <a class="reference internal" href="#module-csv" title="csv: Write and read tabular data to and from delimited files."><code class="xref py py-mod docutils literal notranslate"><span class="pre">csv</span></code></a> module defines the following exception:</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="csv.Error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#csv.Error" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">csv.</span></span><span class="sig-name descname"><span class="pre">Error</span></span><a class="headerlink" href="#csv.Error" title="Link to this definition">¶</a></dt>
 <dd><p>Raised by any of the functions when an error is detected.</p>
 </dd></dl>
 
 </section>
 <section id="dialects-and-formatting-parameters">
-<span id="csv-fmt-params"></span><h2>Dialects and Formatting Parameters<a class="headerlink" href="#dialects-and-formatting-parameters" title="Permalink to this heading">¶</a></h2>
+<span id="csv-fmt-params"></span><h2>Dialects and Formatting Parameters<a class="headerlink" href="#dialects-and-formatting-parameters" title="Link to this heading">¶</a></h2>
 <p>To make it easier to specify the format of input and output records, specific
 formatting parameters are grouped together into dialects.  A dialect is a
-subclass of the <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> class having a set of specific methods and a
-single <code class="xref py py-meth docutils literal notranslate"><span class="pre">validate()</span></code> method.  When creating <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">reader</span></code></a> or
+subclass of the <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> class containing various attributes
+describing the format of the CSV file.  When creating <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-class docutils literal notranslate"><span class="pre">reader</span></code></a> or
 <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects, the programmer can specify a string or a subclass of
 the <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a> class as the dialect parameter.  In addition to, or instead
 of, the <em>dialect</em> parameter, the programmer can also specify individual
@@ -1165,13 +1133,13 @@ for the <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><c
 <p>Dialects support the following attributes:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.delimiter">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">delimiter</span></span><a class="headerlink" href="#csv.Dialect.delimiter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">delimiter</span></span><a class="headerlink" href="#csv.Dialect.delimiter" title="Link to this definition">¶</a></dt>
 <dd><p>A one-character string used to separate fields.  It defaults to <code class="docutils literal notranslate"><span class="pre">','</span></code>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.doublequote">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">doublequote</span></span><a class="headerlink" href="#csv.Dialect.doublequote" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">doublequote</span></span><a class="headerlink" href="#csv.Dialect.doublequote" title="Link to this definition">¶</a></dt>
 <dd><p>Controls how instances of <em>quotechar</em> appearing inside a field should
 themselves be quoted.  When <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a>, the character is doubled. When
 <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>, the <em>escapechar</em> is used as a prefix to the <em>quotechar</em>.  It
@@ -1182,7 +1150,7 @@ defaults to <a class="reference internal" href="constants.html#True" title="True
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.escapechar">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">escapechar</span></span><a class="headerlink" href="#csv.Dialect.escapechar" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">escapechar</span></span><a class="headerlink" href="#csv.Dialect.escapechar" title="Link to this definition">¶</a></dt>
 <dd><p>A one-character string used by the writer to escape the <em>delimiter</em> if <em>quoting</em>
 is set to <a class="reference internal" href="#csv.QUOTE_NONE" title="csv.QUOTE_NONE"><code class="xref py py-const docutils literal notranslate"><span class="pre">QUOTE_NONE</span></code></a> and the <em>quotechar</em> if <em>doublequote</em> is
 <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>. On reading, the <em>escapechar</em> removes any special meaning from
@@ -1194,7 +1162,7 @@ the following character. It defaults to <a class="reference internal" href="cons
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.lineterminator">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">lineterminator</span></span><a class="headerlink" href="#csv.Dialect.lineterminator" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">lineterminator</span></span><a class="headerlink" href="#csv.Dialect.lineterminator" title="Link to this definition">¶</a></dt>
 <dd><p>The string used to terminate lines produced by the <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a>. It defaults
 to <code class="docutils literal notranslate"><span class="pre">'\r\n'</span></code>.</p>
 <div class="admonition note">
@@ -1207,7 +1175,7 @@ future.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.quotechar">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">quotechar</span></span><a class="headerlink" href="#csv.Dialect.quotechar" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">quotechar</span></span><a class="headerlink" href="#csv.Dialect.quotechar" title="Link to this definition">¶</a></dt>
 <dd><p>A one-character string used to quote fields containing special characters, such
 as the <em>delimiter</em> or <em>quotechar</em>, or which contain new-line characters.  It
 defaults to <code class="docutils literal notranslate"><span class="pre">'&quot;'</span></code>.</p>
@@ -1218,34 +1186,34 @@ defaults to <code class="docutils literal notranslate"><span class="pre">'&quot;
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.quoting">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">quoting</span></span><a class="headerlink" href="#csv.Dialect.quoting" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">quoting</span></span><a class="headerlink" href="#csv.Dialect.quoting" title="Link to this definition">¶</a></dt>
 <dd><p>Controls when quotes should be generated by the writer and recognised by the
-reader.  It can take on any of the <code class="xref py py-const docutils literal notranslate"><span class="pre">QUOTE_*</span></code> constants (see section
-<a class="reference internal" href="#csv-contents"><span class="std std-ref">Module Contents</span></a>) and defaults to <a class="reference internal" href="#csv.QUOTE_MINIMAL" title="csv.QUOTE_MINIMAL"><code class="xref py py-const docutils literal notranslate"><span class="pre">QUOTE_MINIMAL</span></code></a>.</p>
+reader.  It can take on any of the <a class="reference internal" href="#csv-constants"><span class="std std-ref">QUOTE_* constants</span></a>
+and defaults to <a class="reference internal" href="#csv.QUOTE_MINIMAL" title="csv.QUOTE_MINIMAL"><code class="xref py py-const docutils literal notranslate"><span class="pre">QUOTE_MINIMAL</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.skipinitialspace">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">skipinitialspace</span></span><a class="headerlink" href="#csv.Dialect.skipinitialspace" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">skipinitialspace</span></span><a class="headerlink" href="#csv.Dialect.skipinitialspace" title="Link to this definition">¶</a></dt>
 <dd><p>When <a class="reference internal" href="constants.html#True" title="True"><code class="xref py py-const docutils literal notranslate"><span class="pre">True</span></code></a>, spaces immediately following the <em>delimiter</em> are ignored.
 The default is <a class="reference internal" href="constants.html#False" title="False"><code class="xref py py-const docutils literal notranslate"><span class="pre">False</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.Dialect.strict">
-<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">strict</span></span><a class="headerlink" href="#csv.Dialect.strict" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">Dialect.</span></span><span class="sig-name descname"><span class="pre">strict</span></span><a class="headerlink" href="#csv.Dialect.strict" title="Link to this definition">¶</a></dt>
 <dd><p>When <code class="docutils literal notranslate"><span class="pre">True</span></code>, raise exception <a class="reference internal" href="#csv.Error" title="csv.Error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">Error</span></code></a> on bad CSV input.
 The default is <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
 </dd></dl>
 
 </section>
 <section id="reader-objects">
-<h2>Reader Objects<a class="headerlink" href="#reader-objects" title="Permalink to this heading">¶</a></h2>
+<span id="id3"></span><h2>Reader Objects<a class="headerlink" href="#reader-objects" title="Link to this heading">¶</a></h2>
 <p>Reader objects (<a class="reference internal" href="#csv.DictReader" title="csv.DictReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictReader</span></code></a> instances and objects returned by the
 <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-func docutils literal notranslate"><span class="pre">reader()</span></code></a> function) have the following public methods:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="csv.csvreader.__next__">
-<span class="sig-prename descclassname"><span class="pre">csvreader.</span></span><span class="sig-name descname"><span class="pre">__next__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.csvreader.__next__" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csvreader.</span></span><span class="sig-name descname"><span class="pre">__next__</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.csvreader.__next__" title="Link to this definition">¶</a></dt>
 <dd><p>Return the next row of the reader’s iterable object as a list (if the object
 was returned from <a class="reference internal" href="#csv.reader" title="csv.reader"><code class="xref py py-func docutils literal notranslate"><span class="pre">reader()</span></code></a>) or a dict (if it is a <a class="reference internal" href="#csv.DictReader" title="csv.DictReader"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictReader</span></code></a>
 instance), parsed according to the current <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a>.  Usually you
@@ -1255,13 +1223,13 @@ should call this as <code class="docutils literal notranslate"><span class="pre"
 <p>Reader objects have the following public attributes:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.csvreader.dialect">
-<span class="sig-prename descclassname"><span class="pre">csvreader.</span></span><span class="sig-name descname"><span class="pre">dialect</span></span><a class="headerlink" href="#csv.csvreader.dialect" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csvreader.</span></span><span class="sig-name descname"><span class="pre">dialect</span></span><a class="headerlink" href="#csv.csvreader.dialect" title="Link to this definition">¶</a></dt>
 <dd><p>A read-only description of the dialect in use by the parser.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.csvreader.line_num">
-<span class="sig-prename descclassname"><span class="pre">csvreader.</span></span><span class="sig-name descname"><span class="pre">line_num</span></span><a class="headerlink" href="#csv.csvreader.line_num" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csvreader.</span></span><span class="sig-name descname"><span class="pre">line_num</span></span><a class="headerlink" href="#csv.csvreader.line_num" title="Link to this definition">¶</a></dt>
 <dd><p>The number of lines read from the source iterator. This is not the same as the
 number of records returned, as records can span multiple lines.</p>
 </dd></dl>
@@ -1269,7 +1237,7 @@ number of records returned, as records can span multiple lines.</p>
 <p>DictReader objects have the following public attribute:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.DictReader.fieldnames">
-<span class="sig-prename descclassname"><span class="pre">DictReader.</span></span><span class="sig-name descname"><span class="pre">fieldnames</span></span><a class="headerlink" href="#csv.DictReader.fieldnames" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">DictReader.</span></span><span class="sig-name descname"><span class="pre">fieldnames</span></span><a class="headerlink" href="#csv.DictReader.fieldnames" title="Link to this definition">¶</a></dt>
 <dd><p>If not passed as a parameter when creating the object, this attribute is
 initialized upon first access or when the first record is read from the
 file.</p>
@@ -1277,17 +1245,17 @@ file.</p>
 
 </section>
 <section id="writer-objects">
-<h2>Writer Objects<a class="headerlink" href="#writer-objects" title="Permalink to this heading">¶</a></h2>
-<p><code class="xref py py-class docutils literal notranslate"><span class="pre">Writer</span></code> objects (<a class="reference internal" href="#csv.DictWriter" title="csv.DictWriter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictWriter</span></code></a> instances and objects returned by
+<h2>Writer Objects<a class="headerlink" href="#writer-objects" title="Link to this heading">¶</a></h2>
+<p><a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects (<a class="reference internal" href="#csv.DictWriter" title="csv.DictWriter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictWriter</span></code></a> instances and objects returned by
 the <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-func docutils literal notranslate"><span class="pre">writer()</span></code></a> function) have the following public methods.  A <em>row</em> must be
-an iterable of strings or numbers for <code class="xref py py-class docutils literal notranslate"><span class="pre">Writer</span></code> objects and a dictionary
+an iterable of strings or numbers for <a class="reference internal" href="#csv.writer" title="csv.writer"><code class="xref py py-class docutils literal notranslate"><span class="pre">writer</span></code></a> objects and a dictionary
 mapping fieldnames to strings or numbers (by passing them through <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-func docutils literal notranslate"><span class="pre">str()</span></code></a>
 first) for <a class="reference internal" href="#csv.DictWriter" title="csv.DictWriter"><code class="xref py py-class docutils literal notranslate"><span class="pre">DictWriter</span></code></a> objects.  Note that complex numbers are written
 out surrounded by parens. This may cause some problems for other programs which
 read CSV files (assuming they support complex numbers at all).</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="csv.csvwriter.writerow">
-<span class="sig-prename descclassname"><span class="pre">csvwriter.</span></span><span class="sig-name descname"><span class="pre">writerow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.csvwriter.writerow" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csvwriter.</span></span><span class="sig-name descname"><span class="pre">writerow</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">row</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.csvwriter.writerow" title="Link to this definition">¶</a></dt>
 <dd><p>Write the <em>row</em> parameter to the writer’s file object, formatted according
 to the current <a class="reference internal" href="#csv.Dialect" title="csv.Dialect"><code class="xref py py-class docutils literal notranslate"><span class="pre">Dialect</span></code></a>. Return the return value of the call to the
 <em>write</em> method of the underlying file object.</p>
@@ -1298,7 +1266,7 @@ to the current <a class="reference internal" href="#csv.Dialect" title="csv.Dial
 
 <dl class="py method">
 <dt class="sig sig-object py" id="csv.csvwriter.writerows">
-<span class="sig-prename descclassname"><span class="pre">csvwriter.</span></span><span class="sig-name descname"><span class="pre">writerows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.csvwriter.writerows" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csvwriter.</span></span><span class="sig-name descname"><span class="pre">writerows</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rows</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#csv.csvwriter.writerows" title="Link to this definition">¶</a></dt>
 <dd><p>Write all elements in <em>rows</em> (an iterable of <em>row</em> objects as described
 above) to the writer’s file object, formatted according to the current
 dialect.</p>
@@ -1307,19 +1275,19 @@ dialect.</p>
 <p>Writer objects have the following public attribute:</p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="csv.csvwriter.dialect">
-<span class="sig-prename descclassname"><span class="pre">csvwriter.</span></span><span class="sig-name descname"><span class="pre">dialect</span></span><a class="headerlink" href="#csv.csvwriter.dialect" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">csvwriter.</span></span><span class="sig-name descname"><span class="pre">dialect</span></span><a class="headerlink" href="#csv.csvwriter.dialect" title="Link to this definition">¶</a></dt>
 <dd><p>A read-only description of the dialect in use by the writer.</p>
 </dd></dl>
 
 <p>DictWriter objects have the following public method:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="csv.DictWriter.writeheader">
-<span class="sig-prename descclassname"><span class="pre">DictWriter.</span></span><span class="sig-name descname"><span class="pre">writeheader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictWriter.writeheader" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">DictWriter.</span></span><span class="sig-name descname"><span class="pre">writeheader</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#csv.DictWriter.writeheader" title="Link to this definition">¶</a></dt>
 <dd><p>Write a row with the field names (as specified in the constructor) to
 the writer’s file object, formatted according to the current dialect. Return
 the return value of the <a class="reference internal" href="#csv.csvwriter.writerow" title="csv.csvwriter.writerow"><code class="xref py py-meth docutils literal notranslate"><span class="pre">csvwriter.writerow()</span></code></a> call used internally.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.2.</span></p>
+<p><span class="versionmodified added">Added in version 3.2.</span></p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.8: </span><a class="reference internal" href="#csv.DictWriter.writeheader" title="csv.DictWriter.writeheader"><code class="xref py py-meth docutils literal notranslate"><span class="pre">writeheader()</span></code></a> now also returns the value returned by
@@ -1329,7 +1297,7 @@ the <a class="reference internal" href="#csv.csvwriter.writerow" title="csv.csvw
 
 </section>
 <section id="examples">
-<span id="csv-examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h2>
+<span id="csv-examples"></span><h2>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h2>
 <p>The simplest example of reading a CSV file:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">csv</span>
 </span><span data-line="2"><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;some.csv&#39;</span><span class="p">,</span> <span class="n">newline</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
@@ -1394,7 +1362,7 @@ done:</p>
 </div>
 <p class="rubric">Footnotes</p>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id3" role="note">
+<aside class="footnote brackets" id="id4" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
 <span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id2">2</a>)</span>
 <p>If <code class="docutils literal notranslate"><span class="pre">newline=''</span></code> is not specified, newlines embedded inside quoted fields
@@ -1447,8 +1415,8 @@ on write an extra <code class="docutils literal notranslate"><span class="pre">\
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

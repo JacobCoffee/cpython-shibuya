@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>unittest.mock — getting started - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="test — Regression tests package for Python" href="test.html" /><link rel="prev" title="unittest.mock — mock object library" href="unittest.mock.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>unittest.mock — getting started - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="test — Regression tests package for Python" href="test.html" /><link rel="prev" title="unittest.mock — mock object library" href="unittest.mock.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -773,14 +783,14 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="unittest-mock-getting-started">
-<h1><a class="reference internal" href="unittest.mock.html#module-unittest.mock" title="unittest.mock: Mock object library."><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code></a> — getting started<a class="headerlink" href="#unittest-mock-getting-started" title="Permalink to this heading">¶</a></h1>
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">unittest.mock</span></code> — getting started<a class="headerlink" href="#unittest-mock-getting-started" title="Link to this heading">¶</a></h1>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.3.</span></p>
+<p><span class="versionmodified added">Added in version 3.3.</span></p>
 </div>
 <span class="target" id="getting-started"></span><section id="using-mock">
-<h2>Using Mock<a class="headerlink" href="#using-mock" title="Permalink to this heading">¶</a></h2>
+<h2>Using Mock<a class="headerlink" href="#using-mock" title="Link to this heading">¶</a></h2>
 <section id="mock-patching-methods">
-<h3>Mock Patching Methods<a class="headerlink" href="#mock-patching-methods" title="Permalink to this heading">¶</a></h3>
+<h3>Mock Patching Methods<a class="headerlink" href="#mock-patching-methods" title="Link to this heading">¶</a></h3>
 <p>Common uses for <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock" title="unittest.mock.Mock"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mock</span></code></a> objects include:</p>
 <ul class="simple">
 <li><p>Patching methods</p></li>
@@ -822,7 +832,7 @@ the <code class="docutils literal notranslate"><span class="pre">something</span
 </div>
 </section>
 <section id="mock-for-method-calls-on-an-object">
-<h3>Mock for Method Calls on an Object<a class="headerlink" href="#mock-for-method-calls-on-an-object" title="Permalink to this heading">¶</a></h3>
+<h3>Mock for Method Calls on an Object<a class="headerlink" href="#mock-for-method-calls-on-an-object" title="Link to this heading">¶</a></h3>
 <p>In the last example we patched a method directly on an object to check that it
 was called correctly. Another common use case is to pass an object into a
 method (or some part of the system under test) and then check that it is used
@@ -849,7 +859,7 @@ accessing it in the test will create it, but <a class="reference internal" href=
 will raise a failure exception.</p>
 </section>
 <section id="mocking-classes">
-<h3>Mocking Classes<a class="headerlink" href="#mocking-classes" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking Classes<a class="headerlink" href="#mocking-classes" title="Link to this heading">¶</a></h3>
 <p>A common use case is to mock out classes instantiated by your code under test.
 When you patch a class, then that class is replaced with a mock. Instances
 are created by <em>calling the class</em>. This means you access the “mock instance”
@@ -871,7 +881,7 @@ by modifying the mock <a class="reference internal" href="unittest.mock.html#uni
 </div>
 </section>
 <section id="naming-your-mocks">
-<h3>Naming your mocks<a class="headerlink" href="#naming-your-mocks" title="Permalink to this heading">¶</a></h3>
+<h3>Naming your mocks<a class="headerlink" href="#naming-your-mocks" title="Link to this heading">¶</a></h3>
 <p>It can be useful to give your mocks a name. The name is shown in the repr of
 the mock and can be helpful when the mock appears in test failure messages. The
 name is also propagated to attributes or methods of the mock:</p>
@@ -884,7 +894,7 @@ name is also propagated to attributes or methods of the mock:</p>
 </div>
 </section>
 <section id="tracking-all-calls">
-<h3>Tracking all Calls<a class="headerlink" href="#tracking-all-calls" title="Permalink to this heading">¶</a></h3>
+<h3>Tracking all Calls<a class="headerlink" href="#tracking-all-calls" title="Link to this heading">¶</a></h3>
 <p>Often you want to track more than a single call to a method. The
 <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock.mock_calls" title="unittest.mock.Mock.mock_calls"><code class="xref py py-attr docutils literal notranslate"><span class="pre">mock_calls</span></code></a> attribute records all calls
 to child attributes of the mock - and also to their children.</p>
@@ -919,7 +929,7 @@ possible to track nested calls where the parameters used to create ancestors are
 </div>
 </section>
 <section id="setting-return-values-and-attributes">
-<h3>Setting Return Values and Attributes<a class="headerlink" href="#setting-return-values-and-attributes" title="Permalink to this heading">¶</a></h3>
+<h3>Setting Return Values and Attributes<a class="headerlink" href="#setting-return-values-and-attributes" title="Link to this heading">¶</a></h3>
 <p>Setting the return values on a mock object is trivially easy:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">mock</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
 </span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">mock</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="mi">3</span>
@@ -968,7 +978,7 @@ this for easy assertion afterwards:</p>
 calls representing the chained calls.</p>
 </section>
 <section id="raising-exceptions-with-mocks">
-<h3>Raising exceptions with mocks<a class="headerlink" href="#raising-exceptions-with-mocks" title="Permalink to this heading">¶</a></h3>
+<h3>Raising exceptions with mocks<a class="headerlink" href="#raising-exceptions-with-mocks" title="Link to this heading">¶</a></h3>
 <p>A useful attribute is <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock.side_effect" title="unittest.mock.Mock.side_effect"><code class="xref py py-attr docutils literal notranslate"><span class="pre">side_effect</span></code></a>. If you set this to an
 exception class or instance then the exception will be raised when the mock
 is called.</p>
@@ -981,7 +991,7 @@ is called.</p>
 </div>
 </section>
 <section id="side-effect-functions-and-iterables">
-<h3>Side effect functions and iterables<a class="headerlink" href="#side-effect-functions-and-iterables" title="Permalink to this heading">¶</a></h3>
+<h3>Side effect functions and iterables<a class="headerlink" href="#side-effect-functions-and-iterables" title="Link to this heading">¶</a></h3>
 <p><code class="docutils literal notranslate"><span class="pre">side_effect</span></code> can also be set to a function or an iterable. The use case for
 <code class="docutils literal notranslate"><span class="pre">side_effect</span></code> as an iterable is where your mock is going to be called several
 times, and you want each call to return a different value. When you set
@@ -1013,7 +1023,7 @@ function returns is what the call returns:</p>
 </div>
 </section>
 <section id="mocking-asynchronous-iterators">
-<h3>Mocking asynchronous iterators<a class="headerlink" href="#mocking-asynchronous-iterators" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking asynchronous iterators<a class="headerlink" href="#mocking-asynchronous-iterators" title="Link to this heading">¶</a></h3>
 <p>Since Python 3.8, <code class="docutils literal notranslate"><span class="pre">AsyncMock</span></code> and <code class="docutils literal notranslate"><span class="pre">MagicMock</span></code> have support to mock
 <a class="reference internal" href="../reference/datamodel.html#async-iterators"><span class="std std-ref">Asynchronous Iterators</span></a> through <code class="docutils literal notranslate"><span class="pre">__aiter__</span></code>. The <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock.return_value" title="unittest.mock.Mock.return_value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">return_value</span></code></a>
 attribute of <code class="docutils literal notranslate"><span class="pre">__aiter__</span></code> can be used to set the return values to be used for
@@ -1029,7 +1039,7 @@ iteration.</p>
 </div>
 </section>
 <section id="mocking-asynchronous-context-manager">
-<h3>Mocking asynchronous context manager<a class="headerlink" href="#mocking-asynchronous-context-manager" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking asynchronous context manager<a class="headerlink" href="#mocking-asynchronous-context-manager" title="Link to this heading">¶</a></h3>
 <p>Since Python 3.8, <code class="docutils literal notranslate"><span class="pre">AsyncMock</span></code> and <code class="docutils literal notranslate"><span class="pre">MagicMock</span></code> have support to mock
 <a class="reference internal" href="../reference/datamodel.html#async-context-managers"><span class="std std-ref">Asynchronous Context Managers</span></a> through <code class="docutils literal notranslate"><span class="pre">__aenter__</span></code> and <code class="docutils literal notranslate"><span class="pre">__aexit__</span></code>.
 By default, <code class="docutils literal notranslate"><span class="pre">__aenter__</span></code> and <code class="docutils literal notranslate"><span class="pre">__aexit__</span></code> are <code class="docutils literal notranslate"><span class="pre">AsyncMock</span></code> instances that
@@ -1052,7 +1062,7 @@ return an async function.</p>
 </div>
 </section>
 <section id="creating-a-mock-from-an-existing-object">
-<h3>Creating a Mock from an Existing Object<a class="headerlink" href="#creating-a-mock-from-an-existing-object" title="Permalink to this heading">¶</a></h3>
+<h3>Creating a Mock from an Existing Object<a class="headerlink" href="#creating-a-mock-from-an-existing-object" title="Link to this heading">¶</a></h3>
 <p>One problem with over use of mocking is that it couples your tests to the
 implementation of your mocks rather than your real code. Suppose you have a
 class that implements <code class="docutils literal notranslate"><span class="pre">some_method</span></code>. In a test for another class, you
@@ -1090,7 +1100,7 @@ of arbitrary attributes as well as the getting of them then you can use
 <em>spec_set</em> instead of <em>spec</em>.</p>
 </section>
 <section id="using-side-effect-to-return-per-file-content">
-<h3>Using side_effect to return per file content<a class="headerlink" href="#using-side-effect-to-return-per-file-content" title="Permalink to this heading">¶</a></h3>
+<h3>Using side_effect to return per file content<a class="headerlink" href="#using-side-effect-to-return-per-file-content" title="Link to this heading">¶</a></h3>
 <p><a class="reference internal" href="unittest.mock.html#unittest.mock.mock_open" title="unittest.mock.mock_open"><code class="xref py py-func docutils literal notranslate"><span class="pre">mock_open()</span></code></a> is used to patch <a class="reference internal" href="functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> method. <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock.side_effect" title="unittest.mock.Mock.side_effect"><code class="xref py py-attr docutils literal notranslate"><span class="pre">side_effect</span></code></a>
 can be used to return a new Mock object per call. This can be used to return different
 contents per file stored in a dictionary:</p>
@@ -1115,7 +1125,7 @@ contents per file stored in a dictionary:</p>
 </section>
 </section>
 <section id="patch-decorators">
-<h2>Patch Decorators<a class="headerlink" href="#patch-decorators" title="Permalink to this heading">¶</a></h2>
+<h2>Patch Decorators<a class="headerlink" href="#patch-decorators" title="Link to this heading">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>With <a class="reference internal" href="unittest.mock.html#unittest.mock.patch" title="unittest.mock.patch"><code class="xref py py-func docutils literal notranslate"><span class="pre">patch()</span></code></a> it matters that you patch objects in the namespace where
@@ -1239,10 +1249,10 @@ class decorators. When used in this way it is the same as applying the
 decorator individually to every method whose name starts with “test”.</p>
 </section>
 <section id="further-examples">
-<span id="id1"></span><h2>Further Examples<a class="headerlink" href="#further-examples" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2>Further Examples<a class="headerlink" href="#further-examples" title="Link to this heading">¶</a></h2>
 <p>Here are some more examples for some slightly more advanced scenarios.</p>
 <section id="mocking-chained-calls">
-<h3>Mocking chained calls<a class="headerlink" href="#mocking-chained-calls" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking chained calls<a class="headerlink" href="#mocking-chained-calls" title="Link to this heading">¶</a></h3>
 <p>Mocking chained calls is actually straightforward with mock once you
 understand the <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock.return_value" title="unittest.mock.Mock.return_value"><code class="xref py py-attr docutils literal notranslate"><span class="pre">return_value</span></code></a> attribute. When a mock is called for
 the first time, or you fetch its <code class="docutils literal notranslate"><span class="pre">return_value</span></code> before it has been called, a
@@ -1308,7 +1318,7 @@ this list of calls for us:</p>
 </div>
 </section>
 <section id="partial-mocking">
-<h3>Partial mocking<a class="headerlink" href="#partial-mocking" title="Permalink to this heading">¶</a></h3>
+<h3>Partial mocking<a class="headerlink" href="#partial-mocking" title="Link to this heading">¶</a></h3>
 <p>In some tests I wanted to mock out a call to <a class="reference internal" href="datetime.html#datetime.date.today" title="datetime.date.today"><code class="xref py py-meth docutils literal notranslate"><span class="pre">datetime.date.today()</span></code></a>
 to return a known date, but I didn’t want to prevent the code under test from
 creating new date objects. Unfortunately <a class="reference internal" href="datetime.html#datetime.date" title="datetime.date"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.date</span></code></a> is written in C, and
@@ -1342,7 +1352,7 @@ algorithm as the code under test, which is a classic testing anti-pattern.</p>
 is discussed in <a class="reference external" href="https://williambert.online/2011/07/how-to-unit-testing-in-django-with-mocking-and-patching/">this blog entry</a>.</p>
 </section>
 <section id="mocking-a-generator-method">
-<h3>Mocking a Generator Method<a class="headerlink" href="#mocking-a-generator-method" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking a Generator Method<a class="headerlink" href="#mocking-a-generator-method" title="Link to this heading">¶</a></h3>
 <p>A Python generator is a function or method that uses the <a class="reference internal" href="../reference/simple_stmts.html#yield"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">yield</span></code></a> statement
 to return a series of values when iterated over <a class="footnote-reference brackets" href="#id3" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>.</p>
 <p>A generator method / function is called to return the generator object. It is
@@ -1370,7 +1380,7 @@ mock this using a <a class="reference internal" href="unittest.mock.html#unittes
 </span></pre></div>
 </div>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id3" role="note">
+<aside class="footnote brackets" id="id3" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">1</a><span class="fn-bracket">]</span></span>
 <p>There are also generator expressions and more <a class="reference external" href="http://www.dabeaz.com/coroutines/index.html">advanced uses</a> of generators, but we aren’t
 concerned about them here. A very good introduction to generators and how
@@ -1379,7 +1389,7 @@ powerful they are is: <a class="reference external" href="http://www.dabeaz.com/
 </aside>
 </section>
 <section id="applying-the-same-patch-to-every-test-method">
-<h3>Applying the same patch to every test method<a class="headerlink" href="#applying-the-same-patch-to-every-test-method" title="Permalink to this heading">¶</a></h3>
+<h3>Applying the same patch to every test method<a class="headerlink" href="#applying-the-same-patch-to-every-test-method" title="Link to this heading">¶</a></h3>
 <p>If you want several patches in place for multiple test methods the obvious way
 is to apply the patch decorators to every method. This can feel like unnecessary
 repetition. Instead, you can use <a class="reference internal" href="unittest.mock.html#unittest.mock.patch" title="unittest.mock.patch"><code class="xref py py-func docutils literal notranslate"><span class="pre">patch()</span></code></a> (in all its
@@ -1438,7 +1448,7 @@ exception is raised in the setUp then tearDown is not called.
 </div>
 </section>
 <section id="mocking-unbound-methods">
-<h3>Mocking Unbound Methods<a class="headerlink" href="#mocking-unbound-methods" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking Unbound Methods<a class="headerlink" href="#mocking-unbound-methods" title="Link to this heading">¶</a></h3>
 <p>Whilst writing tests today I needed to patch an <em>unbound method</em> (patching the
 method on the class rather than on the instance). I needed self to be passed
 in as the first argument because I want to make asserts about which objects
@@ -1474,7 +1484,7 @@ wanted:</p>
 with a Mock instance instead, and isn’t called with <code class="docutils literal notranslate"><span class="pre">self</span></code>.</p>
 </section>
 <section id="checking-multiple-calls-with-mock">
-<h3>Checking multiple calls with mock<a class="headerlink" href="#checking-multiple-calls-with-mock" title="Permalink to this heading">¶</a></h3>
+<h3>Checking multiple calls with mock<a class="headerlink" href="#checking-multiple-calls-with-mock" title="Link to this heading">¶</a></h3>
 <p>mock has a nice API for making assertions about how your mock objects are used.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">mock</span> <span class="o">=</span> <span class="n">Mock</span><span class="p">()</span>
 </span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">mock</span><span class="o">.</span><span class="n">foo_bar</span><span class="o">.</span><span class="n">return_value</span> <span class="o">=</span> <span class="kc">None</span>
@@ -1516,7 +1526,7 @@ looks remarkably similar to the repr of the <code class="docutils literal notran
 </div>
 </section>
 <section id="coping-with-mutable-arguments">
-<h3>Coping with mutable arguments<a class="headerlink" href="#coping-with-mutable-arguments" title="Permalink to this heading">¶</a></h3>
+<h3>Coping with mutable arguments<a class="headerlink" href="#coping-with-mutable-arguments" title="Link to this heading">¶</a></h3>
 <p>Another situation is rare, but can bite you, is when your mock is called with
 mutable arguments. <code class="docutils literal notranslate"><span class="pre">call_args</span></code> and <code class="docutils literal notranslate"><span class="pre">call_args_list</span></code> store <em>references</em> to the
 arguments. If the arguments are mutated by the code under test then you can no
@@ -1629,7 +1639,7 @@ and the <code class="docutils literal notranslate"><span class="pre">return_valu
 children of a <code class="docutils literal notranslate"><span class="pre">CopyingMock</span></code> will also have the type <code class="docutils literal notranslate"><span class="pre">CopyingMock</span></code>.</p>
 </section>
 <section id="nesting-patches">
-<h3>Nesting Patches<a class="headerlink" href="#nesting-patches" title="Permalink to this heading">¶</a></h3>
+<h3>Nesting Patches<a class="headerlink" href="#nesting-patches" title="Link to this heading">¶</a></h3>
 <p>Using patch as a context manager is nice, but if you do multiple patches you
 can end up with nested with statements indenting further and further to the
 right:</p>
@@ -1676,7 +1686,7 @@ for us:</p>
 </div>
 </section>
 <section id="mocking-a-dictionary-with-magicmock">
-<h3>Mocking a dictionary with MagicMock<a class="headerlink" href="#mocking-a-dictionary-with-magicmock" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking a dictionary with MagicMock<a class="headerlink" href="#mocking-a-dictionary-with-magicmock" title="Link to this heading">¶</a></h3>
 <p>You may want to mock a dictionary, or other container object, recording all
 access to it whilst having it still behave like a dictionary.</p>
 <p>We can do this with <a class="reference internal" href="unittest.mock.html#unittest.mock.MagicMock" title="unittest.mock.MagicMock"><code class="xref py py-class docutils literal notranslate"><span class="pre">MagicMock</span></code></a>, which will behave like a dictionary,
@@ -1749,7 +1759,7 @@ mock methods and attributes:</p>
 </div>
 </section>
 <section id="mock-subclasses-and-their-attributes">
-<h3>Mock subclasses and their attributes<a class="headerlink" href="#mock-subclasses-and-their-attributes" title="Permalink to this heading">¶</a></h3>
+<h3>Mock subclasses and their attributes<a class="headerlink" href="#mock-subclasses-and-their-attributes" title="Link to this heading">¶</a></h3>
 <p>There are various reasons why you might want to subclass <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock" title="unittest.mock.Mock"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mock</span></code></a>. One
 reason might be to add helper methods. Here’s a silly example:</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="k">class</span> <span class="nc">MyMock</span><span class="p">(</span><span class="n">MagicMock</span><span class="p">):</span>
@@ -1803,7 +1813,7 @@ onto the mock constructor:</p>
 </span></pre></div>
 </div>
 <aside class="footnote-list brackets">
-<aside class="footnote brackets" id="id5" role="note">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
 <span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">2</a><span class="fn-bracket">]</span></span>
 <p>An exception to this rule are the non-callable mocks. Attributes use the
 callable variant because otherwise non-callable mocks couldn’t have callable
@@ -1812,7 +1822,7 @@ methods.</p>
 </aside>
 </section>
 <section id="mocking-imports-with-patch-dict">
-<h3>Mocking imports with patch.dict<a class="headerlink" href="#mocking-imports-with-patch-dict" title="Permalink to this heading">¶</a></h3>
+<h3>Mocking imports with patch.dict<a class="headerlink" href="#mocking-imports-with-patch-dict" title="Link to this heading">¶</a></h3>
 <p>One situation where mocking can be hard is where you have a local import inside
 a function. These are harder to mock because they aren’t using an object from
 the module namespace that we can patch out.</p>
@@ -1870,7 +1880,7 @@ left in <a class="reference internal" href="sys.html#sys.modules" title="sys.mod
 </div>
 </section>
 <section id="tracking-order-of-calls-and-less-verbose-call-assertions">
-<h3>Tracking order of calls and less verbose call assertions<a class="headerlink" href="#tracking-order-of-calls-and-less-verbose-call-assertions" title="Permalink to this heading">¶</a></h3>
+<h3>Tracking order of calls and less verbose call assertions<a class="headerlink" href="#tracking-order-of-calls-and-less-verbose-call-assertions" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock" title="unittest.mock.Mock"><code class="xref py py-class docutils literal notranslate"><span class="pre">Mock</span></code></a> class allows you to track the <em>order</em> of method calls on
 your mock objects through the <a class="reference internal" href="unittest.mock.html#unittest.mock.Mock.method_calls" title="unittest.mock.Mock.method_calls"><code class="xref py py-attr docutils literal notranslate"><span class="pre">method_calls</span></code></a> attribute. This
 doesn’t allow you to track the order of calls between separate mock objects,
@@ -1948,7 +1958,7 @@ order. In this case you can pass <code class="docutils literal notranslate"><spa
 </div>
 </section>
 <section id="more-complex-argument-matching">
-<h3>More complex argument matching<a class="headerlink" href="#more-complex-argument-matching" title="Permalink to this heading">¶</a></h3>
+<h3>More complex argument matching<a class="headerlink" href="#more-complex-argument-matching" title="Link to this heading">¶</a></h3>
 <p>Using the same basic concept as <a class="reference internal" href="unittest.mock.html#unittest.mock.ANY" title="unittest.mock.ANY"><code class="xref py py-data docutils literal notranslate"><span class="pre">ANY</span></code></a> we can implement matchers to do more
 complex assertions on objects used as arguments to mocks.</p>
 <p>Suppose we expect some object to be passed to a mock that by default
@@ -2063,8 +2073,8 @@ that may be useful here, in the form of its equality matcher
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

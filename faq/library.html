@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Library and Extension FAQ - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Extending/Embedding FAQ" href="extending.html" /><link rel="prev" title="Design and History FAQ" href="design.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Library and Extension FAQ - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Extending/Embedding FAQ" href="extending.html" /><link rel="prev" title="Design and History FAQ" href="design.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Frequently Asked Questions</a><ul class="current">
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -744,7 +754,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="library-and-extension-faq">
-<h1><a class="toc-backref" href="#id1" role="doc-backlink">Library and Extension FAQ</a><a class="headerlink" href="#library-and-extension-faq" title="Permalink to this heading">¶</a></h1>
+<h1><a class="toc-backref" href="#id1" role="doc-backlink">Library and Extension FAQ</a><a class="headerlink" href="#library-and-extension-faq" title="Link to this heading">¶</a></h1>
 <nav class="contents" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -810,9 +820,9 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </nav>
 <section id="general-library-questions">
-<h2><a class="toc-backref" href="#id2" role="doc-backlink">General Library Questions</a><a class="headerlink" href="#general-library-questions" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id2" role="doc-backlink">General Library Questions</a><a class="headerlink" href="#general-library-questions" title="Link to this heading">¶</a></h2>
 <section id="how-do-i-find-a-module-or-application-to-perform-task-x">
-<h3><a class="toc-backref" href="#id3" role="doc-backlink">How do I find a module or application to perform task X?</a><a class="headerlink" href="#how-do-i-find-a-module-or-application-to-perform-task-x" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id3" role="doc-backlink">How do I find a module or application to perform task X?</a><a class="headerlink" href="#how-do-i-find-a-module-or-application-to-perform-task-x" title="Link to this heading">¶</a></h3>
 <p>Check <a class="reference internal" href="../library/index.html#library-index"><span class="std std-ref">the Library Reference</span></a> to see if there’s a relevant
 standard library module.  (Eventually you’ll learn what’s in the standard
 library and will be able to skip this step.)</p>
@@ -821,7 +831,7 @@ another web search engine.  Searching for “Python” plus a keyword or two for
 your topic of interest will usually find something helpful.</p>
 </section>
 <section id="where-is-the-math-py-socket-py-regex-py-etc-source-file">
-<h3><a class="toc-backref" href="#id4" role="doc-backlink">Where is the math.py (socket.py, regex.py, etc.) source file?</a><a class="headerlink" href="#where-is-the-math-py-socket-py-regex-py-etc-source-file" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id4" role="doc-backlink">Where is the math.py (socket.py, regex.py, etc.) source file?</a><a class="headerlink" href="#where-is-the-math-py-socket-py-regex-py-etc-source-file" title="Link to this heading">¶</a></h3>
 <p>If you can’t find a source file for a module it may be a built-in or
 dynamically loaded module implemented in C, C++ or other compiled language.
 In this case you may not have the source file or it may be something like
@@ -840,7 +850,7 @@ type:</p>
 </ol>
 </section>
 <section id="how-do-i-make-a-python-script-executable-on-unix">
-<h3><a class="toc-backref" href="#id5" role="doc-backlink">How do I make a Python script executable on Unix?</a><a class="headerlink" href="#how-do-i-make-a-python-script-executable-on-unix" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id5" role="doc-backlink">How do I make a Python script executable on Unix?</a><a class="headerlink" href="#how-do-i-make-a-python-script-executable-on-unix" title="Link to this heading">¶</a></h3>
 <p>You need to do two things: the script file’s mode must be executable and the
 first line must begin with <code class="docutils literal notranslate"><span class="pre">#!</span></code> followed by the path of the Python
 interpreter.</p>
@@ -879,9 +889,9 @@ However, you can fix that by adding</p>
 </div>
 </section>
 <section id="is-there-a-curses-termcap-package-for-python">
-<h3><a class="toc-backref" href="#id6" role="doc-backlink">Is there a curses/termcap package for Python?</a><a class="headerlink" href="#is-there-a-curses-termcap-package-for-python" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id6" role="doc-backlink">Is there a curses/termcap package for Python?</a><a class="headerlink" href="#is-there-a-curses-termcap-package-for-python" title="Link to this heading">¶</a></h3>
 <p>For Unix variants: The standard Python source distribution comes with a curses
-module in the <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Modules">Modules</a> subdirectory, though it’s not compiled by default.
+module in the <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Modules">Modules</a> subdirectory, though it’s not compiled by default.
 (Note that this is not available in the Windows distribution – there is no
 curses module for Windows.)</p>
 <p>The <a class="reference internal" href="../library/curses.html#module-curses" title="curses: An interface to the curses library, providing portable terminal handling. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">curses</span></code></a> module supports basic curses features as well as many additional
@@ -891,12 +901,12 @@ operating systems that only have BSD curses, but there don’t seem to be any
 currently maintained OSes that fall into this category.</p>
 </section>
 <section id="is-there-an-equivalent-to-c-s-onexit-in-python">
-<h3><a class="toc-backref" href="#id7" role="doc-backlink">Is there an equivalent to C’s onexit() in Python?</a><a class="headerlink" href="#is-there-an-equivalent-to-c-s-onexit-in-python" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Is there an equivalent to C’s onexit() in Python?</a><a class="headerlink" href="#is-there-an-equivalent-to-c-s-onexit-in-python" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../library/atexit.html#module-atexit" title="atexit: Register and execute cleanup functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code></a> module provides a register function that is similar to C’s
 <code class="xref c c-func docutils literal notranslate"><span class="pre">onexit()</span></code>.</p>
 </section>
 <section id="why-don-t-my-signal-handlers-work">
-<h3><a class="toc-backref" href="#id8" role="doc-backlink">Why don’t my signal handlers work?</a><a class="headerlink" href="#why-don-t-my-signal-handlers-work" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id8" role="doc-backlink">Why don’t my signal handlers work?</a><a class="headerlink" href="#why-don-t-my-signal-handlers-work" title="Link to this heading">¶</a></h3>
 <p>The most common problem is that the signal handler is declared with the wrong
 argument list.  It is called as</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="n">handler</span><span class="p">(</span><span class="n">signum</span><span class="p">,</span> <span class="n">frame</span><span class="p">)</span>
@@ -910,9 +920,9 @@ argument list.  It is called as</p>
 </section>
 </section>
 <section id="common-tasks">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Common tasks</a><a class="headerlink" href="#common-tasks" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Common tasks</a><a class="headerlink" href="#common-tasks" title="Link to this heading">¶</a></h2>
 <section id="how-do-i-test-a-python-program-or-component">
-<h3><a class="toc-backref" href="#id10" role="doc-backlink">How do I test a Python program or component?</a><a class="headerlink" href="#how-do-i-test-a-python-program-or-component" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id10" role="doc-backlink">How do I test a Python program or component?</a><a class="headerlink" href="#how-do-i-test-a-python-program-or-component" title="Link to this heading">¶</a></h3>
 <p>Python comes with two testing frameworks.  The <a class="reference internal" href="../library/doctest.html#module-doctest" title="doctest: Test pieces of code within docstrings."><code class="xref py py-mod docutils literal notranslate"><span class="pre">doctest</span></code></a> module finds
 examples in the docstrings for a module and runs them, comparing the output with
 the expected output given in the docstring.</p>
@@ -949,27 +959,27 @@ the external interfaces are unavailable by using “fake” interfaces implement
 in Python.</p>
 </section>
 <section id="how-do-i-create-documentation-from-doc-strings">
-<h3><a class="toc-backref" href="#id11" role="doc-backlink">How do I create documentation from doc strings?</a><a class="headerlink" href="#how-do-i-create-documentation-from-doc-strings" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id11" role="doc-backlink">How do I create documentation from doc strings?</a><a class="headerlink" href="#how-do-i-create-documentation-from-doc-strings" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../library/pydoc.html#module-pydoc" title="pydoc: Documentation generator and online help system."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pydoc</span></code></a> module can create HTML from the doc strings in your Python
 source code.  An alternative for creating API documentation purely from
 docstrings is <a class="reference external" href="https://epydoc.sourceforge.net/">epydoc</a>.  <a class="reference external" href="https://www.sphinx-doc.org">Sphinx</a> can also include docstring content.</p>
 </section>
 <section id="how-do-i-get-a-single-keypress-at-a-time">
-<h3><a class="toc-backref" href="#id12" role="doc-backlink">How do I get a single keypress at a time?</a><a class="headerlink" href="#how-do-i-get-a-single-keypress-at-a-time" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id12" role="doc-backlink">How do I get a single keypress at a time?</a><a class="headerlink" href="#how-do-i-get-a-single-keypress-at-a-time" title="Link to this heading">¶</a></h3>
 <p>For Unix variants there are several solutions.  It’s straightforward to do this
 using curses, but curses is a fairly large module to learn.</p>
 </section>
 </section>
 <section id="threads">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Threads</a><a class="headerlink" href="#threads" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Threads</a><a class="headerlink" href="#threads" title="Link to this heading">¶</a></h2>
 <section id="how-do-i-program-using-threads">
-<h3><a class="toc-backref" href="#id14" role="doc-backlink">How do I program using threads?</a><a class="headerlink" href="#how-do-i-program-using-threads" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">How do I program using threads?</a><a class="headerlink" href="#how-do-i-program-using-threads" title="Link to this heading">¶</a></h3>
 <p>Be sure to use the <a class="reference internal" href="../library/threading.html#module-threading" title="threading: Thread-based parallelism."><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code></a> module and not the <a class="reference internal" href="../library/_thread.html#module-_thread" title="_thread: Low-level threading API."><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code></a> module.
 The <a class="reference internal" href="../library/threading.html#module-threading" title="threading: Thread-based parallelism."><code class="xref py py-mod docutils literal notranslate"><span class="pre">threading</span></code></a> module builds convenient abstractions on top of the
 low-level primitives provided by the <a class="reference internal" href="../library/_thread.html#module-_thread" title="_thread: Low-level threading API."><code class="xref py py-mod docutils literal notranslate"><span class="pre">_thread</span></code></a> module.</p>
 </section>
 <section id="none-of-my-threads-seem-to-run-why">
-<h3><a class="toc-backref" href="#id15" role="doc-backlink">None of my threads seem to run: why?</a><a class="headerlink" href="#none-of-my-threads-seem-to-run-why" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">None of my threads seem to run: why?</a><a class="headerlink" href="#none-of-my-threads-seem-to-run-why" title="Link to this heading">¶</a></h3>
 <p>As soon as the main thread exits, all threads are killed.  Your main thread is
 running too quickly, giving the threads no time to do any work.</p>
 <p>A simple fix is to add a sleep to the end of the program that’s long enough for
@@ -1010,7 +1020,7 @@ the queue when it finishes, and let the main thread read as many tokens from the
 queue as there are threads.</p>
 </section>
 <section id="how-do-i-parcel-out-work-among-a-bunch-of-worker-threads">
-<h3><a class="toc-backref" href="#id16" role="doc-backlink">How do I parcel out work among a bunch of worker threads?</a><a class="headerlink" href="#how-do-i-parcel-out-work-among-a-bunch-of-worker-threads" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">How do I parcel out work among a bunch of worker threads?</a><a class="headerlink" href="#how-do-i-parcel-out-work-among-a-bunch-of-worker-threads" title="Link to this heading">¶</a></h3>
 <p>The easiest way is to use the <a class="reference internal" href="../library/concurrent.futures.html#module-concurrent.futures" title="concurrent.futures: Execute computations concurrently using threads or processes."><code class="xref py py-mod docutils literal notranslate"><span class="pre">concurrent.futures</span></code></a> module,
 especially the <a class="reference internal" href="../library/concurrent.futures.html#concurrent.futures.ThreadPoolExecutor" title="concurrent.futures.ThreadPoolExecutor"><code class="xref py py-mod docutils literal notranslate"><span class="pre">ThreadPoolExecutor</span></code></a> class.</p>
 <p>Or, if you want fine control over the dispatching algorithm, you can write
@@ -1077,7 +1087,7 @@ necessary to ensure that each job is handed out exactly once.</p>
 class provides a featureful interface.</p>
 </section>
 <section id="what-kinds-of-global-value-mutation-are-thread-safe">
-<h3><a class="toc-backref" href="#id17" role="doc-backlink">What kinds of global value mutation are thread-safe?</a><a class="headerlink" href="#what-kinds-of-global-value-mutation-are-thread-safe" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">What kinds of global value mutation are thread-safe?</a><a class="headerlink" href="#what-kinds-of-global-value-mutation-are-thread-safe" title="Link to this heading">¶</a></h3>
 <p>A <a class="reference internal" href="../glossary.html#term-global-interpreter-lock"><span class="xref std std-term">global interpreter lock</span></a> (GIL) is used internally to ensure that only one
 thread runs in the Python VM at a time.  In general, Python offers to switch
 among threads only between bytecode instructions; how frequently it switches can
@@ -1116,19 +1126,35 @@ affect things.  This is especially true for the mass updates to dictionaries and
 lists.  When in doubt, use a mutex!</p>
 </section>
 <section id="can-t-we-get-rid-of-the-global-interpreter-lock">
-<h3><a class="toc-backref" href="#id18" role="doc-backlink">Can’t we get rid of the Global Interpreter Lock?</a><a class="headerlink" href="#can-t-we-get-rid-of-the-global-interpreter-lock" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id18" role="doc-backlink">Can’t we get rid of the Global Interpreter Lock?</a><a class="headerlink" href="#can-t-we-get-rid-of-the-global-interpreter-lock" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../glossary.html#term-global-interpreter-lock"><span class="xref std std-term">global interpreter lock</span></a> (GIL) is often seen as a hindrance to Python’s
 deployment on high-end multiprocessor server machines, because a multi-threaded
 Python program effectively only uses one CPU, due to the insistence that
 (almost) all Python code can only run while the GIL is held.</p>
-<p>Back in the days of Python 1.5, Greg Stein actually implemented a comprehensive
+<p>With the approval of <span class="target" id="index-2"></span><a class="pep reference external" href="https://peps.python.org/pep-0703/"><strong>PEP 703</strong></a> work is now underway to remove the GIL from the
+CPython implementation of Python.  Initially it will be implemented as an
+optional compiler flag when building the interpreter, and so separate
+builds will be available with and without the GIL.  Long-term, the hope is
+to settle on a single build, once the performance implications of removing the
+GIL are fully understood.  Python 3.13 is likely to be the first release
+containing this work, although it may not be completely functional in this
+release.</p>
+<p>The current work to remove the GIL is based on a
+<a class="reference external" href="https://github.com/colesbury/nogil">fork of Python 3.9 with the GIL removed</a>
+by Sam Gross.
+Prior to that,
+in the days of Python 1.5, Greg Stein actually implemented a comprehensive
 patch set (the “free threading” patches) that removed the GIL and replaced it
-with fine-grained locking.  Adam Olsen recently did a similar experiment
+with fine-grained locking.  Adam Olsen did a similar experiment
 in his <a class="reference external" href="https://code.google.com/archive/p/python-safethread">python-safethread</a>
-project.  Unfortunately, both experiments exhibited a sharp drop in single-thread
+project.  Unfortunately, both of these earlier experiments exhibited a sharp
+drop in single-thread
 performance (at least 30% slower), due to the amount of fine-grained locking
-necessary to compensate for the removal of the GIL.</p>
-<p>This doesn’t mean that you can’t make good use of Python on multi-CPU machines!
+necessary to compensate for the removal of the GIL.  The Python 3.9 fork
+is the first attempt at removing the GIL with an acceptable performance
+impact.</p>
+<p>The presence of the GIL in current Python releases
+doesn’t mean that you can’t make good use of Python on multi-CPU machines!
 You just have to be creative with dividing the work up between multiple
 <em>processes</em> rather than multiple <em>threads</em>.  The
 <a class="reference internal" href="../library/concurrent.futures.html#concurrent.futures.ProcessPoolExecutor" title="concurrent.futures.ProcessPoolExecutor"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProcessPoolExecutor</span></code></a> class in the new
@@ -1140,26 +1166,19 @@ perform a time-consuming task, the extension can release the GIL while the
 thread of execution is in the C code and allow other threads to get some work
 done.  Some standard library modules such as <a class="reference internal" href="../library/zlib.html#module-zlib" title="zlib: Low-level interface to compression and decompression routines compatible with gzip."><code class="xref py py-mod docutils literal notranslate"><span class="pre">zlib</span></code></a> and <a class="reference internal" href="../library/hashlib.html#module-hashlib" title="hashlib: Secure hash and message digest algorithms."><code class="xref py py-mod docutils literal notranslate"><span class="pre">hashlib</span></code></a>
 already do this.</p>
-<p>It has been suggested that the GIL should be a per-interpreter-state lock rather
-than truly global; interpreters then wouldn’t be able to share objects.
-Unfortunately, this isn’t likely to happen either.  It would be a tremendous
-amount of work, because many object implementations currently have global state.
-For example, small integers and short strings are cached; these caches would
-have to be moved to the interpreter state.  Other object types have their own
-free list; these free lists would have to be moved to the interpreter state.
-And so on.</p>
-<p>And I doubt that it can even be done in finite time, because the same problem
-exists for 3rd party extensions.  It is likely that 3rd party extensions are
-being written at a faster rate than you can convert them to store all their
-global state in the interpreter state.</p>
-<p>And finally, once you have multiple interpreters not sharing any state, what
-have you gained over running each interpreter in a separate process?</p>
+<p>An alternative approach to reducing the impact of the GIL is
+to make the GIL a per-interpreter-state lock rather than truly global.
+This was <a class="reference internal" href="../whatsnew/3.12.html#whatsnew312-pep684"><span class="std std-ref">first implemented in Python 3.12</span></a> and is
+available in the C API. A Python interface to it is expected in Python 3.13.
+The main limitation to it at the moment is likely to be 3rd party extension
+modules, since these must be written with multiple interpreters in mind in
+order to be usable, so many older extension modules will not be usable.</p>
 </section>
 </section>
 <section id="input-and-output">
-<h2><a class="toc-backref" href="#id19" role="doc-backlink">Input and Output</a><a class="headerlink" href="#input-and-output" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Input and Output</a><a class="headerlink" href="#input-and-output" title="Link to this heading">¶</a></h2>
 <section id="how-do-i-delete-a-file-and-other-file-questions">
-<h3><a class="toc-backref" href="#id20" role="doc-backlink">How do I delete a file? (And other file questions…)</a><a class="headerlink" href="#how-do-i-delete-a-file-and-other-file-questions" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id20" role="doc-backlink">How do I delete a file? (And other file questions…)</a><a class="headerlink" href="#how-do-i-delete-a-file-and-other-file-questions" title="Link to this heading">¶</a></h3>
 <p>Use <code class="docutils literal notranslate"><span class="pre">os.remove(filename)</span></code> or <code class="docutils literal notranslate"><span class="pre">os.unlink(filename)</span></code>; for documentation, see
 the <a class="reference internal" href="../library/os.html#module-os" title="os: Miscellaneous operating system interfaces."><code class="xref py py-mod docutils literal notranslate"><span class="pre">os</span></code></a> module.  The two functions are identical; <a class="reference internal" href="../library/os.html#os.unlink" title="os.unlink"><code class="xref py py-func docutils literal notranslate"><span class="pre">unlink()</span></code></a> is simply
 the name of the Unix system call for this function.</p>
@@ -1178,7 +1197,7 @@ including <a class="reference internal" href="../library/shutil.html#shutil.copy
 <a class="reference internal" href="../library/shutil.html#shutil.rmtree" title="shutil.rmtree"><code class="xref py py-func docutils literal notranslate"><span class="pre">rmtree()</span></code></a>.</p>
 </section>
 <section id="how-do-i-copy-a-file">
-<h3><a class="toc-backref" href="#id21" role="doc-backlink">How do I copy a file?</a><a class="headerlink" href="#how-do-i-copy-a-file" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">How do I copy a file?</a><a class="headerlink" href="#how-do-i-copy-a-file" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../library/shutil.html#module-shutil" title="shutil: High-level file operations, including copying."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shutil</span></code></a> module contains a <a class="reference internal" href="../library/shutil.html#shutil.copyfile" title="shutil.copyfile"><code class="xref py py-func docutils literal notranslate"><span class="pre">copyfile()</span></code></a> function.
 Note that on Windows NTFS volumes, it does not copy
 <a class="reference external" href="https://en.wikipedia.org/wiki/NTFS#Alternate_data_stream_(ADS)">alternate data streams</a>
@@ -1188,7 +1207,7 @@ It also doesn’t copy file permissions and metadata, though using
 <a class="reference internal" href="../library/shutil.html#shutil.copy2" title="shutil.copy2"><code class="xref py py-func docutils literal notranslate"><span class="pre">shutil.copy2()</span></code></a> instead will preserve most (though not all) of it.</p>
 </section>
 <section id="how-do-i-read-or-write-binary-data">
-<h3><a class="toc-backref" href="#id22" role="doc-backlink">How do I read (or write) binary data?</a><a class="headerlink" href="#how-do-i-read-or-write-binary-data" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id22" role="doc-backlink">How do I read (or write) binary data?</a><a class="headerlink" href="#how-do-i-read-or-write-binary-data" title="Link to this heading">¶</a></h3>
 <p>To read or write complex binary data formats, it’s best to use the <a class="reference internal" href="../library/struct.html#module-struct" title="struct: Interpret bytes as packed binary data."><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code></a>
 module.  It allows you to take a string containing binary data (usually numbers)
 and convert it to Python objects; and vice versa.</p>
@@ -1216,7 +1235,7 @@ and <code class="docutils literal notranslate"><span class="pre">f.read()</span>
 </div>
 </section>
 <section id="i-can-t-seem-to-use-os-read-on-a-pipe-created-with-os-popen-why">
-<h3><a class="toc-backref" href="#id23" role="doc-backlink">I can’t seem to use os.read() on a pipe created with os.popen(); why?</a><a class="headerlink" href="#i-can-t-seem-to-use-os-read-on-a-pipe-created-with-os-popen-why" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">I can’t seem to use os.read() on a pipe created with os.popen(); why?</a><a class="headerlink" href="#i-can-t-seem-to-use-os-read-on-a-pipe-created-with-os-popen-why" title="Link to this heading">¶</a></h3>
 <p><a class="reference internal" href="../library/os.html#os.read" title="os.read"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.read()</span></code></a> is a low-level function which takes a file descriptor, a small
 integer representing the opened file.  <a class="reference internal" href="../library/os.html#os.popen" title="os.popen"><code class="xref py py-func docutils literal notranslate"><span class="pre">os.popen()</span></code></a> creates a high-level
 file object, the same type returned by the built-in <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> function.
@@ -1224,10 +1243,10 @@ Thus, to read <em>n</em> bytes from a pipe <em>p</em> created with <a class="ref
 use <code class="docutils literal notranslate"><span class="pre">p.read(n)</span></code>.</p>
 </section>
 <section id="how-do-i-access-the-serial-rs232-port">
-<h3><a class="toc-backref" href="#id24" role="doc-backlink">How do I access the serial (RS232) port?</a><a class="headerlink" href="#how-do-i-access-the-serial-rs232-port" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id24" role="doc-backlink">How do I access the serial (RS232) port?</a><a class="headerlink" href="#how-do-i-access-the-serial-rs232-port" title="Link to this heading">¶</a></h3>
 <p>For Win32, OSX, Linux, BSD, Jython, IronPython:</p>
 <blockquote>
-<div><p><a class="reference external" href="https://pypi.org/project/pyserial/">https://pypi.org/project/pyserial/</a></p>
+<div><p><a class="extlink-pypi reference external" href="https://pypi.org/project/pyserial/">pyserial</a></p>
 </div></blockquote>
 <p>For Unix, see a Usenet post by Mitch Chapman:</p>
 <blockquote>
@@ -1235,7 +1254,7 @@ use <code class="docutils literal notranslate"><span class="pre">p.read(n)</span
 </div></blockquote>
 </section>
 <section id="why-doesn-t-closing-sys-stdout-stdin-stderr-really-close-it">
-<h3><a class="toc-backref" href="#id25" role="doc-backlink">Why doesn’t closing sys.stdout (stdin, stderr) really close it?</a><a class="headerlink" href="#why-doesn-t-closing-sys-stdout-stdin-stderr-really-close-it" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id25" role="doc-backlink">Why doesn’t closing sys.stdout (stdin, stderr) really close it?</a><a class="headerlink" href="#why-doesn-t-closing-sys-stdout-stdin-stderr-really-close-it" title="Link to this heading">¶</a></h3>
 <p>Python <a class="reference internal" href="../glossary.html#term-file-object"><span class="xref std std-term">file objects</span></a> are a high-level layer of
 abstraction on low-level C file descriptors.</p>
 <p>For most file objects you create in Python via the built-in <a class="reference internal" href="../library/functions.html#open" title="open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>
@@ -1259,9 +1278,9 @@ extension modules trying to do I/O).  If it is, use <a class="reference internal
 </section>
 </section>
 <section id="network-internet-programming">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">Network/Internet Programming</a><a class="headerlink" href="#network-internet-programming" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">Network/Internet Programming</a><a class="headerlink" href="#network-internet-programming" title="Link to this heading">¶</a></h2>
 <section id="what-www-tools-are-there-for-python">
-<h3><a class="toc-backref" href="#id27" role="doc-backlink">What WWW tools are there for Python?</a><a class="headerlink" href="#what-www-tools-are-there-for-python" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id27" role="doc-backlink">What WWW tools are there for Python?</a><a class="headerlink" href="#what-www-tools-are-there-for-python" title="Link to this heading">¶</a></h3>
 <p>See the chapters titled <a class="reference internal" href="../library/internet.html#internet"><span class="std std-ref">Internet Protocols and Support</span></a> and <a class="reference internal" href="../library/netdata.html#netdata"><span class="std std-ref">Internet Data Handling</span></a> in the Library
 Reference Manual.  Python has many modules that will help you build server-side
 and client-side web systems.</p>
@@ -1269,11 +1288,11 @@ and client-side web systems.</p>
 <a class="reference external" href="https://wiki.python.org/moin/WebProgramming">https://wiki.python.org/moin/WebProgramming</a>.</p>
 </section>
 <section id="what-module-should-i-use-to-help-with-generating-html">
-<h3><a class="toc-backref" href="#id28" role="doc-backlink">What module should I use to help with generating HTML?</a><a class="headerlink" href="#what-module-should-i-use-to-help-with-generating-html" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id28" role="doc-backlink">What module should I use to help with generating HTML?</a><a class="headerlink" href="#what-module-should-i-use-to-help-with-generating-html" title="Link to this heading">¶</a></h3>
 <p>You can find a collection of useful links on the <a class="reference external" href="https://wiki.python.org/moin/WebProgramming">Web Programming wiki page</a>.</p>
 </section>
 <section id="how-do-i-send-mail-from-a-python-script">
-<h3><a class="toc-backref" href="#id29" role="doc-backlink">How do I send mail from a Python script?</a><a class="headerlink" href="#how-do-i-send-mail-from-a-python-script" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id29" role="doc-backlink">How do I send mail from a Python script?</a><a class="headerlink" href="#how-do-i-send-mail-from-a-python-script" title="Link to this heading">¶</a></h3>
 <p>Use the standard library module <a class="reference internal" href="../library/smtplib.html#module-smtplib" title="smtplib: SMTP protocol client (requires sockets)."><code class="xref py py-mod docutils literal notranslate"><span class="pre">smtplib</span></code></a>.</p>
 <p>Here’s a very simple interactive mail sender that uses it.  This method will
 work on any host that supports an SMTP listener.</p>
@@ -1315,7 +1334,7 @@ some sample code:</p>
 </div>
 </section>
 <section id="how-do-i-avoid-blocking-in-the-connect-method-of-a-socket">
-<h3><a class="toc-backref" href="#id30" role="doc-backlink">How do I avoid blocking in the connect() method of a socket?</a><a class="headerlink" href="#how-do-i-avoid-blocking-in-the-connect-method-of-a-socket" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id30" role="doc-backlink">How do I avoid blocking in the connect() method of a socket?</a><a class="headerlink" href="#how-do-i-avoid-blocking-in-the-connect-method-of-a-socket" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../library/select.html#module-select" title="select: Wait for I/O completion on multiple streams."><code class="xref py py-mod docutils literal notranslate"><span class="pre">select</span></code></a> module is commonly used to help with asynchronous I/O on
 sockets.</p>
 <p>To prevent the TCP connect from blocking, you can set the socket to non-blocking
@@ -1342,18 +1361,18 @@ a popular and feature-rich alternative.</p>
 </section>
 </section>
 <section id="databases">
-<h2><a class="toc-backref" href="#id31" role="doc-backlink">Databases</a><a class="headerlink" href="#databases" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id31" role="doc-backlink">Databases</a><a class="headerlink" href="#databases" title="Link to this heading">¶</a></h2>
 <section id="are-there-any-interfaces-to-database-packages-in-python">
-<h3><a class="toc-backref" href="#id32" role="doc-backlink">Are there any interfaces to database packages in Python?</a><a class="headerlink" href="#are-there-any-interfaces-to-database-packages-in-python" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id32" role="doc-backlink">Are there any interfaces to database packages in Python?</a><a class="headerlink" href="#are-there-any-interfaces-to-database-packages-in-python" title="Link to this heading">¶</a></h3>
 <p>Yes.</p>
-<p>Interfaces to disk-based hashes such as <a class="reference internal" href="../library/dbm.html#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">DBM</span></code></a> and <a class="reference internal" href="../library/dbm.html#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GDBM</span></code></a> are also included with standard Python.  There is also the
+<p>Interfaces to disk-based hashes such as <a class="reference internal" href="../library/dbm.html#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">DBM</span></code></a> and <a class="reference internal" href="../library/dbm.html#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">GDBM</span></code></a> are also included with standard Python.  There is also the
 <a class="reference internal" href="../library/sqlite3.html#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code></a> module, which provides a lightweight disk-based relational
 database.</p>
 <p>Support for most relational databases is available.  See the
 <a class="reference external" href="https://wiki.python.org/moin/DatabaseProgramming">DatabaseProgramming wiki page</a> for details.</p>
 </section>
 <section id="how-do-you-implement-persistent-objects-in-python">
-<h3><a class="toc-backref" href="#id33" role="doc-backlink">How do you implement persistent objects in Python?</a><a class="headerlink" href="#how-do-you-implement-persistent-objects-in-python" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id33" role="doc-backlink">How do you implement persistent objects in Python?</a><a class="headerlink" href="#how-do-you-implement-persistent-objects-in-python" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="../library/pickle.html#module-pickle" title="pickle: Convert Python objects to streams of bytes and back."><code class="xref py py-mod docutils literal notranslate"><span class="pre">pickle</span></code></a> library module solves this in a very general way (though you
 still can’t store things like open files, sockets or windows), and the
 <a class="reference internal" href="../library/shelve.html#module-shelve" title="shelve: Python object persistence."><code class="xref py py-mod docutils literal notranslate"><span class="pre">shelve</span></code></a> library module uses pickle and (g)dbm to create persistent
@@ -1361,20 +1380,20 @@ mappings containing arbitrary Python objects.</p>
 </section>
 </section>
 <section id="mathematics-and-numerics">
-<h2><a class="toc-backref" href="#id34" role="doc-backlink">Mathematics and Numerics</a><a class="headerlink" href="#mathematics-and-numerics" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id34" role="doc-backlink">Mathematics and Numerics</a><a class="headerlink" href="#mathematics-and-numerics" title="Link to this heading">¶</a></h2>
 <section id="how-do-i-generate-random-numbers-in-python">
-<h3><a class="toc-backref" href="#id35" role="doc-backlink">How do I generate random numbers in Python?</a><a class="headerlink" href="#how-do-i-generate-random-numbers-in-python" title="Permalink to this heading">¶</a></h3>
+<h3><a class="toc-backref" href="#id35" role="doc-backlink">How do I generate random numbers in Python?</a><a class="headerlink" href="#how-do-i-generate-random-numbers-in-python" title="Link to this heading">¶</a></h3>
 <p>The standard module <a class="reference internal" href="../library/random.html#module-random" title="random: Generate pseudo-random numbers with various common distributions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code></a> implements a random number generator.  Usage
 is simple:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="kn">import</span> <span class="nn">random</span>
 </span><span data-line="2"><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
 </span></pre></div>
 </div>
-<p>This returns a random floating point number in the range [0, 1).</p>
+<p>This returns a random floating-point number in the range [0, 1).</p>
 <p>There are also many other specialized generators in this module, such as:</p>
 <ul class="simple">
 <li><p><code class="docutils literal notranslate"><span class="pre">randrange(a,</span> <span class="pre">b)</span></code> chooses an integer in the range [a, b).</p></li>
-<li><p><code class="docutils literal notranslate"><span class="pre">uniform(a,</span> <span class="pre">b)</span></code> chooses a floating point number in the range [a, b).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">uniform(a,</span> <span class="pre">b)</span></code> chooses a floating-point number in the range [a, b).</p></li>
 <li><p><code class="docutils literal notranslate"><span class="pre">normalvariate(mean,</span> <span class="pre">sdev)</span></code> samples the normal (Gaussian) distribution.</p></li>
 </ul>
 <p>Some higher-level functions operate on sequences directly, such as:</p>
@@ -1428,8 +1447,8 @@ multiple random number generators.</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

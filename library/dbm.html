@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>dbm — Interfaces to Unix “databases” - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="sqlite3 — DB-API 2.0 interface for SQLite databases" href="sqlite3.html" /><link rel="prev" title="marshal — Internal Python object serialization" href="marshal.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>dbm — Interfaces to Unix “databases” - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="sqlite3 — DB-API 2.0 interface for SQLite databases" href="sqlite3.html" /><link rel="prev" title="marshal — Internal Python object serialization" href="marshal.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -687,35 +697,10 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#dbm.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
-<li><a class="reference internal" href="#dbm.whichdb"><code class="docutils literal notranslate"><span class="pre">whichdb()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.open"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
-<li><a class="reference internal" href="#module-dbm.gnu"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code> &#8212; GNU&#8217;s reinterpretation of dbm</a><ul>
-<li><a class="reference internal" href="#dbm.gnu.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.open"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.gdbm.firstkey"><code class="docutils literal notranslate"><span class="pre">gdbm.firstkey()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.gdbm.nextkey"><code class="docutils literal notranslate"><span class="pre">gdbm.nextkey()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.gdbm.reorganize"><code class="docutils literal notranslate"><span class="pre">gdbm.reorganize()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.gdbm.sync"><code class="docutils literal notranslate"><span class="pre">gdbm.sync()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.gdbm.close"><code class="docutils literal notranslate"><span class="pre">gdbm.close()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.gnu.gdbm.clear"><code class="docutils literal notranslate"><span class="pre">gdbm.clear()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-dbm.ndbm"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code> &#8212; Interface based on ndbm</a><ul>
-<li><a class="reference internal" href="#dbm.ndbm.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
-<li><a class="reference internal" href="#dbm.ndbm.library"><code class="docutils literal notranslate"><span class="pre">library</span></code></a></li>
-<li><a class="reference internal" href="#dbm.ndbm.open"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.ndbm.ndbm.close"><code class="docutils literal notranslate"><span class="pre">ndbm.close()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.ndbm.ndbm.clear"><code class="docutils literal notranslate"><span class="pre">ndbm.clear()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-dbm.dumb"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code> &#8212; Portable DBM implementation</a><ul>
-<li><a class="reference internal" href="#dbm.dumb.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
-<li><a class="reference internal" href="#dbm.dumb.open"><code class="docutils literal notranslate"><span class="pre">open()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.dumb.dumbdbm.sync"><code class="docutils literal notranslate"><span class="pre">dumbdbm.sync()</span></code></a></li>
-<li><a class="reference internal" href="#dbm.dumb.dumbdbm.close"><code class="docutils literal notranslate"><span class="pre">dumbdbm.close()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#module-dbm.sqlite3"><code class="xref py py-mod docutils literal notranslate">sqlite3</span></code> &#8212; SQLite backend for dbm</a></li>
+<li><a class="reference internal" href="#module-dbm.gnu"><code class="xref py py-mod docutils literal notranslate">gnu</span></code> &#8212; GNU database manager</a></li>
+<li><a class="reference internal" href="#module-dbm.ndbm"><code class="xref py py-mod docutils literal notranslate">ndbm</span></code> &#8212; New Database Manager</a></li>
+<li><a class="reference internal" href="#module-dbm.dumb"><code class="xref py py-mod docutils literal notranslate">dumb</span></code> &#8212; Portable DBM implementation</a></li>
 </ul>
 </div><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
@@ -770,17 +755,22 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-dbm">
-<span id="dbm-interfaces-to-unix-databases"></span><h1><a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> — Interfaces to Unix “databases”<a class="headerlink" href="#module-dbm" title="Permalink to this heading">¶</a></h1>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/dbm/__init__.py">Lib/dbm/__init__.py</a></p>
+<span id="dbm-interfaces-to-unix-databases"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code> — Interfaces to Unix “databases”<a class="headerlink" href="#module-dbm" title="Link to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/dbm/__init__.py">Lib/dbm/__init__.py</a></p>
 <hr class="docutils" />
-<p><a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> is a generic interface to variants of the DBM database —
-<a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> or <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a>.  If none of these modules is installed, the
+<p><a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> is a generic interface to variants of the DBM database:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#module-dbm.sqlite3" title="dbm.sqlite3: SQLite backend for dbm (All)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.sqlite3</span></code></a></p></li>
+<li><p><a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a></p></li>
+<li><p><a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a></p></li>
+</ul>
+<p>If none of these modules are installed, the
 slow-but-simple implementation in module <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> will be used.  There
 is a <a class="reference external" href="https://www.jcea.es/programacion/pybsddb.htm">third party interface</a> to
 the Oracle Berkeley DB.</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="dbm.error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.error" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.error" title="Link to this definition">¶</a></dt>
 <dd><p>A tuple containing the exceptions that can be raised by each of the supported
 modules, with a unique exception also named <a class="reference internal" href="#dbm.error" title="dbm.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">dbm.error</span></code></a> as the first
 item — the latter is used when <a class="reference internal" href="#dbm.error" title="dbm.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">dbm.error</span></code></a> is raised.</p>
@@ -788,81 +778,70 @@ item — the latter is used when <a class="reference internal" href="#dbm.error"
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dbm.whichdb">
-<span class="sig-prename descclassname"><span class="pre">dbm.</span></span><span class="sig-name descname"><span class="pre">whichdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.whichdb" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dbm.</span></span><span class="sig-name descname"><span class="pre">whichdb</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.whichdb" title="Link to this definition">¶</a></dt>
 <dd><p>This function attempts to guess which of the several simple database modules
-available — <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a>, <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> or <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> — should
-be used to open a given file.</p>
-<p>Returns one of the following values: <code class="docutils literal notranslate"><span class="pre">None</span></code> if the file can’t be opened
-because it’s unreadable or doesn’t exist; the empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>) if the
-file’s format can’t be guessed; or a string containing the required module
-name, such as <code class="docutils literal notranslate"><span class="pre">'dbm.ndbm'</span></code> or <code class="docutils literal notranslate"><span class="pre">'dbm.gnu'</span></code>.</p>
+available — <a class="reference internal" href="#module-dbm.sqlite3" title="dbm.sqlite3: SQLite backend for dbm (All)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.sqlite3</span></code></a>, <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a>, <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a>,
+or <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> — should be used to open a given file.</p>
+<p>Return one of the following values:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">None</span></code> if the file can’t be opened because it’s unreadable or doesn’t exist</p></li>
+<li><p>the empty string (<code class="docutils literal notranslate"><span class="pre">''</span></code>) if the file’s format can’t be guessed</p></li>
+<li><p>a string containing the required module name, such as <code class="docutils literal notranslate"><span class="pre">'dbm.ndbm'</span></code> or <code class="docutils literal notranslate"><span class="pre">'dbm.gnu'</span></code></p></li>
+</ul>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span><em>filename</em> accepts a <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>.</p>
+</div>
 </dd></dl>
 
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.11: </span>Accepts <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a> for filename.</p>
-</div>
 <dl class="py function">
 <dt class="sig sig-object py" id="dbm.open">
-<span class="sig-prename descclassname"><span class="pre">dbm.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0o666</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open the database file <em>file</em> and return a corresponding object.</p>
+<span class="sig-prename descclassname"><span class="pre">dbm.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0o666</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.open" title="Link to this definition">¶</a></dt>
+<dd><p>Open a database and return the corresponding database object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>) – <p>The database file to open.</p>
 <p>If the database file already exists, the <a class="reference internal" href="#dbm.whichdb" title="dbm.whichdb"><code class="xref py py-func docutils literal notranslate"><span class="pre">whichdb()</span></code></a> function is used to
 determine its type and the appropriate module is used; if it does not exist,
-the first module listed above that can be imported is used.</p>
-<p>The optional <em>flag</em> argument can be:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Value</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code></p></td>
-<td><p>Open existing database for reading only
-(default)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code></p></td>
-<td><p>Open existing database for reading and
-writing</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code></p></td>
-<td><p>Open database for reading and writing,
-creating it if it doesn’t exist</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code></p></td>
-<td><p>Always create a new, empty database, open
-for reading and writing</p></td>
-</tr>
-</tbody>
-</table>
+the first submodule listed above that can be imported is used.</p>
+</p></li>
+<li><p><strong>flag</strong> (<a class="reference internal" href="stdtypes.html#str" title="str"><em>str</em></a>) – <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code> (default): Open existing database for reading only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code>: Open existing database for reading and writing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code>: Open database for reading and writing, creating it if it doesn’t exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code>: Always create a new, empty database, open for reading and writing.</p></li>
+</ul>
+</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="functions.html#int" title="int"><em>int</em></a>) – The Unix file access mode of the file (default: octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code>),
+used only when the database has to be created.</p></li>
+</ul>
+</dd>
+</dl>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.11: </span><em>file</em> accepts a <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>.</p>
 </div>
-<p>The optional <em>mode</em> argument is the Unix mode of the file, used only when the
-database has to be created.  It defaults to octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code> (and will be
-modified by the prevailing umask).</p>
 </dd></dl>
 
-<p>The object returned by <a class="reference internal" href="#dbm.open" title="dbm.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> supports the same basic functionality as
-dictionaries; keys and their corresponding values can be stored, retrieved, and
+<p>The object returned by <a class="reference internal" href="#dbm.open" title="dbm.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> supports the same basic functionality as a
+<a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>; keys and their corresponding values can be stored, retrieved, and
 deleted, and the <a class="reference internal" href="../reference/expressions.html#in"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">in</span></code></a> operator and the <code class="xref py py-meth docutils literal notranslate"><span class="pre">keys()</span></code> method are
-available, as well as <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">setdefault()</span></code>.</p>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.2: </span><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">setdefault()</span></code> are now available in all database modules.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.8: </span>Deleting a key from a read-only database raises database module specific error
-instead of <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a>.</p>
-</div>
-<div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.11: </span>Accepts <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a> for file.</p>
-</div>
-<p>Key and values are always stored as bytes. This means that when
+available, as well as <code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">setdefault()</span></code> methods.</p>
+<p>Key and values are always stored as <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>. This means that when
 strings are used they are implicitly converted to the default encoding before
 being stored.</p>
 <p>These objects also support being used in a <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement, which
 will automatically close them when done.</p>
 <div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.2: </span><code class="xref py py-meth docutils literal notranslate"><span class="pre">get()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">setdefault()</span></code> methods are now available for all
+<a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> backends.</p>
+</div>
+<div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.4: </span>Added native support for the context management protocol to the objects
 returned by <a class="reference internal" href="#dbm.open" title="dbm.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a>.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.8: </span>Deleting a key from a read-only database raises a database module specific exception
+instead of <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a>.</p>
 </div>
 <p>The following example records some hostnames and a corresponding title,  and
 then prints out the contents of the database:</p>
@@ -899,106 +878,130 @@ then prints out the contents of the database:</p>
 </dl>
 </div>
 <p>The individual submodules are described in the following sections.</p>
-<section id="module-dbm.gnu">
-<span id="dbm-gnu-gnu-s-reinterpretation-of-dbm"></span><h2><a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> — GNU’s reinterpretation of dbm<a class="headerlink" href="#module-dbm.gnu" title="Permalink to this heading">¶</a></h2>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/dbm/gnu.py">Lib/dbm/gnu.py</a></p>
+<section id="module-dbm.sqlite3">
+<span id="dbm-sqlite3-sqlite-backend-for-dbm"></span><h2><a class="reference internal" href="#module-dbm.sqlite3" title="dbm.sqlite3: SQLite backend for dbm (All)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.sqlite3</span></code></a> — SQLite backend for dbm<a class="headerlink" href="#module-dbm.sqlite3" title="Link to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/dbm/sqlite3.py">Lib/dbm/sqlite3.py</a></p>
 <hr class="docutils" />
-<p>This module is quite similar to the <a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> module, but uses the GNU library
-<code class="docutils literal notranslate"><span class="pre">gdbm</span></code> instead to provide some additional functionality.  Please note that the
-file formats created by <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> and <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> are incompatible.</p>
-<p>The <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> module provides an interface to the GNU DBM library.
-<code class="docutils literal notranslate"><span class="pre">dbm.gnu.gdbm</span></code> objects behave like mappings (dictionaries), except that keys and
-values are always converted to bytes before storing.  Printing a <code class="docutils literal notranslate"><span class="pre">gdbm</span></code>
-object doesn’t print the
-keys and values, and the <code class="xref py py-meth docutils literal notranslate"><span class="pre">items()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">values()</span></code> methods are not
-supported.</p>
+<p>This module uses the standard library <a class="reference internal" href="sqlite3.html#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code></a> module to provide an
+SQLite backend for the <a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> module.
+The files created by <a class="reference internal" href="#module-dbm.sqlite3" title="dbm.sqlite3: SQLite backend for dbm (All)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.sqlite3</span></code></a> can thus be opened by <a class="reference internal" href="sqlite3.html#module-sqlite3" title="sqlite3: A DB-API 2.0 implementation using SQLite 3.x."><code class="xref py py-mod docutils literal notranslate"><span class="pre">sqlite3</span></code></a>,
+or any other SQLite browser, including the SQLite CLI.</p>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not WASI.</p>
+<p>This module does not work or is not available on WebAssembly. See
+<a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a> for more information.</p>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dbm.sqlite3.open">
+<span class="sig-prename descclassname"><span class="pre">dbm.sqlite3.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0o666</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.sqlite3.open" title="Link to this definition">¶</a></dt>
+<dd><p>Open an SQLite database.
+The returned object behaves like a <a class="reference internal" href="../glossary.html#term-mapping"><span class="xref std std-term">mapping</span></a>,
+implements a <code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code> method,
+and supports a “closing” context manager via the <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> keyword.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>) – The path to the database to be opened.</p></li>
+<li><p><strong>flag</strong> (<a class="reference internal" href="stdtypes.html#str" title="str"><em>str</em></a>) – <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code> (default): Open existing database for reading only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code>: Open existing database for reading and writing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code>: Open database for reading and writing, creating it if it doesn’t exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code>: Always create a new, empty database, open for reading and writing.</p></li>
+</ul>
+</p></li>
+<li><p><strong>mode</strong> – The Unix file access mode of the file (default: octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code>),
+used only when the database has to be created.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-dbm.gnu">
+<span id="dbm-gnu-gnu-database-manager"></span><h2><a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> — GNU database manager<a class="headerlink" href="#module-dbm.gnu" title="Link to this heading">¶</a></h2>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/dbm/gnu.py">Lib/dbm/gnu.py</a></p>
+<hr class="docutils" />
+<p>The <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> module provides an interface to the <abbr title="GNU dbm">GDBM</abbr>
+library, similar to the <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> module, but with additional
+functionality like crash tolerance.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The file formats created by <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> and <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> are incompatible
+and can not be used interchangeably.</p>
+</div>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Android, not iOS, not WASI.</p>
+<p>This module is not supported on <a class="reference internal" href="intro.html#mobile-availability"><span class="std std-ref">mobile platforms</span></a>
+or <a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a>.</p>
+</div>
 <dl class="py exception">
 <dt class="sig sig-object py" id="dbm.gnu.error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.gnu.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.gnu.error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Raised on <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a>-specific errors, such as I/O errors. <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> is
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.gnu.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.gnu.error" title="Link to this definition">¶</a></dt>
+<dd><p>Raised on <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a>-specific errors, such as I/O errors. <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> is
 raised for general mapping errors like specifying an incorrect key.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dbm.gnu.open">
-<span class="sig-prename descclassname"><span class="pre">dbm.gnu.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open a <code class="docutils literal notranslate"><span class="pre">gdbm</span></code> database and return a <code class="xref py py-class docutils literal notranslate"><span class="pre">gdbm</span></code> object.  The <em>filename</em>
-argument is the name of the database file.</p>
-<p>The optional <em>flag</em> argument can be:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Value</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code></p></td>
-<td><p>Open existing database for reading only
-(default)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code></p></td>
-<td><p>Open existing database for reading and
-writing</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code></p></td>
-<td><p>Open database for reading and writing,
-creating it if it doesn’t exist</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code></p></td>
-<td><p>Always create a new, empty database, open
-for reading and writing</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>The following additional characters may be appended to the flag to control
-how the database is opened:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Value</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'f'</span></code></p></td>
-<td><p>Open the database in fast mode.  Writes
-to the database will not be synchronized.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'s'</span></code></p></td>
-<td><p>Synchronized mode. This will cause changes
-to the database to be immediately written
-to the file.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'u'</span></code></p></td>
-<td><p>Do not lock database.</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>Not all flags are valid for all versions of <code class="docutils literal notranslate"><span class="pre">gdbm</span></code>.  The module constant
-<code class="xref py py-const docutils literal notranslate"><span class="pre">open_flags</span></code> is a string of supported flag characters.  The exception
-<a class="reference internal" href="#dbm.gnu.error" title="dbm.gnu.error"><code class="xref py py-exc docutils literal notranslate"><span class="pre">error</span></code></a> is raised if an invalid flag is specified.</p>
-<p>The optional <em>mode</em> argument is the Unix mode of the file, used only when the
-database has to be created.  It defaults to octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code>.</p>
-<p>In addition to the dictionary-like methods, <code class="docutils literal notranslate"><span class="pre">gdbm</span></code> objects have the
-following methods:</p>
+<span class="sig-prename descclassname"><span class="pre">dbm.gnu.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0o666</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.open" title="Link to this definition">¶</a></dt>
+<dd><p>Open a GDBM database and return a <code class="xref py py-class docutils literal notranslate"><span class="pre">gdbm</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>) – The database file to open.</p></li>
+<li><p><strong>flag</strong> (<a class="reference internal" href="stdtypes.html#str" title="str"><em>str</em></a>) – <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code> (default): Open existing database for reading only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code>: Open existing database for reading and writing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code>: Open database for reading and writing, creating it if it doesn’t exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code>: Always create a new, empty database, open for reading and writing.</p></li>
+</ul>
+<p>The following additional characters may be appended
+to control how the database is opened:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'f'</span></code>: Open the database in fast mode.
+Writes to the database will not be synchronized.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'s'</span></code>: Synchronized mode.
+Changes to the database will be written immediately to the file.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'u'</span></code>: Do not lock database.</p></li>
+</ul>
+<p>Not all flags are valid for all versions of GDBM.
+See the <a class="reference internal" href="#dbm.gnu.open_flags" title="dbm.gnu.open_flags"><code class="xref py py-data docutils literal notranslate"><span class="pre">open_flags</span></code></a> member for a list of supported flag characters.</p>
+</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="functions.html#int" title="int"><em>int</em></a>) – The Unix file access mode of the file (default: octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code>),
+used only when the database has to be created.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="#dbm.gnu.error" title="dbm.gnu.error"><strong>error</strong></a> – If an invalid <em>flag</em> argument is passed.</p>
+</dd>
+</dl>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.11: </span>Accepts <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a> for filename.</p>
+<p><span class="versionmodified changed">Changed in version 3.11: </span><em>filename</em> accepts a <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>.</p>
 </div>
+<dl class="py data">
+<dt class="sig sig-object py" id="dbm.gnu.open_flags">
+<span class="sig-prename descclassname"><span class="pre">dbm.gnu.</span></span><span class="sig-name descname"><span class="pre">open_flags</span></span><a class="headerlink" href="#dbm.gnu.open_flags" title="Link to this definition">¶</a></dt>
+<dd><p>A string of characters the <em>flag</em> parameter of <a class="reference internal" href="#dbm.gnu.open" title="dbm.gnu.open"><code class="xref py py-meth docutils literal notranslate"><span class="pre">open()</span></code></a> supports.</p>
+</dd></dl>
+
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">gdbm</span></code> objects behave similar to <a class="reference internal" href="../glossary.html#term-mapping"><span class="xref std std-term">mappings</span></a>,
+but <code class="xref py py-meth docutils literal notranslate"><span class="pre">items()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">values()</span></code> methods are not supported.
+The following methods are also provided:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.gnu.gdbm.firstkey">
-<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">firstkey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.firstkey" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">firstkey</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.firstkey" title="Link to this definition">¶</a></dt>
 <dd><p>It’s possible to loop over every key in the database using this method  and the
-<a class="reference internal" href="#dbm.gnu.gdbm.nextkey" title="dbm.gnu.gdbm.nextkey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nextkey()</span></code></a> method.  The traversal is ordered by <code class="docutils literal notranslate"><span class="pre">gdbm</span></code>’s internal
+<a class="reference internal" href="#dbm.gnu.gdbm.nextkey" title="dbm.gnu.gdbm.nextkey"><code class="xref py py-meth docutils literal notranslate"><span class="pre">nextkey()</span></code></a> method.  The traversal is ordered by GDBM’s internal
 hash values, and won’t be sorted by the key values.  This method returns
 the starting key.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.gnu.gdbm.nextkey">
-<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">nextkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.nextkey" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">nextkey</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">key</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.nextkey" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the key that follows <em>key</em> in the traversal.  The following code prints
 every key in the database <code class="docutils literal notranslate"><span class="pre">db</span></code>, without having to create a list in memory that
 contains them all:</p>
@@ -1012,9 +1015,9 @@ contains them all:</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.gnu.gdbm.reorganize">
-<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">reorganize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.reorganize" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">reorganize</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.reorganize" title="Link to this definition">¶</a></dt>
 <dd><p>If you have carried out a lot of deletions and would like to shrink the space
-used by the <code class="docutils literal notranslate"><span class="pre">gdbm</span></code> file, this routine will reorganize the database.  <code class="docutils literal notranslate"><span class="pre">gdbm</span></code>
+used by the GDBM file, this routine will reorganize the database.  <code class="xref py py-class docutils literal notranslate"><span class="pre">gdbm</span></code>
 objects will not shorten the length of a database file except by using this
 reorganization; otherwise, deleted file space will be kept and reused as new
 (key, value) pairs are added.</p>
@@ -1022,23 +1025,23 @@ reorganization; otherwise, deleted file space will be kept and reused as new
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.gnu.gdbm.sync">
-<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.sync" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.sync" title="Link to this definition">¶</a></dt>
 <dd><p>When the database has been opened in fast mode, this method forces any
 unwritten data to be written to the disk.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.gnu.gdbm.close">
-<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the <code class="docutils literal notranslate"><span class="pre">gdbm</span></code> database.</p>
+<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.close" title="Link to this definition">¶</a></dt>
+<dd><p>Close the GDBM database.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.gnu.gdbm.clear">
-<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove all items from the <code class="docutils literal notranslate"><span class="pre">gdbm</span></code> database.</p>
+<span class="sig-prename descclassname"><span class="pre">gdbm.</span></span><span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.gnu.gdbm.clear" title="Link to this definition">¶</a></dt>
+<dd><p>Remove all items from the GDBM database.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.13.</span></p>
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
 </div>
 </dd></dl>
 
@@ -1046,82 +1049,82 @@ unwritten data to be written to the disk.</p>
 
 </section>
 <section id="module-dbm.ndbm">
-<span id="dbm-ndbm-interface-based-on-ndbm"></span><h2><a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> — Interface based on ndbm<a class="headerlink" href="#module-dbm.ndbm" title="Permalink to this heading">¶</a></h2>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/dbm/ndbm.py">Lib/dbm/ndbm.py</a></p>
+<span id="dbm-ndbm-new-database-manager"></span><h2><a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> — New Database Manager<a class="headerlink" href="#module-dbm.ndbm" title="Link to this heading">¶</a></h2>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/dbm/ndbm.py">Lib/dbm/ndbm.py</a></p>
 <hr class="docutils" />
-<p>The <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> module provides an interface to the Unix “(n)dbm” library.
-Dbm objects behave like mappings (dictionaries), except that keys and values are
-always stored as bytes. Printing a <code class="docutils literal notranslate"><span class="pre">dbm</span></code> object doesn’t print the keys and
-values, and the <code class="xref py py-meth docutils literal notranslate"><span class="pre">items()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">values()</span></code> methods are not supported.</p>
-<p>This module can be used with the “classic” ndbm interface or the GNU GDBM
-compatibility interface. On Unix, the <strong class="program">configure</strong> script will attempt
-to locate the appropriate header file to simplify building this module.</p>
+<p>The <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> module provides an interface to the
+<abbr title="New Database Manager">NDBM</abbr> library.
+This module can be used with the “classic” NDBM interface or the
+<abbr title="GNU dbm">GDBM</abbr> compatibility interface.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The file formats created by <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> and <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a> are incompatible
+and can not be used interchangeably.</p>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warning</p>
+<p>The NDBM library shipped as part of macOS has an undocumented limitation on the
+size of values, which can result in corrupted database files
+when storing values larger than this limit. Reading such corrupted files can
+result in a hard crash (segmentation fault).</p>
+</div>
+<div class="availability docutils container">
+<p><a class="reference internal" href="intro.html#availability"><span class="std std-ref">Availability</span></a>: not Android, not iOS, not WASI.</p>
+<p>This module is not supported on <a class="reference internal" href="intro.html#mobile-availability"><span class="std std-ref">mobile platforms</span></a>
+or <a class="reference internal" href="intro.html#wasm-availability"><span class="std std-ref">WebAssembly platforms</span></a>.</p>
+</div>
 <dl class="py exception">
 <dt class="sig sig-object py" id="dbm.ndbm.error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.ndbm.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.ndbm.error" title="Permalink to this definition">¶</a></dt>
-<dd><p>Raised on <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The standard &quot;database&quot; interface, based on ndbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a>-specific errors, such as I/O errors. <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> is raised
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.ndbm.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.ndbm.error" title="Link to this definition">¶</a></dt>
+<dd><p>Raised on <a class="reference internal" href="#module-dbm.ndbm" title="dbm.ndbm: The New Database Manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.ndbm</span></code></a>-specific errors, such as I/O errors. <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> is raised
 for general mapping errors like specifying an incorrect key.</p>
 </dd></dl>
 
 <dl class="py data">
 <dt class="sig sig-object py" id="dbm.ndbm.library">
-<span class="sig-prename descclassname"><span class="pre">dbm.ndbm.</span></span><span class="sig-name descname"><span class="pre">library</span></span><a class="headerlink" href="#dbm.ndbm.library" title="Permalink to this definition">¶</a></dt>
-<dd><p>Name of the <code class="docutils literal notranslate"><span class="pre">ndbm</span></code> implementation library used.</p>
+<span class="sig-prename descclassname"><span class="pre">dbm.ndbm.</span></span><span class="sig-name descname"><span class="pre">library</span></span><a class="headerlink" href="#dbm.ndbm.library" title="Link to this definition">¶</a></dt>
+<dd><p>Name of the NDBM implementation library used.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dbm.ndbm.open">
-<span class="sig-prename descclassname"><span class="pre">dbm.ndbm.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.ndbm.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open a dbm database and return a <code class="docutils literal notranslate"><span class="pre">ndbm</span></code> object.  The <em>filename</em> argument is the
-name of the database file (without the <code class="file docutils literal notranslate"><span class="pre">.dir</span></code> or <code class="file docutils literal notranslate"><span class="pre">.pag</span></code> extensions).</p>
-<p>The optional <em>flag</em> argument must be one of these values:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Value</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code></p></td>
-<td><p>Open existing database for reading only
-(default)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code></p></td>
-<td><p>Open existing database for reading and
-writing</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code></p></td>
-<td><p>Open database for reading and writing,
-creating it if it doesn’t exist</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code></p></td>
-<td><p>Always create a new, empty database, open
-for reading and writing</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>The optional <em>mode</em> argument is the Unix mode of the file, used only when the
-database has to be created.  It defaults to octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code> (and will be
-modified by the prevailing umask).</p>
-<p>In addition to the dictionary-like methods, <code class="docutils literal notranslate"><span class="pre">ndbm</span></code> objects
-provide the following method:</p>
+<span class="sig-prename descclassname"><span class="pre">dbm.ndbm.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'r'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0o666</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.ndbm.open" title="Link to this definition">¶</a></dt>
+<dd><p>Open an NDBM database and return an <code class="xref py py-class docutils literal notranslate"><span class="pre">ndbm</span></code> object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> (<a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>) – The basename of the database file
+(without the <code class="file docutils literal notranslate"><span class="pre">.dir</span></code> or <code class="file docutils literal notranslate"><span class="pre">.pag</span></code> extensions).</p></li>
+<li><p><strong>flag</strong> (<a class="reference internal" href="stdtypes.html#str" title="str"><em>str</em></a>) – <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code> (default): Open existing database for reading only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code>: Open existing database for reading and writing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code>: Open database for reading and writing, creating it if it doesn’t exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code>: Always create a new, empty database, open for reading and writing.</p></li>
+</ul>
+</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="functions.html#int" title="int"><em>int</em></a>) – The Unix file access mode of the file (default: octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code>),
+used only when the database has to be created.</p></li>
+</ul>
+</dd>
+</dl>
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">ndbm</span></code> objects behave similar to <a class="reference internal" href="../glossary.html#term-mapping"><span class="xref std std-term">mappings</span></a>,
+but <code class="xref py py-meth docutils literal notranslate"><span class="pre">items()</span></code> and <code class="xref py py-meth docutils literal notranslate"><span class="pre">values()</span></code> methods are not supported.
+The following methods are also provided:</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.11: </span>Accepts <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a> for filename.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.ndbm.ndbm.close">
-<span class="sig-prename descclassname"><span class="pre">ndbm.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.ndbm.ndbm.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the <code class="docutils literal notranslate"><span class="pre">ndbm</span></code> database.</p>
+<span class="sig-prename descclassname"><span class="pre">ndbm.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.ndbm.ndbm.close" title="Link to this definition">¶</a></dt>
+<dd><p>Close the NDBM database.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.ndbm.ndbm.clear">
-<span class="sig-prename descclassname"><span class="pre">ndbm.</span></span><span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.ndbm.ndbm.clear" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove all items from the <code class="docutils literal notranslate"><span class="pre">ndbm</span></code> database.</p>
+<span class="sig-prename descclassname"><span class="pre">ndbm.</span></span><span class="sig-name descname"><span class="pre">clear</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.ndbm.ndbm.clear" title="Link to this definition">¶</a></dt>
+<dd><p>Remove all items from the NDBM database.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.13.</span></p>
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
 </div>
 </dd></dl>
 
@@ -1129,8 +1132,8 @@ provide the following method:</p>
 
 </section>
 <section id="module-dbm.dumb">
-<span id="dbm-dumb-portable-dbm-implementation"></span><h2><a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> — Portable DBM implementation<a class="headerlink" href="#module-dbm.dumb" title="Permalink to this heading">¶</a></h2>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/dbm/dumb.py">Lib/dbm/dumb.py</a></p>
+<span id="dbm-dumb-portable-dbm-implementation"></span><h2><a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> — Portable DBM implementation<a class="headerlink" href="#module-dbm.dumb" title="Link to this heading">¶</a></h2>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/dbm/dumb.py">Lib/dbm/dumb.py</a></p>
 <div class="admonition note" id="index-0">
 <p class="admonition-title">Note</p>
 <p>The <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> module is intended as a last resort fallback for the
@@ -1139,56 +1142,47 @@ module is not written for speed and is not nearly as heavily used as the other
 database modules.</p>
 </div>
 <hr class="docutils" />
-<p>The <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> module provides a persistent dictionary-like interface which
-is written entirely in Python.  Unlike other modules such as <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU's reinterpretation of dbm. (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a> no
-external library is required.  As with other persistent mappings, the keys and
-values are always stored as bytes.</p>
-<p>The module defines the following:</p>
+<p>The <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a> module provides a persistent <a class="reference internal" href="stdtypes.html#dict" title="dict"><code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code></a>-like
+interface which is written entirely in Python.
+Unlike other <a class="reference internal" href="#module-dbm" title="dbm: Interfaces to various Unix &quot;database&quot; formats."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm</span></code></a> backends, such as <a class="reference internal" href="#module-dbm.gnu" title="dbm.gnu: GNU database manager (Unix)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.gnu</span></code></a>, no
+external library is required.</p>
+<p>The <code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code> module defines the following:</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="dbm.dumb.error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.dumb.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.dumb.error" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dbm.dumb.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#dbm.dumb.error" title="Link to this definition">¶</a></dt>
 <dd><p>Raised on <a class="reference internal" href="#module-dbm.dumb" title="dbm.dumb: Portable implementation of the simple DBM interface."><code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code></a>-specific errors, such as I/O errors.  <a class="reference internal" href="exceptions.html#KeyError" title="KeyError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">KeyError</span></code></a> is
 raised for general mapping errors like specifying an incorrect key.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="dbm.dumb.open">
-<span class="sig-prename descclassname"><span class="pre">dbm.dumb.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span></em><span class="optional">[</span>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span></em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.dumb.open" title="Permalink to this definition">¶</a></dt>
-<dd><p>Open a <code class="docutils literal notranslate"><span class="pre">dumbdbm</span></code> database and return a dumbdbm object.  The <em>filename</em> argument is
-the basename of the database file (without any specific extensions).  When a
-dumbdbm database is created, files with <code class="file docutils literal notranslate"><span class="pre">.dat</span></code> and <code class="file docutils literal notranslate"><span class="pre">.dir</span></code> extensions
-are created.</p>
-<p>The optional <em>flag</em> argument can be:</p>
-<div class="table-wrapper docutils container">
-<table class="docutils align-default">
-<thead>
-<tr class="row-odd"><th class="head"><p>Value</p></th>
-<th class="head"><p>Meaning</p></th>
-</tr>
-</thead>
-<tbody>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code></p></td>
-<td><p>Open existing database for reading only
-(default)</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code></p></td>
-<td><p>Open existing database for reading and
-writing</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code></p></td>
-<td><p>Open database for reading and writing,
-creating it if it doesn’t exist</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code></p></td>
-<td><p>Always create a new, empty database, open
-for reading and writing</p></td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>The optional <em>mode</em> argument is the Unix mode of the file, used only when the
-database has to be created.  It defaults to octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code> (and will be modified
-by the prevailing umask).</p>
+<span class="sig-prename descclassname"><span class="pre">dbm.dumb.</span></span><span class="sig-name descname"><span class="pre">open</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'c'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mode</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0o666</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#dbm.dumb.open" title="Link to this definition">¶</a></dt>
+<dd><p>Open a <code class="xref py py-mod docutils literal notranslate"><span class="pre">dbm.dumb</span></code> database.
+The returned database object behaves similar to a <a class="reference internal" href="../glossary.html#term-mapping"><span class="xref std std-term">mapping</span></a>,
+in addition to providing <a class="reference internal" href="#dbm.dumb.dumbdbm.sync" title="dbm.dumb.dumbdbm.sync"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sync()</span></code></a> and <a class="reference internal" href="#dbm.dumb.dumbdbm.close" title="dbm.dumb.dumbdbm.close"><code class="xref py py-meth docutils literal notranslate"><span class="pre">close()</span></code></a>
+methods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filename</strong> – <p>The basename of the database file (without extensions).
+A new database creates the following files:</p>
+<ul>
+<li><p><code class="file docutils literal notranslate"><em><span class="pre">filename</span></em><span class="pre">.dat</span></code></p></li>
+<li><p><code class="file docutils literal notranslate"><em><span class="pre">filename</span></em><span class="pre">.dir</span></code></p></li>
+</ul>
+</p></li>
+<li><p><strong>flag</strong> (<a class="reference internal" href="stdtypes.html#str" title="str"><em>str</em></a>) – <ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">'r'</span></code>: Open existing database for reading only.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'w'</span></code>: Open existing database for reading and writing.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'c'</span></code> (default): Open database for reading and writing, creating it if it doesn’t exist.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">'n'</span></code>: Always create a new, empty database, open for reading and writing.</p></li>
+</ul>
+</p></li>
+<li><p><strong>mode</strong> (<a class="reference internal" href="functions.html#int" title="int"><em>int</em></a>) – The Unix file access mode of the file (default: octal <code class="docutils literal notranslate"><span class="pre">0o666</span></code>),
+used only when the database has to be created.</p></li>
+</ul>
+</dd>
+</dl>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
 <p>It is possible to crash the Python interpreter when loading a database
@@ -1196,31 +1190,29 @@ with a sufficiently large/complex entry due to stack depth limitations in
 Python’s AST compiler.</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.5: </span><a class="reference internal" href="#dbm.dumb.open" title="dbm.dumb.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> always creates a new database when the flag has the value
-<code class="docutils literal notranslate"><span class="pre">'n'</span></code>.</p>
+<p><span class="versionmodified changed">Changed in version 3.5: </span><a class="reference internal" href="#dbm.dumb.open" title="dbm.dumb.open"><code class="xref py py-func docutils literal notranslate"><span class="pre">open()</span></code></a> always creates a new database when <em>flag</em> is <code class="docutils literal notranslate"><span class="pre">'n'</span></code>.</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.8: </span>A database opened with flags <code class="docutils literal notranslate"><span class="pre">'r'</span></code> is now read-only.  Opening with
-flags <code class="docutils literal notranslate"><span class="pre">'r'</span></code> and <code class="docutils literal notranslate"><span class="pre">'w'</span></code> no longer creates a database if it does not
-exist.</p>
+<p><span class="versionmodified changed">Changed in version 3.8: </span>A database opened read-only if <em>flag</em> is <code class="docutils literal notranslate"><span class="pre">'r'</span></code>.
+A database is not created if it does not exist if <em>flag</em> is <code class="docutils literal notranslate"><span class="pre">'r'</span></code> or <code class="docutils literal notranslate"><span class="pre">'w'</span></code>.</p>
 </div>
 <div class="versionchanged">
-<p><span class="versionmodified changed">Changed in version 3.11: </span>Accepts <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a> for filename.</p>
+<p><span class="versionmodified changed">Changed in version 3.11: </span><em>filename</em> accepts a <a class="reference internal" href="../glossary.html#term-path-like-object"><span class="xref std std-term">path-like object</span></a>.</p>
 </div>
 <p>In addition to the methods provided by the
-<a class="reference internal" href="collections.abc.html#collections.abc.MutableMapping" title="collections.abc.MutableMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.MutableMapping</span></code></a> class, <code class="xref py py-class docutils literal notranslate"><span class="pre">dumbdbm</span></code> objects
-provide the following methods:</p>
+<a class="reference internal" href="collections.abc.html#collections.abc.MutableMapping" title="collections.abc.MutableMapping"><code class="xref py py-class docutils literal notranslate"><span class="pre">collections.abc.MutableMapping</span></code></a> class,
+the following methods are provided:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.dumb.dumbdbm.sync">
-<span class="sig-prename descclassname"><span class="pre">dumbdbm.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.dumb.dumbdbm.sync" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">dumbdbm.</span></span><span class="sig-name descname"><span class="pre">sync</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.dumb.dumbdbm.sync" title="Link to this definition">¶</a></dt>
 <dd><p>Synchronize the on-disk directory and data files.  This method is called
 by the <code class="xref py py-meth docutils literal notranslate"><span class="pre">Shelve.sync()</span></code> method.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="dbm.dumb.dumbdbm.close">
-<span class="sig-prename descclassname"><span class="pre">dumbdbm.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.dumb.dumbdbm.close" title="Permalink to this definition">¶</a></dt>
-<dd><p>Close the <code class="docutils literal notranslate"><span class="pre">dumbdbm</span></code> database.</p>
+<span class="sig-prename descclassname"><span class="pre">dumbdbm.</span></span><span class="sig-name descname"><span class="pre">close</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dbm.dumb.dumbdbm.close" title="Link to this definition">¶</a></dt>
+<dd><p>Close the database.</p>
 </dd></dl>
 
 </dd></dl>
@@ -1268,8 +1260,8 @@ by the <code class="xref py py-meth docutils literal notranslate"><span class="p
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

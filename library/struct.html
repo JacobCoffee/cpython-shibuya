@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>struct — Interpret bytes as packed binary data - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="codecs — Codec registry and base classes" href="codecs.html" /><link rel="prev" title="Binary Data Services" href="binary.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>struct — Interpret bytes as packed binary data - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="codecs — Codec registry and base classes" href="codecs.html" /><link rel="prev" title="Binary Data Services" href="binary.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -687,16 +697,7 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#functions-and-exceptions">Functions and Exceptions</a><ul>
-<li><a class="reference internal" href="#struct.error"><code class="docutils literal notranslate"><span class="pre">error</span></code></a></li>
-<li><a class="reference internal" href="#struct.pack"><code class="docutils literal notranslate"><span class="pre">pack()</span></code></a></li>
-<li><a class="reference internal" href="#struct.pack_into"><code class="docutils literal notranslate"><span class="pre">pack_into()</span></code></a></li>
-<li><a class="reference internal" href="#struct.unpack"><code class="docutils literal notranslate"><span class="pre">unpack()</span></code></a></li>
-<li><a class="reference internal" href="#struct.unpack_from"><code class="docutils literal notranslate"><span class="pre">unpack_from()</span></code></a></li>
-<li><a class="reference internal" href="#struct.iter_unpack"><code class="docutils literal notranslate"><span class="pre">iter_unpack()</span></code></a></li>
-<li><a class="reference internal" href="#struct.calcsize"><code class="docutils literal notranslate"><span class="pre">calcsize()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#functions-and-exceptions">Functions and Exceptions</a></li>
 <li><a class="reference internal" href="#format-strings">Format Strings</a><ul>
 <li><a class="reference internal" href="#byte-order-size-and-alignment">Byte Order, Size, and Alignment</a></li>
 <li><a class="reference internal" href="#format-characters">Format Characters</a></li>
@@ -708,19 +709,7 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#standard-formats">Standard Formats</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#classes">Classes</a><ul>
-<li><a class="reference internal" href="#struct.Struct"><code class="docutils literal notranslate"><span class="pre">Struct</span></code></a><ul>
-<li><a class="reference internal" href="#struct.Struct.pack"><code class="docutils literal notranslate"><span class="pre">Struct.pack()</span></code></a></li>
-<li><a class="reference internal" href="#struct.Struct.pack_into"><code class="docutils literal notranslate"><span class="pre">Struct.pack_into()</span></code></a></li>
-<li><a class="reference internal" href="#struct.Struct.unpack"><code class="docutils literal notranslate"><span class="pre">Struct.unpack()</span></code></a></li>
-<li><a class="reference internal" href="#struct.Struct.unpack_from"><code class="docutils literal notranslate"><span class="pre">Struct.unpack_from()</span></code></a></li>
-<li><a class="reference internal" href="#struct.Struct.iter_unpack"><code class="docutils literal notranslate"><span class="pre">Struct.iter_unpack()</span></code></a></li>
-<li><a class="reference internal" href="#struct.Struct.format"><code class="docutils literal notranslate"><span class="pre">Struct.format</span></code></a></li>
-<li><a class="reference internal" href="#struct.Struct.size"><code class="docutils literal notranslate"><span class="pre">Struct.size</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#classes">Classes</a></li>
 </ul>
 </div><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
@@ -775,8 +764,8 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="struct-interpret-bytes-as-packed-binary-data">
-<h1><a class="reference internal" href="#module-struct" title="struct: Interpret bytes as packed binary data."><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code></a> — Interpret bytes as packed binary data<a class="headerlink" href="#struct-interpret-bytes-as-packed-binary-data" title="Permalink to this heading">¶</a></h1>
-<span class="target" id="module-struct"></span><p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/struct.py">Lib/struct.py</a></p>
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code> — Interpret bytes as packed binary data<a class="headerlink" href="#struct-interpret-bytes-as-packed-binary-data" title="Link to this heading">¶</a></h1>
+<p id="module-struct"><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/struct.py">Lib/struct.py</a></p>
 <hr class="docutils" id="index-0" />
 <p>This module converts between Python values and C structs represented
 as Python <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> objects.  Compact <a class="reference internal" href="#struct-format-strings"><span class="std std-ref">format strings</span></a>
@@ -804,18 +793,18 @@ for that purpose are <a class="reference internal" href="stdtypes.html#bytes" ti
 that can be viewed as an array of bytes implement the buffer protocol, so that
 they can be read/filled without additional copying from a <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a> object.</p>
 <section id="functions-and-exceptions">
-<h2>Functions and Exceptions<a class="headerlink" href="#functions-and-exceptions" title="Permalink to this heading">¶</a></h2>
+<h2>Functions and Exceptions<a class="headerlink" href="#functions-and-exceptions" title="Link to this heading">¶</a></h2>
 <p>The module defines the following exception and functions:</p>
 <dl class="py exception">
 <dt class="sig sig-object py" id="struct.error">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#struct.error" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">error</span></span><a class="headerlink" href="#struct.error" title="Link to this definition">¶</a></dt>
 <dd><p>Exception raised on various occasions; argument is a string describing what
 is wrong.</p>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.pack">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.pack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.pack" title="Link to this definition">¶</a></dt>
 <dd><p>Return a bytes object containing the values <em>v1</em>, <em>v2</em>, … packed according
 to the format string <em>format</em>.  The arguments must match the values required by
 the format exactly.</p>
@@ -823,7 +812,7 @@ the format exactly.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.pack_into">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">pack_into</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.pack_into" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">pack_into</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.pack_into" title="Link to this definition">¶</a></dt>
 <dd><p>Pack the values <em>v1</em>, <em>v2</em>, … according to the format string <em>format</em> and
 write the packed bytes into the writable buffer <em>buffer</em> starting at
 position <em>offset</em>.  Note that <em>offset</em> is a required argument.</p>
@@ -831,7 +820,7 @@ position <em>offset</em>.  Note that <em>offset</em> is a required argument.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.unpack">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.unpack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.unpack" title="Link to this definition">¶</a></dt>
 <dd><p>Unpack from the buffer <em>buffer</em> (presumably packed by <code class="docutils literal notranslate"><span class="pre">pack(format,</span> <span class="pre">...)</span></code>)
 according to the format string <em>format</em>.  The result is a tuple even if it
 contains exactly one item.  The buffer’s size in bytes must match the
@@ -840,7 +829,7 @@ size required by the format, as reflected by <a class="reference internal" href=
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.unpack_from">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">unpack_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.unpack_from" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">unpack_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">/</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.unpack_from" title="Link to this definition">¶</a></dt>
 <dd><p>Unpack from <em>buffer</em> starting at position <em>offset</em>, according to the format
 string <em>format</em>.  The result is a tuple even if it contains exactly one
 item.  The buffer’s size in bytes, starting at position <em>offset</em>, must be at
@@ -849,7 +838,7 @@ least the size required by the format, as reflected by <a class="reference inter
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.iter_unpack">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">iter_unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.iter_unpack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">iter_unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.iter_unpack" title="Link to this definition">¶</a></dt>
 <dd><p>Iteratively unpack from the buffer <em>buffer</em> according to the format
 string <em>format</em>.  This function returns an iterator which will read
 equally sized chunks from the buffer until all its contents have been
@@ -857,20 +846,20 @@ consumed.  The buffer’s size in bytes must be a multiple of the size
 required by the format, as reflected by <a class="reference internal" href="#struct.calcsize" title="struct.calcsize"><code class="xref py py-func docutils literal notranslate"><span class="pre">calcsize()</span></code></a>.</p>
 <p>Each iteration yields a tuple as specified by the format string.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="struct.calcsize">
-<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">calcsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.calcsize" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">calcsize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.calcsize" title="Link to this definition">¶</a></dt>
 <dd><p>Return the size of the struct (and hence of the bytes object produced by
 <code class="docutils literal notranslate"><span class="pre">pack(format,</span> <span class="pre">...)</span></code>) corresponding to the format string <em>format</em>.</p>
 </dd></dl>
 
 </section>
 <section id="format-strings">
-<span id="struct-format-strings"></span><h2>Format Strings<a class="headerlink" href="#format-strings" title="Permalink to this heading">¶</a></h2>
+<span id="struct-format-strings"></span><h2>Format Strings<a class="headerlink" href="#format-strings" title="Link to this heading">¶</a></h2>
 <p>Format strings describe the data layout when
 packing and unpacking data.  They are built up from <a class="reference internal" href="#format-characters"><span class="std std-ref">format characters</span></a>,
 which specify the type of data being packed/unpacked.  In addition,
@@ -879,7 +868,7 @@ Each format string consists of an optional prefix character which
 describes the overall properties of the data and one or more format
 characters which describe the actual data values and padding.</p>
 <section id="byte-order-size-and-alignment">
-<span id="struct-alignment"></span><h3>Byte Order, Size, and Alignment<a class="headerlink" href="#byte-order-size-and-alignment" title="Permalink to this heading">¶</a></h3>
+<span id="struct-alignment"></span><h3>Byte Order, Size, and Alignment<a class="headerlink" href="#byte-order-size-and-alignment" title="Link to this heading">¶</a></h3>
 <p>By default, C types are represented in the machine’s native format and byte
 order, and properly aligned by skipping pad bytes if necessary (according to the
 rules used by the C compiler).
@@ -930,6 +919,22 @@ following table:</p>
 </table>
 </div>
 <p>If the first character is not one of these, <code class="docutils literal notranslate"><span class="pre">'&#64;'</span></code> is assumed.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The number 1023 (<code class="docutils literal notranslate"><span class="pre">0x3ff</span></code> in hexadecimal) has the following byte representations:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">03</span> <span class="pre">ff</span></code> in big-endian (<code class="docutils literal notranslate"><span class="pre">&gt;</span></code>)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ff</span> <span class="pre">03</span></code> in little-endian (<code class="docutils literal notranslate"><span class="pre">&lt;</span></code>)</p></li>
+</ul>
+<p>Python example:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">struct</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&gt;h&#39;</span><span class="p">,</span> <span class="mi">1023</span><span class="p">)</span>
+</span><span data-line="3"><span class="go">b&#39;\x03\xff&#39;</span>
+</span><span data-line="4"><span class="gp">&gt;&gt;&gt; </span><span class="n">struct</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="s1">&#39;&lt;h&#39;</span><span class="p">,</span> <span class="mi">1023</span><span class="p">)</span>
+</span><span data-line="5"><span class="go">b&#39;\xff\x03&#39;</span>
+</span></pre></div>
+</div>
+</div>
 <p>Native byte order is big-endian or little-endian, depending on the
 host system. For example, Intel x86, AMD64 (x86-64), and Apple M1 are
 little-endian; IBM z and many legacy architectures are big-endian.
@@ -956,7 +961,7 @@ count of zero.  See <a class="reference internal" href="#struct-examples"><span 
 </ol>
 </section>
 <section id="format-characters">
-<span id="id1"></span><h3>Format Characters<a class="headerlink" href="#format-characters" title="Permalink to this heading">¶</a></h3>
+<span id="id1"></span><h3>Format Characters<a class="headerlink" href="#format-characters" title="Link to this heading">¶</a></h3>
 <p>Format characters have the following meaning; the conversion between C and
 Python values should be obvious given their types.  The ‘Standard size’ column
 refers to the size of the packed value in bytes when using standard size; that
@@ -1103,17 +1108,48 @@ platform-dependent.</p>
 </tbody>
 </table>
 </div>
+<p>Additionally, if IEC 60559 compatible complex arithmetic (Annex G of the
+C11 standard) is supported, the following format characters are available:</p>
+<div class="table-wrapper docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Format</p></th>
+<th class="head"><p>C Type</p></th>
+<th class="head"><p>Python type</p></th>
+<th class="head"><p>Standard size</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">E</span></code></p></td>
+<td><p><span class="c-expr sig sig-inline c"><span class="kt">float</span><span class="w"> </span><span class="kt">complex</span></span></p></td>
+<td><p>complex</p></td>
+<td><p>8</p></td>
+<td><p>(10)</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">C</span></code></p></td>
+<td><p><span class="c-expr sig sig-inline c"><span class="kt">double</span><span class="w"> </span><span class="kt">complex</span></span></p></td>
+<td><p>complex</p></td>
+<td><p>16</p></td>
+<td><p>(10)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.3: </span>Added support for the <code class="docutils literal notranslate"><span class="pre">'n'</span></code> and <code class="docutils literal notranslate"><span class="pre">'N'</span></code> formats.</p>
 </div>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.6: </span>Added support for the <code class="docutils literal notranslate"><span class="pre">'e'</span></code> format.</p>
 </div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.14: </span>Added support for the <code class="docutils literal notranslate"><span class="pre">'E'</span></code> and <code class="docutils literal notranslate"><span class="pre">'C'</span></code> formats.</p>
+</div>
 <p>Notes:</p>
 <ol class="arabic">
-<li><p id="index-2">The <code class="docutils literal notranslate"><span class="pre">'?'</span></code> conversion code corresponds to the <span class="c-expr sig sig-inline c"><span class="kt">_Bool</span></span> type defined by
-C99. If this type is not available, it is simulated using a <span class="c-expr sig sig-inline c"><span class="kt">char</span></span>. In
-standard mode, it is always represented by one byte.</p>
+<li><p id="index-2">The <code class="docutils literal notranslate"><span class="pre">'?'</span></code> conversion code corresponds to the <span class="c-expr sig sig-inline c"><span class="kt">_Bool</span></span> type
+defined by C standards since C99.  In standard mode, it is
+represented by one byte.</p>
 </li>
 <li><p>When attempting to pack a non-integer using any of the integer conversion
 codes, if the non-integer has a <a class="reference internal" href="../reference/datamodel.html#object.__index__" title="object.__index__"><code class="xref py py-meth docutils literal notranslate"><span class="pre">__index__()</span></code></a> method then that method is
@@ -1166,6 +1202,9 @@ truncated or padded with null bytes as appropriate to make it fit. For
 unpacking, the resulting bytes object always has exactly the specified number
 of bytes.  As a special case, <code class="docutils literal notranslate"><span class="pre">'0s'</span></code> means a single, empty string (while
 <code class="docutils literal notranslate"><span class="pre">'0c'</span></code> means 0 characters).</p></li>
+<li><p>For the <code class="docutils literal notranslate"><span class="pre">'E'</span></code> and <code class="docutils literal notranslate"><span class="pre">'C'</span></code> format characters, the packed representation uses
+the IEEE 754 binary32 and binary64 format for components of the complex
+number, regardless of the floating-point format used by the platform.</p></li>
 </ol>
 <p>A format character may be preceded by an integral repeat count.  For example,
 the format string <code class="docutils literal notranslate"><span class="pre">'4h'</span></code> means exactly the same as <code class="docutils literal notranslate"><span class="pre">'hhhh'</span></code>.</p>
@@ -1185,7 +1224,7 @@ Either 0 or 1 in the native or standard bool representation will be packed, and
 any non-zero value will be <code class="docutils literal notranslate"><span class="pre">True</span></code> when unpacking.</p>
 </section>
 <section id="examples">
-<span id="struct-examples"></span><h3>Examples<a class="headerlink" href="#examples" title="Permalink to this heading">¶</a></h3>
+<span id="struct-examples"></span><h3>Examples<a class="headerlink" href="#examples" title="Link to this heading">¶</a></h3>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Native byte order examples (designated by the <code class="docutils literal notranslate"><span class="pre">'&#64;'</span></code> format prefix or
@@ -1267,7 +1306,7 @@ at the end, assuming the platform’s longs are aligned on 4-byte boundaries:</p
 </section>
 </section>
 <section id="applications">
-<span id="id2"></span><h2>Applications<a class="headerlink" href="#applications" title="Permalink to this heading">¶</a></h2>
+<span id="id2"></span><h2>Applications<a class="headerlink" href="#applications" title="Link to this heading">¶</a></h2>
 <p>Two main applications for the <a class="reference internal" href="#module-struct" title="struct: Interpret bytes as packed binary data."><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code></a> module exist, data
 interchange between Python and C code within an application or another
 application compiled using the same compiler (<a class="reference internal" href="#struct-native-formats"><span class="std std-ref">native formats</span></a>), and
@@ -1275,7 +1314,7 @@ data interchange between applications using agreed upon data layout
 (<a class="reference internal" href="#struct-standard-formats"><span class="std std-ref">standard formats</span></a>).  Generally speaking, the format strings
 constructed for these two domains are distinct.</p>
 <section id="native-formats">
-<span id="struct-native-formats"></span><h3>Native Formats<a class="headerlink" href="#native-formats" title="Permalink to this heading">¶</a></h3>
+<span id="struct-native-formats"></span><h3>Native Formats<a class="headerlink" href="#native-formats" title="Link to this heading">¶</a></h3>
 <p>When constructing format strings which mimic native layouts, the
 compiler and machine architecture determine byte ordering and padding.
 In such cases, the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> format character should be used to specify
@@ -1304,7 +1343,7 @@ native formats it is better to use a zero-repeat format like <code class="docuti
 better to be explicit and use the <code class="docutils literal notranslate"><span class="pre">'&#64;'</span></code> prefix character.</p>
 </section>
 <section id="standard-formats">
-<span id="struct-standard-formats"></span><h3>Standard Formats<a class="headerlink" href="#standard-formats" title="Permalink to this heading">¶</a></h3>
+<span id="struct-standard-formats"></span><h3>Standard Formats<a class="headerlink" href="#standard-formats" title="Link to this heading">¶</a></h3>
 <p>When exchanging data beyond your process such as networking or storage,
 be precise.  Specify the exact byte order, size, and alignment.  Do
 not assume they match the native order of a particular machine.
@@ -1346,11 +1385,11 @@ below were executed on a 32-bit machine:</p>
 </section>
 </section>
 <section id="classes">
-<span id="struct-objects"></span><h2>Classes<a class="headerlink" href="#classes" title="Permalink to this heading">¶</a></h2>
+<span id="struct-objects"></span><h2>Classes<a class="headerlink" href="#classes" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="#module-struct" title="struct: Interpret bytes as packed binary data."><code class="xref py py-mod docutils literal notranslate"><span class="pre">struct</span></code></a> module also defines the following type:</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="struct.Struct">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">Struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">struct.</span></span><span class="sig-name descname"><span class="pre">Struct</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">format</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct" title="Link to this definition">¶</a></dt>
 <dd><p>Return a new Struct object which writes and reads binary data according to
 the format string <em>format</em>.  Creating a <code class="docutils literal notranslate"><span class="pre">Struct</span></code> object once and calling its
 methods is more efficient than calling module-level functions with the
@@ -1365,27 +1404,27 @@ instance.</p>
 <p>Compiled Struct objects support the following methods and attributes:</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="struct.Struct.pack">
-<span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.pack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">pack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.pack" title="Link to this definition">¶</a></dt>
 <dd><p>Identical to the <a class="reference internal" href="#struct.pack" title="struct.pack"><code class="xref py py-func docutils literal notranslate"><span class="pre">pack()</span></code></a> function, using the compiled format.
 (<code class="docutils literal notranslate"><span class="pre">len(result)</span></code> will equal <a class="reference internal" href="#struct.Struct.size" title="struct.Struct.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.)</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="struct.Struct.pack_into">
-<span class="sig-name descname"><span class="pre">pack_into</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.pack_into" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">pack_into</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">...</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.pack_into" title="Link to this definition">¶</a></dt>
 <dd><p>Identical to the <a class="reference internal" href="#struct.pack_into" title="struct.pack_into"><code class="xref py py-func docutils literal notranslate"><span class="pre">pack_into()</span></code></a> function, using the compiled format.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="struct.Struct.unpack">
-<span class="sig-name descname"><span class="pre">unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.unpack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.unpack" title="Link to this definition">¶</a></dt>
 <dd><p>Identical to the <a class="reference internal" href="#struct.unpack" title="struct.unpack"><code class="xref py py-func docutils literal notranslate"><span class="pre">unpack()</span></code></a> function, using the compiled format.
 The buffer’s size in bytes must equal <a class="reference internal" href="#struct.Struct.size" title="struct.Struct.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="struct.Struct.unpack_from">
-<span class="sig-name descname"><span class="pre">unpack_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.unpack_from" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">unpack_from</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">offset</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.unpack_from" title="Link to this definition">¶</a></dt>
 <dd><p>Identical to the <a class="reference internal" href="#struct.unpack_from" title="struct.unpack_from"><code class="xref py py-func docutils literal notranslate"><span class="pre">unpack_from()</span></code></a> function, using the compiled format.
 The buffer’s size in bytes, starting at position <em>offset</em>, must be at least
 <a class="reference internal" href="#struct.Struct.size" title="struct.Struct.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.</p>
@@ -1393,17 +1432,17 @@ The buffer’s size in bytes, starting at position <em>offset</em>, must be at l
 
 <dl class="py method">
 <dt class="sig sig-object py" id="struct.Struct.iter_unpack">
-<span class="sig-name descname"><span class="pre">iter_unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.iter_unpack" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">iter_unpack</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">buffer</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#struct.Struct.iter_unpack" title="Link to this definition">¶</a></dt>
 <dd><p>Identical to the <a class="reference internal" href="#struct.iter_unpack" title="struct.iter_unpack"><code class="xref py py-func docutils literal notranslate"><span class="pre">iter_unpack()</span></code></a> function, using the compiled format.
 The buffer’s size in bytes must be a multiple of <a class="reference internal" href="#struct.Struct.size" title="struct.Struct.size"><code class="xref py py-attr docutils literal notranslate"><span class="pre">size</span></code></a>.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.4.</span></p>
+<p><span class="versionmodified added">Added in version 3.4.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="struct.Struct.format">
-<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#struct.Struct.format" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">format</span></span><a class="headerlink" href="#struct.Struct.format" title="Link to this definition">¶</a></dt>
 <dd><p>The format string used to construct this Struct object.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.7: </span>The format string type is now <a class="reference internal" href="stdtypes.html#str" title="str"><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></a> instead of <a class="reference internal" href="stdtypes.html#bytes" title="bytes"><code class="xref py py-class docutils literal notranslate"><span class="pre">bytes</span></code></a>.</p>
@@ -1412,7 +1451,7 @@ The buffer’s size in bytes must be a multiple of <a class="reference internal"
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="struct.Struct.size">
-<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#struct.Struct.size" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">size</span></span><a class="headerlink" href="#struct.Struct.size" title="Link to this definition">¶</a></dt>
 <dd><p>The calculated size of the struct (and hence of the bytes object produced
 by the <a class="reference internal" href="#struct.pack" title="struct.pack"><code class="xref py py-meth docutils literal notranslate"><span class="pre">pack()</span></code></a> method) corresponding to <a class="reference internal" href="functions.html#format" title="format"><code class="xref py py-attr docutils literal notranslate"><span class="pre">format</span></code></a>.</p>
 </dd></dl>
@@ -1470,8 +1509,8 @@ is now:</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

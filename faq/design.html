@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Design and History FAQ - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Library and Extension FAQ" href="library.html" /><link rel="prev" title="Programming FAQ" href="programming.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Design and History FAQ - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="Library and Extension FAQ" href="library.html" /><link rel="prev" title="Programming FAQ" href="programming.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../library/getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../library/__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../library/annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../library/site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="reference internal" href="index.html">Python Frequently Asked Questions</a><ul class="current">
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -765,7 +775,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="design-and-history-faq">
-<h1><a class="toc-backref" href="#id2" role="doc-backlink">Design and History FAQ</a><a class="headerlink" href="#design-and-history-faq" title="Permalink to this heading">¶</a></h1>
+<h1><a class="toc-backref" href="#id2" role="doc-backlink">Design and History FAQ</a><a class="headerlink" href="#design-and-history-faq" title="Link to this heading">¶</a></h1>
 <nav class="contents" id="contents">
 <p class="topic-title">Contents</p>
 <ul class="simple">
@@ -804,7 +814,7 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </nav>
 <section id="why-does-python-use-indentation-for-grouping-of-statements">
-<h2><a class="toc-backref" href="#id3" role="doc-backlink">Why does Python use indentation for grouping of statements?</a><a class="headerlink" href="#why-does-python-use-indentation-for-grouping-of-statements" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Why does Python use indentation for grouping of statements?</a><a class="headerlink" href="#why-does-python-use-indentation-for-grouping-of-statements" title="Link to this heading">¶</a></h2>
 <p>Guido van Rossum believes that using indentation for grouping is extremely
 elegant and contributes a lot to the clarity of the average Python program.
 Most people learn to love this feature after a while.</p>
@@ -835,11 +845,11 @@ lack of declarations and the high-level data types are also responsible – but
 the indentation-based syntax certainly helps.</p>
 </section>
 <section id="why-am-i-getting-strange-results-with-simple-arithmetic-operations">
-<h2><a class="toc-backref" href="#id4" role="doc-backlink">Why am I getting strange results with simple arithmetic operations?</a><a class="headerlink" href="#why-am-i-getting-strange-results-with-simple-arithmetic-operations" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Why am I getting strange results with simple arithmetic operations?</a><a class="headerlink" href="#why-am-i-getting-strange-results-with-simple-arithmetic-operations" title="Link to this heading">¶</a></h2>
 <p>See the next question.</p>
 </section>
 <section id="why-are-floating-point-calculations-so-inaccurate">
-<h2><a class="toc-backref" href="#id5" role="doc-backlink">Why are floating-point calculations so inaccurate?</a><a class="headerlink" href="#why-are-floating-point-calculations-so-inaccurate" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Why are floating-point calculations so inaccurate?</a><a class="headerlink" href="#why-are-floating-point-calculations-so-inaccurate" title="Link to this heading">¶</a></h2>
 <p>Users are often surprised by results like this:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="mf">1.2</span> <span class="o">-</span> <span class="mf">1.0</span>
 </span><span data-line="2"><span class="go">0.19999999999999996</span>
@@ -855,7 +865,7 @@ on the hardware implementation in the processor, to perform floating-point
 operations. This means that as far as floating-point operations are concerned,
 Python behaves like many popular languages including C and Java.</p>
 <p>Many numbers that can be written easily in decimal notation cannot be expressed
-exactly in binary floating-point.  For example, after:</p>
+exactly in binary floating point.  For example, after:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="mf">1.2</span>
 </span></pre></div>
 </div>
@@ -871,10 +881,10 @@ stored value is:</p>
 </div>
 <p>The typical precision of 53 bits provides Python floats with 15–16
 decimal digits of accuracy.</p>
-<p>For a fuller explanation, please see the <a class="reference internal" href="../tutorial/floatingpoint.html#tut-fp-issues"><span class="std std-ref">floating point arithmetic</span></a> chapter in the Python tutorial.</p>
+<p>For a fuller explanation, please see the <a class="reference internal" href="../tutorial/floatingpoint.html#tut-fp-issues"><span class="std std-ref">floating-point arithmetic</span></a> chapter in the Python tutorial.</p>
 </section>
 <section id="why-are-python-strings-immutable">
-<h2><a class="toc-backref" href="#id6" role="doc-backlink">Why are Python strings immutable?</a><a class="headerlink" href="#why-are-python-strings-immutable" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Why are Python strings immutable?</a><a class="headerlink" href="#why-are-python-strings-immutable" title="Link to this heading">¶</a></h2>
 <p>There are several advantages.</p>
 <p>One is performance: knowing that a string is immutable means we can allocate
 space for it at creation time, and the storage requirements are fixed and
@@ -885,7 +895,7 @@ numbers.  No amount of activity will change the value 8 to anything else, and in
 Python, no amount of activity will change the string “eight” to anything else.</p>
 </section>
 <section id="why-must-self-be-used-explicitly-in-method-definitions-and-calls">
-<span id="why-self"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Why must ‘self’ be used explicitly in method definitions and calls?</a><a class="headerlink" href="#why-must-self-be-used-explicitly-in-method-definitions-and-calls" title="Permalink to this heading">¶</a></h2>
+<span id="why-self"></span><h2><a class="toc-backref" href="#id7" role="doc-backlink">Why must ‘self’ be used explicitly in method definitions and calls?</a><a class="headerlink" href="#why-must-self-be-used-explicitly-in-method-definitions-and-calls" title="Link to this heading">¶</a></h2>
 <p>The idea was borrowed from Modula-3.  It turns out to be very useful, for a
 variety of reasons.</p>
 <p>First, it’s more obvious that you are using a method or instance attribute
@@ -920,7 +930,7 @@ variables and instance variables live in two different namespaces, and you need
 to tell Python which namespace to use.</p>
 </section>
 <section id="why-can-t-i-use-an-assignment-in-an-expression">
-<span id="id1"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Why can’t I use an assignment in an expression?</a><a class="headerlink" href="#why-can-t-i-use-an-assignment-in-an-expression" title="Permalink to this heading">¶</a></h2>
+<span id="id1"></span><h2><a class="toc-backref" href="#id8" role="doc-backlink">Why can’t I use an assignment in an expression?</a><a class="headerlink" href="#why-can-t-i-use-an-assignment-in-an-expression" title="Link to this heading">¶</a></h2>
 <p>Starting in Python 3.8, you can!</p>
 <p>Assignment expressions using the walrus operator <code class="docutils literal notranslate"><span class="pre">:=</span></code> assign a variable in an
 expression:</p>
@@ -931,7 +941,7 @@ expression:</p>
 <p>See <span class="target" id="index-0"></span><a class="pep reference external" href="https://peps.python.org/pep-0572/"><strong>PEP 572</strong></a> for more information.</p>
 </section>
 <section id="why-does-python-use-methods-for-some-functionality-e-g-list-index-but-functions-for-other-e-g-len-list">
-<h2><a class="toc-backref" href="#id9" role="doc-backlink">Why does Python use methods for some functionality (e.g. list.index()) but functions for other (e.g. len(list))?</a><a class="headerlink" href="#why-does-python-use-methods-for-some-functionality-e-g-list-index-but-functions-for-other-e-g-len-list" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Why does Python use methods for some functionality (e.g. list.index()) but functions for other (e.g. len(list))?</a><a class="headerlink" href="#why-does-python-use-methods-for-some-functionality-e-g-list-index-but-functions-for-other-e-g-len-list" title="Link to this heading">¶</a></h2>
 <p>As Guido said:</p>
 <blockquote>
 <div><p>(a) For some operations, prefix notation just reads better than
@@ -952,7 +962,7 @@ method, or something that isn’t a file has a write() method.</p>
 </div></blockquote>
 </section>
 <section id="why-is-join-a-string-method-instead-of-a-list-or-tuple-method">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Why is join() a string method instead of a list or tuple method?</a><a class="headerlink" href="#why-is-join-a-string-method-instead-of-a-list-or-tuple-method" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Why is join() a string method instead of a list or tuple method?</a><a class="headerlink" href="#why-is-join-a-string-method-instead-of-a-list-or-tuple-method" title="Link to this heading">¶</a></h2>
 <p>Strings became much more like other standard types starting in Python 1.6, when
 methods were added which give the same functionality that has always been
 available using the functions of the string module.  Most of these new methods
@@ -987,7 +997,7 @@ rules for sequence objects, including any new classes you might define yourself.
 Similar methods exist for bytes and bytearray objects.</p>
 </section>
 <section id="how-fast-are-exceptions">
-<h2><a class="toc-backref" href="#id11" role="doc-backlink">How fast are exceptions?</a><a class="headerlink" href="#how-fast-are-exceptions" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id11" role="doc-backlink">How fast are exceptions?</a><a class="headerlink" href="#how-fast-are-exceptions" title="Link to this heading">¶</a></h2>
 <p>A <a class="reference internal" href="../reference/compound_stmts.html#try"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">try</span></code></a>/<a class="reference internal" href="../reference/compound_stmts.html#except"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">except</span></code></a> block is extremely efficient if no exceptions
 are raised.  Actually
 catching an exception is expensive.  In versions of Python prior to 2.0 it was
@@ -1012,10 +1022,12 @@ time.  If that wasn’t the case, you coded it like this:</p>
 is evaluated in all cases.</p>
 </section>
 <section id="why-isn-t-there-a-switch-or-case-statement-in-python">
-<h2><a class="toc-backref" href="#id12" role="doc-backlink">Why isn’t there a switch or case statement in Python?</a><a class="headerlink" href="#why-isn-t-there-a-switch-or-case-statement-in-python" title="Permalink to this heading">¶</a></h2>
-<p>You can do this easily enough with a sequence of <code class="docutils literal notranslate"><span class="pre">if...</span> <span class="pre">elif...</span> <span class="pre">elif...</span> <span class="pre">else</span></code>.
-For literal values, or constants within a namespace, you can also use a
-<code class="docutils literal notranslate"><span class="pre">match</span> <span class="pre">...</span> <span class="pre">case</span></code> statement.</p>
+<h2><a class="toc-backref" href="#id12" role="doc-backlink">Why isn’t there a switch or case statement in Python?</a><a class="headerlink" href="#why-isn-t-there-a-switch-or-case-statement-in-python" title="Link to this heading">¶</a></h2>
+<p>In general, structured switch statements execute one block of code
+when an expression has a particular value or set of values.
+Since Python 3.10 one can easily match literal values, or constants
+within a namespace, with a <code class="docutils literal notranslate"><span class="pre">match</span> <span class="pre">...</span> <span class="pre">case</span></code> statement.
+An older alternative is a sequence of <code class="docutils literal notranslate"><span class="pre">if...</span> <span class="pre">elif...</span> <span class="pre">elif...</span> <span class="pre">else</span></code>.</p>
 <p>For cases where you need to choose from a very large number of possibilities,
 you can create a dictionary mapping case values to functions to call.  For
 example:</p>
@@ -1042,9 +1054,11 @@ example:</p>
 <p>It’s suggested that you use a prefix for the method names, such as <code class="docutils literal notranslate"><span class="pre">visit_</span></code> in
 this example.  Without such a prefix, if values are coming from an untrusted
 source, an attacker would be able to call any method on your object.</p>
+<p>Imitating switch with fallthrough, as with C’s switch-case-default,
+is possible, much harder, and less needed.</p>
 </section>
 <section id="can-t-you-emulate-threads-in-the-interpreter-instead-of-relying-on-an-os-specific-thread-implementation">
-<h2><a class="toc-backref" href="#id13" role="doc-backlink">Can’t you emulate threads in the interpreter instead of relying on an OS-specific thread implementation?</a><a class="headerlink" href="#can-t-you-emulate-threads-in-the-interpreter-instead-of-relying-on-an-os-specific-thread-implementation" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Can’t you emulate threads in the interpreter instead of relying on an OS-specific thread implementation?</a><a class="headerlink" href="#can-t-you-emulate-threads-in-the-interpreter-instead-of-relying-on-an-os-specific-thread-implementation" title="Link to this heading">¶</a></h2>
 <p>Answer 1: Unfortunately, the interpreter pushes at least one C stack frame for
 each Python stack frame.  Also, extensions can call back into Python at almost
 random moments.  Therefore, a complete threads implementation requires thread
@@ -1053,7 +1067,7 @@ support for C.</p>
 which has a completely redesigned interpreter loop that avoids the C stack.</p>
 </section>
 <section id="why-can-t-lambda-expressions-contain-statements">
-<h2><a class="toc-backref" href="#id14" role="doc-backlink">Why can’t lambda expressions contain statements?</a><a class="headerlink" href="#why-can-t-lambda-expressions-contain-statements" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id14" role="doc-backlink">Why can’t lambda expressions contain statements?</a><a class="headerlink" href="#why-can-t-lambda-expressions-contain-statements" title="Link to this heading">¶</a></h2>
 <p>Python lambda expressions cannot contain statements because Python’s syntactic
 framework can’t handle statements nested inside expressions.  However, in
 Python, this is not a serious problem.  Unlike lambda forms in other languages,
@@ -1066,14 +1080,14 @@ function – but that’s just a local variable to which the function object (wh
 is exactly the same type of object that a lambda expression yields) is assigned!</p>
 </section>
 <section id="can-python-be-compiled-to-machine-code-c-or-some-other-language">
-<h2><a class="toc-backref" href="#id15" role="doc-backlink">Can Python be compiled to machine code, C or some other language?</a><a class="headerlink" href="#can-python-be-compiled-to-machine-code-c-or-some-other-language" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id15" role="doc-backlink">Can Python be compiled to machine code, C or some other language?</a><a class="headerlink" href="#can-python-be-compiled-to-machine-code-c-or-some-other-language" title="Link to this heading">¶</a></h2>
 <p><a class="reference external" href="https://cython.org/">Cython</a> compiles a modified version of Python with
-optional annotations into C extensions.  <a class="reference external" href="https://www.nuitka.net/">Nuitka</a> is
+optional annotations into C extensions.  <a class="reference external" href="https://nuitka.net/">Nuitka</a> is
 an up-and-coming compiler of Python into C++ code, aiming to support the full
 Python language.</p>
 </section>
 <section id="how-does-python-manage-memory">
-<h2><a class="toc-backref" href="#id16" role="doc-backlink">How does Python manage memory?</a><a class="headerlink" href="#how-does-python-manage-memory" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id16" role="doc-backlink">How does Python manage memory?</a><a class="headerlink" href="#how-does-python-manage-memory" title="Link to this heading">¶</a></h2>
 <p>The details of Python memory management depend on the implementation.  The
 standard implementation of Python, <a class="reference internal" href="../glossary.html#term-CPython"><span class="xref std std-term">CPython</span></a>, uses reference counting to
 detect inaccessible objects, and another mechanism to collect reference cycles,
@@ -1082,7 +1096,7 @@ cycles and deletes the objects involved. The <a class="reference internal" href=
 to perform a garbage collection, obtain debugging statistics, and tune the
 collector’s parameters.</p>
 <p>Other implementations (such as <a class="reference external" href="https://www.jython.org">Jython</a> or
-<a class="reference external" href="https://www.pypy.org">PyPy</a>), however, can rely on a different mechanism
+<a class="reference external" href="https://pypy.org">PyPy</a>), however, can rely on a different mechanism
 such as a full-blown garbage collector.  This difference can cause some
 subtle porting problems if your Python code depends on the behavior of the
 reference counting implementation.</p>
@@ -1107,7 +1121,7 @@ this will work regardless of memory management scheme:</p>
 </div>
 </section>
 <section id="why-doesn-t-cpython-use-a-more-traditional-garbage-collection-scheme">
-<h2><a class="toc-backref" href="#id17" role="doc-backlink">Why doesn’t CPython use a more traditional garbage collection scheme?</a><a class="headerlink" href="#why-doesn-t-cpython-use-a-more-traditional-garbage-collection-scheme" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id17" role="doc-backlink">Why doesn’t CPython use a more traditional garbage collection scheme?</a><a class="headerlink" href="#why-doesn-t-cpython-use-a-more-traditional-garbage-collection-scheme" title="Link to this heading">¶</a></h2>
 <p>For one thing, this is not a C standard feature and hence it’s not portable.
 (Yes, we know about the Boehm GC library.  It has bits of assembler code for
 <em>most</em> common platforms, not for all of them, and although it is mostly
@@ -1121,7 +1135,7 @@ and may not want Python’s.  Right now, CPython works with anything that
 implements <code class="docutils literal notranslate"><span class="pre">malloc()</span></code> and <code class="docutils literal notranslate"><span class="pre">free()</span></code> properly.</p>
 </section>
 <section id="why-isn-t-all-memory-freed-when-cpython-exits">
-<h2><a class="toc-backref" href="#id18" role="doc-backlink">Why isn’t all memory freed when CPython exits?</a><a class="headerlink" href="#why-isn-t-all-memory-freed-when-cpython-exits" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id18" role="doc-backlink">Why isn’t all memory freed when CPython exits?</a><a class="headerlink" href="#why-isn-t-all-memory-freed-when-cpython-exits" title="Link to this heading">¶</a></h2>
 <p>Objects referenced from the global namespaces of Python modules are not always
 deallocated when Python exits.  This may happen if there are circular
 references.  There are also certain bits of memory that are allocated by the C
@@ -1132,7 +1146,7 @@ does try to destroy every single object.</p>
 <a class="reference internal" href="../library/atexit.html#module-atexit" title="atexit: Register and execute cleanup functions."><code class="xref py py-mod docutils literal notranslate"><span class="pre">atexit</span></code></a> module to run a function that will force those deletions.</p>
 </section>
 <section id="why-are-there-separate-tuple-and-list-data-types">
-<h2><a class="toc-backref" href="#id19" role="doc-backlink">Why are there separate tuple and list data types?</a><a class="headerlink" href="#why-are-there-separate-tuple-and-list-data-types" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Why are there separate tuple and list data types?</a><a class="headerlink" href="#why-are-there-separate-tuple-and-list-data-types" title="Link to this heading">¶</a></h2>
 <p>Lists and tuples, while similar in many respects, are generally used in
 fundamentally different ways.  Tuples can be thought of as being similar to
 Pascal <code class="docutils literal notranslate"><span class="pre">records</span></code> or C <code class="docutils literal notranslate"><span class="pre">structs</span></code>; they’re small collections of related data which may
@@ -1152,7 +1166,7 @@ you can always change a list’s elements.  Only immutable elements can be used 
 dictionary keys, and hence only tuples and not lists can be used as keys.</p>
 </section>
 <section id="how-are-lists-implemented-in-cpython">
-<h2><a class="toc-backref" href="#id20" role="doc-backlink">How are lists implemented in CPython?</a><a class="headerlink" href="#how-are-lists-implemented-in-cpython" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">How are lists implemented in CPython?</a><a class="headerlink" href="#how-are-lists-implemented-in-cpython" title="Link to this heading">¶</a></h2>
 <p>CPython’s lists are really variable-length arrays, not Lisp-style linked lists.
 The implementation uses a contiguous array of references to other objects, and
 keeps a pointer to this array and the array’s length in a list head structure.</p>
@@ -1164,7 +1178,7 @@ when the array must be grown, some extra space is allocated so the next few
 times don’t require an actual resize.</p>
 </section>
 <section id="how-are-dictionaries-implemented-in-cpython">
-<h2><a class="toc-backref" href="#id21" role="doc-backlink">How are dictionaries implemented in CPython?</a><a class="headerlink" href="#how-are-dictionaries-implemented-in-cpython" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id21" role="doc-backlink">How are dictionaries implemented in CPython?</a><a class="headerlink" href="#how-are-dictionaries-implemented-in-cpython" title="Link to this heading">¶</a></h2>
 <p>CPython’s dictionaries are implemented as resizable hash tables.  Compared to
 B-trees, this gives better performance for lookup (the most common operation by
 far) under most circumstances, and the implementation is simpler.</p>
@@ -1175,10 +1189,10 @@ on the key and a per-process seed; for example, <code class="docutils literal no
 to <code class="docutils literal notranslate"><span class="pre">1142331976</span></code>.  The hash code is then used to calculate a location in an
 internal array where the value will be stored.  Assuming that you’re storing
 keys that all have different hash values, this means that dictionaries take
-constant time – O(1), in Big-O notation – to retrieve a key.</p>
+constant time – <em>O</em>(1), in Big-O notation – to retrieve a key.</p>
 </section>
 <section id="why-must-dictionary-keys-be-immutable">
-<h2><a class="toc-backref" href="#id22" role="doc-backlink">Why must dictionary keys be immutable?</a><a class="headerlink" href="#why-must-dictionary-keys-be-immutable" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Why must dictionary keys be immutable?</a><a class="headerlink" href="#why-must-dictionary-keys-be-immutable" title="Link to this heading">¶</a></h2>
 <p>The hash table implementation of dictionaries uses a hash value calculated from
 the key value to find the key.  If the key were a mutable object, its value
 could change, and thus its hash could also change.  But since whoever changes
@@ -1253,7 +1267,7 @@ prepared to think hard about the requirements and the consequences of not
 meeting them correctly.  Consider yourself warned.</p>
 </section>
 <section id="why-doesn-t-list-sort-return-the-sorted-list">
-<h2><a class="toc-backref" href="#id23" role="doc-backlink">Why doesn’t list.sort() return the sorted list?</a><a class="headerlink" href="#why-doesn-t-list-sort-return-the-sorted-list" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id23" role="doc-backlink">Why doesn’t list.sort() return the sorted list?</a><a class="headerlink" href="#why-doesn-t-list-sort-return-the-sorted-list" title="Link to this heading">¶</a></h2>
 <p>In situations where performance matters, making a copy of the list just to sort
 it would be wasteful. Therefore, <a class="reference internal" href="../library/stdtypes.html#list.sort" title="list.sort"><code class="xref py py-meth docutils literal notranslate"><span class="pre">list.sort()</span></code></a> sorts the list in place. In
 order to remind you of that fact, it does not return the sorted list.  This way,
@@ -1269,7 +1283,7 @@ dictionary in sorted order:</p>
 </div>
 </section>
 <section id="how-do-you-specify-and-enforce-an-interface-spec-in-python">
-<h2><a class="toc-backref" href="#id24" role="doc-backlink">How do you specify and enforce an interface spec in Python?</a><a class="headerlink" href="#how-do-you-specify-and-enforce-an-interface-spec-in-python" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id24" role="doc-backlink">How do you specify and enforce an interface spec in Python?</a><a class="headerlink" href="#how-do-you-specify-and-enforce-an-interface-spec-in-python" title="Link to this heading">¶</a></h2>
 <p>An interface specification for a module as provided by languages such as C++ and
 Java describes the prototypes for the methods and functions of the module.  Many
 feel that compile-time enforcement of interface specifications helps in the
@@ -1303,7 +1317,7 @@ any of the actual code.  Of course Python allows you to be sloppy and not write
 test cases at all.</p>
 </section>
 <section id="why-is-there-no-goto">
-<h2><a class="toc-backref" href="#id25" role="doc-backlink">Why is there no goto?</a><a class="headerlink" href="#why-is-there-no-goto" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id25" role="doc-backlink">Why is there no goto?</a><a class="headerlink" href="#why-is-there-no-goto" title="Link to this heading">¶</a></h2>
 <p>In the 1970s people realized that unrestricted goto could lead
 to messy “spaghetti” code that was hard to understand and revise.
 In a high-level language, it is also unneeded as long as there
@@ -1330,7 +1344,7 @@ languages.  For example:</p>
 considered an abuse of <code class="docutils literal notranslate"><span class="pre">goto</span></code> anyway.  Use sparingly.</p>
 </section>
 <section id="why-can-t-raw-strings-r-strings-end-with-a-backslash">
-<h2><a class="toc-backref" href="#id26" role="doc-backlink">Why can’t raw strings (r-strings) end with a backslash?</a><a class="headerlink" href="#why-can-t-raw-strings-r-strings-end-with-a-backslash" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id26" role="doc-backlink">Why can’t raw strings (r-strings) end with a backslash?</a><a class="headerlink" href="#why-can-t-raw-strings-r-strings-end-with-a-backslash" title="Link to this heading">¶</a></h2>
 <p>More precisely, they can’t end with an odd number of backslashes: the unpaired
 backslash at the end escapes the closing quote character, leaving an
 unterminated string.</p>
@@ -1353,7 +1367,7 @@ accept forward slashes too:</p>
 </div>
 </section>
 <section id="why-doesn-t-python-have-a-with-statement-for-attribute-assignments">
-<h2><a class="toc-backref" href="#id27" role="doc-backlink">Why doesn’t Python have a “with” statement for attribute assignments?</a><a class="headerlink" href="#why-doesn-t-python-have-a-with-statement-for-attribute-assignments" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id27" role="doc-backlink">Why doesn’t Python have a “with” statement for attribute assignments?</a><a class="headerlink" href="#why-doesn-t-python-have-a-with-statement-for-attribute-assignments" title="Link to this heading">¶</a></h2>
 <p>Python has a <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement that wraps the execution of a block, calling code
 on the entrance and exit from the block.  Some languages have a construct that
 looks like this:</p>
@@ -1405,7 +1419,7 @@ such as using a ‘leading dot’, have been rejected in favour of explicitness 
 <a class="reference external" href="https://mail.python.org/pipermail/python-ideas/2016-May/040070.html">https://mail.python.org/pipermail/python-ideas/2016-May/040070.html</a>).</p>
 </section>
 <section id="why-don-t-generators-support-the-with-statement">
-<h2><a class="toc-backref" href="#id28" role="doc-backlink">Why don’t generators support the with statement?</a><a class="headerlink" href="#why-don-t-generators-support-the-with-statement" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id28" role="doc-backlink">Why don’t generators support the with statement?</a><a class="headerlink" href="#why-don-t-generators-support-the-with-statement" title="Link to this heading">¶</a></h2>
 <p>For technical reasons, a generator used directly as a context manager
 would not work correctly.  When, as is most common, a generator is used as
 an iterator run to completion, no closing is needed.  When it is, wrap
@@ -1413,7 +1427,7 @@ it as <a class="reference internal" href="../library/contextlib.html#contextlib.
 in the <a class="reference internal" href="../reference/compound_stmts.html#with"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">with</span></code></a> statement.</p>
 </section>
 <section id="why-are-colons-required-for-the-if-while-def-class-statements">
-<h2><a class="toc-backref" href="#id29" role="doc-backlink">Why are colons required for the if/while/def/class statements?</a><a class="headerlink" href="#why-are-colons-required-for-the-if-while-def-class-statements" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id29" role="doc-backlink">Why are colons required for the if/while/def/class statements?</a><a class="headerlink" href="#why-are-colons-required-for-the-if-while-def-class-statements" title="Link to this heading">¶</a></h2>
 <p>The colon is required primarily to enhance readability (one of the results of
 the experimental ABC language).  Consider this:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">if</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span>
@@ -1432,7 +1446,7 @@ highlighting; they can look for colons to decide when indentation needs to be
 increased instead of having to do a more elaborate parsing of the program text.</p>
 </section>
 <section id="why-does-python-allow-commas-at-the-end-of-lists-and-tuples">
-<h2><a class="toc-backref" href="#id30" role="doc-backlink">Why does Python allow commas at the end of lists and tuples?</a><a class="headerlink" href="#why-does-python-allow-commas-at-the-end-of-lists-and-tuples" title="Permalink to this heading">¶</a></h2>
+<h2><a class="toc-backref" href="#id30" role="doc-backlink">Why does Python allow commas at the end of lists and tuples?</a><a class="headerlink" href="#why-does-python-allow-commas-at-the-end-of-lists-and-tuples" title="Link to this heading">¶</a></h2>
 <p>Python lets you add a trailing comma at the end of lists, tuples, and
 dictionaries:</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,]</span>
@@ -1504,8 +1518,8 @@ For example:</p>
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>

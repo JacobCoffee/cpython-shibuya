@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-accent-color="blue" data-content_root="">
+<html lang="en" data-accent-color="blue" data-content_root="../">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>symtable — Access to the compiler’s symbol tables - CPython Docs</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="token — Constants used with Python parse trees" href="token.html" /><link rel="prev" title="ast — Abstract Syntax Trees" href="ast.html" /><script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"><title>symtable — Access to the compiler’s symbol tables - CPython Documentation</title><link rel="author" title="About these documents" href="../about.html" /><link rel="index" title="Index" href="../genindex.html" /><link rel="search" title="Search" href="../search.html" /><link rel="copyright" title="Copyright" href="../copyright.html" /><link rel="next" title="token — Constants used with Python parse trees" href="token.html" /><link rel="prev" title="ast — Abstract Syntax Trees" href="ast.html" /><script>
     function setColorMode(t){let e=document.documentElement;e.setAttribute("data-color-mode",t);let a=window.matchMedia&&window.matchMedia("(prefers-color-scheme: dark)").matches,s=t;"auto"===t&&(s=a?"dark":"light"),"light"===s?(e.classList.remove("dark"),e.classList.add("light")):(e.classList.remove("light"),e.classList.add("dark"))}
     setColorMode(localStorage._theme||"auto");
-  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css" />
-    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css" />
+  </script><link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=397bb51e" />
+    <link rel="stylesheet" type="text/css" href="../_static/shibuya.css?v=36d120a7" />
+    <link media="print" rel="stylesheet" type="text/css" href="../_static/print.css?v=20ff2c19" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,8 +81,7 @@
       <div class="sy-head-extra flex items-center print:hidden"><form class="searchbox flex items-center" action="../search.html" method="get">
   <input type="text" name="q" placeholder="Search" />
   <kbd>/</kbd>
-</form><div class="sy-head-socials flex items-center">
-</div></div>
+</form><div class="sy-head-socials"></div></div>
     </div>
     <div class="sy-head-actions flex items-center shrink-0 print:hidden"><button class="js-theme theme-switch flex items-center"
 data-aria-auto="Switch to light color mode"
@@ -105,6 +104,7 @@ data-aria-dark="Switch to auto color mode">
       <div class="sy-scrollbar p-6">
         <div class="globaltoc" data-expand-depth="0"><ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../whatsnew/index.html">What’s New in Python</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.14.html">What’s New In Python 3.14</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.13.html">What’s New In Python 3.13</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.12.html">What’s New In Python 3.12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../whatsnew/3.11.html">What’s New In Python 3.11</a></li>
@@ -145,7 +145,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/venv.html">12. Virtual Environments and Packages</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/whatnow.html">13. What Now?</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/interactive.html">14. Interactive Input Editing and History Substitution</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating Point Arithmetic:  Issues and Limitations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorial/floatingpoint.html">15. Floating-Point Arithmetic:  Issues and Limitations</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../tutorial/appendix.html">16. Appendix</a></li>
 </ul>
 </li>
@@ -154,8 +154,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../using/unix.html">2. Using Python on Unix platforms</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/configure.html">3. Configure Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../using/windows.html">4. Using Python on Windows</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on a Mac</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">6. Editors and IDEs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/mac.html">5. Using Python on macOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/android.html">6. Using Python on Android</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/ios.html">7. Using Python on iOS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../using/editors.html">8. Editors and IDEs</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../reference/index.html">The Python Language Reference</a><ul>
@@ -215,7 +217,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="numbers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">numbers</span></code> — Numeric abstract base classes</a></li>
 <li class="toctree-l3"><a class="reference internal" href="math.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">math</span></code> — Mathematical functions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="cmath.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">cmath</span></code> — Mathematical functions for complex numbers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed point and floating point arithmetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="decimal.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">decimal</span></code> — Decimal fixed-point and floating-point arithmetic</a></li>
 <li class="toctree-l3"><a class="reference internal" href="fractions.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">fractions</span></code> — Rational numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="random.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">random</span></code> — Generate pseudo-random numbers</a></li>
 <li class="toctree-l3"><a class="reference internal" href="statistics.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">statistics</span></code> — Mathematical statistics functions</a></li>
@@ -277,7 +279,6 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="io.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">io</span></code> — Core tools for working with streams</a></li>
 <li class="toctree-l3"><a class="reference internal" href="time.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">time</span></code> — Time access and conversions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="argparse.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">argparse</span></code> — Parser for command-line options, arguments and sub-commands</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getopt.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">getopt</span></code> — C-style parser for command line options</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging</span></code> — Logging facility for Python</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.config.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.config</span></code> — Logging configuration</a></li>
 <li class="toctree-l3"><a class="reference internal" href="logging.handlers.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">logging.handlers</span></code> — Logging handlers</a></li>
@@ -480,6 +481,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="__future__.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">__future__</span></code> — Future statement definitions</a></li>
 <li class="toctree-l3"><a class="reference internal" href="gc.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">gc</span></code> — Garbage Collector interface</a></li>
 <li class="toctree-l3"><a class="reference internal" href="inspect.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">inspect</span></code> — Inspect live objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="annotationlib.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">annotationlib</span></code> — Functionality for introspecting annotations</a></li>
 <li class="toctree-l3"><a class="reference internal" href="site.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">site</span></code> — Site-specific configuration hook</a></li>
 </ul>
 </li>
@@ -564,8 +566,10 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/marshal.html">Data marshalling support</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/arg.html">Parsing arguments and building values</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/conversion.html">String conversion and formatting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/hash.html">PyHash API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/reflection.html">Reflection</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/codec.html">Codec registry and support functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/time.html">PyTime C API</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/perfmaps.html">Support for Perf Maps</a></li>
 </ul>
 </li>
@@ -584,7 +588,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l3"><a class="reference internal" href="../c-api/none.html">The <code class="docutils literal notranslate"><span class="pre">None</span></code> Object</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/long.html">Integer Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bool.html">Boolean Objects</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating Point Objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../c-api/float.html">Floating-Point Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/complex.html">Complex Number Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytes.html">Bytes Objects</a></li>
 <li class="toctree-l3"><a class="reference internal" href="../c-api/bytearray.html">Byte Array Objects</a></li>
@@ -634,30 +638,35 @@ data-aria-dark="Switch to auto color mode">
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../c-api/apiabiversion.html">API and ABI Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html">Monitoring C API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../c-api/monitoring.html#generating-execution-events">Generating Execution Events</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../installing/index.html">Installing Python Modules</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../howto/index.html">Python HOWTOs</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../howto/pyporting.html">How to port Python 2 Code to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/cporting.html">Porting Extension Modules to Python 3</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/curses.html">Curses Programming with Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor HowTo Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/descriptor.html">Descriptor Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/gdb_helpers.html">Debugging C API extensions and CPython Internals with GDB</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/enum.html">Enum HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/functional.html">Functional Programming HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging.html">Logging HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/logging-cookbook.html">Logging Cookbook</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/regex.html">Regular Expression HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/sockets.html">Socket Programming HOWTO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting HOW TO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/sorting.html">Sorting Techniques</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/unicode.html">Unicode HOWTO</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/urllib2.html">HOWTO Fetch Internet Resources Using The urllib Package</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/argparse.html">Argparse Tutorial</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/ipaddress.html">An introduction to the ipaddress module</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../howto/clinic.html">Argument Clinic How-To</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/instrumentation.html">Instrumenting CPython with DTrace and SystemTap</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/perf_profiling.html">Python support for the Linux <code class="docutils literal notranslate"><span class="pre">perf</span></code> profiler</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/annotations.html">Annotations Best Practices</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../howto/isolating-extensions.html">Isolating Extension Modules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/timerfd.html">timer file descriptor HOWTO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/mro.html">The Python 2.3 Method Resolution Order</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-python.html">Python experimental support for free threading</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../howto/free-threading-extensions.html">C API Extension Support for Free Threading</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../faq/index.html">Python Frequently Asked Questions</a><ul>
@@ -671,6 +680,7 @@ data-aria-dark="Switch to auto color mode">
 <li class="toctree-l2"><a class="reference internal" href="../faq/installed.html">“Why is Python Installed on my Computer?” FAQ</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="../deprecations/index.html">Deprecations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../glossary.html">Glossary</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About these documents</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../bugs.html">Dealing with Bugs</a></li>
@@ -687,56 +697,9 @@ data-aria-dark="Switch to auto color mode">
       <i class="i-lucide close"></i>
     </button>
     <div class="sy-scrollbar sy-rside-inner px-6 xl:top-16 xl:sticky xl:pl-0 pt-6 pb-4"><div class="localtoc"><h3>On this page</h3><ul>
-<li><a class="reference internal" href="#generating-symbol-tables">Generating Symbol Tables</a><ul>
-<li><a class="reference internal" href="#symtable.symtable"><code class="docutils literal notranslate"><span class="pre">symtable()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#examining-symbol-tables">Examining Symbol Tables</a><ul>
-<li><a class="reference internal" href="#symtable.SymbolTable"><code class="docutils literal notranslate"><span class="pre">SymbolTable</span></code></a><ul>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_type"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_type()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_id"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_id()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_name"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_name()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_lineno"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_lineno()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.is_optimized"><code class="docutils literal notranslate"><span class="pre">SymbolTable.is_optimized()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.is_nested"><code class="docutils literal notranslate"><span class="pre">SymbolTable.is_nested()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.has_children"><code class="docutils literal notranslate"><span class="pre">SymbolTable.has_children()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_identifiers"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_identifiers()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.lookup"><code class="docutils literal notranslate"><span class="pre">SymbolTable.lookup()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_symbols"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_symbols()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.SymbolTable.get_children"><code class="docutils literal notranslate"><span class="pre">SymbolTable.get_children()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#symtable.Function"><code class="docutils literal notranslate"><span class="pre">Function</span></code></a><ul>
-<li><a class="reference internal" href="#symtable.Function.get_parameters"><code class="docutils literal notranslate"><span class="pre">Function.get_parameters()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Function.get_locals"><code class="docutils literal notranslate"><span class="pre">Function.get_locals()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Function.get_globals"><code class="docutils literal notranslate"><span class="pre">Function.get_globals()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Function.get_nonlocals"><code class="docutils literal notranslate"><span class="pre">Function.get_nonlocals()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Function.get_frees"><code class="docutils literal notranslate"><span class="pre">Function.get_frees()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#symtable.Class"><code class="docutils literal notranslate"><span class="pre">Class</span></code></a><ul>
-<li><a class="reference internal" href="#symtable.Class.get_methods"><code class="docutils literal notranslate"><span class="pre">Class.get_methods()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#symtable.Symbol"><code class="docutils literal notranslate"><span class="pre">Symbol</span></code></a><ul>
-<li><a class="reference internal" href="#symtable.Symbol.get_name"><code class="docutils literal notranslate"><span class="pre">Symbol.get_name()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_referenced"><code class="docutils literal notranslate"><span class="pre">Symbol.is_referenced()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_imported"><code class="docutils literal notranslate"><span class="pre">Symbol.is_imported()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_parameter"><code class="docutils literal notranslate"><span class="pre">Symbol.is_parameter()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_global"><code class="docutils literal notranslate"><span class="pre">Symbol.is_global()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_nonlocal"><code class="docutils literal notranslate"><span class="pre">Symbol.is_nonlocal()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_declared_global"><code class="docutils literal notranslate"><span class="pre">Symbol.is_declared_global()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_local"><code class="docutils literal notranslate"><span class="pre">Symbol.is_local()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_annotated"><code class="docutils literal notranslate"><span class="pre">Symbol.is_annotated()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_free"><code class="docutils literal notranslate"><span class="pre">Symbol.is_free()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_assigned"><code class="docutils literal notranslate"><span class="pre">Symbol.is_assigned()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.is_namespace"><code class="docutils literal notranslate"><span class="pre">Symbol.is_namespace()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.get_namespaces"><code class="docutils literal notranslate"><span class="pre">Symbol.get_namespaces()</span></code></a></li>
-<li><a class="reference internal" href="#symtable.Symbol.get_namespace"><code class="docutils literal notranslate"><span class="pre">Symbol.get_namespace()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li><a class="reference internal" href="#generating-symbol-tables">Generating Symbol Tables</a></li>
+<li><a class="reference internal" href="#examining-symbol-tables">Examining Symbol Tables</a></li>
+<li><a class="reference internal" href="#command-line-usage">Command-Line Usage</a></li>
 </ul>
 </div><div class="sy-deprecated">
   You are using <code>relations.html</code> in <code>html_sidebars</code>. This
@@ -791,18 +754,18 @@ data-aria-dark="Switch to auto color mode">
       <div class="min-w-0 max-w-6xl px-6 pb-6 pt-8 xl:px-12">
         <article class="yue" role="main">
           <section id="module-symtable">
-<span id="symtable-access-to-the-compiler-s-symbol-tables"></span><h1><a class="reference internal" href="#module-symtable" title="symtable: Interface to the compiler's internal symbol tables."><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code></a> — Access to the compiler’s symbol tables<a class="headerlink" href="#module-symtable" title="Permalink to this heading">¶</a></h1>
-<p><strong>Source code:</strong> <a class="reference external" href="https://github.com/python/cpython/tree/3.12/Lib/symtable.py">Lib/symtable.py</a></p>
+<span id="symtable-access-to-the-compiler-s-symbol-tables"></span><h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code> — Access to the compiler’s symbol tables<a class="headerlink" href="#module-symtable" title="Link to this heading">¶</a></h1>
+<p><strong>Source code:</strong> <a class="extlink-source reference external" href="https://github.com/python/cpython/tree/main/Lib/symtable.py">Lib/symtable.py</a></p>
 <hr class="docutils" />
 <p>Symbol tables are generated by the compiler from AST just before bytecode is
 generated.  The symbol table is responsible for calculating the scope of every
 identifier in the code.  <a class="reference internal" href="#module-symtable" title="symtable: Interface to the compiler's internal symbol tables."><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code></a> provides an interface to examine these
 tables.</p>
 <section id="generating-symbol-tables">
-<h2>Generating Symbol Tables<a class="headerlink" href="#generating-symbol-tables" title="Permalink to this heading">¶</a></h2>
+<h2>Generating Symbol Tables<a class="headerlink" href="#generating-symbol-tables" title="Link to this heading">¶</a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="symtable.symtable">
-<span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">symtable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compile_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#symtable.symtable" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">symtable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">code</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compile_type</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#symtable.symtable" title="Link to this definition">¶</a></dt>
 <dd><p>Return the toplevel <a class="reference internal" href="#symtable.SymbolTable" title="symtable.SymbolTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTable</span></code></a> for the Python source <em>code</em>.
 <em>filename</em> is the name of the file containing the code.  <em>compile_type</em> is
 like the <em>mode</em> argument to <a class="reference internal" href="functions.html#compile" title="compile"><code class="xref py py-func docutils literal notranslate"><span class="pre">compile()</span></code></a>.</p>
@@ -810,33 +773,94 @@ like the <em>mode</em> argument to <a class="reference internal" href="functions
 
 </section>
 <section id="examining-symbol-tables">
-<h2>Examining Symbol Tables<a class="headerlink" href="#examining-symbol-tables" title="Permalink to this heading">¶</a></h2>
+<h2>Examining Symbol Tables<a class="headerlink" href="#examining-symbol-tables" title="Link to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="symtable.SymbolTableType">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">SymbolTableType</span></span><a class="headerlink" href="#symtable.SymbolTableType" title="Link to this definition">¶</a></dt>
+<dd><p>An enumeration indicating the type of a <a class="reference internal" href="#symtable.SymbolTable" title="symtable.SymbolTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTable</span></code></a> object.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.MODULE">
+<span class="sig-name descname"><span class="pre">MODULE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;module&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.MODULE" title="Link to this definition">¶</a></dt>
+<dd><p>Used for the symbol table of a module.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.FUNCTION">
+<span class="sig-name descname"><span class="pre">FUNCTION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;function&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.FUNCTION" title="Link to this definition">¶</a></dt>
+<dd><p>Used for the symbol table of a function.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.CLASS">
+<span class="sig-name descname"><span class="pre">CLASS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;class&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.CLASS" title="Link to this definition">¶</a></dt>
+<dd><p>Used for the symbol table of a class.</p>
+</dd></dl>
+
+<p>The following members refer to different flavors of
+<a class="reference internal" href="../reference/executionmodel.html#annotation-scopes"><span class="std std-ref">annotation scopes</span></a>.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.ANNOTATION">
+<span class="sig-name descname"><span class="pre">ANNOTATION</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;annotation&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.ANNOTATION" title="Link to this definition">¶</a></dt>
+<dd><p>Used for annotations if <code class="docutils literal notranslate"><span class="pre">from</span> <span class="pre">__future__</span> <span class="pre">import</span> <span class="pre">annotations</span></code> is active.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.TYPE_ALIAS">
+<span class="sig-name descname"><span class="pre">TYPE_ALIAS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;type</span> <span class="pre">alias&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.TYPE_ALIAS" title="Link to this definition">¶</a></dt>
+<dd><p>Used for the symbol table of <a class="reference internal" href="../reference/simple_stmts.html#type"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">type</span></code></a> constructions.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.TYPE_PARAMETERS">
+<span class="sig-name descname"><span class="pre">TYPE_PARAMETERS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;type</span> <span class="pre">parameters&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.TYPE_PARAMETERS" title="Link to this definition">¶</a></dt>
+<dd><p>Used for the symbol table of <a class="reference internal" href="../reference/compound_stmts.html#generic-functions"><span class="std std-ref">generic functions</span></a>
+or <a class="reference internal" href="../reference/compound_stmts.html#generic-classes"><span class="std std-ref">generic classes</span></a>.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="symtable.SymbolTableType.TYPE_VARIABLE">
+<span class="sig-name descname"><span class="pre">TYPE_VARIABLE</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&quot;type</span> <span class="pre">variable&quot;</span></em><a class="headerlink" href="#symtable.SymbolTableType.TYPE_VARIABLE" title="Link to this definition">¶</a></dt>
+<dd><p>Used for the symbol table of the bound, the constraint tuple or the
+default value of a single type variable in the formal sense, i.e.,
+a TypeVar, a TypeVarTuple or a ParamSpec object (the latter two do
+not support a bound or a constraint tuple).</p>
+</dd></dl>
+
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+</dd></dl>
+
 <dl class="py class">
 <dt class="sig sig-object py" id="symtable.SymbolTable">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">SymbolTable</span></span><a class="headerlink" href="#symtable.SymbolTable" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">SymbolTable</span></span><a class="headerlink" href="#symtable.SymbolTable" title="Link to this definition">¶</a></dt>
 <dd><p>A namespace table for a block.  The constructor is not public.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_type">
-<span class="sig-name descname"><span class="pre">get_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_type" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the type of the symbol table.  Possible values are <code class="docutils literal notranslate"><span class="pre">'class'</span></code>,
-<code class="docutils literal notranslate"><span class="pre">'module'</span></code>, <code class="docutils literal notranslate"><span class="pre">'function'</span></code>, <code class="docutils literal notranslate"><span class="pre">'annotation'</span></code>, <code class="docutils literal notranslate"><span class="pre">'TypeVar</span> <span class="pre">bound'</span></code>,
-<code class="docutils literal notranslate"><span class="pre">'type</span> <span class="pre">alias'</span></code>, and <code class="docutils literal notranslate"><span class="pre">'type</span> <span class="pre">parameter'</span></code>. The latter four refer to
-different flavors of <a class="reference internal" href="../reference/executionmodel.html#annotation-scopes"><span class="std std-ref">annotation scopes</span></a>.</p>
+<span class="sig-name descname"><span class="pre">get_type</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_type" title="Link to this definition">¶</a></dt>
+<dd><p>Return the type of the symbol table.  Possible values are members
+of the <a class="reference internal" href="#symtable.SymbolTableType" title="symtable.SymbolTableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTableType</span></code></a> enumeration.</p>
 <div class="versionchanged">
 <p><span class="versionmodified changed">Changed in version 3.12: </span>Added <code class="docutils literal notranslate"><span class="pre">'annotation'</span></code>,  <code class="docutils literal notranslate"><span class="pre">'TypeVar</span> <span class="pre">bound'</span></code>, <code class="docutils literal notranslate"><span class="pre">'type</span> <span class="pre">alias'</span></code>,
 and <code class="docutils literal notranslate"><span class="pre">'type</span> <span class="pre">parameter'</span></code> as possible return values.</p>
+</div>
+<div class="versionchanged">
+<p><span class="versionmodified changed">Changed in version 3.13: </span>Return values are members of the <a class="reference internal" href="#symtable.SymbolTableType" title="symtable.SymbolTableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTableType</span></code></a> enumeration.</p>
+<p>The exact values of the returned string may change in the future,
+and thus, it is recommended to use <a class="reference internal" href="#symtable.SymbolTableType" title="symtable.SymbolTableType"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTableType</span></code></a> members
+instead of hard-coded strings.</p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_id">
-<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_id" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_id</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_id" title="Link to this definition">¶</a></dt>
 <dd><p>Return the table’s identifier.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_name">
-<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_name" title="Link to this definition">¶</a></dt>
 <dd><p>Return the table’s name.  This is the name of the class if the table is
 for a class, the name of the function if the table is for a function, or
 <code class="docutils literal notranslate"><span class="pre">'top'</span></code> if the table is global (<a class="reference internal" href="#symtable.SymbolTable.get_type" title="symtable.SymbolTable.get_type"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_type()</span></code></a> returns <code class="docutils literal notranslate"><span class="pre">'module'</span></code>).
@@ -848,51 +872,51 @@ For <a class="reference internal" href="typing.html#typing.TypeVar" title="typin
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_lineno">
-<span class="sig-name descname"><span class="pre">get_lineno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_lineno" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_lineno</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_lineno" title="Link to this definition">¶</a></dt>
 <dd><p>Return the number of the first line in the block this table represents.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.is_optimized">
-<span class="sig-name descname"><span class="pre">is_optimized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.is_optimized" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_optimized</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.is_optimized" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the locals in this table can be optimized.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.is_nested">
-<span class="sig-name descname"><span class="pre">is_nested</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.is_nested" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_nested</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.is_nested" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the block is a nested class or function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.has_children">
-<span class="sig-name descname"><span class="pre">has_children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.has_children" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">has_children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.has_children" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the block has nested namespaces within it.  These can
 be obtained with <a class="reference internal" href="#symtable.SymbolTable.get_children" title="symtable.SymbolTable.get_children"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_children()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_identifiers">
-<span class="sig-name descname"><span class="pre">get_identifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_identifiers" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_identifiers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_identifiers" title="Link to this definition">¶</a></dt>
 <dd><p>Return a view object containing the names of symbols in the table.
 See the <a class="reference internal" href="stdtypes.html#dict-views"><span class="std std-ref">documentation of view objects</span></a>.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.lookup">
-<span class="sig-name descname"><span class="pre">lookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.lookup" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">lookup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.lookup" title="Link to this definition">¶</a></dt>
 <dd><p>Lookup <em>name</em> in the table and return a <a class="reference internal" href="#symtable.Symbol" title="symtable.Symbol"><code class="xref py py-class docutils literal notranslate"><span class="pre">Symbol</span></code></a> instance.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_symbols">
-<span class="sig-name descname"><span class="pre">get_symbols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_symbols" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_symbols</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_symbols" title="Link to this definition">¶</a></dt>
 <dd><p>Return a list of <a class="reference internal" href="#symtable.Symbol" title="symtable.Symbol"><code class="xref py py-class docutils literal notranslate"><span class="pre">Symbol</span></code></a> instances for names in the table.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.SymbolTable.get_children">
-<span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_children" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_children</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.SymbolTable.get_children" title="Link to this definition">¶</a></dt>
 <dd><p>Return a list of the nested symbol tables.</p>
 </dd></dl>
 
@@ -900,36 +924,36 @@ See the <a class="reference internal" href="stdtypes.html#dict-views"><span clas
 
 <dl class="py class">
 <dt class="sig sig-object py" id="symtable.Function">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">Function</span></span><a class="headerlink" href="#symtable.Function" title="Permalink to this definition">¶</a></dt>
-<dd><p>A namespace for a function or method.  This class inherits
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">Function</span></span><a class="headerlink" href="#symtable.Function" title="Link to this definition">¶</a></dt>
+<dd><p>A namespace for a function or method.  This class inherits from
 <a class="reference internal" href="#symtable.SymbolTable" title="symtable.SymbolTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTable</span></code></a>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Function.get_parameters">
-<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_parameters" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_parameters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_parameters" title="Link to this definition">¶</a></dt>
 <dd><p>Return a tuple containing names of parameters to this function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Function.get_locals">
-<span class="sig-name descname"><span class="pre">get_locals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_locals" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_locals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_locals" title="Link to this definition">¶</a></dt>
 <dd><p>Return a tuple containing names of locals in this function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Function.get_globals">
-<span class="sig-name descname"><span class="pre">get_globals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_globals" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_globals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_globals" title="Link to this definition">¶</a></dt>
 <dd><p>Return a tuple containing names of globals in this function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Function.get_nonlocals">
-<span class="sig-name descname"><span class="pre">get_nonlocals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_nonlocals" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_nonlocals</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_nonlocals" title="Link to this definition">¶</a></dt>
 <dd><p>Return a tuple containing names of nonlocals in this function.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Function.get_frees">
-<span class="sig-name descname"><span class="pre">get_frees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_frees" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_frees</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Function.get_frees" title="Link to this definition">¶</a></dt>
 <dd><p>Return a tuple containing names of free variables in this function.</p>
 </dd></dl>
 
@@ -937,94 +961,175 @@ See the <a class="reference internal" href="stdtypes.html#dict-views"><span clas
 
 <dl class="py class">
 <dt class="sig sig-object py" id="symtable.Class">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">Class</span></span><a class="headerlink" href="#symtable.Class" title="Permalink to this definition">¶</a></dt>
-<dd><p>A namespace of a class.  This class inherits <a class="reference internal" href="#symtable.SymbolTable" title="symtable.SymbolTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTable</span></code></a>.</p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">Class</span></span><a class="headerlink" href="#symtable.Class" title="Link to this definition">¶</a></dt>
+<dd><p>A namespace of a class.  This class inherits from <a class="reference internal" href="#symtable.SymbolTable" title="symtable.SymbolTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTable</span></code></a>.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Class.get_methods">
-<span class="sig-name descname"><span class="pre">get_methods</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Class.get_methods" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a tuple containing the names of methods declared in the class.</p>
+<span class="sig-name descname"><span class="pre">get_methods</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Class.get_methods" title="Link to this definition">¶</a></dt>
+<dd><p>Return a tuple containing the names of method-like functions declared
+in the class.</p>
+<p>Here, the term ‘method’ designates <em>any</em> function defined in the class
+body via <a class="reference internal" href="../reference/compound_stmts.html#def"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">def</span></code></a> or <a class="reference internal" href="../reference/compound_stmts.html#async-def"><code class="xref std std-keyword docutils literal notranslate"><span class="pre">async</span> <span class="pre">def</span></code></a>.</p>
+<p>Functions defined in a deeper scope (e.g., in an inner class) are not
+picked up by <a class="reference internal" href="#symtable.Class.get_methods" title="symtable.Class.get_methods"><code class="xref py py-meth docutils literal notranslate"><span class="pre">get_methods()</span></code></a>.</p>
+<p>For example:</p>
+<div class="highlight-pycon notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">symtable</span>
+</span><span data-line="2"><span class="gp">&gt;&gt;&gt; </span><span class="n">st</span> <span class="o">=</span> <span class="n">symtable</span><span class="o">.</span><span class="n">symtable</span><span class="p">(</span><span class="s1">&#39;&#39;&#39;</span>
+</span><span data-line="3"><span class="gp">... </span><span class="s1">def outer(): pass</span>
+</span><span data-line="4"><span class="gp">...</span>
+</span><span data-line="5"><span class="gp">... </span><span class="s1">class A:</span>
+</span><span data-line="6"><span class="gp">... </span><span class="s1">   def f():</span>
+</span><span data-line="7"><span class="gp">... </span><span class="s1">       def w(): pass</span>
+</span><span data-line="8"><span class="gp">...</span>
+</span><span data-line="9"><span class="gp">... </span><span class="s1">   def g(self): pass</span>
+</span><span data-line="10"><span class="gp">...</span>
+</span><span data-line="11"><span class="gp">... </span><span class="s1">   @classmethod</span>
+</span><span data-line="12"><span class="gp">... </span><span class="s1">   async def h(cls): pass</span>
+</span><span data-line="13"><span class="gp">...</span>
+</span><span data-line="14"><span class="gp">... </span><span class="s1">   global outer</span>
+</span><span data-line="15"><span class="gp">... </span><span class="s1">   def outer(self): pass</span>
+</span><span data-line="16"><span class="gp">... </span><span class="s1">&#39;&#39;&#39;</span><span class="p">,</span> <span class="s1">&#39;test&#39;</span><span class="p">,</span> <span class="s1">&#39;exec&#39;</span><span class="p">)</span>
+</span><span data-line="17"><span class="gp">&gt;&gt;&gt; </span><span class="n">class_A</span> <span class="o">=</span> <span class="n">st</span><span class="o">.</span><span class="n">get_children</span><span class="p">()[</span><span class="mi">2</span><span class="p">]</span>
+</span><span data-line="18"><span class="gp">&gt;&gt;&gt; </span><span class="n">class_A</span><span class="o">.</span><span class="n">get_methods</span><span class="p">()</span>
+</span><span data-line="19"><span class="go">(&#39;f&#39;, &#39;g&#39;, &#39;h&#39;)</span>
+</span></pre></div>
+</div>
+<p>Although <code class="docutils literal notranslate"><span class="pre">A().f()</span></code> raises <a class="reference internal" href="exceptions.html#TypeError" title="TypeError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">TypeError</span></code></a> at runtime, <code class="docutils literal notranslate"><span class="pre">A.f</span></code> is still
+considered as a method-like function.</p>
+<div class="deprecated-removed">
+<p><span class="versionmodified deprecated">Deprecated since version 3.14, will be removed in version 3.16.</span></p>
+</div>
 </dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="symtable.Symbol">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">Symbol</span></span><a class="headerlink" href="#symtable.Symbol" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">symtable.</span></span><span class="sig-name descname"><span class="pre">Symbol</span></span><a class="headerlink" href="#symtable.Symbol" title="Link to this definition">¶</a></dt>
 <dd><p>An entry in a <a class="reference internal" href="#symtable.SymbolTable" title="symtable.SymbolTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">SymbolTable</span></code></a> corresponding to an identifier in the
 source.  The constructor is not public.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.get_name">
-<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.get_name" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_name</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.get_name" title="Link to this definition">¶</a></dt>
 <dd><p>Return the symbol’s name.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_referenced">
-<span class="sig-name descname"><span class="pre">is_referenced</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_referenced" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_referenced</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_referenced" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is used in its block.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_imported">
-<span class="sig-name descname"><span class="pre">is_imported</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_imported" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_imported</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_imported" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is created from an import statement.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_parameter">
-<span class="sig-name descname"><span class="pre">is_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_parameter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_parameter" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is a parameter.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="symtable.Symbol.is_type_parameter">
+<span class="sig-name descname"><span class="pre">is_type_parameter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_type_parameter" title="Link to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is a type parameter.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.14.0a0 (unreleased).</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_global">
-<span class="sig-name descname"><span class="pre">is_global</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_global" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_global</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_global" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is global.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_nonlocal">
-<span class="sig-name descname"><span class="pre">is_nonlocal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_nonlocal" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_nonlocal</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_nonlocal" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is nonlocal.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_declared_global">
-<span class="sig-name descname"><span class="pre">is_declared_global</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_declared_global" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_declared_global</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_declared_global" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is declared global with a global statement.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_local">
-<span class="sig-name descname"><span class="pre">is_local</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_local" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_local</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_local" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is local to its block.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_annotated">
-<span class="sig-name descname"><span class="pre">is_annotated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_annotated" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_annotated</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_annotated" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is annotated.</p>
 <div class="versionadded">
-<p><span class="versionmodified added">New in version 3.6.</span></p>
+<p><span class="versionmodified added">Added in version 3.6.</span></p>
 </div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_free">
-<span class="sig-name descname"><span class="pre">is_free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_free" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_free</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_free" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is referenced in its block, but not assigned
 to.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="symtable.Symbol.is_free_class">
+<span class="sig-name descname"><span class="pre">is_free_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_free_class" title="Link to this definition">¶</a></dt>
+<dd><p>Return <em>True</em> if a class-scoped symbol is free from
+the perspective of a method.</p>
+<p>Consider the following example:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="k">def</span> <span class="nf">f</span><span class="p">():</span>
+</span><span data-line="2">    <span class="n">x</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># function-scoped</span>
+</span><span data-line="3">    <span class="k">class</span> <span class="nc">C</span><span class="p">:</span>
+</span><span data-line="4">        <span class="n">x</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># class-scoped</span>
+</span><span data-line="5">        <span class="k">def</span> <span class="nf">method</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+</span><span data-line="6">            <span class="k">return</span> <span class="n">x</span>
+</span></pre></div>
+</div>
+<p>In this example, the class-scoped symbol <code class="docutils literal notranslate"><span class="pre">x</span></code> is considered to
+be free from the perspective of <code class="docutils literal notranslate"><span class="pre">C.method</span></code>, thereby allowing
+the latter to return <em>1</em> at runtime and not <em>2</em>.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.14.0a0 (unreleased).</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_assigned">
-<span class="sig-name descname"><span class="pre">is_assigned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_assigned" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_assigned</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_assigned" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is assigned to in its block.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="symtable.Symbol.is_comp_iter">
+<span class="sig-name descname"><span class="pre">is_comp_iter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_comp_iter" title="Link to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is a comprehension iteration variable.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.14.0a0 (unreleased).</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="symtable.Symbol.is_comp_cell">
+<span class="sig-name descname"><span class="pre">is_comp_cell</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_comp_cell" title="Link to this definition">¶</a></dt>
+<dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if the symbol is a cell in an inlined comprehension.</p>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.14.0a0 (unreleased).</span></p>
+</div>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.is_namespace">
-<span class="sig-name descname"><span class="pre">is_namespace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_namespace" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">is_namespace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.is_namespace" title="Link to this definition">¶</a></dt>
 <dd><p>Return <code class="docutils literal notranslate"><span class="pre">True</span></code> if name binding introduces new namespace.</p>
 <p>If the name is used as the target of a function or class statement, this
 will be true.</p>
@@ -1041,19 +1146,32 @@ list, that does not introduce a new namespace.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.get_namespaces">
-<span class="sig-name descname"><span class="pre">get_namespaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.get_namespaces" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_namespaces</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.get_namespaces" title="Link to this definition">¶</a></dt>
 <dd><p>Return a list of namespaces bound to this name.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="symtable.Symbol.get_namespace">
-<span class="sig-name descname"><span class="pre">get_namespace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.get_namespace" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_namespace</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#symtable.Symbol.get_namespace" title="Link to this definition">¶</a></dt>
 <dd><p>Return the namespace bound to this name. If more than one or no namespace
 is bound to this name, a <a class="reference internal" href="exceptions.html#ValueError" title="ValueError"><code class="xref py py-exc docutils literal notranslate"><span class="pre">ValueError</span></code></a> is raised.</p>
 </dd></dl>
 
 </dd></dl>
 
+</section>
+<section id="command-line-usage">
+<span id="symtable-cli"></span><h2>Command-Line Usage<a class="headerlink" href="#command-line-usage" title="Link to this heading">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified added">Added in version 3.13.</span></p>
+</div>
+<p>The <a class="reference internal" href="#module-symtable" title="symtable: Interface to the compiler's internal symbol tables."><code class="xref py py-mod docutils literal notranslate"><span class="pre">symtable</span></code></a> module can be executed as a script from the command line.</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span><span data-line="1">python<span class="w"> </span>-m<span class="w"> </span>symtable<span class="w"> </span><span class="o">[</span>infile...<span class="o">]</span>
+</span></pre></div>
+</div>
+<p>Symbol tables are generated for the specified Python source files and
+dumped to stdout.
+If no input file is specified, the content is read from stdin.</p>
 </section>
 </section>
 
@@ -1097,8 +1215,8 @@ is bound to this name, a <a class="reference internal" href="exceptions.html#Val
     </div>
   </div>
 </footer>
-      <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-      <script src="../_static/doctools.js"></script>
-      <script src="../_static/sphinx_highlight.js"></script>
-      <script src="../_static/shibuya.js"></script></body>
+      <script src="../_static/documentation_options.js?v=54ee44a5"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/shibuya.js?v=c5fc9e80"></script></body>
 </html>
